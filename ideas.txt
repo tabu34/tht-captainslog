@@ -1,0 +1,4 @@
+file struct
+file i/o class
+stats are set based on file i/o and structs that are filled by it
+
