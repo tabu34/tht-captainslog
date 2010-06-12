@@ -1,0 +1,28 @@
+filename
+map width
+map height
+num layers
+<layer 0>
+<tile 0>
+tile width
+tile height
+tile number
+top
+left
+</tile 0>
+</layer 0>
+<objects>
+<object 0>
+top
+left
+id
+</object 0>
+</objects>
+<blockers>
+<blocker 0>
+<point 0>
+x
+y
+</point 0>
+</blocker 0>
+
