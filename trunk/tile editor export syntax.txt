@@ -1,3 +1,4 @@
+version #
 filename
 map width
 map height
