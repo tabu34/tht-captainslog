@@ -10,6 +10,7 @@ class CTestState : public IGameState
 {
 	CMarine		Marine1, Marine2;
 	int			m_nBackgroundID;
+	CBMPFont	testFont;
 
 	CTestState(void);
 	CTestState(const CTestState&);

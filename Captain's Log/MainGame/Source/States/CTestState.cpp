@@ -38,6 +38,10 @@ void CTestState::Enter(void)
 
 	CCollisionManager::GetInstance()->AddObject(&Marine1);
 	CCollisionManager::GetInstance()->AddObject(&Marine2);
+
+
+	testFont.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 1, 1, 3, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(0, 255, 0));
+	testFont.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
 }
 
 bool CTestState::Input(void)
@@ -66,6 +70,8 @@ void CTestState::Render(void)
 	CSGD_Direct3D::GetInstance()->SpriteBegin();
 	CSGD_Direct3D::GetInstance()->DrawRect(Marine1.GetCollisionRect(), 255, 0, 0);
 	CSGD_Direct3D::GetInstance()->DrawRect(Marine2.GetCollisionRect(), 0, 255, 0);
+
+	testFont.RenderText("Hello", 300, 300);
 }
 
 void CTestState::Exit(void)
