@@ -3,6 +3,8 @@
 
 #include "CAbility.h"
 
+class CBase;
+
 class CTargetAbility
 {
 	CBase*	m_pTarget;

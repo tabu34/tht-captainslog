@@ -8,7 +8,6 @@
 class IGameState
 {
 public:
-
 	virtual ~IGameState(void)=0 {}
 
 	virtual void Enter(void)=0;

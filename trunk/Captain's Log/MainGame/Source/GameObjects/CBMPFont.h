@@ -7,15 +7,19 @@ using namespace std;
 
 class CBMPFont
 {
-	vector<RECT>	m_vLetterRects;
+	RECT			m_rLetterRects[256];
+	int				m_nStartChar;
 	int				m_nImageID;
 	float			m_fScaleX;
 	float			m_fScaleY;
 	int				m_nKerning;
+	DWORD			m_dwFontColor;
 
 public:
-	void	SetUp(char* szFileName, float fScaleX, float fScaleY, int nKerning);
-	void	RenderText(char* szString);
-	void	AddLetter(char* szLetter, RECT rRectangle);
+
+	void	Initialize(const char* szFileName, float fScaleX, float fScaleY, int nKerning, DWORD dwKeyColor = 0, DWORD dwFontColor = -1);
+	void	SetUp(float fScaleX, float fScaleY, int nKerning, DWORD dwFontColor = -1);
+	void	RenderText(char* szString, int nPosX, int nPosY);
+	void	LoadLetterRects(const char* szFileName);
 };
 #endif // CBMPFont_h__

@@ -313,6 +313,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Source\Managers\CFileManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\Managers\CFileManager.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\Managers\CObjectManager.cpp"
 				>
 			</File>
@@ -380,6 +388,14 @@
 				Name="Abilities"
 				>
 				<File
+					RelativePath=".\Source\GameObjects\CAbilities.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\GameObjects\CAbilities.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\GameObjects\CAbility.h"
 					>
 				</File>
@@ -431,6 +447,22 @@
 			<Filter
 				Name="Units"
 				>
+				<File
+					RelativePath=".\Source\GameObjects\CBasicEnemies.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\GameObjects\CBasicEnemies.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\GameObjects\CBossEnemies.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\GameObjects\CBossEnemies.h"
+					>
+				</File>
 				<File
 					RelativePath=".\Source\GameObjects\CHeavy.cpp"
 					>

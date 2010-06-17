@@ -2,6 +2,7 @@
 #define CLocationAbility_h__
 
 #include "CAbility.h"
+#include <windows.h>
 
 class CLocationAbility : public CAbility
 {
