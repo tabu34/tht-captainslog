@@ -12,6 +12,7 @@ top
 left
 </tile 0>
 </layer 0>
+numobjects
 <objects>
 <object 0>
 top
@@ -19,8 +20,10 @@ left
 id
 </object 0>
 </objects>
+numblockers
 <blockers>
 <blocker 0>
+numpoints
 <point 0>
 x
 y
