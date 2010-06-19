@@ -328,6 +328,10 @@
 				RelativePath=".\Source\Managers\CObjectManager.h"
 				>
 			</File>
+			<File
+				RelativePath=".\Source\Managers\HTable.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Game Objects"
