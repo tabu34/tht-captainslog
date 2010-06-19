@@ -5,10 +5,21 @@
 #include <string>
 using namespace std;
 
+class HTable;
+
 class CCodeProfiler
 {
-	vector<string>			strFunctionName;
-	vector<vector<float>>	vTimes;
+public:
+	struct tFunctionProfile 
+	{
+		string			strFunctionName;
+		vector<float>	vStartTimes;
+		vector<float>	vEndTimes;
+	};
+
+private:
+	HTable*		m_hProfileTable;
+
 
 	~CCodeProfiler();
 	CCodeProfiler();
@@ -18,9 +29,8 @@ class CCodeProfiler
 public:
 	static CCodeProfiler*	GetInstance();
 
-	void	StartFunction(float fTime, char* szFunctionName);
-	void	EndFunction(float fTime, char* szFunctionName);
+	void	StartFunction(char* szFunctionName);
+	void	EndFunction(char* szFunctionName);
 	void	Output(char* szFileName);
-
 };
 #endif // CCodeProfiler_h__
