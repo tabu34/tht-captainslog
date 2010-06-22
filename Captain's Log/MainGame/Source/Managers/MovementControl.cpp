@@ -29,12 +29,12 @@ void CMovementControl::Input()
 {
 	// TODO: Mouse Input
 
-	if(m_DI->MouseButtonPressed(MOUSE_LEFT))
+	if(m_DI->MouseButtonPressed(MOUSE_RIGHT))
 	{
 		//m_esEventSystem->SendEvent("LeftMouseButtonPressed");
 	}
 
-	if(m_DI->MouseButtonDown(MOUSE_RIGHT))
+	if(m_DI->MouseButtonDown(MOUSE_LEFT))
 	{
 		// Unit Selection ---------------
 		if(m_bDragging == false)
@@ -43,8 +43,6 @@ void CMovementControl::Input()
 			m_ptStart.x = CSGD_DirectInput::GetInstance()->MouseGetPosX();
 			m_ptStart.y = CSGD_DirectInput::GetInstance()->MouseGetPosY();
 		}
-		
-		
 		// END Unit Selection -----------
 
 		//m_esEventSystem->SendEvent("RightMouseButtonPressed");
