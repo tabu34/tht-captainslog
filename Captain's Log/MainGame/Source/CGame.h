@@ -6,11 +6,15 @@
 #include "Managers\CCamera.h"
 #include "Managers\CCollisionManager.h"
 #include "Managers\CObjectManager.h"
+#include "Managers\MovementControl.h"
+#include "GameObjects\CAnimationManager.h"
 #include "SGD Wrappers\CSGD_Direct3D.h"
 #include "SGD Wrappers\CSGD_DirectInput.h"
 #include "SGD Wrappers\CSGD_TextureManager.h"
 #include "States\IGameState.h"
 using namespace std;
+
+class CCamera;
 
 class CGame
 {
@@ -28,6 +32,10 @@ class CGame
 	CObjectManager*			m_pOM;
 	CCollisionManager*		m_pCM;
 	CCamera*				m_pCAM;
+	CAnimationManager*		m_pAM;
+	CMovementControl*		m_pMC;
+
+	POINT					m_ptMousePos;
 
 	// Directory Variables /////////////////////
 	string					m_strResourcePath;
@@ -51,6 +59,7 @@ public:
 	// Accessors
 	int				GetScreenHeight(void) {return m_nWindowHeight;}
 	int				GetScreenWidth(void) {return m_nWindowWidth;}
+	CCamera*		GetCamera() { return m_pCAM; }
 
 	string			ResourcePath() const { return m_strResourcePath; }
 	string			GraphicsPath() const { return m_strGraphicsPath; }
