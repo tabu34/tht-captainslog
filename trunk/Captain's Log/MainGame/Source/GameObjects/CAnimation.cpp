@@ -1,3 +1,4 @@
+#include "precompiled_header.h"
 #include "CAnimation.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
 

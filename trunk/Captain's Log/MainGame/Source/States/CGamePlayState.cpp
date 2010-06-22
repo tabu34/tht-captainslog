@@ -5,6 +5,7 @@
 //
 //	Purpose			:	To define the functionality of the Game Play game state
 //////////////////////////////////////////////////////////////////////////////////////////////
+#include "precompiled_header.h"
 #include "CGamePlayState.h"
 
 

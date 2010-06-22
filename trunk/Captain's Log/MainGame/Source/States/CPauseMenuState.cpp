@@ -1,3 +1,4 @@
+#include "precompiled_header.h"
 #include "CPauseMenuState.h"
 
 CPauseMenuState::CPauseMenuState(void)

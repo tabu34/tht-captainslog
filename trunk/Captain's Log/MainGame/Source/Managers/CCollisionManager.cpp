@@ -1,3 +1,4 @@
+#include "precompiled_header.h"
 #include "CCollisionManager.h"
 #include "..\GameObjects\CBase.h"
 

@@ -1,3 +1,4 @@
+#include "precompiled_header.h"
 #include "CCamera.h"
 
 RECT CCamera::GetCollisionRect()

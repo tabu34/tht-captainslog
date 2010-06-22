@@ -19,6 +19,7 @@ Full Sail students may not redistribute this code,
 but may use it in any project for educational purposes.
 */
 
+#include "precompiled_header.h"
 #include "CSGD_Direct3D.h"
 
 // Initialize the static object.

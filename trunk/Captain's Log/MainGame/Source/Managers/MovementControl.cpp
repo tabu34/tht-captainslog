@@ -1,3 +1,4 @@
+#include "precompiled_header.h"
 #include "MovementControl.h"
 #include "CObjectManager.h"
 #include "CCamera.h"

@@ -5,6 +5,7 @@
 //
 //	Purpose			:	To define the functionality of the Main Menu game state
 //////////////////////////////////////////////////////////////////////////////////////////////
+#include "precompiled_header.h"
 #include "CMainMenuState.h"
 
 CMainMenuState::CMainMenuState(void)

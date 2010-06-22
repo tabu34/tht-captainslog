@@ -24,6 +24,7 @@ Full Sail students may not redistribute this code, but may
 use it in any project used for educational purposes.
 */
 
+#include "precompiled_header.h"
 #include "CSGD_DirectInput.h"
 
 //	MessageBox for Errors that occur within DirectInput.
