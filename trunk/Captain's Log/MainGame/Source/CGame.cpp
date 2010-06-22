@@ -103,11 +103,14 @@ void CGame::Initialize( HWND hWnd, HINSTANCE hInstance, int nScreenWidth, int nS
 	m_pTM	= CSGD_TextureManager::GetInstance();
 	m_pCM	= CCollisionManager::GetInstance();
 	m_pOM	= CObjectManager::GetInstance();
+	m_pAM	= CAnimationManager::GetInstance();
+	m_pMC   = CMovementControl::GetInstance();
 
 	// Initialize singletons
 	m_pD3D->InitDirect3D(hWnd, nScreenWidth, nScreenHeight, bIsWindowed, true);
 	m_pTM->InitTextureManager(m_pD3D->GetDirect3DDevice(), m_pD3D->GetSprite());
-	m_pDI->InitDirectInput(hWnd, hInstance, DI_KEYBOARD | DI_MOUSE);
+	m_pDI->InitDirectInput(hWnd, hInstance, DI_KEYBOARD | DI_MOUSE, DI_MOUSE);
+	m_pMC->Init();
 
 	//	Store initial program variables
 	m_nWindowHeight=nScreenHeight;
