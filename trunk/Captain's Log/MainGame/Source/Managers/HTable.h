@@ -41,7 +41,15 @@ public:
 		Table = new SLList<functProfile>[numOfBuckets];
 	}
 
+	SLList<functProfile>* OutputTable()
+	{
+		return Table;
+	}
 
+	unsigned int NumBuckets()
+	{
+		return m_NumOfBuckets;
+	}
 
 	///////////////////////////////////////////////////////////////////////////////
 	// Function : Destructor
@@ -90,9 +98,9 @@ public:
 	// Function : insert
 	// Parameters : v - the item to insert into the hash table
 	///////////////////////////////////////////////////////////////////////////////
-	void insert(const functProfile& v)
+	void insert(char* szFunctionName, functProfile* v)
 	{
-		Table[numHash(v.strFunctionName)].addHead(v);
+		Table[numHash(szFunctionName)].addHead(*v);
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
@@ -134,16 +142,17 @@ public:
 	// Parameters : v - the item to look for
 	// Return : the bucket we found the item in or -1 if we didn’t find the item.
 	///////////////////////////////////////////////////////////////////////////////
-	int find(functProfile* v)
+	int find(char* szFunctionName, functProfile** v)
 	{
-		int bucket = numHash(v->strFunctionName);
+		string	tempFunctionName = szFunctionName;
+		int bucket = numHash(tempFunctionName);
 		SLLIter<functProfile> Iter(Table[bucket]);
 		Iter.begin();
 		for (; !Iter.end();++Iter)
 		{
-			if (Iter.current().strFunctionName == v->strFunctionName)
+			if (Iter.current().strFunctionName == tempFunctionName)
 			{
-				v = &Iter.current();
+				*v = &Iter.current();
 				return bucket;
 			}
 		}

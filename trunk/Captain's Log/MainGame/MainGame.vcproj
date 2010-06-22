@@ -45,7 +45,8 @@
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="precompiled_header.h"
 				WarningLevel="3"
 				DebugInformationFormat="4"
 			/>
@@ -177,6 +178,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Source\precompiled_header.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
 				RelativePath=".\Source\WinMain.cpp"
 				>
 			</File>
@@ -188,6 +201,10 @@
 			>
 			<File
 				RelativePath=".\Source\CGame.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\precompiled_header.h"
 				>
 			</File>
 		</Filter>
