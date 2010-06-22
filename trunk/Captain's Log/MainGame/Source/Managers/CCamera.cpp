@@ -1,16 +1,11 @@
 #include "CCamera.h"
 
-void CCamera::Render()
+RECT CCamera::GetCollisionRect()
 {
-
-}
-
-void CCamera::Render( CBase* pObject )
-{
-
-}
-
-void CCamera::Update( float fElapsedTime )
-{
-
+	RECT output;
+	output.left = (int)m_fX;
+	output.top = (int)m_fY;
+	output.right = output.left + CGame::GetInstance()->GetScreenWidth();
+	output.bottom = output.top + CGame::GetInstance()->GetScreenHeight();
+	return output;
 }
