@@ -11,7 +11,6 @@ class CHUD
 	int				m_nHUDImageID;
 	int				m_nMarkerImageID;
 	int**			m_nCharacterHealth;
-	CCamera			m_camMiniMap;
 	string			m_strDialogue;
 	CBMPFont		m_cFont;
 
