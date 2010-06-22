@@ -18,7 +18,6 @@ using namespace std;
 class CGamePlayState : public IGameState
 {
 	CPlayerUnit*	m_pPlayerArray;
-	vector<CItem>	m_vInventory;
 	int				m_nLevel;
 	int				m_nScore;
 
