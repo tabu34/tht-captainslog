@@ -9,7 +9,8 @@ class CBase;
 class CObjectManager
 {
 	vector<CBase*>	m_vObjectList;
-
+	vector<CBase*>	m_vSelected;
+	
 	~CObjectManager();
 	CObjectManager();
 	CObjectManager(CObjectManager&);
@@ -23,5 +24,16 @@ public:
 	void	RemoveObject(CBase* pObject);
 	void	RenderObjects();
 	void	UpdateObjects(float fElapsedTime);
+	bool    IsUnitOnscreen(CBase * pObject);
+
+	vector<CBase*>*	GetObjectList()
+	{
+		return &m_vObjectList;
+	}
+
+	vector<CBase*>*	GetSelectedList()
+	{
+		return &m_vSelected;
+	}
 };
 #endif // CObjectManager_h__
