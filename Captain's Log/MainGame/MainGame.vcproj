@@ -349,6 +349,14 @@
 				RelativePath=".\Source\Managers\HTable.h"
 				>
 			</File>
+			<File
+				RelativePath=".\Source\Managers\MovementControl.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\Managers\MovementControl.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Game Objects"
