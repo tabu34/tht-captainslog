@@ -8,7 +8,7 @@ class CAnimationManager
 public:
 	struct tAnimation
 	{
-		char*		szFilename;
+		char		szFilename[100];
 		int			nRefs;
 		CAnimation	anAnimation;
 	};
@@ -25,8 +25,11 @@ public:
 	static CAnimationManager*	GetInstance();
 
 	tAnimation*		GetAnimation(int nID);
-	int				LoadAnimation(char* szImageID, DWORD dwKeyColor, float fSpeed, bool bIsLooping, int nNumFrames, CAnimation::tFrame* pFrames);
+	tAnimation*		GetAnimation(char* _name);
+	int				LoadAnimation(char* szAnimationName, char* szImageID, DWORD dwKeyColor, float fSpeed, bool bIsLooping, int nNumFrames, CAnimation::tFrame* pFrames);
+	bool			LoadAnimationsFromFile(char* szFilename);
 	void			UnloadAnimation(int nID);
+	void			Shutdown();
 
 };
 #endif // CAnimationManager_h__

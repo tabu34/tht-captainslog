@@ -13,14 +13,15 @@ CAnimation::CAnimation()
 
 CAnimation::~CAnimation()
 {
-	Shutdown();
+	//Shutdown();
 }
 
-void CAnimation::Init( char* szImageID, DWORD dwKeyColor, float fSpeed, bool bIsLooping, int nNumFrames, tFrame* pFrames)
+void CAnimation::Init( char* szAnimationName, char* szImageID, DWORD dwKeyColor, float fSpeed, bool bIsLooping, int nNumFrames, tFrame* pFrames)
 {
 	m_nImageID		= CSGD_TextureManager::GetInstance()->LoadTexture(szImageID, dwKeyColor);
 	m_fSpeed		= fSpeed;
 	m_bIsLooping	= bIsLooping;
+	strcpy_s(m_szName, 50, szAnimationName);
 
 	for (int i = 0; i < nNumFrames; i++)
 	{
@@ -28,8 +29,12 @@ void CAnimation::Init( char* szImageID, DWORD dwKeyColor, float fSpeed, bool bIs
 		tempFrame.rFrame	= pFrames[i].rFrame;
 		tempFrame.ptAnchor	= pFrames[i].ptAnchor;
 		tempFrame.fDuration	= pFrames[i].fDuration;
+		strcpy_s(tempFrame.szTrigger, 100, pFrames[i].szTrigger);
+		tempFrame.cFrame	= pFrames[i].cFrame;
 		m_vFrames.push_back(tempFrame);
 	}
+
+	Reset();
 }
 
 void CAnimation::Shutdown()
@@ -48,8 +53,8 @@ void CAnimation::Update( float fElapsedTime )
 	if (m_fTimeWaited > m_vFrames[m_nCurFrame].fDuration)
 	{
 
-		// m_fTimeWaited = 0.0f; (not good for lagging)
-		m_fTimeWaited -= m_vFrames[m_nCurFrame].fDuration;
+		m_fTimeWaited = 0.0f;
+		//m_fTimeWaited -= m_vFrames[m_nCurFrame].fDuration;
 
 		m_nCurFrame ++;
 
