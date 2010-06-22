@@ -38,7 +38,7 @@ void CTestState::Enter(void)
  	Marine2.Height(50);
  	Marine2.MovementSpeed(5);
  
- 	CAnimationManager::GetInstance()->LoadAnimationsFromFile("C:\\Users\\Preston Stoll\\Desktop\\test.bin");
+ 	CAnimationManager::GetInstance()->LoadAnimationsFromFile("Resource\\Graphics\\test.bin");
  	CAnimationManager::GetInstance()->GetAnimation("Untitled Animation")->anAnimation.Play();
  	CCollisionManager::GetInstance()->AddObject(&Marine1);
  	CCollisionManager::GetInstance()->AddObject(&Marine2);
