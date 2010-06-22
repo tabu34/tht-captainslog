@@ -11,8 +11,10 @@ public:
 	struct tFrame 
 	{
 		RECT	rFrame;
+		RECT	cFrame;
 		POINT	ptAnchor;
 		float	fDuration;
+		char	szTrigger[100];
 	};
 
 private:
@@ -23,6 +25,7 @@ private:
 	float			m_fSpeed;
 	bool			m_bIsPlaying;
 	bool			m_bIsLooping;
+	char			m_szName[100];
 
 	void Reset();
 
@@ -38,7 +41,7 @@ public:
 	void Update(float fElapsedTime);
 	void Render(int nPosX, int nPosY, bool bIsFlipped = false, float fScale = 1, DWORD dwColor = -1);
 
-	void Init(char* szImageID, DWORD dwKeyColor, float fSpeed, bool bIsLooping, int nNumFrames, tFrame* pFrames);
+	void Init(char* szAnimationName, char* szImageID, DWORD dwKeyColor, float fSpeed, bool bIsLooping, int nNumFrames, tFrame* pFrames);
 	void Shutdown();
 
 	bool IsPlaying() const { return m_bIsPlaying; }
@@ -50,6 +53,17 @@ public:
 	}
 	void Stop()	{ m_bIsPlaying = false; }
 	void Pause()	{ m_bIsPlaying = true; }
+
+	// Accessors
+	char * GetName()
+	{
+		return m_szName;
+	}
+	// Mutators
+	void SetName( char * _name )
+	{
+		strcpy_s(m_szName, 100, _name);
+	}
 
 };
 #endif // CAnimation_h__
