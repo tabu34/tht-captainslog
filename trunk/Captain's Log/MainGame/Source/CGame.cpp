@@ -41,6 +41,12 @@ bool CGame::Input()
 			return true;
 		}
 	}
+
+	if (m_pDI->KeyDown(DIK_ESCAPE))
+	{
+		return false;
+	}
+
 	if (m_vStateStack[m_vStateStack.size() - 1])
 		return m_vStateStack[m_vStateStack.size() - 1]->Input();
 
@@ -206,4 +212,6 @@ void CGame::Shutdown()
 	m_pOM				= NULL;
 	m_pCM				= NULL;
 	m_pCAM				= NULL;
+
+	CCodeProfiler::GetInstance()->Output("codeprofiler test.txt");
 }

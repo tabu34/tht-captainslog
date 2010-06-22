@@ -24,6 +24,7 @@ CTestState* CTestState::GetInstance()
 
 void CTestState::Enter(void)
 {
+	START_PROFILING
  	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("cptLogMainMenu.png").c_str());
  
  	Marine1.PosX(300);
@@ -46,10 +47,12 @@ void CTestState::Enter(void)
  
  	testFont.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 1, 1, 3, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(0, 255, 0));
  	testFont.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
+	END_PROFILING
 }
 
 bool CTestState::Input(void)
 {
+	START_PROFILING
  	CMovementControl::GetInstance()->Input();
  
  	if (CSGD_DirectInput::GetInstance()->KeyDown(DIK_DOWNARROW))
@@ -61,17 +64,21 @@ bool CTestState::Input(void)
  	if (CSGD_DirectInput::GetInstance()->KeyDown(DIK_RIGHTARROW))
  		Marine1.PosX(Marine1.PosX() + Marine1.MovementSpeed());
 
+	END_PROFILING
 	return true;
 }
 
 void CTestState::Update(float fElapsedTime)
 {
+	START_PROFILING
  	CCollisionManager::GetInstance()->RunCollisions();
  	CAnimationManager::GetInstance()->GetAnimation("Untitled Animation")->anAnimation.Update(fElapsedTime);
+	END_PROFILING
 }
 
 void CTestState::Render(void)
 {
+	START_PROFILING
  	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID, 0, 0, 0.35f, 0.35f);
  	CAnimationManager::GetInstance()->GetAnimation("Untitled Animation")->anAnimation.Render(150,150);
  	CSGD_Direct3D::GetInstance()->SpriteEnd();
@@ -82,9 +89,12 @@ void CTestState::Render(void)
  	CMovementControl::GetInstance()->RenderCursor();
  
  	testFont.RenderText("Hello", 300, 300);
+	END_PROFILING
 }
 
 void CTestState::Exit(void)
 {
+	START_PROFILING
  	CAnimationManager::GetInstance()->Shutdown();
+	END_PROFILING
 }
