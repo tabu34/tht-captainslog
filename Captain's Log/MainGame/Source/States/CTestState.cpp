@@ -1,6 +1,7 @@
 #include "CTestState.h"
 #include "..\Managers\CCollisionManager.h"
 #include "..\GameObjects\CMarine.h"
+#include "..\GameObjects\CAnimationManager.h"
 #include "..\CGame.h"
 
 CTestState::CTestState(void)
@@ -35,7 +36,8 @@ void CTestState::Enter(void)
 	Marine2.Height(50);
 	Marine2.MovementSpeed(5);
 
-
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile("C:\\Users\\Preston Stoll\\Desktop\\test.bin");
+	CAnimationManager::GetInstance()->GetAnimation("Untitled Animation")->anAnimation.Play();
 	CCollisionManager::GetInstance()->AddObject(&Marine1);
 	CCollisionManager::GetInstance()->AddObject(&Marine2);
 
@@ -46,6 +48,8 @@ void CTestState::Enter(void)
 
 bool CTestState::Input(void)
 {
+	CMovementControl::GetInstance()->Input();
+
 	if (CSGD_DirectInput::GetInstance()->KeyDown(DIK_DOWNARROW))
 		Marine1.PosY(Marine1.PosY() + Marine1.MovementSpeed());
 	if (CSGD_DirectInput::GetInstance()->KeyDown(DIK_UPARROW))
@@ -61,20 +65,27 @@ bool CTestState::Input(void)
 void CTestState::Update(float fElapsedTime)
 {
 	CCollisionManager::GetInstance()->RunCollisions();
+	CAnimationManager::GetInstance()->GetAnimation("Untitled Animation")->anAnimation.Update(fElapsedTime);
 }
 
 void CTestState::Render(void)
 {
 	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID, 0, 0, 0.35f, 0.35f);
+	CAnimationManager::GetInstance()->GetAnimation("Untitled Animation")->anAnimation.Render(150,150);
 	CSGD_Direct3D::GetInstance()->SpriteEnd();
 	CSGD_Direct3D::GetInstance()->SpriteBegin();
 	CSGD_Direct3D::GetInstance()->DrawRect(Marine1.GetCollisionRect(), 255, 0, 0);
 	CSGD_Direct3D::GetInstance()->DrawRect(Marine2.GetCollisionRect(), 0, 255, 0);
+<<<<<<< .mine
+	CMovementControl::GetInstance()->RenderDragRect();
+	CMovementControl::GetInstance()->RenderCursor();
+=======
 
 	testFont.RenderText("Hello", 300, 300);
+>>>>>>> .r45
 }
 
 void CTestState::Exit(void)
 {
-
+	CAnimationManager::GetInstance()->Shutdown();
 }
