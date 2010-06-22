@@ -9,6 +9,9 @@
 
 #include <stdio.h>
 #include <tchar.h>
+// #include "Managers\CCodeProfiler.h"
+// 
+// #define START_PROFILING CCodeProfiler::GetInstance()->StartFunction(__FUNCTION__)
 
 
 #endif // precompiled_header_h__

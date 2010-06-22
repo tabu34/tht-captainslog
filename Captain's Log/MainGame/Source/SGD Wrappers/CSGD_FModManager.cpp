@@ -9,6 +9,7 @@
 // Purpose:.... function definitions for fMod wrapper class
 //______________________________________________________________________________
 
+#include "precompiled_header.h"
 #include "CSGD_FModManager.h"
 #include <assert.h>
 

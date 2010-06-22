@@ -7,6 +7,7 @@
 //					functionality for a four sided polygon for collision
 //////////////////////////////////////////////////////////////////////
 
+#include "precompiled_header.h"
 #include "CRectObstacle.h"
 #include "SGD Wrappers/CSGD_Direct3D.h"
 #include "Messaging/CSGD_MessageSystem.h"

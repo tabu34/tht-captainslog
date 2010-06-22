@@ -1,3 +1,4 @@
+#include "precompiled_header.h"
 #include "CBase.h"
 
 RECT CBase::GetCollisionRect()

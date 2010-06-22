@@ -1,3 +1,4 @@
+#include "precompiled_header.h"
 #include "CParticleEmitter.h"
 
 void CParticleEmitter::Initialize( int nImageID, int nHeight, int nWidth, float fPosX, float fPosY )

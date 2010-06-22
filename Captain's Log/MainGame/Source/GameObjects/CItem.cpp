@@ -1,3 +1,4 @@
+#include "precompiled_header.h"
 #include "CItem.h"
 
 void CItem::Collect()

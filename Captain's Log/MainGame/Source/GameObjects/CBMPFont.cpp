@@ -1,3 +1,4 @@
+#include "precompiled_header.h"
 #include "CBMPFont.h"
 #include <fstream>
 #include "..\Managers\CFileManager.h"

@@ -1,3 +1,4 @@
+#include "precompiled_header.h"
 #include "CObjectManager.h"
 #include <windows.h>
 #include "..\GameObjects\CBase.h"

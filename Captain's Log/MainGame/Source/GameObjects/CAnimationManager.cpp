@@ -1,3 +1,4 @@
+#include "precompiled_header.h"
 #include "CAnimationManager.h"
 #include <fstream>
 using namespace std;

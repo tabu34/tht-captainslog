@@ -11,6 +11,7 @@
 //	Purpose			:	To provide a basic window framework for student games.
 //
 //////////////////////////////////////////////////////////////////////////////////////////////
+#include "precompiled_header.h"
 #include <windows.h>	//	Needed for Windows Applications.
 
 #define VLD_AGGREGATE_DUPLICATES
