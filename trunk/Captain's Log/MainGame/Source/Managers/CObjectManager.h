@@ -5,6 +5,7 @@
 using namespace std;
 
 class CBase;
+class CUnit;
 
 class CObjectManager
 {
@@ -24,7 +25,9 @@ public:
 	void	RemoveObject(CBase* pObject);
 	void	RenderObjects();
 	void	UpdateObjects(float fElapsedTime);
-	bool    IsUnitOnscreen(CBase * pObject);
+	bool	IsUnitOnscreen(CBase * pObject);
+	void	FindAndRemove(CUnit* pObject);
+	void	ToggleUnitSelection(CUnit* pObject);
 
 	vector<CBase*>*	GetObjectList()
 	{
