@@ -88,6 +88,12 @@ void CMovementControl::CheckDragRect()
 		dragRect.right = CSGD_DirectInput::GetInstance()->MouseGetPosX();
 		dragRect.bottom = CSGD_DirectInput::GetInstance()->MouseGetPosY();
 
+		if(dragRect.right < dragRect.left)
+			swap(dragRect.left, dragRect.right);
+
+		if(dragRect.bottom < dragRect.top)
+			swap(dragRect.top, dragRect.bottom);
+
 		for(unsigned int i = 0; i < m_vObjectList->size(); i++)
 		{
 			RECT collide;
