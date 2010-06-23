@@ -43,6 +43,8 @@ void CTestState::Enter(void)
  	CAnimationManager::GetInstance()->GetAnimation("Untitled Animation")->anAnimation.Play();
  	CCollisionManager::GetInstance()->AddObject(&Marine1);
  	CCollisionManager::GetInstance()->AddObject(&Marine2);
+	CObjectManager::GetInstance()->AddObject(&Marine1);
+	CObjectManager::GetInstance()->AddObject(&Marine2);
  
  
  	testFont.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 1, 1, 3, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(0, 255, 0));
@@ -73,6 +75,7 @@ void CTestState::Update(float fElapsedTime)
 	START_PROFILING
  	CCollisionManager::GetInstance()->RunCollisions();
  	CAnimationManager::GetInstance()->GetAnimation("Untitled Animation")->anAnimation.Update(fElapsedTime);
+	CMovementControl::GetInstance()->CheckDragRect();
 	END_PROFILING
 }
 
@@ -84,7 +87,10 @@ void CTestState::Render(void)
  	CAnimationManager::GetInstance()->GetAnimation("Untitled Animation")->anAnimation.Render(150,150);
  	CSGD_Direct3D::GetInstance()->SpriteEnd();
  	CSGD_Direct3D::GetInstance()->SpriteBegin();
- 	CSGD_Direct3D::GetInstance()->DrawRect(Marine1.GetCollisionRect(), 255, 0, 0);
+	if(!Marine1.Selected())
+ 		CSGD_Direct3D::GetInstance()->DrawRect(Marine1.GetCollisionRect(), 255, 0, 0);
+	else
+		CSGD_Direct3D::GetInstance()->DrawRect(Marine1.GetCollisionRect(), 255, 255, 255);
  	CSGD_Direct3D::GetInstance()->DrawRect(Marine2.GetCollisionRect(), 0, 255, 0);
  	CMovementControl::GetInstance()->RenderDragRect();
  	CMovementControl::GetInstance()->RenderCursor();
