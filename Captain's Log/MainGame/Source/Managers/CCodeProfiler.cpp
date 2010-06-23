@@ -104,14 +104,14 @@ void CCodeProfiler::Output( char* szFileName )
 				outstream << tempProfile.strFunctionName;
 				outstream << endl;
 				
-				outstream << "Max Time: " << nTimeMax << "\t" << "MinTime: " << nTimeMin << "\t" << "Average Time: " << nTimeAverage << "\n";
+				outstream << "Max Time: " << nTimeMax << "\t" << "MinTime: " << nTimeMin << "\t" << "Average Time: " << nTimeAverage << "\n\n";
 
-				outstream << "All Times: ";
+				outstream << "All Times" << vTimeList.size() << ": ";
 				for (unsigned int i = 0; i < vTimeList.size(); i++)
 				{
 					outstream << vTimeList[i] << ", ";
 				}
-				outstream << "\n";
+				outstream << "\n\n";
 
 				++tempListIter;
 			}
