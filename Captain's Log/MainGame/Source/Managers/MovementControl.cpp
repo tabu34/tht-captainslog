@@ -6,6 +6,8 @@
 #include "..\SGD Wrappers\CSGD_Direct3D.h"
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
+#include "..\GameObjects\CUnit.h"
+
 CMovementControl* CMovementControl::GetInstance()
 {
 	static CMovementControl instance;
@@ -74,6 +76,38 @@ void CMovementControl::Input()
 void CMovementControl::Shutdown()
 {
 	
+}
+
+void CMovementControl::CheckDragRect()
+{
+	if(m_bDragging)
+	{
+		RECT dragRect;
+		dragRect.left = m_ptStart.x;
+		dragRect.top = m_ptStart.y;
+		dragRect.right = CSGD_DirectInput::GetInstance()->MouseGetPosX();
+		dragRect.bottom = CSGD_DirectInput::GetInstance()->MouseGetPosY();
+
+		for(unsigned int i = 0; i < m_vObjectList->size(); i++)
+		{
+			RECT collide;
+			RECT collisionRect = (*m_vObjectList)[i]->GetCollisionRect();
+			if(IntersectRect(&collide, &dragRect, &collisionRect))
+			{
+				if(!((CUnit*)(*m_vObjectList)[i])->Selected())	// If not selected
+				{
+					((CUnit*)(*m_vObjectList)[i])->Selected(true);
+					(*m_vSelected).push_back( (*m_vObjectList)[i] );
+				}
+			} else {
+				if( ((CUnit*)(*m_vObjectList)[i])->Selected() )	// If selected
+				{
+					((CUnit*)(*m_vObjectList)[i])->Selected(false);
+					CObjectManager::GetInstance()->FindAndRemove( (CUnit*)(*m_vObjectList)[i] );
+				}
+			}
+		}
+	}
 }
 
 void CMovementControl::RenderDragRect()
