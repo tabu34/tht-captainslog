@@ -79,7 +79,8 @@ void CTestState::Update(float fElapsedTime)
 void CTestState::Render(void)
 {
 	START_PROFILING
- 	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID, 0, 0, 0.35f, 0.35f);
+ 	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID, 0, 0, 0.75f, 0.75f);
+
  	CAnimationManager::GetInstance()->GetAnimation("Untitled Animation")->anAnimation.Render(150,150);
  	CSGD_Direct3D::GetInstance()->SpriteEnd();
  	CSGD_Direct3D::GetInstance()->SpriteBegin();
