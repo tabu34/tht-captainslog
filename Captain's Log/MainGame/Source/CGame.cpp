@@ -213,5 +213,5 @@ void CGame::Shutdown()
 	m_pCM				= NULL;
 	m_pCAM				= NULL;
 
-	CCodeProfiler::GetInstance()->Output("codeprofiler test.txt");
+	CCodeProfiler::GetInstance()->Output("codeprofiler test --");
 }

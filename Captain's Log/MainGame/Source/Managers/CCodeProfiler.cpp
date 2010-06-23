@@ -71,12 +71,22 @@ void CCodeProfiler::EndFunction( char* szFunctionName )
 
 void CCodeProfiler::Output( char* szFileName )
 {
+	string outputFile = szFileName;
+	outputFile += __TIMESTAMP__;
+	outputFile += ".txt";
+
+	for (unsigned int i = 0; i < outputFile.size(); i++)
+	{
+		if (outputFile[i] == ':')
+			outputFile[i] = '-';
+	}
+
 	vector<double>	vTimeList;
 	double			nTimeMax, nTimeMin, nTimeAverage;
 	nTimeMax = nTimeMin = nTimeAverage = 0;
 
 	ofstream	outstream;
-	outstream.open(szFileName);
+	outstream.open(outputFile.c_str());
 
 	if (outstream.is_open())
 	{
