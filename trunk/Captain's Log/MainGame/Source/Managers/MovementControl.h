@@ -33,6 +33,7 @@ public:
 	static CMovementControl* GetInstance();
 	void Init();
 	void Input();
+	void CheckDragRect();
 	void RenderDragRect();
 	void RenderCursor();
 	void Shutdown();
