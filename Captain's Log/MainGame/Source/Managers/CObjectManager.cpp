@@ -56,3 +56,28 @@ bool CObjectManager::IsUnitOnscreen(CBase* pObject)
 	else
 		return false;
 }
+
+void CObjectManager::ToggleUnitSelection(CUnit* pObject)
+{
+	if (pObject->Selected())
+	{
+		pObject->Selected(false);
+		m_vSelected->
+	}
+	else
+	{
+		pObject->Selected(true);
+	}
+}
+
+void CObjectManager::FindAndRemove(CUnit* pObject)
+{
+	for (int i = 0; i < m_vSelected; i++)
+	{
+		if((*m_vSelected)[i] == pObject)
+		{
+			(*m_vSelected)->erase(m_vSelected->begin() + i);
+			return;
+		}
+	}
+}

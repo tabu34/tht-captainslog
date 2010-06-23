@@ -13,6 +13,7 @@ class CUnit : public CBase
 	bool				m_bCloaked;
 	bool				m_bInvulnerable;
 	bool				m_bRanged;
+	bool				m_bSelected;
 	bool				m_bStunned;
 	float				m_fAttackDamage;
 	float				m_fAttackSpeed;
@@ -34,6 +35,7 @@ public:
 	bool Cloaked() const { return m_bCloaked; }
 	bool Invulnerable() const { return m_bInvulnerable; }
 	bool Ranged() const { return m_bRanged; }
+	bool Selected() const { return m_bSelected; }
 	bool Stunned() const { return m_bStunned; }
 	float AttackDamage() const { return m_fAttackDamage; }
 	float AttackSpeed() const { return m_fAttackSpeed; }
@@ -67,6 +69,7 @@ public:
 	void MovementSpeed(float val) { m_fMovementSpeed = val; }
 	void PortraitID(int val) { m_nPortraitID = val; }
 	void Ranged(bool val) { m_bRanged = val; }
+	void Selected(bool val) { m_bSelected = val; }
 	void Stunned(bool val) { m_bStunned = val; }
 	void StunnedEndTime(float val) { m_fStunnedEndTime = val; }
 	////////////////////////////////////////////////
