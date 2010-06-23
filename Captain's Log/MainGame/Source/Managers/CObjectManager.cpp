@@ -4,6 +4,7 @@
 #include "..\GameObjects\CBase.h"
 #include "..\CGame.h"
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
+#include "..\GameObjects\CUnit.h"
 
 CObjectManager::~CObjectManager()
 {
@@ -62,21 +63,22 @@ void CObjectManager::ToggleUnitSelection(CUnit* pObject)
 	if (pObject->Selected())
 	{
 		pObject->Selected(false);
-		m_vSelected->
+		FindAndRemove(pObject);
 	}
 	else
 	{
 		pObject->Selected(true);
+		m_vSelected.push_back(pObject);
 	}
 }
 
 void CObjectManager::FindAndRemove(CUnit* pObject)
 {
-	for (int i = 0; i < m_vSelected; i++)
+	for (unsigned int i = 0; i < m_vSelected.size(); i++)
 	{
-		if((*m_vSelected)[i] == pObject)
+		if(m_vSelected[i] == pObject)
 		{
-			(*m_vSelected)->erase(m_vSelected->begin() + i);
+			m_vSelected.erase(m_vSelected.begin() + i);
 			return;
 		}
 	}
