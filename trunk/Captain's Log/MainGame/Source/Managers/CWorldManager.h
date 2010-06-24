@@ -1,8 +1,6 @@
 #ifndef CWorldManager_h__
 #define CWorldManager_h__
 
-#include <string>
-
 struct Tile 
 {
 	int m_nWidth;
@@ -35,7 +33,7 @@ private:
 
 	float m_fVersionNumber;
 
-	string m_sFileName;
+	char* m_szFileName;
 	int m_nTilesetImageID;
 	int m_nTilesetWidth;
 	int m_nTilesetHeight;

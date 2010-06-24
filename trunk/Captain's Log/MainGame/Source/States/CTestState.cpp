@@ -6,6 +6,7 @@
 #include "..\GameObjects\CAnimationManager.h"
 #include "..\CGame.h"
 #include "..\Managers\MovementControl.h"
+#include "..\Managers\CWorldManager.h"
 
 CTestState::CTestState(void)
 {
@@ -55,6 +56,8 @@ void CTestState::Enter(void)
 	CObjectManager::GetInstance()->AddObject(&Marine1);
 	CObjectManager::GetInstance()->AddObject(&Marine2);
 	CObjectManager::GetInstance()->AddObject(&temporaryBlocker);
+
+	CWorldManager::GetInstance()->Load("Resource\\Graphics\\test.mfl");
  
  
  	testFont.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 1, 1, 3, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(0, 255, 0));
@@ -96,7 +99,8 @@ void CTestState::Update(float fElapsedTime)
 void CTestState::Render(void)
 {
 	
- 	CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID, 0, 0, 0.75f, 0.75f);
+ 	//CSGD_TextureManager::GetInstance()->Draw(m_nBackgroundID, 0, 0, 0.75f, 0.75f);
+	CWorldManager::GetInstance()->Render();
 
  	CAnimationManager::GetInstance()->GetAnimation("Untitled Animation")->anAnimation.Render(150,150);
  	CSGD_Direct3D::GetInstance()->SpriteEnd();
