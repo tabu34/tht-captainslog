@@ -52,7 +52,7 @@ void CCollisionManager::RunCollisions()
 }
 
 void CCollisionManager::CheckCollision()
-{	
+{
 	for (unsigned int i=0; i < m_vObstacles.size(); i++)
 	{
 		for(unsigned int j=0; j<m_vPlayers.size(); j++)
@@ -65,8 +65,16 @@ void CCollisionManager::CheckCollision()
 		}
 	}
 
-
-
+	for (unsigned int i=0; i < m_vPlayers.size(); i++)
+	{
+		for(unsigned int j=0; j<m_vPlayers.size(); j++)
+		{
+			if (m_vPlayers[i] != m_vPlayers[j])
+			{
+				RunBorderCollision(m_vPlayers[i], m_vPlayers[j]);
+			}
+		}
+	}
 }
 
 void CCollisionManager::AddObject( CBase* pBase )
