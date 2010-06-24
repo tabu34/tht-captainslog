@@ -8,6 +8,7 @@
 #include "precompiled_header.h"
 #include "CGamePlayState.h"
 #include "..\CGame.h"
+#include "..\GameObjects\CMarine.h"
 
 CGamePlayState::CGamePlayState(void)
 {
@@ -28,7 +29,7 @@ CGamePlayState* CGamePlayState::GetInstance()
 void CGamePlayState::Enter(void)
 {
 	// Setup GUI
-	m_vButtons.push_back(CHUDButton(-76, 645, 2048, 512, "0", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/0.png").c_str())));
+	m_vButtons.push_back(CHUDButton(-76, 645, 2048, 512, "BottomHUD", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/0.png").c_str())));
 	m_vButtons.push_back(CHUDButton(270, 706, 256, 256, "UnitPortrait", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/1.png").c_str())));
 	m_vButtons.push_back(CHUDButton(274, 852, 256, 32, "PortraitNameLine", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/2.png").c_str())));
 	m_vButtons.push_back(CHUDButton(433, 728, 1024, 256, "MiddleHUDOutlines", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/3.png").c_str())));
@@ -56,7 +57,7 @@ void CGamePlayState::Enter(void)
 
 	m_ftTextSmall.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.65f, 0.65f, -6, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(255, 255, 255));
  	m_ftTextSmall.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
-	m_ftTextSmallShadow.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.65, 0.65f, -6, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(0, 0, 0));
+	m_ftTextSmallShadow.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.65f, 0.65f, -6, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(0, 0, 0));
  	m_ftTextSmallShadow.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
 	m_ftTextLarge.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.80f, 0.80f, -3, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(255, 255, 255));
  	m_ftTextLarge.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
@@ -65,6 +66,12 @@ void CGamePlayState::Enter(void)
 
 	// Test BG
 	m_nBG = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("testBG.png").c_str());
+
+	// Load Animations
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\marine\\idle.bin").c_str(), D3DCOLOR_XRGB(112, 38, 37));
+
+	// Objects
+	CObjectManager::GetInstance()->AddObject(new CMarine());
 
 	// Test Speech
 	m_nCurCount = 0;
@@ -77,7 +84,6 @@ void CGamePlayState::Exit(void)
 	{
 		CSGD_TextureManager::GetInstance()->UnloadTexture(m_vButtons[i].TextureID());
 	}
-
 }
 
 bool CGamePlayState::Input(void)
@@ -107,6 +113,7 @@ void CGamePlayState::Update(float fElapsedTime)
 {
 	m_nCurCount += 25.0f * fElapsedTime;
 	CMovementControl::GetInstance()->CheckDragRect();
+	CObjectManager::GetInstance()->UpdateObjects(fElapsedTime);
 }
 
 void CGamePlayState::RenderHUD(void)
@@ -136,12 +143,13 @@ void CGamePlayState::RenderHUD(void)
 void CGamePlayState::Render(void)
 {
 	CSGD_TextureManager::GetInstance()->Draw(m_nBG, 0, 0, 1.0f, 1.0f);
-	RenderHUD();
 	CSGD_Direct3D::GetInstance()->SpriteEnd();
 	CSGD_Direct3D::GetInstance()->SpriteBegin();
-	CMovementControl::GetInstance()->RenderDragRect();
-	CMovementControl::GetInstance()->RenderCursor();
 	
+	CMovementControl::GetInstance()->RenderDragRect();
+	RenderHUD();
+	CObjectManager::GetInstance()->RenderObjects();
+	CMovementControl::GetInstance()->RenderCursor();
 }
 
 int  CGamePlayState::FindButton(string _name)
