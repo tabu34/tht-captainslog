@@ -33,6 +33,10 @@ void CMovementControl::Input()
 
 	if(m_DI->MouseButtonPressed(MOUSE_RIGHT))
 	{
+		for(unsigned int i = 0; i < m_vSelected->size(); i++)
+		{
+			((CUnit*)(*m_vSelected)[i])->OrderMove(CSGD_DirectInput::GetInstance()->MouseGetPosX(), CSGD_DirectInput::GetInstance()->MouseGetPosY());
+		}
 		//m_esEventSystem->SendEvent("LeftMouseButtonPressed");
 	}
 

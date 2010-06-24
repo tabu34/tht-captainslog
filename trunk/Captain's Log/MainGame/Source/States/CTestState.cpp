@@ -38,6 +38,9 @@ void CTestState::Enter(void)
  	Marine2.Width(50);
  	Marine2.Height(50);
  	Marine2.MovementSpeed(5);
+
+	CGame::GetInstance()->GetCamera()->SetX(0.0f);
+	CGame::GetInstance()->GetCamera()->SetY(0.0f);
  
  	CAnimationManager::GetInstance()->LoadAnimationsFromFile("Resource\\Graphics\\test.bin");
  	CAnimationManager::GetInstance()->GetAnimation("Untitled Animation")->anAnimation.Play();
@@ -76,6 +79,7 @@ void CTestState::Update(float fElapsedTime)
  	CCollisionManager::GetInstance()->RunCollisions();
  	CAnimationManager::GetInstance()->GetAnimation("Untitled Animation")->anAnimation.Update(fElapsedTime);
 	CMovementControl::GetInstance()->CheckDragRect();
+	CObjectManager::GetInstance()->UpdateObjects(fElapsedTime);
 	END_PROFILING
 }
 
@@ -87,11 +91,7 @@ void CTestState::Render(void)
  	CAnimationManager::GetInstance()->GetAnimation("Untitled Animation")->anAnimation.Render(150,150);
  	CSGD_Direct3D::GetInstance()->SpriteEnd();
  	CSGD_Direct3D::GetInstance()->SpriteBegin();
-	if(!Marine1.Selected())
- 		CSGD_Direct3D::GetInstance()->DrawRect(Marine1.GetCollisionRect(), 255, 0, 0);
-	else
-		CSGD_Direct3D::GetInstance()->DrawRect(Marine1.GetCollisionRect(), 255, 255, 255);
- 	CSGD_Direct3D::GetInstance()->DrawRect(Marine2.GetCollisionRect(), 0, 255, 0);
+	CObjectManager::GetInstance()->RenderObjects();
  	CMovementControl::GetInstance()->RenderDragRect();
  	CMovementControl::GetInstance()->RenderCursor();
  

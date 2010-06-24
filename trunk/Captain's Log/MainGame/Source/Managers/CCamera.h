@@ -10,6 +10,8 @@ class CCamera
 public:
 	float GetX() { return m_fX; }
 	float GetY() { return m_fY; }
+	void SetX(float _x) { m_fX = _x; }
+	void SetY(float _y) { m_fY = _y; }
 	RECT GetCollisionRect();
 };
 #endif // CCamera_h__

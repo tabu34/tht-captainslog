@@ -14,8 +14,6 @@
 #include "States\IGameState.h"
 using namespace std;
 
-class CCamera;
-
 class CGame
 {
 	bool					m_bWindowed;
