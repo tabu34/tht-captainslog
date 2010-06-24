@@ -26,20 +26,31 @@ CTestState* CTestState::GetInstance()
 
 void CTestState::Enter(void)
 {
-	
  	m_nBackgroundID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("cptLogMainMenu.png").c_str());
  
+	CMessageSystem::GetInstance()->InitMessageSystem(CTestState::MessageProc);
+
  	Marine1.PosX(300);
  	Marine1.PosY(300);
  	Marine1.Width(50);
  	Marine1.Height(50);
  	Marine1.MovementSpeed(5);
+	Marine1.AttackRange(250);
+	Marine1.AttackSpeed(2);
+	Marine1.AttackDamage(2);
+	Marine1.MaxHealth(10);
+	Marine1.CurHealth(10);
  
  	Marine2.PosX(400);
  	Marine2.PosY(400);
  	Marine2.Width(50);
- 	Marine2.Height(50);
- 	Marine2.MovementSpeed(5);
+	Marine2.Height(50);
+	Marine2.MovementSpeed(5);
+	Marine2.AttackRange(250);
+	Marine2.AttackSpeed(2);
+	Marine2.AttackDamage(2);
+	Marine2.MaxHealth(10);
+	Marine2.CurHealth(10);
 
 	temporaryBlocker.PosX(float(500 + (CGame::GetInstance()->GetScreenWidth() >> 1)));
 	temporaryBlocker.PosY(float(100 + (CGame::GetInstance()->GetScreenHeight() >> 1)));
@@ -47,6 +58,15 @@ void CTestState::Enter(void)
 	temporaryBlocker.Height(CGame::GetInstance()->GetScreenHeight() - 200);
 	temporaryBlocker.MovementSpeed(0);
 	temporaryBlocker.Type(CBase::OBJ_OBSTACLE);
+
+	testEnemy.PosX(500);
+	testEnemy.PosY(550);
+	testEnemy.Width(50);
+	testEnemy.Height(50);
+	testEnemy.MovementSpeed(5);
+	testEnemy.MaxHealth(10);
+	testEnemy.CurHealth(10);
+	testEnemy.Type(CBase::OBJ_ENEMY);
 
 	CGame::GetInstance()->GetCamera()->SetX(0.0f);
 	CGame::GetInstance()->GetCamera()->SetY(0.0f);
@@ -56,6 +76,7 @@ void CTestState::Enter(void)
 	CObjectManager::GetInstance()->AddObject(&Marine1);
 	CObjectManager::GetInstance()->AddObject(&Marine2);
 	CObjectManager::GetInstance()->AddObject(&temporaryBlocker);
+	CObjectManager::GetInstance()->AddObject(&testEnemy);
 
 	CWorldManager::GetInstance()->Load("Resource\\Graphics\\test.mfl");
  
@@ -93,7 +114,7 @@ void CTestState::Update(float fElapsedTime)
  	CAnimationManager::GetInstance()->GetAnimation("Untitled Animation")->anAnimation.Update(fElapsedTime);
 	CMovementControl::GetInstance()->CheckDragRect();
 	CObjectManager::GetInstance()->UpdateObjects(fElapsedTime);
-	
+	CMessageSystem::GetInstance()->ProcessMessages();
 }
 
 void CTestState::Render(void)
@@ -118,4 +139,15 @@ void CTestState::Exit(void)
 	CObjectManager::GetInstance()->RemoveAllObjects();
  	CAnimationManager::GetInstance()->Shutdown();
 	
+}
+
+void CTestState::MessageProc(CBaseMessage* pMSG)
+{
+	switch (pMSG->GetMsgID())
+	{
+	case MSG_DESTROY_UNIT:
+		CUnitDeathMessage* udMSG = (CUnitDeathMessage*)pMSG;
+
+		CObjectManager::GetInstance()->RemoveObject(udMSG->GetUnit());
+	}
 }

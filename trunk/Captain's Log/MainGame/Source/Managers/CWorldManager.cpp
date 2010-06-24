@@ -18,10 +18,6 @@ CWorldManager::~CWorldManager()
 	{
 		for (int i = 0; i < m_nWorldWidth; i++)
 		{
-// 			for (int j = 0; j < m_nWorldHeight; j++)
-// 			{
-// 				delete m_World[l][i][j];
-// 			}
 			delete[] m_World[l][i];
 		}
 		delete[] m_World[l];
@@ -50,8 +46,8 @@ void CWorldManager::Load(string sFileName)
 
 	m_nTilesetImageID = CSGD_TextureManager::GetInstance()->LoadTexture(m_szFileName);
 
-	fin.read((char*)&m_nTilesetWidth, sizeof(int));
 	fin.read((char*)&m_nTilesetHeight, sizeof(int));
+	fin.read((char*)&m_nTilesetWidth, sizeof(int));
 
 	fin.read((char*)&m_nWorldWidth, sizeof(int));
 	fin.read((char*)&m_nWorldHeight, sizeof(int));
@@ -92,14 +88,19 @@ void CWorldManager::Render()
 			for (int j = 0; j < m_nWorldHeight; j++)
 			{
 				Tile tempTile = m_World[l][i][j];
-				if (tempTile.m_nTileNumber != -1)
+				RECT cameraRect = CGame::GetInstance()->GetCamera()->GetCollisionRect();
+				if (tempTile.m_nLeft >= cameraRect.left && tempTile.m_nLeft <= cameraRect.right
+					&& tempTile.m_nTop >= cameraRect.top && tempTile.m_nTop <= cameraRect.bottom)
 				{
-					RECT src = {tempTile.m_nTileNumber % (m_nTilesetWidth) * tempTile.m_nWidth,
-								tempTile.m_nTileNumber / (m_nTilesetWidth) * tempTile.m_nHeight,
-								0, 0};
-					src.bottom = src.top + tempTile.m_nHeight;
-					src.right = src.left + tempTile.m_nWidth;
-					CSGD_TextureManager::GetInstance()->Draw(m_nTilesetImageID, tempTile.m_nLeft, tempTile.m_nTop, 1.0f, 1.0f, &src, 0.0f, 0.0f, 0.0f);
+					if (tempTile.m_nTileNumber != -1)
+					{
+						RECT src = {tempTile.m_nTileNumber % (m_nTilesetWidth) * tempTile.m_nWidth,
+							tempTile.m_nTileNumber / (m_nTilesetWidth) * tempTile.m_nHeight,
+							0, 0};
+						src.bottom = src.top + tempTile.m_nHeight;
+						src.right = src.left + tempTile.m_nWidth;
+						CSGD_TextureManager::GetInstance()->Draw(m_nTilesetImageID, tempTile.m_nLeft, tempTile.m_nTop, 1.0f, 1.0f, &src, 0.0f, 0.0f, 0.0f);
+					}
 				}
 			}
 		}

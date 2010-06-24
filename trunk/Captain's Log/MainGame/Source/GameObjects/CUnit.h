@@ -17,6 +17,7 @@ class CUnit : public CBase
 	bool				m_bStunned;
 	float				m_fAttackDamage;
 	float				m_fAttackSpeed;
+	float				m_fAttackTimer;
 	float				m_fMovementSpeed;
 	float				m_fStunnedEndTime;
 	int					m_fAttackRange;
@@ -32,7 +33,9 @@ class CUnit : public CBase
 	POINT				m_pDestinationMove;
 	int					m_nState;
 
-	enum { UNIT_MOVING };
+	CUnit*				m_pTarget;
+
+	enum { UNIT_MOVING, UNIT_MOVING_ATTACK, UNIT_ATTACK };
 
 public:
 	CUnit();
@@ -41,6 +44,7 @@ public:
 	// Orders //////////////////////////////////////
 	void OrderMove( POINT _dest );
 	void OrderMove( int _x, int _y);
+	void OrderAttack( CUnit* pTarget);
 
 	// Accessors ///////////////////////////////////
 	bool Burned() const { return m_bBurned; }
@@ -51,6 +55,7 @@ public:
 	bool Stunned() const { return m_bStunned; }
 	float AttackDamage() const { return m_fAttackDamage; }
 	float AttackSpeed() const { return m_fAttackSpeed; }
+	float AttackTimer() const { return m_fAttackTimer; }
 	float MovementSpeed() const { return m_fMovementSpeed; }
 	float StunnedEndTime() const { return m_fStunnedEndTime; }
 	int Armor() const { return m_nArmor; }
@@ -71,6 +76,7 @@ public:
 	void AttackDamage(float val) { m_fAttackDamage = val; }
 	void AttackRange(int val) { m_fAttackRange = val; }
 	void AttackSpeed(float val) { m_fAttackSpeed = val; }
+	void AttackTimer(float val) { m_fAttackTimer = val; }
 	void Burned(bool val) { m_bBurned = val; }
 	void Cloaked(bool val) { m_bCloaked = val; }
 	void CurHealth(int val) { m_nCurHealth = val; }

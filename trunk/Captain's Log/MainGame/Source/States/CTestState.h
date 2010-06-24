@@ -5,11 +5,13 @@
 #include "IGameState.h"
 #include "..\GameObjects\CBMPFont.h"
 #include "..\GameObjects\CMarine.h"
+#include "..\Managers\CMessageSystem.h"
 
 class CTestState : public IGameState
 {
 	CMarine		Marine1, Marine2;
 	CMarine		temporaryBlocker;
+	CMarine		testEnemy;
 	int			m_nBackgroundID;
 	CBMPFont	testFont;
 
@@ -19,6 +21,8 @@ class CTestState : public IGameState
 	~CTestState(void);
 public:
 	static CTestState* GetInstance();
+
+	static void MessageProc(CBaseMessage* pMSG);
 
 	void Enter(void);
 	bool Input(void);
