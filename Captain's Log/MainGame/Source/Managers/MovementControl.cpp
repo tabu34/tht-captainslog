@@ -33,9 +33,39 @@ void CMovementControl::Input()
 
 	if(m_DI->MouseButtonPressed(MOUSE_RIGHT))
 	{
+		int nTarget;
+
 		for(unsigned int i = 0; i < m_vSelected->size(); i++)
 		{
-			((CUnit*)(*m_vSelected)[i])->OrderMove(CSGD_DirectInput::GetInstance()->MouseGetPosX(), CSGD_DirectInput::GetInstance()->MouseGetPosY());
+			nTarget = -1;
+
+			RECT mouseRect = {0, 0, 0, 0};
+			mouseRect.left = CSGD_DirectInput::GetInstance()->MouseGetPosX();
+			mouseRect.top = CSGD_DirectInput::GetInstance()->MouseGetPosY();
+			mouseRect.right = mouseRect.left + 1;
+			mouseRect.bottom = mouseRect.top +1;
+
+			RECT resultRect;
+
+			for (unsigned int j = 0; j < m_vObjectList->size(); j++)
+			{
+				if ((*m_vObjectList)[j]->Type() != CBase::OBJ_ENEMY)
+				{
+					continue;
+				}
+				if (IntersectRect(&resultRect, &mouseRect, &((*m_vObjectList)[j]->GetCollisionRect())))
+				{
+					nTarget = j;
+				}
+			}
+			if (nTarget != -1)
+			{
+				((CUnit*)(*m_vSelected)[i])->OrderAttack((CUnit*)(*m_vObjectList)[nTarget]);
+			}
+			else
+			{
+				((CUnit*)(*m_vSelected)[i])->OrderMove(mouseRect.left, mouseRect.top);
+			}
 		}
 		//m_esEventSystem->SendEvent("LeftMouseButtonPressed");
 	}

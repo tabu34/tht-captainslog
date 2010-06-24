@@ -1,10 +1,12 @@
 #include "precompiled_header.h"
 #include "CUnit.h"
+#include "../Managers/CMessageSystem.h"
 #include <cmath>
 
 CUnit::CUnit()
 {
 	m_nState = -1;
+	m_fAttackTimer = 0;
 }
 
 void CUnit::OrderMove( POINT _dest )
@@ -20,9 +22,21 @@ void CUnit::OrderMove( int _x, int _y)
 	m_pDestinationMove.y = _y;
 }
 
+void CUnit::OrderAttack(CUnit* pTarget)
+{
+	m_nState = UNIT_MOVING_ATTACK;
+	m_pTarget = pTarget;
+}
+
 void CUnit::Update(float fElapsedTime)
 {
 	CBase::Update(fElapsedTime);
+
+	if (m_nCurHealth <= 0)
+	{
+		CMessageSystem::GetInstance()->SendMessage(new CUnitDeathMessage(this));
+		return;
+	}
 
 	if(m_nState == UNIT_MOVING)
 	{
@@ -49,5 +63,43 @@ void CUnit::Update(float fElapsedTime)
 		if(VelX() == 0.0f && VelY() == 0.0f)
 			m_nState = -1;
 	}
+	else if (m_nState == UNIT_MOVING_ATTACK)
+	{
+		if (fabs(((PosX() - m_pTarget->PosX()) * (PosX() - m_pTarget->PosX()) +
+		   (PosY() - m_pTarget->PosY()) * (PosY() - m_pTarget->PosY()))) < (m_fAttackRange * m_fAttackRange))
+		{
+			VelX(0);
+			VelY(0);
+			m_nState = UNIT_ATTACK;
+		}
+		else
+		{
+			if(PosX() < m_pTarget->PosX())
+				VelX(100.0f);
+			else
+				VelX(-100.0f);
 
+			if(PosY() < m_pTarget->PosX())
+				VelY(100.0f);
+			else
+				VelY(-100.0f);
+		}
+	}
+	else if (m_nState == UNIT_ATTACK)
+	{
+		if (fabs(((PosX() - m_pTarget->PosX()) * (PosX() - m_pTarget->PosX()) +
+			(PosY() - m_pTarget->PosY()) * (PosY() - m_pTarget->PosY()))) > (m_fAttackRange * m_fAttackRange))
+		{
+			m_nState = UNIT_MOVING_ATTACK;
+		}
+		else
+		{
+			m_fAttackTimer += fElapsedTime;
+			if (m_fAttackTimer >= m_fAttackSpeed)
+			{
+				m_pTarget->CurHealth(m_pTarget->CurHealth() - (int)(m_fAttackDamage));
+				m_fAttackTimer = 0;
+			}
+		}
+	}
 }
