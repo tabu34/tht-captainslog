@@ -21,7 +21,6 @@ CGame::~CGame()
 	m_pTM					= NULL;
 	m_pOM					= NULL;
 	m_pCM					= NULL;
-	m_pCAM					= NULL;
 }
 
 CGame::CGame()
@@ -120,6 +119,7 @@ void CGame::Initialize( HWND hWnd, HINSTANCE hInstance, int nScreenWidth, int nS
 	m_pTM->InitTextureManager(m_pD3D->GetDirect3DDevice(), m_pD3D->GetSprite());
 	m_pDI->InitDirectInput(hWnd, hInstance, DI_KEYBOARD | DI_MOUSE, DI_MOUSE);
  	m_pMC->Init();
+	m_pCAM = new CCamera();
 
 	//	Store initial program variables
 	m_nWindowHeight=nScreenHeight;
@@ -174,11 +174,6 @@ void CGame::Shutdown()
 {
 	ChangeState(NULL);
 
-	if (m_pCAM)
-	{
-		m_pCAM = NULL;
-	}
-
 	if (m_pCM)
 	{
 		m_pCM = NULL;
@@ -211,7 +206,6 @@ void CGame::Shutdown()
 	m_pTM				= NULL;
 	m_pOM				= NULL;
 	m_pCM				= NULL;
-	m_pCAM				= NULL;
 
 	CCodeProfiler::GetInstance()->Output("codeprofiler test --");
 }

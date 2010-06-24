@@ -29,7 +29,19 @@ class CUnit : public CBase
 	vector<CAbility*>	m_vAbilities;
 	vector<int>			m_vAnimations;
 
+	POINT				m_pDestinationMove;
+	int					m_nState;
+
+	enum { UNIT_MOVING };
+
 public:
+	CUnit();
+	void Update(float fElapsedTime);
+
+	// Orders //////////////////////////////////////
+	void OrderMove( POINT _dest );
+	void OrderMove( int _x, int _y);
+
 	// Accessors ///////////////////////////////////
 	bool Burned() const { return m_bBurned; }
 	bool Cloaked() const { return m_bCloaked; }

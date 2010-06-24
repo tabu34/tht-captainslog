@@ -7,6 +7,7 @@ class CMarine : public CPlayerUnit
 {
 public:
 	void	Update(float fElapsedTime);
+	void	Render();
 	void	Initialize();
 };
 #endif // CMarine_h__
