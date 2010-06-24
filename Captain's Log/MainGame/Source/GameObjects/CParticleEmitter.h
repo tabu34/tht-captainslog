@@ -46,11 +46,13 @@ class CParticleEmitter : public CBase
 	
 
 public:
-	void	Initialize(int nImageID, int nHeight, int nWidth, float fPosX, float fPosY, int nNumParticles, int nMaxPartLife, int nMinPartLife);
+	void	Initialize(int nImageID, int nWidth, int nHeight, int fPosX, int fPosY, int nNumParticles = 500, int nMinPartLife = 200, int nMaxPartLife = 500,
+		int AlphaValue = 0, int initialForceX = 0, int initialForceY = 0, int BlendModeSource = 0, int BlendModeDest = 0,
+		int minPartWidth = 100, int minPartHeight = 100, int maxPartWidth = 100, int maxPartHeight = 100, int nGravity = 0,
+		int GravitySourceX = 0, int GravitySourceY = 0, int RandomSpread = 0);
 	void	Update(float fElapsedTime);
 	void	Render();
 	//~CParticleEmitter();
-
 
 };
 #endif // CParticleEmitter_h__

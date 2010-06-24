@@ -1,6 +1,7 @@
 #include "precompiled_header.h"
 #include "CParticle.h"
 #include "../SGD Wrappers/CSGD_TextureManager.h"
+#include "../SGD Wrappers/CSGD_Direct3D.h"
 
 void CParticle::Initialize(int nImageID,int nLife, float fScaleX, float fScaleY, float fPosX, float fPosY, int ncolor)
 {
@@ -58,28 +59,28 @@ void CParticle::Update( float fElapsedTime, int GravityPointX, int GravityPointY
 {
 
 	if (m_bInitialForceOn)
-        {
-            m_nForceX += m_nInitialForceX*1000;// *fElapsedTime; //m_fYMove* fElapsedTime;
-            m_nForceY += m_nInitialForceY*1000;// *fElapsedTime; //m_fXMove * fElapsedTime;
-            //m_bInitialForceOn = false;
-        }
-        m_fLife -= fElapsedTime*1000;
+    {
+        m_nForceX += m_nInitialForceX*1000;// *fElapsedTime; //m_fYMove* fElapsedTime;
+        m_nForceY += m_nInitialForceY*1000;// *fElapsedTime; //m_fXMove * fElapsedTime;
+        //m_bInitialForceOn = false;
+    }
+    m_fLife -= fElapsedTime*1000;
 
-        int gravityX = (GravityPointX - (int)m_fPosX) * nGravity;
-        int gravityY = (GravityPointY - (int)m_fPosY) * nGravity;
+    int gravityX = (GravityPointX - (int)m_fPosX) * nGravity;
+    int gravityY = (GravityPointY - (int)m_fPosY) * nGravity;
 
-        m_fSpeedX = m_fSpeedX + (m_nForceX + gravityX + m_nSpreadx*nSpread) * fElapsedTime;
-        m_fSpeedY = m_fSpeedY + (m_nForceY + gravityY + m_nSpready*nSpread) * fElapsedTime;
+    m_fSpeedX = m_fSpeedX + (m_nForceX + gravityX + m_nSpreadx*nSpread) * fElapsedTime;
+    m_fSpeedY = m_fSpeedY + (m_nForceY + gravityY + m_nSpready*nSpread) * fElapsedTime;
 
-        m_fPosX = m_fPosX + m_fSpeedX * fElapsedTime;
-        m_fPosY = m_fPosY + m_fSpeedY * fElapsedTime;
+    m_fPosX = m_fPosX + m_fSpeedX * fElapsedTime;
+    m_fPosY = m_fPosY + m_fSpeedY * fElapsedTime;
 
-        if (m_bInitialForceOn)
-        {
-            m_nForceX -= m_nInitialForceX*1000;// *fElapsedTime; //m_fYMove* fElapsedTime;
-            m_nForceY -= m_nInitialForceY*1000;// *fElapsedTime; //m_fXMove * fElapsedTime;
-            m_bInitialForceOn = false;
-        }
+    if (m_bInitialForceOn)
+    {
+        m_nForceX -= m_nInitialForceX*1000;// *fElapsedTime; //m_fYMove* fElapsedTime;
+        m_nForceY -= m_nInitialForceY*1000;// *fElapsedTime; //m_fXMove * fElapsedTime;
+        m_bInitialForceOn = false;
+    }
 
 }
 
@@ -104,6 +105,8 @@ void CParticle::Render(int ImageID)
     
     //ManagedTextureManager.Instance.Draw(nImageID, (int)m_fPosX, (int)m_fPosY, m_fScaleX, m_fScaleY, painter, 0, 0, 0.0f,newcolor);
 	//CSGD_TextureManager
+	//CSGD_Direct3D::GetInstance()->GetSprite()->Draw(
+	
 	CSGD_TextureManager::GetInstance()->Draw(ImageID, (int)m_fPosX, (int)m_fPosY, m_fScaleX, m_fScaleY, &m_rPaintRect, 0.0f,0.0f,0.0f);//,m_nColor);
 
 }

@@ -50,13 +50,10 @@ class CParticle : public CBase
 	RECT	m_rPaintRect;
 
 public:
-	/*void	Initialize(int nImageID, int nLife, float fPosX, float fPosY);
-	void	Update(float fElapsedTime);
-	void	Render();*/
 
 	void Initialize(int nImageID,int nLife, float fScaleX, float fScaleY, float fPosX, float fPosY, int ncolor);
 
-	void Update( float fElapsedTime, int GravityPointX, int GravityPointY, int nGravity, int nSpread);// );
+	void Update( float fElapsedTime, int GravityPointX, int GravityPointY, int nGravity, int nSpread);
 
 	void Render(int ImageID);
 
