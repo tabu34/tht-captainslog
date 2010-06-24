@@ -5,6 +5,8 @@
 
 class CMarine : public CPlayerUnit
 {
+	int m_nCurFrame;
+
 public:
 	CMarine();
 

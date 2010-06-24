@@ -57,7 +57,7 @@ int CAnimationManager::LoadAnimation( char* szAnimationName, char* szImageID, DW
 	return m_Animations.size() - 1;
 }
 
-bool CAnimationManager::LoadAnimationsFromFile(char* szFilename)
+bool CAnimationManager::LoadAnimationsFromFile(char* szFilename, DWORD dwKeyColor)
 {
 	ifstream in(szFilename, ios::in | ios::binary);
 	if(in.is_open())
@@ -104,7 +104,7 @@ bool CAnimationManager::LoadAnimationsFromFile(char* szFilename)
 			
 			newTAnimation.anAnimation.Init(name,
 				newTAnimation.szFilename,
-				D3DCOLOR_ARGB(255, 255, 255, 255),
+				dwKeyColor,
 				1.0f,
 				isLooping,
 				numFrames,

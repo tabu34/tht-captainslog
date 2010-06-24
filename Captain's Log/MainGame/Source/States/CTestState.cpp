@@ -51,7 +51,7 @@ void CTestState::Enter(void)
 	CGame::GetInstance()->GetCamera()->SetX(0.0f);
 	CGame::GetInstance()->GetCamera()->SetY(0.0f);
  
- 	CAnimationManager::GetInstance()->LoadAnimationsFromFile("Resource\\Graphics\\test.bin");
+ 	CAnimationManager::GetInstance()->LoadAnimationsFromFile("Resource\\Graphics\\test.bin", D3DCOLOR_ARGB(255, 0, 0, 0));
  	CAnimationManager::GetInstance()->GetAnimation("Untitled Animation")->anAnimation.Play();
 	CObjectManager::GetInstance()->AddObject(&Marine1);
 	CObjectManager::GetInstance()->AddObject(&Marine2);
@@ -115,7 +115,7 @@ void CTestState::Render(void)
 
 void CTestState::Exit(void)
 {
-	
+	CObjectManager::GetInstance()->RemoveAllObjects();
  	CAnimationManager::GetInstance()->Shutdown();
 	
 }
