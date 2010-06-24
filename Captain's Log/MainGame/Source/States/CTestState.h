@@ -9,6 +9,7 @@
 class CTestState : public IGameState
 {
 	CMarine		Marine1, Marine2;
+	CMarine		temporaryBlocker;
 	int			m_nBackgroundID;
 	CBMPFont	testFont;
 
