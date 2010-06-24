@@ -27,12 +27,12 @@ void CBMPFont::RenderText( char* szString, int nPosX, int nPosY )
 		if (szString[i] == '\n')
 		{
 			nPosX = nStartingPosX;
-			nPosY = nPosY + m_rLetterRects[m_nStartChar].bottom - m_rLetterRects[m_nStartChar].top;
+			nPosY = nPosY + (m_rLetterRects[m_nStartChar].bottom - m_rLetterRects[m_nStartChar].top) * m_fScaleY;
 		}
 		else
 		{
 			CSGD_TextureManager::GetInstance()->Draw(m_nImageID, nPosX, nPosY, m_fScaleX, m_fScaleY, &(m_rLetterRects[szString[i]]), 0, 0, 0, m_dwFontColor);
-			nPosX = nPosX + m_nKerning + m_rLetterRects[szString[i]].right - m_rLetterRects[szString[i]].left;
+			nPosX = nPosX + m_nKerning + (m_rLetterRects[szString[i]].right - m_rLetterRects[szString[i]].left) * m_fScaleX;
 		}
 	}
 }
