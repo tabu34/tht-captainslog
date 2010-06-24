@@ -48,12 +48,15 @@ private:
 	int m_nWorldWidth;
 	int m_nWorldDepth;
 
+
+
 	CWorldManager();
 	~CWorldManager();
 	CWorldManager(CWorldManager&);
 	CWorldManager& operator=(CWorldManager&);
 
 public:
+	static CWorldManager* GetInstance();
 
 	void Load(string sFileName);
 	void Render();

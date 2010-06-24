@@ -13,7 +13,25 @@ CWorldManager::CWorldManager()
 
 CWorldManager::~CWorldManager()
 {
+	for (int l = 0; l < m_nWorldDepth; l++)
+	{
+		for (int i = 0; i < m_nWorldWidth; i++)
+		{
+// 			for (int j = 0; j < m_nWorldHeight; j++)
+// 			{
+// 				delete m_World[l][i][j];
+// 			}
+			delete[] m_World[l][i];
+		}
+		delete[] m_World[l];
+	}
+	delete[] m_World;
+}
 
+CWorldManager* CWorldManager::GetInstance()
+{
+	static CWorldManager instance;
+	return &instance;
 }
 
 void CWorldManager::Load(string sFileName)
