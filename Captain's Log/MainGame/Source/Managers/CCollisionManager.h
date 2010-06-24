@@ -19,14 +19,14 @@ class CCollisionManager
 	CCollisionManager& operator=(CCollisionManager&);
 
 	void	RunProjectileCollision();
-	void	RunBorderCollision();
+	bool RunBorderCollision( CBase * pBase , CBase * pBaseOther);
 
 public:
 	static CCollisionManager* GetInstance();
 
 	void	RunCollisions();
 	void	AddObject(CBase* pBase);
-	bool	CheckCollision( CBase * pBase , CBase * pBaseOther);
+	void CheckCollision();
 
 };
 #endif // CCollisionManager_h__
