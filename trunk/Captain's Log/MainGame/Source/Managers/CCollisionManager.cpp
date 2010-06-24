@@ -17,30 +17,7 @@ void CCollisionManager::RunProjectileCollision()
 
 }
 
-void CCollisionManager::RunBorderCollision()
-{
-	for (unsigned int i=0; i < m_vObstacles.size(); i++)
-	{
-		for(unsigned int j=0; j<m_vObstacles.size(); j++)
-		{
-			//if(m_vObstacles[i]->Type() !=m_vObstacles[j]->Type())
-			//{
-				if(CheckCollision(m_vObstacles[i], m_vObstacles[j]))
-				{
-					break;
-				}
-			//}
-		}
-	}
-
-}
-
-void CCollisionManager::RunCollisions()
-{
-	RunBorderCollision();
-}
-
-bool CCollisionManager::CheckCollision( CBase * pBase , CBase * pBaseOther)
+bool CCollisionManager::RunBorderCollision( CBase * pBase , CBase * pBaseOther )
 {
 	RECT tempRect;
 	RECT pBaseCollision = pBase->GetCollisionRect();
@@ -67,12 +44,47 @@ bool CCollisionManager::CheckCollision( CBase * pBase , CBase * pBaseOther)
 		return false;
 
 
+}
+
+void CCollisionManager::RunCollisions()
+{
+	CheckCollision();
+}
+
+void CCollisionManager::CheckCollision()
+{	
+	for (unsigned int i=0; i < m_vObstacles.size(); i++)
+	{
+		for(unsigned int j=0; j<m_vPlayers.size(); j++)
+		{
+			if(RunBorderCollision(m_vObstacles[i], m_vPlayers[j]))
+			{
+				break;
+			}
+		}
+		for(unsigned int j=0; j<m_vEnemies.size(); j++)
+		{
+			if(RunBorderCollision(m_vObstacles[i], m_vEnemies[j]))
+			{
+				break;
+			}
+		}
+	}
+
+
 
 }
 
 void CCollisionManager::AddObject( CBase* pBase )
 {
-	m_vObstacles.push_back(pBase);
+	if (pBase->Type() == CBase::OBJ_OBSTACLE)
+		m_vObstacles.push_back(pBase);
+	else if (pBase->Type() == CBase::OBJ_PLAYER)
+		m_vPlayers.push_back(pBase);
+	else if (pBase->Type() == CBase::OBJ_ENEMY)
+		m_vEnemies.push_back(pBase);
+	else if (pBase->Type() == CBase::OBJ_PROJECTILE)
+		m_vProjectiles.push_back(pBase);
 }
 
 CCollisionManager* CCollisionManager::GetInstance()
