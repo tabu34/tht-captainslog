@@ -1,6 +1,5 @@
 #include "precompiled_header.h"
 #include "CParticle.h"
-#include <CTime>
 #include "../SGD Wrappers/CSGD_TextureManager.h"
 
 void CParticle::Initialize(int nImageID,int nLife, float fScaleX, float fScaleY, float fPosX, float fPosY, int ncolor)
@@ -28,8 +27,6 @@ void CParticle::Initialize(int nImageID,int nLife, float fScaleX, float fScaleY,
     m_nForceY = 0;
     m_nInitialForceX = 0;
     m_nInitialForceY = 0;
-
-	srand(unsigned int(time(0)));
 
 	int RandomInt = rand()%10;
 	
