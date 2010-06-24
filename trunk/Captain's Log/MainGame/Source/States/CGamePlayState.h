@@ -95,6 +95,9 @@ class CGamePlayState : public IGameState
 	float				m_nCurCount;
 	string				m_szSpeechText;
 
+	// Tooltip
+	string				m_szTooltipText;
+
 	CGamePlayState(void);
 	CGamePlayState(const CGamePlayState&);
 	CGamePlayState& operator=(const CGamePlayState&);

@@ -56,7 +56,7 @@ void CGamePlayState::Enter(void)
 
 	m_ftTextSmall.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.65f, 0.65f, -6, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(255, 255, 255));
  	m_ftTextSmall.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
-	m_ftTextSmallShadow.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.65f, 0.65f, -6, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(0, 0, 0));
+	m_ftTextSmallShadow.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.65, 0.65f, -6, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(0, 0, 0));
  	m_ftTextSmallShadow.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
 	m_ftTextLarge.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.80f, 0.80f, -3, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(255, 255, 255));
  	m_ftTextLarge.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
@@ -73,7 +73,10 @@ void CGamePlayState::Enter(void)
 
 void CGamePlayState::Exit(void)
 {
-
+	for(unsigned int i = 0; i < m_vButtons.size(); i++)
+	{
+		CSGD_TextureManager::GetInstance()->UnloadTexture(m_vButtons[i].TextureID());
+	}
 
 }
 
@@ -90,9 +93,11 @@ bool CGamePlayState::Input(void)
 
 	if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("MinimapButton1")].GetCollisionRect()), &mousePos))
 	{
-		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left, mousePos.top);
+		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
+		m_szTooltipText = "Tactical Minimap Overlay";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
 	} else {
+		m_szTooltipText = "";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(false);
 	}
 	return true;
@@ -122,6 +127,10 @@ void CGamePlayState::RenderHUD(void)
 
 	// Render Speech
 	RenderLargeShadowText((char *)(m_szSpeechText.substr(0, (unsigned int)m_nCurCount)).c_str(), 135, 494);
+
+	// Render ToolTip Text
+	if(m_szTooltipText != "")
+		m_ftTextSmallShadow.RenderText((char*)m_szTooltipText.c_str(), CSGD_DirectInput::GetInstance()->MouseGetPosX(), CSGD_DirectInput::GetInstance()->MouseGetPosY() - 25);
 }
 
 void CGamePlayState::Render(void)
