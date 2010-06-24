@@ -9,4 +9,5 @@ public:
 	void	CreateNewEmitter(int nImageID, int nHeight, int nWidth, float fPosX, float fPosY);
 	void	Update(float fElapsedTime);
 	void	Render();
+	void	Shutdown();
 };

@@ -43,12 +43,13 @@ class CParticleEmitter : public CBase
 
     int m_nSpread;
 
-	~CParticleEmitter();
+	
 
 public:
 	void	Initialize(int nImageID, int nHeight, int nWidth, float fPosX, float fPosY, int nNumParticles, int nMaxPartLife, int nMinPartLife);
 	void	Update(float fElapsedTime);
 	void	Render();
+	//~CParticleEmitter();
 
 
 };

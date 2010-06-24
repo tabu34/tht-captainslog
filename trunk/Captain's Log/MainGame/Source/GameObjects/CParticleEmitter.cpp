@@ -84,8 +84,8 @@ void CParticleEmitter::Render()
     }
 
 }
-
+/*
 CParticleEmitter::~CParticleEmitter()
 {
-	delete[] m_cParticleArray;
-}
+	delete m_cParticleArray;
+}*/
