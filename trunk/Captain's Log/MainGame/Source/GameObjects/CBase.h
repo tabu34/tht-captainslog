@@ -44,6 +44,8 @@ public:
 	void Scale(float val) { m_fScale = val; }
 	////////////////////////////////////////////////
 
+	enum {OBJ_NULL, OBJ_PLAYER, OBJ_ENEMY, OBJ_PROJECTILE, OBJ_OBSTACLE, OBJ_MAX};
+
 	RECT GetCollisionRect();
 
 	void	Update(float fElapsedTime);
