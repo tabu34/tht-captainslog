@@ -1,7 +1,9 @@
 version #
 filename
-map width
-map height
+tileset width   (pixels)
+tileset height  (pixels)
+map width    (rows)
+map height   (cols)
 num layers
 <layer 0>
 <tile 0>
