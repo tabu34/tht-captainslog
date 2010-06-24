@@ -18,6 +18,9 @@ class CMainMenuState : public IGameState
 	int			m_nMenuMusic;
 	short		m_sCurrentChoice;
 
+	int m_nMenuBG;
+	int	m_nMenuCur[5];
+
 	CMainMenuState(void);
 	CMainMenuState(const CMainMenuState&);
 	CMainMenuState& operator=(const CMainMenuState&);
