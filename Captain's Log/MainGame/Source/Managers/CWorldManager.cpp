@@ -2,6 +2,7 @@
 #include "CWorldManager.h"
 #include "../SGD Wrappers/CSGD_Direct3D.h"
 #include "../SGD Wrappers/CSGD_TextureManager.h"
+#include "../CGame.h"
 
 #include <fstream>
 using namespace std;
@@ -38,17 +39,23 @@ void CWorldManager::Load(string sFileName)
 {
 	ifstream fin(sFileName.c_str(), ios::in | ios::binary);
 
-	fin >> m_fVersionNumber;
-	fin >> m_sFileName;
+	fin.read((char*)&m_fVersionNumber, sizeof(float));
 
-	m_nTilesetImageID = CSGD_TextureManager::GetInstance()->LoadTexture(m_sFileName.c_str());
+	int nFileNameSize = 0;
+	fin.read((char*)&nFileNameSize, sizeof(int));
 
-	fin >> m_nTilesetWidth;
-	fin >> m_nTilesetHeight;
+	m_szFileName = new char[nFileNameSize];
+	fin.read((char*)m_szFileName, nFileNameSize);
+	m_szFileName[nFileNameSize] = '\0';
 
-	fin >> m_nWorldWidth;
-	fin >> m_nWorldHeight;
-	fin >> m_nWorldDepth;
+	m_nTilesetImageID = CSGD_TextureManager::GetInstance()->LoadTexture(m_szFileName);
+
+	fin.read((char*)&m_nTilesetWidth, sizeof(int));
+	fin.read((char*)&m_nTilesetHeight, sizeof(int));
+
+	fin.read((char*)&m_nWorldWidth, sizeof(int));
+	fin.read((char*)&m_nWorldHeight, sizeof(int));
+	fin.read((char*)&m_nWorldDepth, sizeof(int));
 
 	m_World = new Tile**[m_nWorldDepth];
 
@@ -62,11 +69,11 @@ void CWorldManager::Load(string sFileName)
 			{
 				Tile tempTile;
 
-				fin >> tempTile.m_nWidth;
-				fin >> tempTile.m_nHeight;
-				fin >> tempTile.m_nTileNumber;
-				fin >> tempTile.m_nTop;
-				fin >> tempTile.m_nLeft;
+				fin.read((char*)&tempTile.m_nWidth, sizeof(int));
+				fin.read((char*)&tempTile.m_nHeight, sizeof(int));
+				fin.read((char*)&tempTile.m_nTileNumber, sizeof(int));
+				fin.read((char*)&tempTile.m_nTop, sizeof(int));
+				fin.read((char*)&tempTile.m_nLeft, sizeof(int));
 
 				m_World[l][i][j] = tempTile;
 			}
@@ -87,8 +94,8 @@ void CWorldManager::Render()
 				Tile tempTile = m_World[l][i][j];
 				if (tempTile.m_nTileNumber != -1)
 				{
-					RECT src = {tempTile.m_nTileNumber % (m_nTilesetWidth / tempTile.m_nWidth) * tempTile.m_nWidth,
-								tempTile.m_nTileNumber / (m_nTilesetWidth / tempTile.m_nWidth) * tempTile.m_nHeight,
+					RECT src = {tempTile.m_nTileNumber % (m_nTilesetWidth) * tempTile.m_nWidth,
+								tempTile.m_nTileNumber / (m_nTilesetWidth) * tempTile.m_nHeight,
 								0, 0};
 					src.bottom = src.top + tempTile.m_nHeight;
 					src.right = src.left + tempTile.m_nWidth;
