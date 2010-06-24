@@ -330,11 +330,35 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Source\Managers\CEventClient.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\Managers\CEventSystem.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\Managers\CEventSystem.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\Managers\CFileManager.cpp"
 				>
 			</File>
 			<File
 				RelativePath=".\Source\Managers\CFileManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\Managers\CMessage.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\Managers\CMessageSystem.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\Managers\CMessageSystem.h"
 				>
 			</File>
 			<File
