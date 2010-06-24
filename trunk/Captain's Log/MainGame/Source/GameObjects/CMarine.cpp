@@ -31,6 +31,7 @@ void CMarine::Initialize()
 
 void CMarine::Render()
 {
+	CUnit::Render();
 	if(CAnimationManager::GetInstance()->GetAnimation("MarineIdle"))
 	{
 		bool flipped = false;
