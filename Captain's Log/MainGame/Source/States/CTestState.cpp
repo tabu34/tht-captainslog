@@ -1,5 +1,6 @@
 #include "precompiled_header.h"
 #include "CTestState.h"
+#include "CGamePlayState.h"
 #include "..\Managers\CCollisionManager.h"
 #include "..\GameObjects\CMarine.h"
 #include "..\GameObjects\CAnimationManager.h"
@@ -68,6 +69,9 @@ bool CTestState::Input(void)
  		Marine1.PosX(Marine1.PosX() - Marine1.MovementSpeed());
  	if (CSGD_DirectInput::GetInstance()->KeyDown(DIK_RIGHTARROW))
  		Marine1.PosX(Marine1.PosX() + Marine1.MovementSpeed());
+
+	if (CSGD_DirectInput::GetInstance()->KeyDown(DIK_1))
+		CGame::GetInstance()->ChangeState( CGamePlayState::GetInstance() );
 
 	END_PROFILING
 	return true;
