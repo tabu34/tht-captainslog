@@ -2,11 +2,14 @@
 #include "CParticleEmitter.h"
 #include "CParticle.h"
 
-void CParticleEmitter::Initialize(int nImageID, int nHeight, int nWidth, float fPosX, float fPosY, int nNumParticles, int nMaxPartLife, int nMinPartLife)
+void CParticleEmitter::Initialize(int nImageID, int nWidth, int nHeight, int fPosX, int fPosY, int nNumParticles, int nMinPartLife, int nMaxPartLife,
+		int AlphaValue, int initialForceX, int initialForceY, int BlendModeSource, int BlendModeDest,
+		int minPartWidth, int minPartHeight, int maxPartWidth, int maxPartHeight, int nGravity,
+		int GravitySourceX, int GravitySourceY, int RandomSpread)
 {
 	m_nImageID = nImageID;
-    m_fPosX = fPosX;
-    m_fPosY = fPosY;
+    m_fPosX = (float)fPosX;
+    m_fPosY = (float)fPosY;
     m_nNumParticles = nNumParticles;
 
     m_cParticleArray = new CParticle[m_nNumParticles];
@@ -21,11 +24,17 @@ void CParticleEmitter::Initialize(int nImageID, int nHeight, int nWidth, float f
 
     m_bfixedAlpha = false;
 
-    m_bRandScaleOn = false;
-    m_fXScale = 1.0f;
-    m_fYscale = 1.0f;
-    m_fMaxXscale = 0.0f;
-    m_dMaxYScale = 0.0f;
+	if(maxPartHeight > minPartHeight || maxPartWidth > minPartWidth)
+	{
+		m_bRandScaleOn = true;
+	}else
+	{
+		m_bRandScaleOn = false;
+	}
+    m_fXScale = minPartWidth*0.01;
+    m_fYscale = minPartHeight*0.01;
+    m_fMaxXscale = maxPartWidth*0.01;
+    m_dMaxYScale = maxPartHeight*0.01;
 
     
     for (int i = 0; i < m_nNumParticles; ++i)
@@ -34,18 +43,20 @@ void CParticleEmitter::Initialize(int nImageID, int nHeight, int nWidth, float f
         m_cParticleArray[i].Initialize(m_nImageID, 0, 1.0f, 1.0f, m_fPosX + ((float)(rand()%m_nWidth) - m_nWidth*0.5f), m_fPosY + ((float)(rand()%m_nHeight) - m_nHeight*0.5f), color);
     }
 
-    m_nGravity = 0;
-    m_nGravityPointX = 0;
-    m_nGravityPointY = 0;
+    m_nGravity = nGravity;
+    m_nGravityPointX = GravitySourceX + (int)fPosX;
+    m_nGravityPointY = GravitySourceY + (int)fPosY;
 
-    m_nSpread = 0;
+    m_nSpread = RandomSpread;
 }
 
 void CParticleEmitter::Update( float fElapsedTime )
 {
+	static float passes = 0;
 	for (int i = 0; i < m_nNumParticles; ++i)
     {
         m_cParticleArray[i].Update(fElapsedTime,m_nGravityPointX,m_nGravityPointY,m_nGravity, m_nSpread);
+		//if(passes == 0){
         if (m_cParticleArray[i].IsDead())
         {
             float tempXScale = m_fXScale;
@@ -59,7 +70,7 @@ void CParticleEmitter::Update( float fElapsedTime )
 
             //if(rand
 
-			m_cParticleArray[i].Initialize(m_nImageID, rand()%(MinParticleLife + MaxParticleLife)+MinParticleLife, tempXScale, tempYSacle,
+			m_cParticleArray[i].Initialize(m_nImageID, rand()%(MaxParticleLife - MinParticleLife)+MinParticleLife, tempXScale, tempYSacle,
 				m_fPosX + ((float)(rand()%m_nWidth) - m_nWidth*0.5f), m_fPosY + ((float)(rand()%m_nHeight) - m_nHeight*0.5f), color);
 
             if (m_bInitialForceOn)
@@ -71,7 +82,9 @@ void CParticleEmitter::Update( float fElapsedTime )
 				m_cParticleArray[i].SetFixedAlpha(m_nFixedAlpha);
             }
         }
+		//}
     }
+	++passes;
 
 }
 

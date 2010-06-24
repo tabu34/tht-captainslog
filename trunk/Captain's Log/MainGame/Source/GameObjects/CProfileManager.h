@@ -6,6 +6,16 @@ using namespace std;
 
 class CGameInfo
 {
+public:
+	string WriteToSaveFile(void)
+	{
+		string info;
+		return info;
+	}
+	void ReadFromSaveFile(string Read)
+	{
+		string info = Read;
+	}
 };
 
 class CProfile
@@ -14,6 +24,13 @@ class CProfile
 	CGameInfo m_cPlayerProgress;
 	int m_nPlayerNumber;
 public:
+
+	CProfile()
+	{
+		m_sPlayerName = "null";
+		m_nPlayerNumber = 0;
+	}
+
 	string GetName(void){return m_sPlayerName;}
 	void SetName(string Name){m_sPlayerName = Name;}
 	
@@ -28,7 +45,8 @@ enum STATUS {DISPLAY = 0, ENTER_NEW, NUM_STATUSES};
 
 class CProfileManager
 {
-	vector<CProfile> m_vProfiles;
+	CProfile* m_cProfileArray;
+	int m_nProfiles;
 
 	int m_nSelectedProfile;
 	int m_nProfilesToDisplay[10];
@@ -40,13 +58,19 @@ class CProfileManager
 	CProfileManager& operator=(const CProfileManager&);
 	~CProfileManager() {}
 
-public:
+public: 
 	void Init(void);
 	void LoadProfiles(void);
 	void SaveProfiles(void);
-	void AddProfile(CProfile newProfile);//DONE
-	void DeleteProfile(CProfile tobeDeleted);//DONE
-	void SelectProfile(CProfile selectedProfile);
+	void AddProfile(string ProfileName, CGameInfo* GameInfo = NULL);//DONE
+	void DeleteProfile(int ProfileNumber);//DONE
+	void SelectProfile(int ProfileNumber);
 	void Update(void);//FINISH THIS
 	void Render(void);
+
+	static CProfileManager* GetInstance(void)
+	{
+		static CProfileManager instance;
+		return &instance;
+	}
 };
