@@ -25,7 +25,7 @@ void CMarine::Render()
 		CSGD_Direct3D::GetInstance()->DrawRect(GetCollisionRect(), 255, 255, 255);
 
 	RECT dragRect;
-	SetRect(&dragRect, PosX(), PosY(), PosX() + Width(), PosY() + Height());
+	SetRect(&dragRect, (int)PosX(), (int)PosY(), (int)PosX() + Width(), (int)PosY() + Height());
 
 	CSGD_Direct3D::GetInstance()->DrawLine(dragRect.left, dragRect.top, dragRect.right, dragRect.top, 0, 255, 0);
 	CSGD_Direct3D::GetInstance()->DrawLine(dragRect.right, dragRect.top, dragRect.right, dragRect.bottom, 0, 255, 0);
