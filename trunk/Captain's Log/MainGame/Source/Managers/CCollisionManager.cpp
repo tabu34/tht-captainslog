@@ -17,7 +17,7 @@ void CCollisionManager::RunProjectileCollision()
 
 }
 
-bool CCollisionManager::RunBorderCollision( CBase * pBase , CBase * pBaseOther )
+bool CCollisionManager::RunBorderCollision( CBase * pBaseOther , CBase * pBase )
 {
 	RECT tempRect;
 	RECT pBaseCollision = pBase->GetCollisionRect();
@@ -27,16 +27,16 @@ bool CCollisionManager::RunBorderCollision( CBase * pBase , CBase * pBaseOther )
 		if (tempRect.right - tempRect.left < tempRect.bottom - tempRect.top)
 		{
 			if (tempRect.left == pBaseCollision.left)
-				pBase->PosX(pBaseOther->PosX() + pBaseOther->Width());
+				pBase->PosX(float(pBaseOtherCollision.right + (pBase->Width() >> 1)));
 			else if (tempRect.right == pBaseCollision.right)
-				pBase->PosX(pBaseOther->PosX() - pBase->Width());
+				pBase->PosX(float(pBaseOtherCollision.left - (pBase->Width() >> 1)));
 		}
 		else if (tempRect.bottom - tempRect.top < tempRect.right - tempRect.left)
 		{
 			if (tempRect.top == pBaseCollision.top)
-				pBase->PosY(pBaseOther->PosY() + pBaseOther->Height());
+				pBase->PosY(float(pBaseOtherCollision.bottom + (pBase->Height() >> 1)));
 			else if (tempRect.bottom == pBaseCollision.bottom)
-				pBase->PosY(pBaseOther->PosY() - pBase->Height());
+				pBase->PosY(float(pBaseOtherCollision.top - (pBase->Height() >> 1)));
 		}
 		return true;
 	}
@@ -57,17 +57,11 @@ void CCollisionManager::CheckCollision()
 	{
 		for(unsigned int j=0; j<m_vPlayers.size(); j++)
 		{
-			if(RunBorderCollision(m_vObstacles[i], m_vPlayers[j]))
-			{
-				break;
-			}
+			RunBorderCollision(m_vObstacles[i], m_vPlayers[j]);
 		}
 		for(unsigned int j=0; j<m_vEnemies.size(); j++)
 		{
-			if(RunBorderCollision(m_vObstacles[i], m_vEnemies[j]))
-			{
-				break;
-			}
+			RunBorderCollision(m_vObstacles[i], m_vEnemies[j]);
 		}
 	}
 

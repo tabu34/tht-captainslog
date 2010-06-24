@@ -40,8 +40,8 @@ void CTestState::Enter(void)
  	Marine2.Height(50);
  	Marine2.MovementSpeed(5);
 
-	temporaryBlocker.PosX(500 + CGame::GetInstance()->GetScreenWidth() / 2);
-	temporaryBlocker.PosY(100 + CGame::GetInstance()->GetScreenHeight() / 2);
+	temporaryBlocker.PosX(float(500 + (CGame::GetInstance()->GetScreenWidth() >> 1)));
+	temporaryBlocker.PosY(float(100 + (CGame::GetInstance()->GetScreenHeight() >> 1)));
 	temporaryBlocker.Width(100);
 	temporaryBlocker.Height(CGame::GetInstance()->GetScreenHeight() - 200);
 	temporaryBlocker.MovementSpeed(0);
