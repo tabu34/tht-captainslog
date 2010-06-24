@@ -21,10 +21,19 @@ void CBMPFont::SetUp( float fScaleX, float fScaleY, int nKerning, DWORD dwFontCo
 
 void CBMPFont::RenderText( char* szString, int nPosX, int nPosY )
 {
+	int nStartingPosX = nPosX, nStartingPosY = nPosY;
 	for (unsigned int i = 0; i < strlen(szString); i++)
 	{
-		CSGD_TextureManager::GetInstance()->Draw(m_nImageID, nPosX, nPosY, m_fScaleX, m_fScaleY, &(m_rLetterRects[szString[i]]), 0, 0, 0, m_dwFontColor);
-		nPosX = nPosX + m_nKerning + m_rLetterRects[szString[i]].right - m_rLetterRects[szString[i]].left;
+		if (szString[i] == '\n')
+		{
+			nPosX = nStartingPosX;
+			nPosY = nPosY + m_rLetterRects[m_nStartChar].bottom - m_rLetterRects[m_nStartChar].top;
+		}
+		else
+		{
+			CSGD_TextureManager::GetInstance()->Draw(m_nImageID, nPosX, nPosY, m_fScaleX, m_fScaleY, &(m_rLetterRects[szString[i]]), 0, 0, 0, m_dwFontColor);
+			nPosX = nPosX + m_nKerning + m_rLetterRects[szString[i]].right - m_rLetterRects[szString[i]].left;
+		}
 	}
 }
 
