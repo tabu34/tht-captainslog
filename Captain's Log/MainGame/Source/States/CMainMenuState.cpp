@@ -66,7 +66,7 @@ void CMainMenuState::Update(float fElapsedTime)
 void CMainMenuState::Render(void)
 {
 	CSGD_TextureManager::GetInstance()->Draw(m_nMenuBG, 0, 0, 0.75f, 0.75f);
-	CSGD_TextureManager::GetInstance()->Draw(m_nMenuCur[m_sCurrentChoice], 632 * 0.75f, 574 * 0.75f, 0.75f, 0.75f);
+	CSGD_TextureManager::GetInstance()->Draw(m_nMenuCur[m_sCurrentChoice], (int)(632 * 0.75f), (int)(574 * 0.75f), 0.75f, 0.75f);
 }
 
 void CMainMenuState::Exit(void)
