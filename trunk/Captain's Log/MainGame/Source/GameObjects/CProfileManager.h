@@ -4,6 +4,8 @@
 #include <vector>
 using namespace std;
 
+#include "CBMPFont.h"
+
 class CGameInfo
 {
 public:
@@ -39,9 +41,10 @@ public:
 
 	int GetNumber(void){return m_nPlayerNumber;}
 	void SetNumber(int Number){m_nPlayerNumber = Number;}
+
 };
 
-enum STATUS {DISPLAY = 0, ENTER_NEW, NUM_STATUSES};
+enum STATUS {DISPLAY = 0, ENTER_NEW, EXPAND, NUM_STATUSES};
 
 class CProfileManager
 {
@@ -49,9 +52,15 @@ class CProfileManager
 	int m_nProfiles;
 
 	int m_nSelectedProfile;
-	int m_nProfilesToDisplay[10];
+	int m_nDisplayOffset;
 
 	int m_nStatus;
+
+	string m_szNewProfName;
+
+	int m_nExpandSelector;
+
+	CBMPFont m_cBMPFont;
 
 	CProfileManager() {}
 	CProfileManager(const CProfileManager&);
@@ -67,6 +76,11 @@ public:
 	void SelectProfile(int ProfileNumber);
 	void Update(void);//FINISH THIS
 	void Render(void);
+
+	void Shutdown(void)
+	{
+		SaveProfiles();
+	}
 
 	static CProfileManager* GetInstance(void)
 	{
