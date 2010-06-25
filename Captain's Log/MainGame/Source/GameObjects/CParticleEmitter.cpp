@@ -5,7 +5,7 @@
 void CParticleEmitter::Initialize(int nImageID, int nWidth, int nHeight, int fPosX, int fPosY, int nNumParticles, int nMinPartLife, int nMaxPartLife,
 		int AlphaValue, int initialForceX, int initialForceY, int BlendModeSource, int BlendModeDest,
 		int minPartWidth, int minPartHeight, int maxPartWidth, int maxPartHeight, int nGravity,
-		int GravitySourceX, int GravitySourceY, int RandomSpread)
+		int GravitySourceX, int GravitySourceY, int RandomSpread, int red, int green, int blue)
 {
 	m_nImageID = nImageID;
     m_fPosX = (float)fPosX;
@@ -31,10 +31,10 @@ void CParticleEmitter::Initialize(int nImageID, int nWidth, int nHeight, int fPo
 	{
 		m_bRandScaleOn = false;
 	}
-    m_fXScale = minPartWidth*0.01f;
-    m_fYscale = minPartHeight*0.01f;
-    m_fMaxXscale = maxPartWidth*0.01f;
-    m_dMaxYScale = maxPartHeight*0.01f;
+    m_fXScale = minPartWidth*0.01;
+    m_fYscale = minPartHeight*0.01;
+    m_fMaxXscale = maxPartWidth*0.01;
+    m_dMaxYScale = maxPartHeight*0.01;
 
     
     for (int i = 0; i < m_nNumParticles; ++i)
@@ -46,6 +46,10 @@ void CParticleEmitter::Initialize(int nImageID, int nWidth, int nHeight, int fPo
     m_nGravity = nGravity;
     m_nGravityPointX = GravitySourceX + (int)fPosX;
     m_nGravityPointY = GravitySourceY + (int)fPosY;
+
+	m_nRed = red;
+	m_nGreen = green;
+	m_nBlue = blue;
 
     m_nSpread = RandomSpread;
 }
@@ -93,7 +97,7 @@ void CParticleEmitter::Render()
 
 	for (int i = 0; i < m_nNumParticles; ++i)
     {
-        m_cParticleArray[i].Render(m_nImageID);
+        m_cParticleArray[i].Render(m_nImageID, m_nRed, m_nGreen, m_nBlue);
     }
 
 }
