@@ -12,9 +12,11 @@ CMarine::CMarine()
 	VelY(0);
 	Width(120);
 	Height(140);
+	CurHealth(10);
 
-		if(CAnimationManager::GetInstance()->GetAnimation("MarineIdle"))
+	if(CAnimationManager::GetInstance()->GetAnimation("MarineIdle"))
 		CAnimationManager::GetInstance()->GetAnimation("MarineIdle")->anAnimation.Play();
+	m_nCurFrame = 0;
 }
 
 void CMarine::Update( float fElapsedTime )
@@ -62,11 +64,10 @@ void CMarine::Render()
 		{
 			flipped = true;
 			m_nCurFrame = 6;
-		} else {
-			m_nCurFrame = 0;
 		}
+
 		CAnimationManager::GetInstance()->GetAnimation("MarineIdle")->anAnimation.CurFrame(m_nCurFrame);
-		CAnimationManager::GetInstance()->GetAnimation("MarineIdle")->anAnimation.Render(PosX(), PosY(), flipped, 2.0f);
+		CAnimationManager::GetInstance()->GetAnimation("MarineIdle")->anAnimation.Render((int)PosX(), (int)PosY(), flipped, 2.0f);
 	} else {
 		CSGD_Direct3D::GetInstance()->DrawRect(GetCollisionRect(), 255, 255, 255);
 	}
