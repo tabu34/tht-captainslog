@@ -57,6 +57,7 @@ void CParticle::Initialize(int nImageID,int nLife, float fScaleX, float fScaleY,
 }
 void CParticle::Update( float fElapsedTime, int GravityPointX, int GravityPointY, int nGravity, int nSpread)
 {
+	fElapsedTime*=0.08f;
 
 	if (m_bInitialForceOn)
     {
@@ -84,7 +85,7 @@ void CParticle::Update( float fElapsedTime, int GravityPointX, int GravityPointY
 
 }
 
-void CParticle::Render(int ImageID)
+void CParticle::Render(int ImageID, int red, int green, int blue)
 {
 	
 	//ManagedDirect3D.Instance.DrawRect(painter, 255, 255, 255);
@@ -106,8 +107,9 @@ void CParticle::Render(int ImageID)
     //ManagedTextureManager.Instance.Draw(nImageID, (int)m_fPosX, (int)m_fPosY, m_fScaleX, m_fScaleY, painter, 0, 0, 0.0f,newcolor);
 	//CSGD_TextureManager
 	//CSGD_Direct3D::GetInstance()->GetSprite()->Draw(
+	//D3DCOLOR_ARGB(Alpha,255,255,255);
 	
-	CSGD_TextureManager::GetInstance()->Draw(ImageID, (int)m_fPosX, (int)m_fPosY, m_fScaleX, m_fScaleY, &m_rPaintRect, 0.0f,0.0f,0.0f);//,m_nColor);
+	CSGD_TextureManager::GetInstance()->Draw(ImageID, (int)m_fPosX, (int)m_fPosY, m_fScaleX, m_fScaleY, &m_rPaintRect, 0.0f,0.0f,0.0f,D3DCOLOR_ARGB(Alpha,red,green,blue));//,m_nColor);
 
 }
 

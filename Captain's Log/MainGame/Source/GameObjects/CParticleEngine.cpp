@@ -46,7 +46,7 @@ bool CParticleEngine::CreateEmitterFromFile(int nImageID, string sFileName, floa
 	{
 		int MinLife = 0, MaxLife = 0, EmitterWidth = 0, EmitterHeight = 0, nParticles = 0, AlphaValue = 0, initialForceX = 0, initialForceY = 0,
 			BlendModeSource = 0, BlendModeDest = 0, minPartWidth = 0, minPartHeight = 0, maxPartWidth = 0, maxPartHeight = 0, nGravity = 0,
-			GravitySourceX = 0, GravitySourceY = 0, RandomSpread = 0;
+			GravitySourceX = 0, GravitySourceY = 0, RandomSpread = 0, blue = 255, green = 255, red = 255;
 
 		in.read((char*)&MinLife,sizeof(int));
 		in.read((char*)&MaxLife,sizeof(int));
@@ -75,10 +75,14 @@ bool CParticleEngine::CreateEmitterFromFile(int nImageID, string sFileName, floa
 
 		in.read((char*)&RandomSpread,sizeof(int));
 
+		in.read((char*)&blue,sizeof(int));
+		in.read((char*)&green,sizeof(int));
+		in.read((char*)&red,sizeof(int));
+
 		in.close();
 
 		emitter.Initialize(nImageID,EmitterWidth,EmitterHeight,fPosX,fPosY,nParticles,MinLife,MaxLife,AlphaValue,initialForceX,initialForceY,BlendModeSource,BlendModeDest,
-			minPartWidth,minPartHeight,maxPartWidth,maxPartHeight,nGravity,GravitySourceX,GravitySourceY,RandomSpread);
+			minPartWidth,minPartHeight,maxPartWidth,maxPartHeight,nGravity,GravitySourceX,GravitySourceY,RandomSpread,red,green,blue);
 
 		m_vEmitters.push_back(emitter);
 
