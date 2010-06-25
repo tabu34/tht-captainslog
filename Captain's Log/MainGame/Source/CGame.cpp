@@ -133,7 +133,7 @@ void CGame::Initialize( HWND hWnd, HINSTANCE hInstance, int nScreenWidth, int nS
 
 
 	CGamePlayState::GetInstance();
-	ChangeState(CTestState::GetInstance());
+	ChangeState(CMainMenuState::GetInstance());
 }
 
 bool CGame::Main()
