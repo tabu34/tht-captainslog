@@ -55,7 +55,7 @@ public:
 
 	void Update( float fElapsedTime, int GravityPointX, int GravityPointY, int nGravity, int nSpread);
 
-	void Render(int ImageID);
+	void Render(int ImageID, int red = 255, int green = 255, int blue = 255);
 
     bool IsDead(){return (m_fLife <= 0);}
 
