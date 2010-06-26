@@ -4,7 +4,7 @@
 #include "IGameState.h"
 #include "..\GameObjects\CBMPFont.h"
 
-class CBitmapFontEngine;
+//class CBitmapFontEngine;
 
 class CPauseMenuState : public IGameState
 {

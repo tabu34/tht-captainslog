@@ -442,6 +442,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Source\GameObjects\CProfileManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\GameObjects\CProfileManager.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\GameObjects\CUnit.cpp"
 				>
 			</File>
