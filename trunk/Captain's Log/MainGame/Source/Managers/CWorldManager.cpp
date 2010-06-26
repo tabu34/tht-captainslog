@@ -99,7 +99,7 @@ void CWorldManager::Render()
 							0, 0};
 						src.bottom = src.top + tempTile.m_nHeight;
 						src.right = src.left + tempTile.m_nWidth;
-						CSGD_TextureManager::GetInstance()->Draw(m_nTilesetImageID, tempTile.m_nLeft - CGame::GetInstance()->GetCamera()->GetX(), tempTile.m_nTop - CGame::GetInstance()->GetCamera()->GetY(), 1.0f, 1.0f, &src, 0.0f, 0.0f, 0.0f);
+						CSGD_TextureManager::GetInstance()->Draw(m_nTilesetImageID, tempTile.m_nLeft - (int)CGame::GetInstance()->GetCamera()->GetX(), tempTile.m_nTop - (int)CGame::GetInstance()->GetCamera()->GetY(), 1.0f, 1.0f, &src, 0.0f, 0.0f, 0.0f);
 					}
 				}
 			}

@@ -58,8 +58,8 @@ void CMovementControl::Input()
 			nTarget = -1;
 
 			RECT mouseRect = {0, 0, 0, 0};
-			mouseRect.left = CMovementControl::GetInstance()->MousePosX() + CGame::GetInstance()->GetCamera()->GetX();
-			mouseRect.top = CMovementControl::GetInstance()->MousePosY() + CGame::GetInstance()->GetCamera()->GetY();
+			mouseRect.left = LONG((float)CMovementControl::GetInstance()->MousePosX() + CGame::GetInstance()->GetCamera()->GetX());
+			mouseRect.top = LONG((float)CMovementControl::GetInstance()->MousePosY() + CGame::GetInstance()->GetCamera()->GetY());
 			mouseRect.right = mouseRect.left + 1;
 			mouseRect.bottom = mouseRect.top +1;
 
@@ -147,10 +147,10 @@ void CMovementControl::CheckDragRect()
 	if(m_bDragging)
 	{
 		RECT dragRect;
-		dragRect.left = m_ptStart.x + CGame::GetInstance()->GetCamera()->GetX();
-		dragRect.top = m_ptStart.y + CGame::GetInstance()->GetCamera()->GetY();
-		dragRect.right = CMovementControl::GetInstance()->MousePosX() + CGame::GetInstance()->GetCamera()->GetX();
-		dragRect.bottom = CMovementControl::GetInstance()->MousePosY() + CGame::GetInstance()->GetCamera()->GetY();
+		dragRect.left = m_ptStart.x + (LONG)CGame::GetInstance()->GetCamera()->GetX();
+		dragRect.top = m_ptStart.y + (LONG)CGame::GetInstance()->GetCamera()->GetY();
+		dragRect.right = LONG((float)CMovementControl::GetInstance()->MousePosX() + CGame::GetInstance()->GetCamera()->GetX());
+		dragRect.bottom = LONG((float)CMovementControl::GetInstance()->MousePosY() + CGame::GetInstance()->GetCamera()->GetY());
 
 		if(dragRect.right < dragRect.left)
 			swap(dragRect.left, dragRect.right);

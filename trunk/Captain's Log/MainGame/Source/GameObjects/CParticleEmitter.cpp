@@ -31,10 +31,10 @@ void CParticleEmitter::Initialize(int nImageID, int nWidth, int nHeight, int fPo
 	{
 		m_bRandScaleOn = false;
 	}
-    m_fXScale = minPartWidth*0.01;
-    m_fYscale = minPartHeight*0.01;
-    m_fMaxXscale = maxPartWidth*0.01;
-    m_dMaxYScale = maxPartHeight*0.01;
+    m_fXScale = (float)minPartWidth*0.01f;
+    m_fYscale = (float)minPartHeight*0.01f;
+    m_fMaxXscale = (float)maxPartWidth*0.01f;
+    m_dMaxYScale = (float)maxPartHeight*0.01f;
 
     
     for (int i = 0; i < m_nNumParticles; ++i)
