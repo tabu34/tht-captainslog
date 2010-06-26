@@ -31,7 +31,7 @@ const int	g_nWINDOW_HEIGHT		= 900;						//	Window Height.
 #ifdef _DEBUG
 	const BOOL	g_bIS_WINDOWED			= TRUE;						
 #else
-	const BOOL	g_bIS_WINDOWED			= FALSE;
+	const BOOL	g_bIS_WINDOWED			= TRUE;
 #endif
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)

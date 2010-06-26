@@ -7,7 +7,7 @@ using namespace std;
 void CParticleEngine::CreateNewEmitter( int nImageID, int nWidth, int nHeight, float fPosX, float fPosY, int nNumParticles, int nMinPartLife, int nMaxPartLife)
 {
 	CParticleEmitter emitter;
-	emitter.Initialize(nImageID,nWidth,nHeight,fPosX,fPosY,nNumParticles,nMaxPartLife,nMinPartLife);
+	emitter.Initialize(nImageID,nWidth,nHeight,(int)fPosX,(int)fPosY,nNumParticles,nMaxPartLife,nMinPartLife);
 	m_vEmitters.push_back(emitter);
 }
 
@@ -81,7 +81,7 @@ bool CParticleEngine::CreateEmitterFromFile(int nImageID, string sFileName, floa
 
 		in.close();
 
-		emitter.Initialize(nImageID,EmitterWidth,EmitterHeight,fPosX,fPosY,nParticles,MinLife,MaxLife,AlphaValue,initialForceX,initialForceY,BlendModeSource,BlendModeDest,
+		emitter.Initialize(nImageID,EmitterWidth,EmitterHeight,(int)fPosX,(int)fPosY,nParticles,MinLife,MaxLife,AlphaValue,initialForceX,initialForceY,BlendModeSource,BlendModeDest,
 			minPartWidth,minPartHeight,maxPartWidth,maxPartHeight,nGravity,GravitySourceX,GravitySourceY,RandomSpread,red,green,blue);
 
 		m_vEmitters.push_back(emitter);
