@@ -85,6 +85,9 @@ void CGamePlayState::Enter(void)
 	// Test Speech
 	m_nCurCount = 0;
 	m_szSpeechText = "Test Speech, Test Speech, \nTest Speech, Test Speech, \nTest Speech, Test Speech";
+
+	CGame::GetInstance()->GetCamera()->SetX( 0.0f );
+	CGame::GetInstance()->GetCamera()->SetY( 0.0f );
 }
 
 void CGamePlayState::Exit(void)

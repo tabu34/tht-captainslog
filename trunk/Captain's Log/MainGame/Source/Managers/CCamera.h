@@ -13,5 +13,6 @@ public:
 	void SetX(float _x) { m_fX = _x; }
 	void SetY(float _y) { m_fY = _y; }
 	RECT GetCollisionRect();
+	void Input();
 };
 #endif // CCamera_h__

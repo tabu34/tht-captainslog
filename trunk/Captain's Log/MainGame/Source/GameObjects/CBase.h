@@ -3,6 +3,7 @@
 
 #include "IBaseInterface.h"
 #include <Windows.h>
+#include "..\CGame.h"
 
 class CBase : public IBaseInterface
 {
