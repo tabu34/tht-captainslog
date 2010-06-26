@@ -36,17 +36,17 @@ void CMovementControl::Input()
 	m_pCursorLocation.x += CSGD_DirectInput::GetInstance()->MouseMovementX();
 	m_pCursorLocation.y += CSGD_DirectInput::GetInstance()->MouseMovementY();
 
-	if(MousePosX() < CGame::GetInstance()->GetCamera()->GetX())
-		m_pCursorLocation.x = (LONG)CGame::GetInstance()->GetCamera()->GetX();
+	if(MousePosX() < 0)
+		m_pCursorLocation.x = 0;
 
-	if(MousePosX() >CGame::GetInstance()->GetCamera()->GetCollisionRect().right)
-		m_pCursorLocation.x = CGame::GetInstance()->GetCamera()->GetCollisionRect().right;
+	if(MousePosX() > CGame::GetInstance()->GetScreenWidth())
+		m_pCursorLocation.x = CGame::GetInstance()->GetScreenWidth();
 
-	if(MousePosY() < CGame::GetInstance()->GetCamera()->GetY())
-		m_pCursorLocation.y = (LONG)CGame::GetInstance()->GetCamera()->GetY();
+	if(MousePosY() < 0)
+		m_pCursorLocation.y = 0;
 
-	if(MousePosY() >CGame::GetInstance()->GetCamera()->GetCollisionRect().bottom)
-		m_pCursorLocation.y = CGame::GetInstance()->GetCamera()->GetCollisionRect().bottom;
+	if(MousePosY() > CGame::GetInstance()->GetScreenHeight())
+		m_pCursorLocation.y = CGame::GetInstance()->GetScreenHeight();
 	// TODO: Mouse Input
 
 	if(m_DI->MouseButtonPressed(MOUSE_RIGHT))
@@ -58,8 +58,8 @@ void CMovementControl::Input()
 			nTarget = -1;
 
 			RECT mouseRect = {0, 0, 0, 0};
-			mouseRect.left = CMovementControl::GetInstance()->MousePosX();
-			mouseRect.top = CMovementControl::GetInstance()->MousePosY();
+			mouseRect.left = CMovementControl::GetInstance()->MousePosX() + CGame::GetInstance()->GetCamera()->GetX();
+			mouseRect.top = CMovementControl::GetInstance()->MousePosY() + CGame::GetInstance()->GetCamera()->GetY();
 			mouseRect.right = mouseRect.left + 1;
 			mouseRect.bottom = mouseRect.top +1;
 
@@ -106,21 +106,33 @@ void CMovementControl::Input()
 
 	if(m_DI->KeyDown(DIK_LEFT))
 	{
+		CGame::GetInstance()->GetCamera()->SetX( CGame::GetInstance()->GetCamera()->GetX() - 1.5f );
+		if(CGame::GetInstance()->GetCamera()->GetX() < 0.0f)
+			CGame::GetInstance()->GetCamera()->SetX( 0.0f );
 		//m_esEventSystem->SendEvent("LeftKeyPressed");
 	}
 
 	if(m_DI->KeyDown(DIK_RIGHT))
 	{
+		CGame::GetInstance()->GetCamera()->SetX( CGame::GetInstance()->GetCamera()->GetX() + 1.5f );
+		if(CGame::GetInstance()->GetCamera()->GetX() > 1000.0f)
+			CGame::GetInstance()->GetCamera()->SetX( 1000.0f );
 		//m_esEventSystem->SendEvent("RightKeyPressed");
 	}
 
 	if(m_DI->KeyDown(DIK_UP))
 	{
+		CGame::GetInstance()->GetCamera()->SetY( CGame::GetInstance()->GetCamera()->GetY() - 1.5f );
+		if(CGame::GetInstance()->GetCamera()->GetY() < 0.0f)
+			CGame::GetInstance()->GetCamera()->SetY( 0.0f );
 		//m_esEventSystem->SendEvent("UpKeyPressed");
 	}
 
 	if(m_DI->KeyDown(DIK_DOWN))
 	{
+		CGame::GetInstance()->GetCamera()->SetY( CGame::GetInstance()->GetCamera()->GetY() + 1.5f );
+		if(CGame::GetInstance()->GetCamera()->GetY() > 1000.0f)
+			CGame::GetInstance()->GetCamera()->SetY( 1000.0f );
 		//m_esEventSystem->SendEvent("DownKeyPressed");
 	}
 }
@@ -135,10 +147,10 @@ void CMovementControl::CheckDragRect()
 	if(m_bDragging)
 	{
 		RECT dragRect;
-		dragRect.left = m_ptStart.x;
-		dragRect.top = m_ptStart.y;
-		dragRect.right = CMovementControl::GetInstance()->MousePosX();
-		dragRect.bottom = CMovementControl::GetInstance()->MousePosY();
+		dragRect.left = m_ptStart.x + CGame::GetInstance()->GetCamera()->GetX();
+		dragRect.top = m_ptStart.y + CGame::GetInstance()->GetCamera()->GetY();
+		dragRect.right = CMovementControl::GetInstance()->MousePosX() + CGame::GetInstance()->GetCamera()->GetX();
+		dragRect.bottom = CMovementControl::GetInstance()->MousePosY() + CGame::GetInstance()->GetCamera()->GetY();
 
 		if(dragRect.right < dragRect.left)
 			swap(dragRect.left, dragRect.right);
