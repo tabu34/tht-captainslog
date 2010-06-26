@@ -9,7 +9,7 @@
 #include <CTime>
 
 //DELETE THIS
-#include "GameObjects\CProfileManager.h"
+//#include "GameObjects\CProfileManager.h"
 //////
 
 CGame::~CGame()
@@ -31,10 +31,6 @@ CGame::~CGame()
 
 CGame::CGame()
 {
-<<<<<<< .mine
-//
-=======
->>>>>>> .r114
 }
 
 bool CGame::Input()
@@ -84,8 +80,8 @@ void CGame::Render()
 	}
 
 	//DELETE THIS
-	MyPartEngine.Render();
-	CProfileManager::GetInstance()->Render();
+	/*MyPartEngine.Render();
+	CProfileManager::GetInstance()->Render();*/
 	//////////////////
 
 	m_pD3D->SpriteEnd();
@@ -100,9 +96,9 @@ void CGame::Update()
 	if (m_vStateStack[m_vStateStack.size() - 1])
 		m_vStateStack[m_vStateStack.size() - 1]->Update(m_fElapsedTime);
 
-	//DELETE THIS
-	MyPartEngine.Update(m_fElapsedTime);
-	CProfileManager::GetInstance()->Update();
+	////DELETE THIS
+	//MyPartEngine.Update(m_fElapsedTime);
+	//CProfileManager::GetInstance()->Update();
 	///////////////////////////
 
 }
@@ -165,11 +161,11 @@ void CGame::Initialize( HWND hWnd, HINSTANCE hInstance, int nScreenWidth, int nS
 	ChangeState(CMainMenuState::GetInstance());
 
 	//DELETE THIS
-	srand(unsigned int(time(0)));
+	/*srand(unsigned int(time(0)));
 	int number = CSGD_TextureManager::GetInstance()->LoadTexture("Resource/Graphics/spark.png");
 	MyPartEngine.CreateEmitterFromFile(number,"Resource/checkitour.par", 200, 200);
 
-	CProfileManager::GetInstance()->Init();
+	CProfileManager::GetInstance()->Init();*/
 	/////////////
 }
 
@@ -210,9 +206,9 @@ void CGame::PushState( IGameState* pNewState )
 void CGame::Shutdown()
 {
 
-	////////////////
-	//DELETE THIS
-	CProfileManager::GetInstance()->Shutdown();
+	//////////////////
+	////DELETE THIS
+	//CProfileManager::GetInstance()->Shutdown();
 	//////////////////
 
 	ChangeState(NULL);
