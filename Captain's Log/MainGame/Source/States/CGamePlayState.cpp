@@ -101,8 +101,8 @@ bool CGamePlayState::Input(void)
 
 	// Tooltips
 	RECT mousePos, collide, collider;
-	mousePos.left = CSGD_DirectInput::GetInstance()->MouseGetPosX();
-	mousePos.top = CSGD_DirectInput::GetInstance()->MouseGetPosY();
+	mousePos.left = CMovementControl::GetInstance()->MousePosX();
+	mousePos.top = CMovementControl::GetInstance()->MousePosY();
 	mousePos.right = mousePos.left + 1;
 	mousePos.bottom = mousePos.top + 1;
 
@@ -177,7 +177,7 @@ void CGamePlayState::RenderHUD(void)
 
 	// Render ToolTip Text
 	if(m_szTooltipText != "")
-		m_ftTextSmallShadow.RenderText((char*)m_szTooltipText.c_str(), CSGD_DirectInput::GetInstance()->MouseGetPosX(), CSGD_DirectInput::GetInstance()->MouseGetPosY() - 25);
+		m_ftTextSmallShadow.RenderText((char*)m_szTooltipText.c_str(), CMovementControl::GetInstance()->MousePosX(), CMovementControl::GetInstance()->MousePosY() - 25);
 }
 
 void CGamePlayState::Render(void)

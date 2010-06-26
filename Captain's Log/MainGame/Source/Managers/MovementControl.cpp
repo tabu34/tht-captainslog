@@ -22,13 +22,31 @@ void CMovementControl::Init()
 	m_cCAM = CGame::GetInstance()->GetCamera();
 
 	m_bDragging = false;
-	m_ptStart.x = CSGD_DirectInput::GetInstance()->MouseGetPosX();
-	m_ptStart.y = CSGD_DirectInput::GetInstance()->MouseGetPosY();
+	m_ptStart.x = CMovementControl::GetInstance()->MousePosX();
+	m_ptStart.y = CMovementControl::GetInstance()->MousePosY();
 	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture("Resource\\Graphics\\gameCursor.png");
+	m_pCursorLocation.x = 100;
+	m_pCursorLocation.y = 100;
 }
 
 void CMovementControl::Input()
 {
+
+	// Update Mouse Pos
+	m_pCursorLocation.x += CSGD_DirectInput::GetInstance()->MouseMovementX();
+	m_pCursorLocation.y += CSGD_DirectInput::GetInstance()->MouseMovementY();
+
+	if(MousePosX() < CGame::GetInstance()->GetCamera()->GetX())
+		m_pCursorLocation.x = (LONG)CGame::GetInstance()->GetCamera()->GetX();
+
+	if(MousePosX() >CGame::GetInstance()->GetCamera()->GetCollisionRect().right)
+		m_pCursorLocation.x = CGame::GetInstance()->GetCamera()->GetCollisionRect().right;
+
+	if(MousePosY() < CGame::GetInstance()->GetCamera()->GetY())
+		m_pCursorLocation.y = (LONG)CGame::GetInstance()->GetCamera()->GetY();
+
+	if(MousePosY() >CGame::GetInstance()->GetCamera()->GetCollisionRect().bottom)
+		m_pCursorLocation.y = CGame::GetInstance()->GetCamera()->GetCollisionRect().bottom;
 	// TODO: Mouse Input
 
 	if(m_DI->MouseButtonPressed(MOUSE_RIGHT))
@@ -40,8 +58,8 @@ void CMovementControl::Input()
 			nTarget = -1;
 
 			RECT mouseRect = {0, 0, 0, 0};
-			mouseRect.left = CSGD_DirectInput::GetInstance()->MouseGetPosX();
-			mouseRect.top = CSGD_DirectInput::GetInstance()->MouseGetPosY();
+			mouseRect.left = CMovementControl::GetInstance()->MousePosX();
+			mouseRect.top = CMovementControl::GetInstance()->MousePosY();
 			mouseRect.right = mouseRect.left + 1;
 			mouseRect.bottom = mouseRect.top +1;
 
@@ -76,8 +94,8 @@ void CMovementControl::Input()
 		if(m_bDragging == false)
 		{
 			m_bDragging = true;
-			m_ptStart.x = CSGD_DirectInput::GetInstance()->MouseGetPosX();
-			m_ptStart.y = CSGD_DirectInput::GetInstance()->MouseGetPosY();
+			m_ptStart.x = CMovementControl::GetInstance()->MousePosX();
+			m_ptStart.y = CMovementControl::GetInstance()->MousePosY();
 		}
 		// END Unit Selection -----------
 
@@ -119,8 +137,8 @@ void CMovementControl::CheckDragRect()
 		RECT dragRect;
 		dragRect.left = m_ptStart.x;
 		dragRect.top = m_ptStart.y;
-		dragRect.right = CSGD_DirectInput::GetInstance()->MouseGetPosX();
-		dragRect.bottom = CSGD_DirectInput::GetInstance()->MouseGetPosY();
+		dragRect.right = CMovementControl::GetInstance()->MousePosX();
+		dragRect.bottom = CMovementControl::GetInstance()->MousePosY();
 
 		if(dragRect.right < dragRect.left)
 			swap(dragRect.left, dragRect.right);
@@ -157,8 +175,8 @@ void CMovementControl::RenderDragRect()
 		RECT dragRect;
 		dragRect.left = m_ptStart.x;
 		dragRect.top = m_ptStart.y;
-		dragRect.right = CSGD_DirectInput::GetInstance()->MouseGetPosX();
-		dragRect.bottom = CSGD_DirectInput::GetInstance()->MouseGetPosY();
+		dragRect.right = CMovementControl::GetInstance()->MousePosX();
+		dragRect.bottom = CMovementControl::GetInstance()->MousePosY();
 
 		CSGD_Direct3D::GetInstance()->DrawLine(dragRect.left, dragRect.top, dragRect.right, dragRect.top, 0, 255, 0);
 		CSGD_Direct3D::GetInstance()->DrawLine(dragRect.right, dragRect.top, dragRect.right, dragRect.bottom, 0, 255, 0);
@@ -169,5 +187,5 @@ void CMovementControl::RenderDragRect()
 
 void CMovementControl::RenderCursor()
 {
-	CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, CSGD_DirectInput::GetInstance()->MouseGetPosX(), CSGD_DirectInput::GetInstance()->MouseGetPosY(), 0.75f, 0.75f);
+	CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, CMovementControl::GetInstance()->MousePosX(), CMovementControl::GetInstance()->MousePosY(), 0.75f, 0.75f);
 }

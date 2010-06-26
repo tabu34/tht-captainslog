@@ -24,12 +24,16 @@ class CMovementControl
 
 	// Cursor variables
 	int					m_nCursorImageID;
+	POINT				m_pCursorLocation;
 
 	CMovementControl(void) {};
 	~CMovementControl(void) {};
 	CMovementControl(CMovementControl&) {};
 	CMovementControl& operator=(CMovementControl&) {};
 public:
+	int		MousePosX()	{ return m_pCursorLocation.x; }
+	int		MousePosY()	{ return m_pCursorLocation.y; }
+
 	static CMovementControl* GetInstance();
 	void Init();
 	void Input();
