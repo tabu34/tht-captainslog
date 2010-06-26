@@ -12,6 +12,11 @@
 #include "SGD Wrappers\CSGD_DirectInput.h"
 #include "SGD Wrappers\CSGD_TextureManager.h"
 #include "States\IGameState.h"
+
+//
+#include "GameObjects/CParticleEngine.h"
+#include "GameObjects/CProfileManager.h"
+//
 using namespace std;
 
 class CGame
@@ -52,6 +57,10 @@ class CGame
 	void			Update();
 
 	void			ToggleFullScreen();
+
+	//REMOVE////
+	CParticleEngine MyPartEngine;
+	////////////////////////////////
 
 public:
 	// Accessors
