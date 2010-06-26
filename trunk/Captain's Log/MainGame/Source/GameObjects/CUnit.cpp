@@ -131,7 +131,7 @@ void CUnit::Render()
 
 	char szHP[16];
 	sprintf_s(szHP, 16, "%i", CurHealth());
-	CSGD_Direct3D::GetInstance()->DrawText(szHP, PosX() - 25.0f - CGame::GetInstance()->GetCamera()->GetX(), PosY() - 25.0f - CGame::GetInstance()->GetCamera()->GetY(), 255, 255, 255);
+	//CSGD_Direct3D::GetInstance()->DrawText(szHP, PosX() - 25.0f - CGame::GetInstance()->GetCamera()->GetX(), PosY() - 25.0f - CGame::GetInstance()->GetCamera()->GetY(), 255, 255, 255);
 
 	//DEBUG
 	if (m_fFireLineTime > 0)
