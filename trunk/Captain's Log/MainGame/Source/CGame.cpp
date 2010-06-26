@@ -31,6 +31,10 @@ CGame::~CGame()
 
 CGame::CGame()
 {
+<<<<<<< .mine
+//
+=======
+>>>>>>> .r114
 }
 
 bool CGame::Input()
