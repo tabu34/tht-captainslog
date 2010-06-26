@@ -20,6 +20,8 @@ using namespace std;
 #include <string>
 using namespace std;
 
+#include "..\GameObjects\CParticleEmitter.h"
+
 class CHUDButton
 {
 	POINT	m_pLocation;
@@ -98,6 +100,10 @@ class CGamePlayState : public IGameState
 
 	// Tooltip
 	string				m_szTooltipText;
+
+	// Particles
+	CParticleEmitter	m_peEmitter;
+	int					m_nParticleImageID;
 
 	CGamePlayState(void);
 	CGamePlayState(const CGamePlayState&);

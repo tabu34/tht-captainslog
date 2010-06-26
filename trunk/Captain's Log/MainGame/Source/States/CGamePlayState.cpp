@@ -86,12 +86,19 @@ void CGamePlayState::Enter(void)
 	m_nCurCount = 0;
 	m_szSpeechText = "Test Speech, Test Speech, \nTest Speech, Test Speech, \nTest Speech, Test Speech";
 
+	// Camera
 	CGame::GetInstance()->GetCamera()->SetX( 0.0f );
 	CGame::GetInstance()->GetCamera()->SetY( 0.0f );
+
+	// Particles
+	m_nParticleImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("particle.png").c_str());
+	m_peEmitter.Initialize(m_nParticleImageID, 64, 64, 50.0f, 50.0f, 30, 5, 50, 0, 1, 1, 0, 0, 16,16,32,32,0, 0, 0, 3, 255, 255, 255);
 }
 
 void CGamePlayState::Exit(void)
 {
+	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nParticleImageID);
+
 	for(unsigned int i = 0; i < m_vButtons.size(); i++)
 	{
 		CSGD_TextureManager::GetInstance()->UnloadTexture(m_vButtons[i].TextureID());
@@ -157,6 +164,7 @@ void CGamePlayState::Update(float fElapsedTime)
 	CMovementControl::GetInstance()->CheckDragRect();
 	CObjectManager::GetInstance()->UpdateObjects(fElapsedTime);
 	CMessageSystem::GetInstance()->ProcessMessages();
+	m_peEmitter.Update(fElapsedTime);
 }
 
 void CGamePlayState::RenderHUD(void)
@@ -191,6 +199,7 @@ void CGamePlayState::Render(void)
 	CSGD_Direct3D::GetInstance()->SpriteBegin();
 
 	CMovementControl::GetInstance()->RenderDragRect();
+	m_peEmitter.Render();
 	RenderHUD();
 	CObjectManager::GetInstance()->RenderObjects();
 	CMovementControl::GetInstance()->RenderCursor();
