@@ -14,6 +14,7 @@
 #include "..\GameObjects\CBMPFont.h"
 #include <vector>
 #include "..\GameObjects\CItem.h"
+#include "..\Managers\CMessageSystem.h"
 using namespace std;
 
 #include <string>
@@ -104,6 +105,8 @@ class CGamePlayState : public IGameState
 	~CGamePlayState(void);
 public:
 	static CGamePlayState* GetInstance();
+
+	static void MessageProc(CBaseMessage* pMSG);
 
 	// HUD Functions
 	int  FindButton(string _name);

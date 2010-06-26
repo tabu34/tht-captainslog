@@ -13,6 +13,12 @@ CMarine::CMarine()
 	Width(120);
 	Height(140);
 	CurHealth(10);
+	MaxHealth(10);
+	AttackSpeed(1);
+	AttackDamage(4);
+	AttackTimer(0);
+	AttackRange(250);
+	
 
 	if(CAnimationManager::GetInstance()->GetAnimation("MarineIdle"))
 		CAnimationManager::GetInstance()->GetAnimation("MarineIdle")->anAnimation.Play();

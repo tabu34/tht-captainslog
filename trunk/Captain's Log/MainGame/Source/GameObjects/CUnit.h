@@ -30,6 +30,10 @@ class CUnit : public CBase
 	vector<CAbility*>	m_vAbilities;
 	vector<int>			m_vAnimations;
 
+	//DEBUGGING
+	float				m_fFireLineTime;
+	//END
+
 	POINT				m_pDestinationMove;
 	int					m_nState;
 
@@ -40,6 +44,7 @@ class CUnit : public CBase
 public:
 	CUnit();
 	void Update(float fElapsedTime);
+	void Render();
 
 	// Orders //////////////////////////////////////
 	void OrderMove( POINT _dest );
