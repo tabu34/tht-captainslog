@@ -9,6 +9,7 @@
 #include "CGamePlayState.h"
 #include "..\CGame.h"
 #include "..\GameObjects\CMarine.h"
+#include "..\Managers\CWorldManager.h"
 
 CGamePlayState::CGamePlayState(void)
 {
@@ -67,7 +68,8 @@ void CGamePlayState::Enter(void)
  	m_ftTextLargeShadow.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
 
 	// Test BG
-	m_nBG = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("testBG.png").c_str());
+	//m_nBG = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("testBG.png").c_str());
+	CWorldManager::GetInstance()->Load("Resource//Graphics//testmap.mfl");
 
 	// Load Animations
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\marine\\idle.bin").c_str(), D3DCOLOR_XRGB(112, 38, 37));
@@ -121,6 +123,28 @@ bool CGamePlayState::Input(void)
 		badGuy->PosX(800);
 		CObjectManager::GetInstance()->AddObject(badGuy);
 	}
+
+	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_M))
+	{
+		for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
+		{
+			if ((*CObjectManager::GetInstance()->GetObjectList())[i]->Type() == CUnit::OBJ_PLAYER)
+			{
+				((CUnit*)((*CObjectManager::GetInstance()->GetObjectList())[i]))->CurHealth(((CUnit*)((*CObjectManager::GetInstance()->GetObjectList())[i]))->CurHealth() + 2);
+			}
+		}
+	}
+
+	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_K))
+	{
+		for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
+		{
+			if ((*CObjectManager::GetInstance()->GetObjectList())[i]->Type() == CUnit::OBJ_PLAYER)
+			{
+				((CUnit*)((*CObjectManager::GetInstance()->GetObjectList())[i]))->CurHealth(((CUnit*)((*CObjectManager::GetInstance()->GetObjectList())[i]))->CurHealth() - 2);
+			}
+		}
+	}
 	return true;
 }
 
@@ -158,10 +182,11 @@ void CGamePlayState::RenderHUD(void)
 
 void CGamePlayState::Render(void)
 {
-	CSGD_TextureManager::GetInstance()->Draw(m_nBG, 0, 0, 1.0f, 1.0f);
+	CWorldManager::GetInstance()->Render();
+//	CSGD_TextureManager::GetInstance()->Draw(m_nBG, 0, 0, 1.0f, 1.0f);
 	CSGD_Direct3D::GetInstance()->SpriteEnd();
 	CSGD_Direct3D::GetInstance()->SpriteBegin();
-	
+
 	CMovementControl::GetInstance()->RenderDragRect();
 	RenderHUD();
 	CObjectManager::GetInstance()->RenderObjects();
