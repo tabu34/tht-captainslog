@@ -1,6 +1,7 @@
 #include "precompiled_header.h"
 #include "CUnit.h"
 #include "../Managers/CMessageSystem.h"
+#include "../SGD Wrappers/CSGD_Direct3D.h"
 #include <cmath>
 
 CUnit::CUnit()
@@ -31,6 +32,13 @@ void CUnit::OrderAttack(CUnit* pTarget)
 void CUnit::Update(float fElapsedTime)
 {
 	CBase::Update(fElapsedTime);
+
+	//DEBUG
+	if (m_fFireLineTime > 0)
+	{
+		m_fFireLineTime -= fElapsedTime;
+	}
+	//END
 
 	if (m_nCurHealth <= 0)
 	{
@@ -65,6 +73,12 @@ void CUnit::Update(float fElapsedTime)
 	}
 	else if (m_nState == UNIT_MOVING_ATTACK)
 	{
+		if (m_pTarget->CurHealth() <= 0)
+		{
+			m_nState = UNIT_MOVING;
+			m_pDestinationMove.x = PosX();
+			m_pDestinationMove.y = PosY();
+		}
 		if (fabs(((PosX() - m_pTarget->PosX()) * (PosX() - m_pTarget->PosX()) +
 		   (PosY() - m_pTarget->PosY()) * (PosY() - m_pTarget->PosY()))) < (m_fAttackRange * m_fAttackRange))
 		{
@@ -79,7 +93,7 @@ void CUnit::Update(float fElapsedTime)
 			else
 				VelX(-100.0f);
 
-			if(PosY() < m_pTarget->PosX())
+			if(PosY() < m_pTarget->PosY())
 				VelY(100.0f);
 			else
 				VelY(-100.0f);
@@ -87,6 +101,12 @@ void CUnit::Update(float fElapsedTime)
 	}
 	else if (m_nState == UNIT_ATTACK)
 	{
+		if (m_pTarget->CurHealth() <= 0)
+		{
+			m_nState = UNIT_MOVING;
+			m_pDestinationMove.x = PosX();
+			m_pDestinationMove.y = PosY();
+		}
 		if (fabs(((PosX() - m_pTarget->PosX()) * (PosX() - m_pTarget->PosX()) +
 			(PosY() - m_pTarget->PosY()) * (PosY() - m_pTarget->PosY()))) > (m_fAttackRange * m_fAttackRange))
 		{
@@ -99,7 +119,24 @@ void CUnit::Update(float fElapsedTime)
 			{
 				m_pTarget->CurHealth(m_pTarget->CurHealth() - (int)(m_fAttackDamage));
 				m_fAttackTimer = 0;
+				m_fFireLineTime = 0.1;
 			}
 		}
 	}
+}
+
+void CUnit::Render()
+{
+	CBase::Render();
+
+	char szHP[16];
+	sprintf_s(szHP, 16, "%i", CurHealth());
+	CSGD_Direct3D::GetInstance()->DrawText(szHP, PosX() - 25.0f, PosY() - 25.0f, 255, 255, 255);
+
+	//DEBUG
+	if (m_fFireLineTime > 0)
+	{
+		CSGD_Direct3D::GetInstance()->DrawLine(PosX(), PosY(), m_pTarget->PosX(), m_pTarget->PosY(), 255, 255, 255);
+	}
+	//END
 }

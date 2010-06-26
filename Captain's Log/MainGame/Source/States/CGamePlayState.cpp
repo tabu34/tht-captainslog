@@ -28,6 +28,8 @@ CGamePlayState* CGamePlayState::GetInstance()
 
 void CGamePlayState::Enter(void)
 {
+	CMessageSystem::GetInstance()->InitMessageSystem(CGamePlayState::MessageProc);
+
 	// Setup GUI
 	m_vButtons.push_back(CHUDButton(-76, 645, 2048, 512, "BottomHUD", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/0.png").c_str())));
 	m_vButtons.push_back(CHUDButton(270, 706, 256, 256, "UnitPortrait", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/1.png").c_str())));
@@ -73,6 +75,11 @@ void CGamePlayState::Enter(void)
 	// Objects
 	CObjectManager::GetInstance()->AddObject(new CMarine());
 
+	CMarine* badGuy = new CMarine();
+	badGuy->Type(CBase::OBJ_ENEMY);
+	badGuy->PosX(400);
+	CObjectManager::GetInstance()->AddObject(badGuy);
+
 	// Test Speech
 	m_nCurCount = 0;
 	m_szSpeechText = "Test Speech, Test Speech, \nTest Speech, Test Speech, \nTest Speech, Test Speech";
@@ -106,6 +113,14 @@ bool CGamePlayState::Input(void)
 		m_szTooltipText = "";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(false);
 	}
+
+	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_B))
+	{
+		CMarine* badGuy = new CMarine();
+		badGuy->Type(CBase::OBJ_ENEMY);
+		badGuy->PosX(800);
+		CObjectManager::GetInstance()->AddObject(badGuy);
+	}
 	return true;
 }
 
@@ -114,6 +129,7 @@ void CGamePlayState::Update(float fElapsedTime)
 	m_nCurCount += 25.0f * fElapsedTime;
 	CMovementControl::GetInstance()->CheckDragRect();
 	CObjectManager::GetInstance()->UpdateObjects(fElapsedTime);
+	CMessageSystem::GetInstance()->ProcessMessages();
 }
 
 void CGamePlayState::RenderHUD(void)
@@ -173,4 +189,15 @@ void CGamePlayState::RenderLargeShadowText(char* _text, int _x, int _y)
 {
 	m_ftTextLargeShadow.RenderText(_text, _x + 2, _y + 2);
 	m_ftTextLarge.RenderText(_text, _x, _y);
+}
+
+void CGamePlayState::MessageProc(CBaseMessage* pMSG)
+{
+	switch (pMSG->GetMsgID())
+	{
+	case MSG_DESTROY_UNIT:
+		CUnitDeathMessage* udMSG = (CUnitDeathMessage*)pMSG;
+
+		CObjectManager::GetInstance()->RemoveObject(udMSG->GetUnit());
+	}
 }
