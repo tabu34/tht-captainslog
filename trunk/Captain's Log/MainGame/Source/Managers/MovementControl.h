@@ -1,14 +1,16 @@
 #ifndef CMovementControl_h__
 #define CMovementControl_h__
 
+
+
 class CBase;
 class CEventSystem;
-class CSGD_DirectInput;
 class CCamera;
 #include <vector>
 using namespace std;
 
 #include <windows.h>
+#include "..\SGD Wrappers\CSGD_DirectInput.h"
 
 class CMovementControl
 {
@@ -24,15 +26,14 @@ class CMovementControl
 
 	// Cursor variables
 	int					m_nCursorImageID;
-	POINT				m_pCursorLocation;
 
 	CMovementControl(void) {};
 	~CMovementControl(void) {};
 	CMovementControl(CMovementControl&) {};
 	CMovementControl& operator=(CMovementControl&) {};
 public:
-	int		MousePosX()	{ return m_pCursorLocation.x; }
-	int		MousePosY()	{ return m_pCursorLocation.y; }
+	int		MousePosX()	{ return CSGD_DirectInput::GetInstance()->MouseGetPosX(); }
+	int		MousePosY()	{ return CSGD_DirectInput::GetInstance()->MouseGetPosY(); }
 
 	static CMovementControl* GetInstance();
 	void Init();
