@@ -36,17 +36,18 @@ void CMovementControl::Input()
 
 	// Update Mouse Pos
 
-	if(MousePosX() < m_cCAM->GetX())
-		CSGD_DirectInput::GetInstance()->MouseSetPosX((LONG)m_cCAM->GetX());
 
-	if(MousePosX() > m_cCAM->GetX() + CGame::GetInstance()->GetScreenWidth())
-		CSGD_DirectInput::GetInstance()->MouseSetPosX( (LONG)m_cCAM->GetX() + CGame::GetInstance()->GetScreenWidth());
+	//if(MousePosX() < m_cCAM->GetX())
+	//	CSGD_DirectInput::GetInstance()->MouseSetPosX((LONG)m_cCAM->GetX());
 
-	if(MousePosY() < m_cCAM->GetY())
-		CSGD_DirectInput::GetInstance()->MouseSetPosY( (LONG)m_cCAM->GetY());
+	//if(MousePosX() > m_cCAM->GetX() + CGame::GetInstance()->GetScreenWidth())
+	//	CSGD_DirectInput::GetInstance()->MouseSetPosX( (LONG)m_cCAM->GetX() + CGame::GetInstance()->GetScreenWidth());
 
-	if(MousePosY() > m_cCAM->GetY() + CGame::GetInstance()->GetScreenHeight())
-		CSGD_DirectInput::GetInstance()->MouseSetPosY( (LONG)m_cCAM->GetY() + CGame::GetInstance()->GetScreenHeight());
+	//if(MousePosY() < m_cCAM->GetY())
+	//	CSGD_DirectInput::GetInstance()->MouseSetPosY( (LONG)m_cCAM->GetY());
+
+	//if(MousePosY() > m_cCAM->GetY() + CGame::GetInstance()->GetScreenHeight())
+	//	CSGD_DirectInput::GetInstance()->MouseSetPosY( (LONG)m_cCAM->GetY() + CGame::GetInstance()->GetScreenHeight());
 
 	m_pCursorLocation.x = CSGD_DirectInput::GetInstance()->MouseGetPosX();
 	m_pCursorLocation.y = CSGD_DirectInput::GetInstance()->MouseGetPosY();
