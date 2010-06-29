@@ -41,6 +41,7 @@ public:
 	void RenderDragRect();
 	void RenderCursor();
 	void Shutdown();
+	void UpdateCamera(float fElapsedTime);
 };
 
 #endif
