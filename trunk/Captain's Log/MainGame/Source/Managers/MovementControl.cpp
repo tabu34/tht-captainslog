@@ -25,28 +25,31 @@ void CMovementControl::Init()
 	m_ptStart.x = CMovementControl::GetInstance()->MousePosX();
 	m_ptStart.y = CMovementControl::GetInstance()->MousePosY();
 	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture("Resource\\Graphics\\gameCursor.png");
-	m_pCursorLocation.x = 100;
-	m_pCursorLocation.y = 100;
+	CSGD_DirectInput::GetInstance()->MouseSetPosX(100);
+	CSGD_DirectInput::GetInstance()->MouseSetPosY(100);
+	m_pCursorLocation.x = CSGD_DirectInput::GetInstance()->MouseGetPosX();
+	m_pCursorLocation.y = CSGD_DirectInput::GetInstance()->MouseGetPosY();
 }
 
 void CMovementControl::Input()
 {
 
 	// Update Mouse Pos
-	m_pCursorLocation.x += CSGD_DirectInput::GetInstance()->MouseMovementX();
-	m_pCursorLocation.y += CSGD_DirectInput::GetInstance()->MouseMovementY();
 
-	if(MousePosX() < 0)
-		m_pCursorLocation.x = 0;
+	if(MousePosX() < m_cCAM->GetX())
+		CSGD_DirectInput::GetInstance()->MouseSetPosX((LONG)m_cCAM->GetX());
 
-	if(MousePosX() > CGame::GetInstance()->GetScreenWidth())
-		m_pCursorLocation.x = CGame::GetInstance()->GetScreenWidth();
+	if(MousePosX() > m_cCAM->GetX() + CGame::GetInstance()->GetScreenWidth())
+		CSGD_DirectInput::GetInstance()->MouseSetPosX( (LONG)m_cCAM->GetX() + CGame::GetInstance()->GetScreenWidth());
 
-	if(MousePosY() < 0)
-		m_pCursorLocation.y = 0;
+	if(MousePosY() < m_cCAM->GetY())
+		CSGD_DirectInput::GetInstance()->MouseSetPosY( (LONG)m_cCAM->GetY());
 
-	if(MousePosY() > CGame::GetInstance()->GetScreenHeight())
-		m_pCursorLocation.y = CGame::GetInstance()->GetScreenHeight();
+	if(MousePosY() > m_cCAM->GetY() + CGame::GetInstance()->GetScreenHeight())
+		CSGD_DirectInput::GetInstance()->MouseSetPosY( (LONG)m_cCAM->GetY() + CGame::GetInstance()->GetScreenHeight());
+
+	m_pCursorLocation.x = CSGD_DirectInput::GetInstance()->MouseGetPosX();
+	m_pCursorLocation.y = CSGD_DirectInput::GetInstance()->MouseGetPosY();
 	// TODO: Mouse Input
 
 	if(m_DI->MouseButtonPressed(MOUSE_RIGHT))
@@ -58,8 +61,8 @@ void CMovementControl::Input()
 			nTarget = -1;
 
 			RECT mouseRect = {0, 0, 0, 0};
-			mouseRect.left = CMovementControl::GetInstance()->MousePosX() + CGame::GetInstance()->GetCamera()->GetX();
-			mouseRect.top = CMovementControl::GetInstance()->MousePosY() + CGame::GetInstance()->GetCamera()->GetY();
+			mouseRect.left = LONG((float)CMovementControl::GetInstance()->MousePosX() + CGame::GetInstance()->GetCamera()->GetX());
+			mouseRect.top = LONG((float)CMovementControl::GetInstance()->MousePosY() + CGame::GetInstance()->GetCamera()->GetY());
 			mouseRect.right = mouseRect.left + 1;
 			mouseRect.bottom = mouseRect.top +1;
 
@@ -147,10 +150,10 @@ void CMovementControl::CheckDragRect()
 	if(m_bDragging)
 	{
 		RECT dragRect;
-		dragRect.left = m_ptStart.x + CGame::GetInstance()->GetCamera()->GetX();
-		dragRect.top = m_ptStart.y + CGame::GetInstance()->GetCamera()->GetY();
-		dragRect.right = CMovementControl::GetInstance()->MousePosX() + CGame::GetInstance()->GetCamera()->GetX();
-		dragRect.bottom = CMovementControl::GetInstance()->MousePosY() + CGame::GetInstance()->GetCamera()->GetY();
+		dragRect.left = m_ptStart.x + (LONG)CGame::GetInstance()->GetCamera()->GetX();
+		dragRect.top = m_ptStart.y + (LONG)CGame::GetInstance()->GetCamera()->GetY();
+		dragRect.right = LONG((float)CMovementControl::GetInstance()->MousePosX() + CGame::GetInstance()->GetCamera()->GetX());
+		dragRect.bottom = LONG((float)CMovementControl::GetInstance()->MousePosY() + CGame::GetInstance()->GetCamera()->GetY());
 
 		if(dragRect.right < dragRect.left)
 			swap(dragRect.left, dragRect.right);
@@ -195,9 +198,53 @@ void CMovementControl::RenderDragRect()
 		CSGD_Direct3D::GetInstance()->DrawLine(dragRect.right, dragRect.bottom, dragRect.left, dragRect.bottom, 0, 255, 0);
 		CSGD_Direct3D::GetInstance()->DrawLine(dragRect.left, dragRect.bottom, dragRect.left, dragRect.top, 0, 255, 0);
 	}
-}
+}	
 
 void CMovementControl::RenderCursor()
 {
 	CSGD_TextureManager::GetInstance()->Draw(m_nCursorImageID, CMovementControl::GetInstance()->MousePosX(), CMovementControl::GetInstance()->MousePosY(), 0.75f, 0.75f);
+}
+
+void CMovementControl::UpdateCamera( float fElapsedTime )
+{
+	int nBuffer		= 20;
+	float nSpeed	= 100;
+
+	RECT rCameraBounds;
+	SetRect(&rCameraBounds, 0, 0, 10000, 10000);
+
+	m_cCAM->VelX(0);
+	m_cCAM->VelY(0);
+
+	if (CSGD_DirectInput::GetInstance()->MouseGetPosX() < nBuffer + m_cCAM->GetX())
+		m_cCAM->VelX(-nSpeed);
+	else if (CSGD_DirectInput::GetInstance()->MouseGetPosX() > m_cCAM->GetX() + CGame::GetInstance()->GetScreenWidth() - nBuffer)
+		m_cCAM->VelX(nSpeed);
+
+	if (CSGD_DirectInput::GetInstance()->MouseGetPosY() < nBuffer + m_cCAM->GetY())
+		m_cCAM->VelY(-nSpeed);
+	else if (CSGD_DirectInput::GetInstance()->MouseGetPosY() > m_cCAM->GetY() + CGame::GetInstance()->GetScreenHeight() - nBuffer)
+		m_cCAM->VelY(nSpeed);
+
+
+	m_cCAM->Update(fElapsedTime);
+
+
+	if (m_cCAM->GetX() < rCameraBounds.left)
+	{
+		m_cCAM->SetX((float)rCameraBounds.left);
+		m_cCAM->VelX(0);
+	}
+	//else if (m_cCAM->GetX() + CGame::GetInstance()->GetScreenWidth() > rCameraBounds.right)
+	//{
+	//	m_cCAM->SetX((float)(rCameraBounds.right - CGame::GetInstance()->GetScreenWidth()));
+	//	m_cCAM->VelY(0);
+	//}
+
+	//if (m_cCAM->GetY() < rCameraBounds.top)
+	//	m_cCAM->SetY((float)rCameraBounds.top);
+	//else if (m_cCAM->GetY() + CGame:: GetInstance()->GetScreenHeight() > rCameraBounds.bottom)
+	//	m_cCAM->SetY((float)(rCameraBounds.bottom - CGame::GetInstance()->GetScreenHeight()));
+
+
 }
