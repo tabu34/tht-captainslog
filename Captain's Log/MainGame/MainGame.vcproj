@@ -250,6 +250,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Source\SGD Wrappers\SGD_Math.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\SGD Wrappers\SGD_Math.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\SGD Wrappers\SGD_Util.h"
 				>
 			</File>
@@ -367,6 +375,14 @@
 			</File>
 			<File
 				RelativePath=".\Source\Managers\CObjectManager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\Managers\CPathManager.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\Managers\CPathManager.h"
 				>
 			</File>
 			<File

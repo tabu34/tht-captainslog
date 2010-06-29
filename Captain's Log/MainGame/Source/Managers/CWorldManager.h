@@ -1,6 +1,8 @@
 #ifndef CWorldManager_h__
 #define CWorldManager_h__
 
+class CPathManager;
+
 struct Tile 
 {
 	int m_nWidth;
@@ -24,6 +26,7 @@ struct Blocker
 		int x;
 		int y;
 	};
+	int m_nNumPoints;
 	Point* m_Points;
 };
 
@@ -41,6 +44,7 @@ private:
 	Tile*** m_World;
 	Object* m_Objects;
 	Blocker* m_Blockers;
+	int m_nNumBlockers;
 
 	int m_nWorldHeight;
 	int m_nWorldWidth;
@@ -58,6 +62,8 @@ public:
 
 	void Load(string sFileName);
 	void Render();
+
+	friend class CPathManager;
 };
 
 #endif
