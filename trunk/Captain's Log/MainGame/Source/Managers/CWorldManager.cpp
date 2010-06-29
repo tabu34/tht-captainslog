@@ -89,8 +89,8 @@ void CWorldManager::Render()
 			{
 				Tile tempTile = m_World[l][i][j];
 				RECT cameraRect = CGame::GetInstance()->GetCamera()->GetCollisionRect();
-				if (tempTile.m_nLeft >= cameraRect.left && tempTile.m_nLeft <= cameraRect.right
-					&& tempTile.m_nTop >= cameraRect.top && tempTile.m_nTop <= cameraRect.bottom)
+				if (tempTile.m_nLeft + tempTile.m_nWidth >= cameraRect.left && tempTile.m_nLeft <= cameraRect.right
+					&& tempTile.m_nTop + tempTile.m_nHeight >= cameraRect.top && tempTile.m_nTop <= cameraRect.bottom)
 				{
 					if (tempTile.m_nTileNumber != -1)
 					{
@@ -99,7 +99,7 @@ void CWorldManager::Render()
 							0, 0};
 						src.bottom = src.top + tempTile.m_nHeight;
 						src.right = src.left + tempTile.m_nWidth;
-						CSGD_TextureManager::GetInstance()->Draw(m_nTilesetImageID, tempTile.m_nLeft - CGame::GetInstance()->GetCamera()->GetX(), tempTile.m_nTop - CGame::GetInstance()->GetCamera()->GetY(), 1.0f, 1.0f, &src, 0.0f, 0.0f, 0.0f);
+						CSGD_TextureManager::GetInstance()->Draw(m_nTilesetImageID, tempTile.m_nLeft - (int)CGame::GetInstance()->GetCamera()->GetX(), tempTile.m_nTop - (int)CGame::GetInstance()->GetCamera()->GetY(), 1.0f, 1.0f, &src, 0.0f, 0.0f, 0.0f);
 					}
 				}
 			}
