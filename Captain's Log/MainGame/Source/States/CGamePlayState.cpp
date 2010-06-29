@@ -92,7 +92,7 @@ void CGamePlayState::Enter(void)
 
 	// Particles
 	m_nParticleImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("particle.png").c_str());
-	m_peEmitter.Initialize(m_nParticleImageID, 64, 64, 50.0f, 50.0f, 30, 5, 50, 0, 1, 1, 0, 0, 16,16,32,32,0, 0, 0, 3, 255, 255, 255);
+	m_peEmitter.Initialize(m_nParticleImageID, 64, 64, 50, 50, 30, 5, 50, 0, 1, 1, 0, 0, 16,16,32,32,0, 0, 0, 3, 255, 255, 255);
 }
 
 void CGamePlayState::Exit(void)
@@ -162,6 +162,7 @@ void CGamePlayState::Update(float fElapsedTime)
 {
 	m_nCurCount += 25.0f * fElapsedTime;
 	CMovementControl::GetInstance()->CheckDragRect();
+	CMovementControl::GetInstance()->UpdateCamera(fElapsedTime);
 	CObjectManager::GetInstance()->UpdateObjects(fElapsedTime);
 	CMessageSystem::GetInstance()->ProcessMessages();
 	m_peEmitter.Update(fElapsedTime);
