@@ -8,6 +8,7 @@
 #include "precompiled_header.h"
 #include "CMainMenuState.h"
 #include "CGamePlayState.h"
+#include "COptionsMenuState.h"
 #include "..\CGame.h"
 
 CMainMenuState::CMainMenuState(void)
@@ -53,6 +54,8 @@ bool CMainMenuState::Input(void)
 	{
 		if(m_sCurrentChoice == 0)
 			CGame::GetInstance()->ChangeState( CGamePlayState::GetInstance() );
+		if(m_sCurrentChoice == 2)
+			CGame::GetInstance()->PushState(COptionsMenuState::GetInstance());
 	}
 
 	return true;
