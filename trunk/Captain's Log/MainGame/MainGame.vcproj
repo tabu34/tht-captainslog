@@ -282,6 +282,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Source\States\COptionsMenuState.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\States\COptionsMenuState.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\States\CPauseMenuState.cpp"
 				>
 			</File>
