@@ -204,8 +204,8 @@ void CMovementControl::RenderCursor()
 
 void CMovementControl::UpdateCamera( float fElapsedTime )
 {
-	int nBuffer		= 20;
-	float nSpeed	= 200;
+	int nBuffer		= 80;
+	float nSpeed	= 50;
 
 	RECT rCameraBounds;
 	SetRect(&rCameraBounds, 0, 0, 2000, 2000);
@@ -214,14 +214,16 @@ void CMovementControl::UpdateCamera( float fElapsedTime )
 	m_cCAM->VelY(0);
 
 	if (CSGD_DirectInput::GetInstance()->MouseGetPosX() < nBuffer)
-		m_cCAM->VelX(-nSpeed);
+	{
+		m_cCAM->VelX(-(nSpeed * ((nBuffer - CSGD_DirectInput::GetInstance()->MouseGetPosX()) >> 2)));
+	}
 	else if (CSGD_DirectInput::GetInstance()->MouseGetPosX() > + CGame::GetInstance()->GetScreenWidth() - nBuffer)
-		m_cCAM->VelX(nSpeed);
+		m_cCAM->VelX(nSpeed * ((nBuffer - (CGame::GetInstance()->GetScreenWidth() - CSGD_DirectInput::GetInstance()->MouseGetPosX())) >> 2));
 
 	if (CSGD_DirectInput::GetInstance()->MouseGetPosY() < nBuffer)
-		m_cCAM->VelY(-nSpeed);
+		m_cCAM->VelY(-(nSpeed * ((nBuffer - CSGD_DirectInput::GetInstance()->MouseGetPosY()) >> 2)));
 	else if (CSGD_DirectInput::GetInstance()->MouseGetPosY() > CGame::GetInstance()->GetScreenHeight() - nBuffer)
-		m_cCAM->VelY(nSpeed);
+		m_cCAM->VelY(nSpeed * ((nBuffer - (CGame::GetInstance()->GetScreenHeight() - CSGD_DirectInput::GetInstance()->MouseGetPosY())) >> 2));
 
 
 	m_cCAM->Update(fElapsedTime);
