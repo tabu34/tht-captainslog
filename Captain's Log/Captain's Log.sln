@@ -5,6 +5,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MainGame", "MainGame\MainGa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Unit Test -- Code Profiler", "Unit Test -- Code Profiler\Unit Test -- Code Profiler.vcproj", "{ED82D898-191A-487A-9AC8-4734641699D8}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "A-Star (spike)", "A-Star (spike)\A-Star (spike).vcproj", "{686807ED-610C-4416-BE25-6C1A52FB0390}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -19,6 +21,10 @@ Global
 		{ED82D898-191A-487A-9AC8-4734641699D8}.Debug|Win32.Build.0 = Debug|Win32
 		{ED82D898-191A-487A-9AC8-4734641699D8}.Release|Win32.ActiveCfg = Release|Win32
 		{ED82D898-191A-487A-9AC8-4734641699D8}.Release|Win32.Build.0 = Release|Win32
+		{686807ED-610C-4416-BE25-6C1A52FB0390}.Debug|Win32.ActiveCfg = Debug|Win32
+		{686807ED-610C-4416-BE25-6C1A52FB0390}.Debug|Win32.Build.0 = Debug|Win32
+		{686807ED-610C-4416-BE25-6C1A52FB0390}.Release|Win32.ActiveCfg = Release|Win32
+		{686807ED-610C-4416-BE25-6C1A52FB0390}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
