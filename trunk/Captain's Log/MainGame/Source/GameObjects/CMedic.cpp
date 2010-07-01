@@ -4,8 +4,8 @@
 CMedic::CMedic()
 {
 	Type(OBJ_PLAYER);
-	PosX(80);
-	PosY(200);
+	PosX(0);
+	PosY(0);
 	VelX(0);
 	VelY(0);
 	Width(120);
@@ -93,7 +93,7 @@ void CMedic::Render()
 	CUnit::Render();
 	bool flipped = false;
 
-	if (State() == 0)
+	if (State() == 0 || State() == 3)
 	{
 		switch (CurDirection())
 		{

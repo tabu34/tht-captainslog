@@ -6,8 +6,8 @@
 CHeavy::CHeavy()
 {
 	Type(OBJ_PLAYER);
-	PosX(80);
-	PosY(50);
+	PosX(0);
+	PosY(0);
 	VelX(0);
 	VelY(0);
 	Width(120);
@@ -95,7 +95,7 @@ void CHeavy::Render()
 	CUnit::Render();
 	bool flipped = false;
 
-	if (State() == 0)
+	if (State() == 0 || State() == 3)
 	{
 		switch (CurDirection())
 		{
@@ -170,7 +170,7 @@ void CHeavy::Render()
 			break;
 		}
 	}
-	else if (State() == 3)
+	else if (State() == 4)
 	{
 		switch (CurDirection())
 		{

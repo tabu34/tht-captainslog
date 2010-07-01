@@ -89,19 +89,22 @@ void CGamePlayState::Enter(void)
 
 	alliedMarine->PosX(50);
 	alliedMarine->PosY(50);
-	alliedHeavy->PosX(80);
+	alliedHeavy->PosX(150);
 	alliedHeavy->PosY(50);
-	alliedScout->PosX(80);
-	alliedScout->PosY(400);
+	alliedScout->PosX(150);
+	alliedScout->PosY(150);
+	alliedMedic->PosX(50);
+	alliedMedic->PosY(150);
 
 	CObjectManager::GetInstance()->AddObject(alliedHeavy);
 	CObjectManager::GetInstance()->AddObject(alliedMedic);
 	CObjectManager::GetInstance()->AddObject(alliedScout);
-	//CObjectManager::GetInstance()->AddObject(alliedMarine);
+	CObjectManager::GetInstance()->AddObject(alliedMarine);
 
 	CMarine* badGuy = new CMarine();
 	badGuy->Type(CBase::OBJ_ENEMY);
 	badGuy->PosX(400);
+	badGuy->PosY(200);
 	CObjectManager::GetInstance()->AddObject(badGuy);
 
 	// Test Speech
@@ -161,7 +164,8 @@ bool CGamePlayState::Input(void)
 	{
 		CMarine* badGuy = new CMarine();
 		badGuy->Type(CBase::OBJ_ENEMY);
-		badGuy->PosX(800);
+		badGuy->PosX(400);
+		badGuy->PosY(200);
 		CObjectManager::GetInstance()->AddObject(badGuy);
 	}
 

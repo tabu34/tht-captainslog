@@ -47,7 +47,11 @@ void CUnit::Update(float fElapsedTime)
 		return;
 	}
 
-	if(m_nState == UNIT_MOVING)
+	if (m_nState == UNIT_IDLE)
+	{
+
+	}
+	else if(m_nState == UNIT_MOVING)
 	{
 		if(PosX() < m_pDestinationMove.x)
 			VelX(100.0f);
@@ -80,7 +84,7 @@ void CUnit::Update(float fElapsedTime)
 			m_pDestinationMove.x = (LONG)PosX();
 			m_pDestinationMove.y = (LONG)PosY();
 		}
-		if (fabs(((PosX() - m_pTarget->PosX()) * (PosX() - m_pTarget->PosX()) +
+		else if (fabs(((PosX() - m_pTarget->PosX()) * (PosX() - m_pTarget->PosX()) +
 		   (PosY() - m_pTarget->PosY()) * (PosY() - m_pTarget->PosY()))) < (m_fAttackRange * m_fAttackRange))
 		{
 			VelX(0);
@@ -100,7 +104,7 @@ void CUnit::Update(float fElapsedTime)
 				VelY(-100.0f);
 		}
 	}
-	else if (m_nState == UNIT_ATTACK)
+	else if (m_nState == UNIT_ATTACK || UNIT_FIRE)
 	{
 		if (m_pTarget->CurHealth() <= 0)
 		{
@@ -108,19 +112,24 @@ void CUnit::Update(float fElapsedTime)
 			m_pDestinationMove.x = (LONG)PosX();
 			m_pDestinationMove.y = (LONG)PosY();
 		}
-		if (fabs(((PosX() - m_pTarget->PosX()) * (PosX() - m_pTarget->PosX()) +
+		else if (fabs(((PosX() - m_pTarget->PosX()) * (PosX() - m_pTarget->PosX()) +
 			(PosY() - m_pTarget->PosY()) * (PosY() - m_pTarget->PosY()))) > (m_fAttackRange * m_fAttackRange))
 		{
 			m_nState = UNIT_MOVING_ATTACK;
 		}
 		else
 		{
+			if (m_fFireLineTime <= 0)
+			{
+				m_nState = UNIT_ATTACK;
+			}
 			m_fAttackTimer += fElapsedTime;
 			if (m_fAttackTimer >= m_fAttackSpeed)
 			{
 				m_pTarget->CurHealth(m_pTarget->CurHealth() - (int)(m_fAttackDamage));
 				m_fAttackTimer = 0;
 				m_fFireLineTime = 0.1f;
+				m_nState = UNIT_FIRE;
 			}
 		}
 	}
