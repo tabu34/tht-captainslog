@@ -13,6 +13,10 @@ class CPauseMenuState : public IGameState
 
 	int			m_nBGImageID;
 	int			m_nSelectorImageID;
+	int			m_nMouseX;
+	int			m_nMouseY;
+	int			m_nMousePrevX;
+	int			m_nMousePrevY;
 
 	CPauseMenuState(void);
 	CPauseMenuState(const CPauseMenuState&);
