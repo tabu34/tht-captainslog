@@ -11,6 +11,9 @@ class CPauseMenuState : public IGameState
 	CBMPFont	m_bfFont;
 	short		m_sCurrentChoice;
 
+	int			m_nBGImageID;
+	int			m_nSelectorImageID;
+
 	CPauseMenuState(void);
 	CPauseMenuState(const CPauseMenuState&);
 	CPauseMenuState& operator=(const CPauseMenuState&);

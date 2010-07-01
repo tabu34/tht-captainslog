@@ -28,7 +28,7 @@ void COptionsMenuState::Enter()
 
 bool COptionsMenuState::Input()
 {
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN))
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
 	{
 		CGame::GetInstance()->PopState();
 	}
