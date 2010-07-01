@@ -27,6 +27,7 @@ class CUnit : public CBase
 	int					m_nLevel;
 	int					m_nMaxHealth;
 	int					m_nPortraitID;
+	int					m_nCurDirection;
 	vector<CAbility*>	m_vAbilities;
 	vector<int>			m_vAnimations;
 
@@ -39,7 +40,7 @@ class CUnit : public CBase
 
 	CUnit*				m_pTarget;
 
-	enum { UNIT_MOVING, UNIT_MOVING_ATTACK, UNIT_ATTACK };
+	enum { UNIT_IDLE, UNIT_MOVING, UNIT_MOVING_ATTACK, UNIT_ATTACK };
 
 public:
 	CUnit();
@@ -70,8 +71,10 @@ public:
 	int Level() const { return m_nLevel; }
 	int MaxHealth() const { return m_nMaxHealth; }
 	int PortraitID() const { return m_nPortraitID; }
+	int CurDirection() const { return m_nCurDirection; }
+	int State() const { return m_nState; }
 	vector<CAbility*> Abilities() const { return m_vAbilities; }
-	vector<int> Animations() const { return m_vAnimations; }
+	vector<int>* Animations() { return &m_vAnimations; }
 	////////////////////////////////////////////////
 
 	// Mutators ////////////////////////////////////
@@ -95,6 +98,7 @@ public:
 	void Selected(bool val) { m_bSelected = val; }
 	void Stunned(bool val) { m_bStunned = val; }
 	void StunnedEndTime(float val) { m_fStunnedEndTime = val; }
+	void CurDirection(int val) { m_nCurDirection = val; }
 	////////////////////////////////////////////////
 };
 #endif // CUnit_h__

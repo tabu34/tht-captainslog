@@ -9,6 +9,7 @@
 #include "CGamePlayState.h"
 #include "..\CGame.h"
 #include "..\GameObjects\CMarine.h"
+#include "..\GameObjects\CHeavy.h"
 #include "..\Managers\CWorldManager.h"
 
 CGamePlayState::CGamePlayState(void)
@@ -73,9 +74,19 @@ void CGamePlayState::Enter(void)
 
 	// Load Animations
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\marine\\idle.bin").c_str(), D3DCOLOR_XRGB(112, 38, 37));
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\firebat\\firebat.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
 
 	// Objects
-	CObjectManager::GetInstance()->AddObject(new CMarine());
+	CMarine* alliedMarine = new CMarine();
+	CHeavy* alliedHeavy = new CHeavy();
+
+	alliedMarine->PosX(50);
+	alliedMarine->PosY(50);
+	alliedHeavy->PosX(80);
+	alliedHeavy->PosY(50);
+
+	CObjectManager::GetInstance()->AddObject(alliedHeavy);
+	//CObjectManager::GetInstance()->AddObject(alliedMarine);
 
 	CMarine* badGuy = new CMarine();
 	badGuy->Type(CBase::OBJ_ENEMY);
@@ -103,6 +114,9 @@ void CGamePlayState::Exit(void)
 	{
 		CSGD_TextureManager::GetInstance()->UnloadTexture(m_vButtons[i].TextureID());
 	}
+
+	CAnimationManager::GetInstance()->Shutdown();
+	CObjectManager::GetInstance()->RemoveAllObjects();
 }
 
 bool CGamePlayState::Input(void)
@@ -195,7 +209,6 @@ void CGamePlayState::RenderHUD(void)
 void CGamePlayState::Render(void)
 {
 	CWorldManager::GetInstance()->Render();
-//	CSGD_TextureManager::GetInstance()->Draw(m_nBG, 0, 0, 1.0f, 1.0f);
 	CSGD_Direct3D::GetInstance()->SpriteEnd();
 	CSGD_Direct3D::GetInstance()->SpriteBegin();
 

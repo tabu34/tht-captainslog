@@ -7,6 +7,7 @@
 CUnit::CUnit()
 {
 	m_nState = -1;
+	m_nCurDirection = 0;
 	m_fAttackTimer = 0;
 }
 
@@ -69,7 +70,7 @@ void CUnit::Update(float fElapsedTime)
 		}
 
 		if(VelX() == 0.0f && VelY() == 0.0f)
-			m_nState = -1;
+			m_nState = UNIT_IDLE;
 	}
 	else if (m_nState == UNIT_MOVING_ATTACK)
 	{
