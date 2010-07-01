@@ -40,7 +40,7 @@ class CUnit : public CBase
 
 	CUnit*				m_pTarget;
 
-	enum { UNIT_IDLE, UNIT_MOVING, UNIT_MOVING_ATTACK, UNIT_ATTACK };
+	enum { UNIT_IDLE, UNIT_MOVING, UNIT_MOVING_ATTACK, UNIT_ATTACK, UNIT_FIRE };
 
 public:
 	CUnit();
