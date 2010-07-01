@@ -13,6 +13,7 @@
 #include "..\Managers\CWorldManager.h"
 #include "CPauseMenuState.h"
 #include "..\GameObjects\CMedic.h"
+#include "..\GameObjects\CScout.h"
 
 CGamePlayState::CGamePlayState(void)
 {
@@ -78,19 +79,24 @@ void CGamePlayState::Enter(void)
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\marine\\marine.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\firebat\\firebat.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\medic\\medic.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\ghost\\ghost.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
 
 	// Objects
 	CMarine* alliedMarine = new CMarine();
 	CHeavy* alliedHeavy = new CHeavy();
 	CMedic* alliedMedic = new CMedic();
+	CScout* alliedScout = new CScout();
 
 	alliedMarine->PosX(50);
 	alliedMarine->PosY(50);
 	alliedHeavy->PosX(80);
 	alliedHeavy->PosY(50);
+	alliedScout->PosX(80);
+	alliedScout->PosY(400);
 
 	CObjectManager::GetInstance()->AddObject(alliedHeavy);
 	CObjectManager::GetInstance()->AddObject(alliedMedic);
+	CObjectManager::GetInstance()->AddObject(alliedScout);
 	//CObjectManager::GetInstance()->AddObject(alliedMarine);
 
 	CMarine* badGuy = new CMarine();
