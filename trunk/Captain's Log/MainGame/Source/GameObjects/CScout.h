@@ -6,7 +6,10 @@
 class CScout : public CPlayerUnit
 {
 public:
+	CScout();
+
 	void	Update(float fElapsedTime);
 	void	Initialize();
+	void	Render();
 };
 #endif // CScout_h__
