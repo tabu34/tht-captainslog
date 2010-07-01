@@ -11,6 +11,7 @@
 #include "..\GameObjects\CMarine.h"
 #include "..\GameObjects\CHeavy.h"
 #include "..\Managers\CWorldManager.h"
+#include "CPauseMenuState.h"
 
 CGamePlayState::CGamePlayState(void)
 {
@@ -138,6 +139,12 @@ bool CGamePlayState::Input(void)
 	} else {
 		m_szTooltipText = "";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(false);
+	}
+
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
+	{
+		CGame::GetInstance()->PushState(CPauseMenuState::GetInstance());
+
 	}
 
 	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_B))
