@@ -537,6 +537,14 @@
 					>
 				</File>
 				<File
+					RelativePath=".\CItems.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\CItems.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Source\GameObjects\CPassive.cpp"
 					>
 				</File>
