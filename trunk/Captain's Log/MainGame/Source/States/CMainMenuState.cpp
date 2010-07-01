@@ -56,6 +56,8 @@ bool CMainMenuState::Input(void)
 			CGame::GetInstance()->ChangeState( CGamePlayState::GetInstance() );
 		if(m_sCurrentChoice == 2)
 			CGame::GetInstance()->PushState(COptionsMenuState::GetInstance());
+		if(m_sCurrentChoice == 4)
+			return false;
 	}
 
 	return true;
