@@ -1,13 +1,75 @@
 #include "precompiled_header.h"
 #include "CMedic.h"
 
-void CMedic::Update( float fElapsedTime )
+CMedic::CMedic()
 {
-
+	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medic-Walk-N"));
+	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medic-Walk-NE"));
+	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medic-Walk-E"));
+	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medic-Walk-SE"));
+	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medic-Walk-S"));
+	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medic-Idle"));
+	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medic-Fire"));
 }
 
 void CMedic::Initialize()
 {
+
+}
+
+void CMedic::Update( float fElapsedTime )
+{
+	CUnit::Update(fElapsedTime);
+
+	if(VelX() == 0.0f && VelY() < 0.0f)
+	{
+		CurDirection(0);
+	} 
+	else if(VelX() > 0.0f && VelY() < 0.0f)
+	{
+		CurDirection(1);
+	} 
+	else if(VelX() > 0.0f && VelY() == 0.0f)
+	{
+		CurDirection(2);
+	} 
+	else if(VelX() > 0.0f && VelY() > 0.0f)
+	{
+		CurDirection(3);
+	} 
+	else if(VelX() == 0.0f && VelY() > 0.0f)
+	{
+		CurDirection(4);
+	} 
+	else if(VelX() < 0.0f && VelY() > 0.0f)
+	{
+		CurDirection(5);
+	} 
+	else if(VelX() < 0.0f && VelY() == 0.0f)
+	{
+		CurDirection(6);
+	} 
+	else if(VelX() < 0.0f && VelY() < 0.0f)
+	{
+		CurDirection(7);
+	}
+
+	if (CurDirection() < 5)
+	{
+		CAnimationManager::GetInstance()->GetAnimation((*Animations())[CurDirection()])->anAnimation.Update(fElapsedTime);
+	}
+	else if (CurDirection() == 5)
+	{
+		CAnimationManager::GetInstance()->GetAnimation((*Animations())[3])->anAnimation.Update(fElapsedTime);
+	}
+	else if (CurDirection() == 6)
+	{
+		CAnimationManager::GetInstance()->GetAnimation((*Animations())[2])->anAnimation.Update(fElapsedTime);
+	}
+	else
+	{
+		CAnimationManager::GetInstance()->GetAnimation((*Animations())[1])->anAnimation.Update(fElapsedTime);
+	}
 
 }
 

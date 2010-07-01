@@ -12,6 +12,7 @@
 #include "..\GameObjects\CHeavy.h"
 #include "..\Managers\CWorldManager.h"
 #include "CPauseMenuState.h"
+#include "..\GameObjects\CMedic.h"
 
 CGamePlayState::CGamePlayState(void)
 {
@@ -74,12 +75,14 @@ void CGamePlayState::Enter(void)
 	CWorldManager::GetInstance()->Load("Resource//Graphics//testmap.mfl");
 
 	// Load Animations
-	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\marine\\idle.bin").c_str(), D3DCOLOR_XRGB(112, 38, 37));
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\marine\\marine.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\firebat\\firebat.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\medic\\medic.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
 
 	// Objects
 	CMarine* alliedMarine = new CMarine();
 	CHeavy* alliedHeavy = new CHeavy();
+	CMedic* alliedMedic = new CMedic();
 
 	alliedMarine->PosX(50);
 	alliedMarine->PosY(50);

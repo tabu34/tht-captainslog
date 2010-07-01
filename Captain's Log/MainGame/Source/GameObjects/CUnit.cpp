@@ -6,7 +6,7 @@
 
 CUnit::CUnit()
 {
-	m_nState = -1;
+	m_nState = UNIT_IDLE;
 	m_nCurDirection = 0;
 	m_fAttackTimer = 0;
 }

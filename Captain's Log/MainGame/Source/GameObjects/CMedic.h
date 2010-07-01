@@ -6,6 +6,8 @@
 class CMedic : public CPlayerUnit
 {
 public:
+	CMedic();
+
 	void	Update(float fElapsedTime);
 	void	Initialize();
 	void	Render();
