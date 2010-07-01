@@ -76,8 +76,8 @@ void CUnit::Update(float fElapsedTime)
 		if (m_pTarget->CurHealth() <= 0)
 		{
 			m_nState = UNIT_MOVING;
-			m_pDestinationMove.x = PosX();
-			m_pDestinationMove.y = PosY();
+			m_pDestinationMove.x = (LONG)PosX();
+			m_pDestinationMove.y = (LONG)PosY();
 		}
 		if (fabs(((PosX() - m_pTarget->PosX()) * (PosX() - m_pTarget->PosX()) +
 		   (PosY() - m_pTarget->PosY()) * (PosY() - m_pTarget->PosY()))) < (m_fAttackRange * m_fAttackRange))
@@ -104,8 +104,8 @@ void CUnit::Update(float fElapsedTime)
 		if (m_pTarget->CurHealth() <= 0)
 		{
 			m_nState = UNIT_MOVING;
-			m_pDestinationMove.x = PosX();
-			m_pDestinationMove.y = PosY();
+			m_pDestinationMove.x = (LONG)PosX();
+			m_pDestinationMove.y = (LONG)PosY();
 		}
 		if (fabs(((PosX() - m_pTarget->PosX()) * (PosX() - m_pTarget->PosX()) +
 			(PosY() - m_pTarget->PosY()) * (PosY() - m_pTarget->PosY()))) > (m_fAttackRange * m_fAttackRange))
@@ -119,7 +119,7 @@ void CUnit::Update(float fElapsedTime)
 			{
 				m_pTarget->CurHealth(m_pTarget->CurHealth() - (int)(m_fAttackDamage));
 				m_fAttackTimer = 0;
-				m_fFireLineTime = 0.1;
+				m_fFireLineTime = 0.1f;
 			}
 		}
 	}
@@ -136,7 +136,7 @@ void CUnit::Render()
 	//DEBUG
 	if (m_fFireLineTime > 0)
 	{
-		CSGD_Direct3D::GetInstance()->DrawLine(PosX() - CGame::GetInstance()->GetCamera()->GetX(), PosY() - CGame::GetInstance()->GetCamera()->GetY(), m_pTarget->PosX() - CGame::GetInstance()->GetCamera()->GetX(), m_pTarget->PosY() - CGame::GetInstance()->GetCamera()->GetY(), 255, 255, 255);
+		CSGD_Direct3D::GetInstance()->DrawLine(int(PosX() - CGame::GetInstance()->GetCamera()->GetX()), int(PosY() - CGame::GetInstance()->GetCamera()->GetY()), int(m_pTarget->PosX() - CGame::GetInstance()->GetCamera()->GetX()), int(m_pTarget->PosY() - CGame::GetInstance()->GetCamera()->GetY()), 255, 255, 255);
 	}
 	//END
 }
