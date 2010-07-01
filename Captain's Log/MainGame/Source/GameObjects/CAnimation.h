@@ -48,8 +48,11 @@ public:
 
 	void Play()
 	{
-		Reset();
-		m_bIsPlaying = true;
+		if (!m_bIsPlaying)
+		{
+			Reset();
+			m_bIsPlaying = true;
+		}
 	}
 	void Stop()	{ m_bIsPlaying = false; }
 	void Pause()	{ m_bIsPlaying = true; }
@@ -59,6 +62,7 @@ public:
 	{
 		return m_szName;
 	}
+
 	// Mutators
 	void SetName( char * _name )
 	{

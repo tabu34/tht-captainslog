@@ -47,6 +47,17 @@ CAnimationManager::tAnimation* CAnimationManager::GetAnimation( char * _name )
 	return 0;
 }
 
+int CAnimationManager::GetAnimationID(char* _name)
+{
+	for(unsigned int i = 0; i < m_Animations.size(); i++)
+	{
+		if(strcmp(m_Animations[i].anAnimation.GetName(), _name) == 0)
+			return i;
+	}
+
+	return 0;
+}
+
 int CAnimationManager::LoadAnimation( char* szAnimationName, char* szImageID, DWORD dwKeyColor, float fSpeed, bool bIsLooping, int nNumFrames, CAnimation::tFrame* pFrames )
 {
 	CAnimation *newAnimation = new CAnimation();

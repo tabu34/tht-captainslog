@@ -26,6 +26,7 @@ public:
 
 	tAnimation*		GetAnimation(int nID);
 	tAnimation*		GetAnimation(char* _name);
+	int				GetAnimationID(char* _name);
 	int				LoadAnimation(char* szAnimationName, char* szImageID, DWORD dwKeyColor, float fSpeed, bool bIsLooping, int nNumFrames, CAnimation::tFrame* pFrames);
 	bool			LoadAnimationsFromFile(char* szFilename, DWORD dwKeyColor);
 	void			UnloadAnimation(int nID);

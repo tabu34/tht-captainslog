@@ -57,7 +57,7 @@ void CAnimation::Update( float fElapsedTime )
 		m_fTimeWaited = 0.0f;
 		//m_fTimeWaited -= m_vFrames[m_nCurFrame].fDuration;
 
-		m_nCurFrame ++;
+		m_nCurFrame++;
 
 		if (m_nCurFrame >= m_vFrames.size())
 		{
