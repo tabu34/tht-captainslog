@@ -20,8 +20,8 @@ CPauseMenuState* CPauseMenuState::GetInstance()
 
 void CPauseMenuState::Enter(void)
 {
-	m_nBGImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\pauseMenu.png"));
-	m_nSelectorImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\menuSelector.png"));
+	m_nBGImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\pauseMenu.png").c_str());
+	m_nSelectorImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\menuSelector.png").c_str());
 
 }
 
