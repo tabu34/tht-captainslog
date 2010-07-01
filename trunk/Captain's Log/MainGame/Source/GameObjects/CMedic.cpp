@@ -3,6 +3,21 @@
 
 CMedic::CMedic()
 {
+	Type(OBJ_PLAYER);
+	PosX(80);
+	PosY(200);
+	VelX(0);
+	VelY(0);
+	Width(120);
+	Height(140);
+	CurHealth(10);
+	MaxHealth(10);
+	AttackSpeed(2);
+	AttackDamage(4);
+	AttackTimer(0);
+	AttackRange(250);
+
+
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medic-Walk-N"));
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medic-Walk-NE"));
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medic-Walk-E"));

@@ -90,6 +90,7 @@ void CGamePlayState::Enter(void)
 	alliedHeavy->PosY(50);
 
 	CObjectManager::GetInstance()->AddObject(alliedHeavy);
+	CObjectManager::GetInstance()->AddObject(alliedMedic);
 	//CObjectManager::GetInstance()->AddObject(alliedMarine);
 
 	CMarine* badGuy = new CMarine();
