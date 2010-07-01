@@ -5,7 +5,6 @@
 #include "A-Star (spike).h"
 #define MAX_LOADSTRING 100
 
-
 //stuff for A*
 struct Blocker
 {
@@ -25,6 +24,27 @@ typedef struct
 	float fX;
 	float fY;
 } tNode;
+
+const tNode helperNodes[6] = {
+	{
+		139.0f, 29.0f,
+	},
+	{
+		89.0f, 224.0f,
+	},
+	{
+		124.0f, 125.0f,
+	},
+	{
+		317.0f, 291.0f,
+	},
+	{
+		446.0f, 240.0f,
+	},
+	{
+		434.0f, 156.0f,
+	},
+};
 
 typedef struct  
 {
@@ -135,6 +155,46 @@ bool IntersectLine(tVector2D A1, tVector2D A2, tVector2D B1, tVector2D B2)
 	}
 	return false;
 }
+#define MIN(x,y) (x < y ? x : y)
+#define MAX(x,y) (x > y ? x : y)
+bool InsideBlocker(POINT p)
+{
+	int counter=0;
+	float xInters;
+	Blocker::Point p1, p2;
+
+	for(int i=0; i<3; i++)
+	{
+		counter=0;
+		p1 = arrBlockers[i].m_Points[0];
+
+		for(int j=1; j<=arrBlockers[i].m_nNumPoints; j++)
+		{
+			p2 = arrBlockers[i].m_Points[j%arrBlockers[i].m_nNumPoints];
+			if(p.y > MIN(p1.y, p2.y))
+			{
+				if(p.y <= MAX(p1.y, p2.y))
+				{
+					if(p.x <= MAX(p1.x, p2.x))
+					{
+						if(p1.y!=p2.y)
+						{
+							xInters = (p.y-p1.y)*(p2.x-p1.x)/(p2.y-p1.y)+p1.x;
+							if(p1.x == p2.x || p.x<=xInters)
+								counter++;
+						}
+					}
+				}
+			}
+			p1=p2;
+		}
+
+		if(counter!=0 && counter%2!=0)
+			return true;
+
+	}
+	return false;
+}
 
 CPathManager* CPathManager::GetInstance()
 {
@@ -180,7 +240,6 @@ void CPathManager::GenerateMap()
 // 				OutputDebugString(buff);
 // 			}
 		}
-
 		for(size_t i=0; i<vNodesInShape.size(); i++)
 			for(size_t j=0; j<vNodesInShape.size(); j++)
 			{
@@ -192,6 +251,14 @@ void CPathManager::GenerateMap()
 				vLines.push_back(line);
 			}
 	}
+	//add helper nodes
+	for(int i=0; i<6; i++)
+	{
+		node.fX = helperNodes[i].fX;
+		node.fY = helperNodes[i].fY;
+		m_lstNodeList.push_back(node);
+	}
+
 
 	m_vLines = vLines;
 
@@ -235,6 +302,11 @@ void CPathManager::GenerateMap()
 inline float ManhattanDistance(tNode& source, tNode& target)
 {
 	return fabs(source.fX - target.fX) + fabs(source.fY - target.fY);
+}
+
+inline int PointDistance(POINT p1, POINT p2)
+{
+	return (int)sqrt(static_cast<double>((p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y)));
 }
 
 vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
@@ -375,7 +447,10 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 			stk.push(pParent.pNode);
 			pParent = vNodePool[pParent.nIndexParent];
 			if(pParent.pCameFrom == NULL)
+			{
+				stk.push(pParent.pNode);
 				break;
+			}
 		}
 
 		while(stk.size() > 0)
@@ -567,10 +642,11 @@ void OnPaint(HWND hWnd)
 	FillRect(hdc, &theScreen, hbrBG);
 	hbrOld=(HBRUSH)SelectObject(hdc, hbrBG);
 
-	HPEN hpBoard, hpOld, hpPath, hpAdj;
+	HPEN hpBoard, hpOld, hpPath, hpAdj, hpNode;
 	hpBoard=CreatePen(PS_SOLID, 3, 0x000000);
 	hpPath = CreatePen(PS_SOLID, 3, 0xFF0000);
 	hpAdj = CreatePen(PS_SOLID, 1, 0x00FF00);
+	hpNode = CreatePen(PS_SOLID, 2, 0x0000FF);
 	hpOld=(HPEN)SelectObject(hdc, hpBoard);
 
 // 	//draw the blockers
@@ -615,6 +691,17 @@ void OnPaint(HWND hWnd)
 	if(vDirections.size()>0)
 		LineTo(hdc, target.x, target.y);
 
+	//draw the nodes
+	SelectObject(hdc, hpNode);
+	for(size_t i=0; i<CPathManager::GetInstance()->m_lstNodeList.size(); i++)
+	{
+		tNode* pNode = &CPathManager::GetInstance()->m_lstNodeList[i];
+		MoveToEx(hdc, (int)pNode->fX-7, (int)pNode->fY-7, NULL);
+		LineTo(hdc, (int)pNode->fX+7, (int)pNode->fY+7);
+		MoveToEx(hdc, (int)pNode->fX+7, (int)pNode->fY-7, NULL);
+		LineTo(hdc, (int)pNode->fX-7, (int)pNode->fY+7);
+	}
+	
 	//draw our guy
 	SelectObject(hdc, hpBoard);
 	MoveToEx(hdc, theGuy.x-3, theGuy.y-3, NULL);
@@ -634,6 +721,7 @@ void OnPaint(HWND hWnd)
 	DeleteObject(hpBoard);
 	DeleteObject(hbrBG);
 	DeleteObject(hpAdj);
+	DeleteObject(hpNode);
 	EndPaint(hWnd, &ps);
 }
 
@@ -645,6 +733,23 @@ void TheSequence(HWND hWnd)
 
 	for(size_t i=0; i<vDirections.size(); i++)
 	{
+// 		if(i == vDirections.size()-1)
+// 		{
+// 			POINT pEnd;
+// 			pEnd.x = (int)vDirections[i]->fX;
+// 			pEnd.y = (int)vDirections[i]->fY;
+// 			if(PointDistance(theGuy, target) < PointDistance(theGuy, pEnd))
+// 			{
+// 				Sleep(300);
+// 				theGuy.x = target.x;
+// 				theGuy.y = target.y;
+// 				InvalidateRect(hWnd, NULL, TRUE);
+// 				OnPaint(hWnd);
+// 				Sleep(200);
+// 			}
+// 			break;
+// 		}
+
 		Sleep(300);
 		theGuy.x = (int)vDirections[i]->fX;
 		theGuy.y = (int)vDirections[i]->fY;
@@ -653,13 +758,29 @@ void TheSequence(HWND hWnd)
 		Sleep(200);
 	}
 
-	Sleep(300);
-	theGuy.x = target.x;
-	theGuy.y = target.y;
+	bool bRet=false;
+	tVector2D guy = {(float)theGuy.x, (float)theGuy.y};
+	tVector2D tar = {(float)target.x, (float)target.y};
+	for(size_t i=0; i<CPathManager::GetInstance()->m_vLines.size(); i++)
+	{
+		if(IntersectLine(guy, tar, CPathManager::GetInstance()->m_vLines[i].start, CPathManager::GetInstance()->m_vLines[i].end))
+		{
+			bRet=true;
+			break;
+		}
+	}
+	if(!bRet && !InsideBlocker(target))
+	{
+		Sleep(300);
+		theGuy.x = target.x;
+		theGuy.y = target.y;
+		InvalidateRect(hWnd, NULL, TRUE);
+		OnPaint(hWnd);
+		Sleep(200);
+	}
+	vDirections.clear();
 	InvalidateRect(hWnd, NULL, TRUE);
 	OnPaint(hWnd);
-	Sleep(200);
-	vDirections.clear();
 }
 
 //
