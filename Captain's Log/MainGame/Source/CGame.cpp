@@ -41,10 +41,10 @@ bool CGame::Input()
 		}
 	}
 
-	if (m_pDI->KeyDown(DIK_ESCAPE))
-	{
-		return false;
-	}
+// 	if (m_pDI->KeyDown(DIK_ESCAPE))
+// 	{
+// 		return false;
+// 	}
 
 	if (m_pDI->KeyDown(DIK_9))
 	{
