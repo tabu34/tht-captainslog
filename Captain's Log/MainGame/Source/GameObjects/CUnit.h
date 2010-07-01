@@ -44,8 +44,8 @@ class CUnit : public CBase
 
 public:
 	CUnit();
-	void Update(float fElapsedTime);
-	void Render();
+	virtual void Update(float fElapsedTime);
+	virtual void Render();
 
 	// Orders //////////////////////////////////////
 	void OrderMove( POINT _dest );
