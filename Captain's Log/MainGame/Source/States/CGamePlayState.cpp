@@ -44,10 +44,10 @@ void CGamePlayState::Enter(void)
 	m_vButtons.push_back(CHUDButton(222, 689, 32, 32, "MinimapButton1", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/4.png").c_str())));
 	m_vButtons.push_back(CHUDButton(222, 726, 64, 64, "MinimapButton2", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/5.png").c_str())));
 	m_vButtons.push_back(CHUDButton(222, 764, 64, 64, "MinimapButton3", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/6.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1113, 688, 128, 128, "MoveOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/7.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1177, 688, 128, 128, "AttackOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/8.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1243, 688, 128, 128, "HoldOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/9.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1357, 819, 128, 128, "CancelOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str())));
+	m_vButtons.push_back(CHUDButton(1113, 688, 64, 64, "MoveOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/7.png").c_str())));
+	m_vButtons.push_back(CHUDButton(1177, 688, 64, 64, "AttackOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/8.png").c_str())));
+	m_vButtons.push_back(CHUDButton(1243, 688, 64, 64, "HoldOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/9.png").c_str())));
+	m_vButtons.push_back(CHUDButton(1357, 819, 64, 64, "CancelOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str())));
 	m_vButtons.push_back(CHUDButton(515, 0, 128, 64, "TipsHelpButton", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/11.png").c_str())));
 	m_vButtons.push_back(CHUDButton(797, 0, 128, 32, "TacticalMapButton", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/12.png").c_str())));
 	m_vButtons.push_back(CHUDButton(641, 0, 256, 64, "OverMenuButton", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/13.png").c_str())));
@@ -146,10 +146,21 @@ bool CGamePlayState::Input(void)
 	mousePos.right = mousePos.left + 1;
 	mousePos.bottom = mousePos.top + 1;
 
-	if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("MinimapButton1")].GetCollisionRect()), &mousePos))
-	{
+	if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("MoveOrder")].GetCollisionRect()), &mousePos)) {
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
-		m_szTooltipText = "Tactical Minimap Overlay";
+		m_szTooltipText = "  Move To Position";
+		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+	} else if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("AttackOrder")].GetCollisionRect()), &mousePos)) {
+		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
+		m_szTooltipText = "     Attack Target";
+		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+	} else if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("HoldOrder")].GetCollisionRect()), &mousePos)) {
+		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
+		m_szTooltipText = "   Hold";
+		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+	} else if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("CancelOrder")].GetCollisionRect()), &mousePos)) {
+		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
+		m_szTooltipText = " Cancel";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
 	} else {
 		m_szTooltipText = "";
