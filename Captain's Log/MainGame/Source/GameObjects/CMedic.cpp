@@ -111,7 +111,10 @@ void CMedic::Attack(float fElapsedTime)
 			AttackTimer(AttackTimer() + fElapsedTime);
 			if (AttackTimer() >= AttackSpeed())
 			{
-				Target()->CurHealth(Target()->CurHealth() - (int)(AttackDamage() - (AttackDamage() * Target()->Armor() * 0.01f)));
+				if (Target()->Invulnerable() == false)
+				{
+					Target()->CurHealth(Target()->CurHealth() - (int)(AttackDamage() - (AttackDamage() * Target()->Armor() * 0.01f)));
+				}
 				AttackTimer(0);
 				FireLineTime(0.2f);
 				State(4);
