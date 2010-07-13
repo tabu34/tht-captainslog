@@ -298,6 +298,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Source\States\CSplashState.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\States\CSplashState.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\States\CTestState.cpp"
 				>
 			</File>
