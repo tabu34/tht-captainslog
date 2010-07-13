@@ -10,14 +10,15 @@ CHeavy::CHeavy()
 	PosY(0);
 	VelX(0);
 	VelY(0);
-	Width(120);
-	Height(140);
-	CurHealth(15);
-	MaxHealth(15);
+	Width(64);
+	Height(64);
+	CurHealth(150);
+	MaxHealth(150);
 	AttackSpeed(2);
-	AttackDamage(6);
+	AttackDamage(50);
 	AttackTimer(0);
 	AttackRange(250);
+	Armor(40);
 
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Firebat-Walk-N"));
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Firebat-Walk-NE"));

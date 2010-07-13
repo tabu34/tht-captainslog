@@ -10,14 +10,15 @@ CMarine::CMarine()
 	PosY(0);
 	VelX(0);
 	VelY(0);
-	Width(120);
-	Height(140);
-	CurHealth(10);
-	MaxHealth(10);
+	Width(64);
+	Height(64);
+	CurHealth(100);
+	MaxHealth(100);
 	AttackSpeed(1);
-	AttackDamage(4);
+	AttackDamage(20);
 	AttackTimer(0);
 	AttackRange(250);
+	Armor(25);
 	
 
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Walk-N"));

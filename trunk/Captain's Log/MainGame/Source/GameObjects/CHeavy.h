@@ -7,6 +7,10 @@ class CHeavy : public CPlayerUnit
 {
 	int m_nCurFrame;
 
+	bool m_bRocketBarrage;
+	bool m_bArmorLockdown;
+	bool m_bFlamethrower;
+
 public:
 	CHeavy();
 	

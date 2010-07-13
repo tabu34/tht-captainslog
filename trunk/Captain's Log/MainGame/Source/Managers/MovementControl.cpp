@@ -67,10 +67,10 @@ void CMovementControl::Input()
 
 			for (unsigned int j = 0; j < m_vObjectList->size(); j++)
 			{
-				if ((*m_vObjectList)[j]->Type() != CBase::OBJ_ENEMY)
-				{
-					continue;
-				}
+// 				if ((*m_vObjectList)[j]->Type() != CBase::OBJ_ENEMY)
+// 				{
+// 					continue;
+// 				}
 				if (IntersectRect(&resultRect, &mouseRect, &((*m_vObjectList)[j]->GetCollisionRect())))
 				{
 					nTarget = j;

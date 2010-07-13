@@ -106,31 +106,44 @@ void CUnit::Update(float fElapsedTime)
 	}
 	else if (m_nState == UNIT_ATTACK || UNIT_FIRE)
 	{
-		if (m_pTarget->CurHealth() <= 0)
+		Attack(fElapsedTime);
+	}
+}
+
+void CUnit::Attack(float fElapsedTime)
+{
+	if (m_pTarget->Type() != OBJ_ENEMY)
+	{
+		m_nState = UNIT_MOVING;
+		m_pDestinationMove.x = (LONG)PosX();
+		m_pDestinationMove.y = (LONG)PosY();
+		return;
+	}
+
+	if (m_pTarget->CurHealth() <= 0)
+	{
+		m_nState = UNIT_MOVING;
+		m_pDestinationMove.x = (LONG)PosX();
+		m_pDestinationMove.y = (LONG)PosY();
+	}
+	else if (fabs(((PosX() - m_pTarget->PosX()) * (PosX() - m_pTarget->PosX()) +
+		(PosY() - m_pTarget->PosY()) * (PosY() - m_pTarget->PosY()))) > (m_fAttackRange * m_fAttackRange))
+	{
+		m_nState = UNIT_MOVING_ATTACK;
+	}
+	else
+	{
+		if (m_fFireLineTime <= 0)
 		{
-			m_nState = UNIT_MOVING;
-			m_pDestinationMove.x = (LONG)PosX();
-			m_pDestinationMove.y = (LONG)PosY();
+			m_nState = UNIT_ATTACK;
 		}
-		else if (fabs(((PosX() - m_pTarget->PosX()) * (PosX() - m_pTarget->PosX()) +
-			(PosY() - m_pTarget->PosY()) * (PosY() - m_pTarget->PosY()))) > (m_fAttackRange * m_fAttackRange))
+		m_fAttackTimer += fElapsedTime;
+		if (m_fAttackTimer >= m_fAttackSpeed)
 		{
-			m_nState = UNIT_MOVING_ATTACK;
-		}
-		else
-		{
-			if (m_fFireLineTime <= 0)
-			{
-				m_nState = UNIT_ATTACK;
-			}
-			m_fAttackTimer += fElapsedTime;
-			if (m_fAttackTimer >= m_fAttackSpeed)
-			{
-				m_pTarget->CurHealth(m_pTarget->CurHealth() - (int)(m_fAttackDamage));
-				m_fAttackTimer = 0;
-				m_fFireLineTime = 0.1f;
-				m_nState = UNIT_FIRE;
-			}
+			m_pTarget->CurHealth(m_pTarget->CurHealth() - (int)(m_fAttackDamage - (m_fAttackDamage * m_pTarget->Armor() * 0.01f)));
+			m_fAttackTimer = 0;
+			m_fFireLineTime = 0.2f;
+			m_nState = UNIT_FIRE;
 		}
 	}
 }
@@ -141,7 +154,6 @@ void CUnit::Render()
 
 	char szHP[16];
 	sprintf_s(szHP, 16, "%i", CurHealth());
-	//CSGD_Direct3D::GetInstance()->DrawText(szHP, PosX() - 25.0f - CGame::GetInstance()->GetCamera()->GetX(), PosY() - 25.0f - CGame::GetInstance()->GetCamera()->GetY(), 255, 255, 255);
 
 	//DEBUG
 	if (m_fFireLineTime > 0)
