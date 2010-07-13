@@ -11,5 +11,6 @@ public:
 	void	Update(float fElapsedTime);
 	void	Initialize();
 	void	Render();
+	void	Attack(float fElapsedTime);
 };
 #endif // CMedic_h__

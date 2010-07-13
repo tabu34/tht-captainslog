@@ -8,14 +8,15 @@ CMedic::CMedic()
 	PosY(0);
 	VelX(0);
 	VelY(0);
-	Width(120);
-	Height(140);
-	CurHealth(10);
-	MaxHealth(10);
+	Width(64);
+	Height(64);
+	CurHealth(90);
+	MaxHealth(90);
 	AttackSpeed(2);
-	AttackDamage(4);
+	AttackDamage(15);
 	AttackTimer(0);
 	AttackRange(250);
+	Armor(20);
 
 
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medic-Walk-N"));
@@ -85,7 +86,66 @@ void CMedic::Update( float fElapsedTime )
 	{
 		CAnimationManager::GetInstance()->GetAnimation((*Animations())[1])->anAnimation.Update(fElapsedTime);
 	}
+}
 
+void CMedic::Attack(float fElapsedTime)
+{
+	if (Target()->Type() != OBJ_PLAYER)
+	{
+		if (Target()->CurHealth() <= 0)
+		{
+			State(1);
+			Destination((LONG)PosX(), (LONG)PosY());
+		}
+		else if (fabs(((PosX() - Target()->PosX()) * (PosX() - Target()->PosX()) +
+			(PosY() - Target()->PosY()) * (PosY() - Target()->PosY()))) > (AttackRange() * AttackRange()))
+		{
+			State(2);
+		}
+		else
+		{
+			if (FireLineTime() <= 0)
+			{
+				State(3);
+			}
+			AttackTimer(AttackTimer() + fElapsedTime);
+			if (AttackTimer() >= AttackSpeed())
+			{
+				Target()->CurHealth(Target()->CurHealth() - (int)(AttackDamage() - (AttackDamage() * Target()->Armor() * 0.01f)));
+				AttackTimer(0);
+				FireLineTime(0.2f);
+				State(4);
+			}
+		}
+	} 
+	else
+	{
+		if (Target()->CurHealth() <= 0)
+		{
+			State(1);
+			Destination((LONG)PosX(), (LONG)PosY());
+		}
+		else if (fabs(((PosX() - Target()->PosX()) * (PosX() - Target()->PosX()) +
+			(PosY() - Target()->PosY()) * (PosY() - Target()->PosY()))) > (AttackRange() * AttackRange()))
+		{
+			State(2);
+		}
+		else
+		{
+			if (FireLineTime() <= 0)
+			{
+				State(3);
+			}
+			AttackTimer(AttackTimer() + fElapsedTime);
+			if (AttackTimer() >= AttackSpeed())
+			{
+				Target()->CurHealth(Target()->CurHealth() + (int)(AttackDamage()));
+				AttackTimer(0);
+				FireLineTime(0.2f);
+				State(4);
+			}
+		}
+	}
 }
 
 void CMedic::Render()
@@ -168,7 +228,7 @@ void CMedic::Render()
 			break;
 		}
 	}
-	else if (State() == 3)
+	else if (State() == 4)
 	{
 		switch (CurDirection())
 		{

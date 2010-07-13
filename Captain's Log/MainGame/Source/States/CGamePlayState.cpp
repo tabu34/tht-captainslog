@@ -41,7 +41,7 @@ void CGamePlayState::Enter(void)
 	m_vButtons.push_back(CHUDButton(270, 706, 256, 256, "UnitPortrait", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/1.png").c_str())));
 	m_vButtons.push_back(CHUDButton(274, 852, 256, 32, "PortraitNameLine", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/2.png").c_str())));
 	m_vButtons.push_back(CHUDButton(433, 728, 1024, 256, "MiddleHUDOutlines", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/3.png").c_str())));
-	m_vButtons.push_back(CHUDButton(222, 689, 64, 64, "MinimapButton1", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/4.png").c_str())));
+	m_vButtons.push_back(CHUDButton(222, 689, 32, 32, "MinimapButton1", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/4.png").c_str())));
 	m_vButtons.push_back(CHUDButton(222, 726, 64, 64, "MinimapButton2", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/5.png").c_str())));
 	m_vButtons.push_back(CHUDButton(222, 764, 64, 64, "MinimapButton3", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/6.png").c_str())));
 	m_vButtons.push_back(CHUDButton(1113, 688, 128, 128, "MoveOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/7.png").c_str())));
@@ -79,14 +79,15 @@ void CGamePlayState::Enter(void)
 	// Load Animations
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\marine\\marine.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\firebat\\firebat.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
-	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\medic\\medic.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
-	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\ghost\\ghost.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\medic\\medic.bin").c_str(), D3DCOLOR_XRGB(0, 255, 255));
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\ghost\\ghost.bin").c_str(), D3DCOLOR_XRGB(0, 255, 255));
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\tempenemy\\tempenemy.bin").c_str(), D3DCOLOR_XRGB(0, 255, 255));
 
 	// Objects
 	CMarine* alliedMarine = new CMarine();
-	CHeavy* alliedHeavy = new CHeavy();
-	CMedic* alliedMedic = new CMedic();
-	CScout* alliedScout = new CScout();
+	CHeavy*  alliedHeavy  = new CHeavy();
+	CMedic*  alliedMedic  = new CMedic();
+	CScout*  alliedScout  = new CScout();
 
 	alliedMarine->PosX(50);
 	alliedMarine->PosY(50);
@@ -118,7 +119,7 @@ void CGamePlayState::Enter(void)
 
 	// Particles
 	m_nParticleImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("particle.png").c_str());
-	m_peEmitter.Initialize(m_nParticleImageID, 64, 64, 50, 50, 30, 5, 50, 0, 1, 1, 0, 0, 16,16,32,32,0, 0, 0, 3, 255, 255, 255);
+	m_peEmitter.Initialize(m_nParticleImageID, 64, 64, 50, 50, 30, 5, 50, 0, 1, 1, 0, 0, 16, 16, 32, 32, 0, 0, 0, 3, 255, 255, 255);
 }
 
 void CGamePlayState::Exit(void)
@@ -236,7 +237,6 @@ void CGamePlayState::RenderHUD(void)
 				char buff[128];
 				sprintf_s(buff, 128, "%i/%i", pUnit->CurHealth(), pUnit->MaxHealth());
 				m_ftTextSmall.RenderText(buff, 460, 770);
-
 				sprintf_s(buff, 128, "Attack: %.2f", pUnit->AttackDamage());
 				m_ftTextSmall.RenderText(buff, 840, 755);
 				sprintf_s(buff, 128, "Speed: %.2f", pUnit->AttackSpeed());
@@ -276,10 +276,10 @@ void CGamePlayState::Render(void)
 	CSGD_Direct3D::GetInstance()->SpriteEnd();
 	CSGD_Direct3D::GetInstance()->SpriteBegin();
 
+	CObjectManager::GetInstance()->RenderObjects();
 	CMovementControl::GetInstance()->RenderDragRect();
 	m_peEmitter.Render();
 	RenderHUD();
-	CObjectManager::GetInstance()->RenderObjects();
 	CMovementControl::GetInstance()->RenderCursor();
 }
 

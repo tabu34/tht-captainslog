@@ -46,6 +46,7 @@ public:
 	CUnit();
 	virtual void Update(float fElapsedTime);
 	virtual void Render();
+	virtual void Attack(float fElapsedTime);
 
 	// Orders //////////////////////////////////////
 	void OrderMove( POINT _dest );
@@ -64,6 +65,7 @@ public:
 	float AttackTimer() const { return m_fAttackTimer; }
 	float MovementSpeed() const { return m_fMovementSpeed; }
 	float StunnedEndTime() const { return m_fStunnedEndTime; }
+	float FireLineTime() const { return m_fFireLineTime; }
 	int Armor() const { return m_nArmor; }
 	int AttackRange() const { return m_fAttackRange; }
 	int CurHealth() const { return m_nCurHealth; }
@@ -73,6 +75,8 @@ public:
 	int PortraitID() const { return m_nPortraitID; }
 	int CurDirection() const { return m_nCurDirection; }
 	int State() const { return m_nState; }
+	POINT Destination() const { return m_pDestinationMove; }
+	CUnit* Target() const { return m_pTarget; }
 	vector<CAbility*> Abilities() const { return m_vAbilities; }
 	vector<int>* Animations() { return &m_vAnimations; }
 	////////////////////////////////////////////////
@@ -85,6 +89,7 @@ public:
 	void AttackRange(int val) { m_fAttackRange = val; }
 	void AttackSpeed(float val) { m_fAttackSpeed = val; }
 	void AttackTimer(float val) { m_fAttackTimer = val; }
+	void FireLineTime(float val) { m_fFireLineTime = val; }
 	void Burned(bool val) { m_bBurned = val; }
 	void Cloaked(bool val) { m_bCloaked = val; }
 	void CurHealth(int val) { m_nCurHealth = val; }
@@ -99,6 +104,9 @@ public:
 	void Stunned(bool val) { m_bStunned = val; }
 	void StunnedEndTime(float val) { m_fStunnedEndTime = val; }
 	void CurDirection(int val) { m_nCurDirection = val; }
+	void State(int val) { m_nState = val; }
+	void Target(CUnit* val) { m_pTarget = val; }
+	void Destination (LONG x, LONG y) { m_pDestinationMove.x = x; m_pDestinationMove.y = y; }
 	////////////////////////////////////////////////
 };
 #endif // CUnit_h__

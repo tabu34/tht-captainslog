@@ -8,14 +8,15 @@ CScout::CScout()
 	PosY(0);
 	VelX(0);
 	VelY(0);
-	Width(120);
-	Height(140);
-	CurHealth(8);
-	MaxHealth(8);
+	Width(64);
+	Height(64);
+	CurHealth(80);
+	MaxHealth(80);
 	AttackSpeed(3);
-	AttackDamage(7);
+	AttackDamage(60);
 	AttackTimer(0);
 	AttackRange(250);
+	Armor(15);
 
 
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Ghost-Walk-N"));

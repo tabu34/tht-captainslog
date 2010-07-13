@@ -76,7 +76,7 @@ void CGame::Render()
 
 	//////////////////////////////////////////////////////////////////////////
 	char* buffer = new char[100];
-	sprintf(buffer, "mouse x: %d; y: %d", CMovementControl::GetInstance()->MousePosX(), CMovementControl::GetInstance()->MousePosY());
+	sprintf_s(buffer, 100, "mouse x: %d; y: %d", CMovementControl::GetInstance()->MousePosX(), CMovementControl::GetInstance()->MousePosY());
 	m_pD3D->DrawText(buffer, 10, 300, 255, 255, 255);
 	delete[] buffer;
 	//////////////////////////////////////////////////////////////////////////
