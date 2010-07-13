@@ -88,6 +88,40 @@ void CMovementControl::Input()
 		//m_esEventSystem->SendEvent("LeftMouseButtonPressed");
 	}
 
+	if(m_DI->MouseButtonReleased(MOUSE_LEFT))
+	{
+		if (m_ptStart.x	== CSGD_DirectInput::GetInstance()->MouseGetPosX() && m_ptStart.y == CSGD_DirectInput::GetInstance()->MouseGetPosY())
+		{
+			RECT mouseRect = {0, 0, 0, 0};
+			mouseRect.left = LONG((float)CSGD_DirectInput::GetInstance()->MouseGetPosX() + CGame::GetInstance()->GetCamera()->GetX());
+			mouseRect.top = LONG((float)CSGD_DirectInput::GetInstance()->MouseGetPosY() + CGame::GetInstance()->GetCamera()->GetY());
+			mouseRect.right = mouseRect.left + 1;
+			mouseRect.bottom = mouseRect.top + 1;
+	
+			for(unsigned int i = 0; i < m_vObjectList->size(); i++)
+			{
+				RECT collide;
+				RECT collisionRect = (*m_vObjectList)[i]->GetCollisionRect();
+				if(IntersectRect(&collide, &mouseRect, &collisionRect))
+				{
+					if(!((CUnit*)(*m_vObjectList)[i])->Selected())	// If not selected
+					{
+						((CUnit*)(*m_vObjectList)[i])->Selected(true);
+						(*m_vSelected).push_back( (*m_vObjectList)[i] );
+					}
+				} 
+				else
+				{
+					if( ((CUnit*)(*m_vObjectList)[i])->Selected() )	// If selected
+					{
+						((CUnit*)(*m_vObjectList)[i])->Selected(false);
+						CObjectManager::GetInstance()->FindAndRemove( (CUnit*)(*m_vObjectList)[i] );
+					}
+				}
+			}
+		}
+	}
+
 	if(m_DI->MouseButtonDown(MOUSE_LEFT))
 	{
 		// Unit Selection ---------------
@@ -100,7 +134,9 @@ void CMovementControl::Input()
 		// END Unit Selection -----------
 
 		//m_esEventSystem->SendEvent("RightMouseButtonPressed");
-	} else {
+	} 
+	else 
+	{
 		m_bDragging = false;
 	}
 
@@ -169,7 +205,9 @@ void CMovementControl::CheckDragRect()
 					((CUnit*)(*m_vObjectList)[i])->Selected(true);
 					(*m_vSelected).push_back( (*m_vObjectList)[i] );
 				}
-			} else {
+			} 
+			else
+			{
 				if( ((CUnit*)(*m_vObjectList)[i])->Selected() )	// If selected
 				{
 					((CUnit*)(*m_vObjectList)[i])->Selected(false);
