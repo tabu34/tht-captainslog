@@ -313,6 +313,8 @@ void CGamePlayState::MessageProc(CBaseMessage* pMSG)
 	case MSG_DESTROY_UNIT:
 		CUnitDeathMessage* udMSG = (CUnitDeathMessage*)pMSG;
 
+		CObjectManager::GetInstance()->FindAndRemove(udMSG->GetUnit());
+
 		CObjectManager::GetInstance()->RemoveObject(udMSG->GetUnit());
 	}
 }

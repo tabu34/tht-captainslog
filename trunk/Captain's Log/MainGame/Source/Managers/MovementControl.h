@@ -1,8 +1,6 @@
 #ifndef CMovementControl_h__
 #define CMovementControl_h__
 
-
-
 class CBase;
 class CEventSystem;
 class CCamera;

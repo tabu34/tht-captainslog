@@ -33,9 +33,14 @@ void CObjectManager::AddObject( CBase* pObject )
 
 void CObjectManager::RemoveAllObjects()
 {
-	for (unsigned int i=0; i < m_vObjectList.size(); i++)
+	for (unsigned int i = 0; i < m_vObjectList.size(); i++)
 	{
 		m_vObjectList[i]->Release();
+	}
+
+	while (m_vSelected.size())
+	{
+		m_vSelected.erase(m_vSelected.begin());
 	}
 
 	m_vObjectList.clear();
