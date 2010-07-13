@@ -383,7 +383,7 @@ void CreateKeybindBuffer(char* buffer, char* keybind, unsigned char DIKCode)
 		DIK_CALCULATOR, 	"CALC",
 		DIK_CAPITAL, 		"CAPITAL",
 		DIK_COLON, 			":",
-		DIK_COMMA, 			",COMMA",
+		DIK_COMMA, 			",",
 		DIK_CONVERT, 		"CONVERT",
 		DIK_D, 				"D",
 		DIK_DECIMAL, 		".",
