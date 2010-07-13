@@ -3,16 +3,16 @@
 
 #include "CAbility.h"
 
-class CBase;
+class CUnit;
 
-class CTargetAbility
+class CTargetAbility : public CAbility
 {
-	CBase*	m_pTarget;
+	CUnit*	m_pTarget;
 
 public:
 
 	// Accessors ///////////////////////////////////
-	CBase* Target() const { return m_pTarget; }
+	CUnit* Target() const { return m_pTarget; }
 	////////////////////////////////////////////////
 
 };

@@ -7,11 +7,17 @@ class CAbility
 	bool	m_bIsActive;
 	bool	m_bIsAuto;
 	float	m_fCooldown;
+	float	m_fDuration;
+	float	m_fTimePassed;
 
 public:
 
+	virtual void Update(float fElapsedTime);
+
 	// Accessors ///////////////////////////////////
 	float Cooldown() const { return m_fCooldown; }
+	float Duration() const { return m_fDuration; }
+	float TimePassed() const { return m_fTimePassed; }
 	bool IsAuto() const { return m_bIsAuto; }
 	bool IsActive() const { return m_bIsActive; }
 	int Type() const { return m_nType; }
@@ -19,6 +25,7 @@ public:
 
 	// Mutators ////////////////////////////////////
 	void IsActive(bool val) { m_bIsActive = val; }
+	void TimePassed(float val) { m_fTimePassed = val; }
 	////////////////////////////////////////////////
 
 };

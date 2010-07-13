@@ -9,6 +9,8 @@ CUnit::CUnit()
 	m_nState = UNIT_IDLE;
 	m_nCurDirection = 0;
 	m_fAttackTimer = 0;
+	m_bStunned = false;
+	m_bInvulnerable = false;
 }
 
 void CUnit::OrderMove( POINT _dest )
@@ -44,6 +46,16 @@ void CUnit::Update(float fElapsedTime)
 	if (m_nCurHealth <= 0)
 	{
 		CMessageSystem::GetInstance()->SendMessage(new CUnitDeathMessage(this));
+		return;
+	}
+
+	if (m_nCurHealth > m_nMaxHealth)
+	{
+		m_nCurHealth--;
+	}
+
+	if (m_bStunned)
+	{
 		return;
 	}
 
@@ -140,7 +152,10 @@ void CUnit::Attack(float fElapsedTime)
 		m_fAttackTimer += fElapsedTime;
 		if (m_fAttackTimer >= m_fAttackSpeed)
 		{
-			m_pTarget->CurHealth(m_pTarget->CurHealth() - (int)(m_fAttackDamage - (m_fAttackDamage * m_pTarget->Armor() * 0.01f)));
+			if (m_pTarget->Invulnerable() == false)
+			{
+				m_pTarget->CurHealth(m_pTarget->CurHealth() - (int)(m_fAttackDamage - (m_fAttackDamage * m_pTarget->Armor() * 0.01f)));
+			}
 			m_fAttackTimer = 0;
 			m_fFireLineTime = 0.2f;
 			m_nState = UNIT_FIRE;
