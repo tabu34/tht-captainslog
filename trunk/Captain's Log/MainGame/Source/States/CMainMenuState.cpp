@@ -9,6 +9,7 @@
 #include "CMainMenuState.h"
 #include "CGamePlayState.h"
 #include "COptionsMenuState.h"
+#include "../Managers/MovementControl.h"
 #include "..\CGame.h"
 
 CMainMenuState::CMainMenuState(void)
@@ -40,6 +41,9 @@ void CMainMenuState::Enter(void)
 
 bool CMainMenuState::Input(void)
 {
+	m_nMouseX = CMovementControl::GetInstance()->MousePosX();
+	m_nMouseY = CMovementControl::GetInstance()->MousePosY();
+
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP))
 		m_sCurrentChoice--;
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN))
@@ -50,7 +54,7 @@ bool CMainMenuState::Input(void)
 	if(m_sCurrentChoice > 4)
 		m_sCurrentChoice = 0;
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN))
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
 	{
 		if(m_sCurrentChoice == 0)
 			CGame::GetInstance()->ChangeState( CGamePlayState::GetInstance() );
@@ -60,18 +64,42 @@ bool CMainMenuState::Input(void)
 			return false;
 	}
 
+	int nItemHeight=20;
+	if((m_nMouseX!=m_nMousePrevX || m_nMouseY!=m_nMousePrevY) && m_nMouseX > 480 && m_nMouseX < 950)
+	{
+		m_sCurrentChoice = (m_nMouseY-(short)(574 * 0.75f))/20 - 2;
+
+		if(m_sCurrentChoice < 0)
+			m_sCurrentChoice = 0;
+		if(m_sCurrentChoice > 4)
+			m_sCurrentChoice = 4;
+	}
+
+	m_nMousePrevX = m_nMouseX;
+	m_nMousePrevY = m_nMouseY;
 	return true;
 }
 
 void CMainMenuState::Update(float fElapsedTime)
 {
+	if(m_nMouseX < 0)
+		CSGD_DirectInput::GetInstance()->MouseSetPosX(0);
 
+	if(m_nMouseX > CGame::GetInstance()->GetScreenWidth())
+		CSGD_DirectInput::GetInstance()->MouseSetPosX(CGame::GetInstance()->GetScreenWidth());
+
+	if(m_nMouseY < 0)
+		CSGD_DirectInput::GetInstance()->MouseSetPosY(0);
+
+	if(m_nMouseY > CGame::GetInstance()->GetScreenHeight())
+		CSGD_DirectInput::GetInstance()->MouseSetPosY(CGame::GetInstance()->GetScreenHeight());
 }
 
 void CMainMenuState::Render(void)
 {
 	CSGD_TextureManager::GetInstance()->Draw(m_nMenuBG, 0, 0, 0.75f, 0.75f);
 	CSGD_TextureManager::GetInstance()->Draw(m_nMenuCur[m_sCurrentChoice], (int)(632 * 0.75f), (int)(574 * 0.75f), 0.75f, 0.75f);
+	CMovementControl::GetInstance()->RenderCursor();
 }
 
 void CMainMenuState::Exit(void)
