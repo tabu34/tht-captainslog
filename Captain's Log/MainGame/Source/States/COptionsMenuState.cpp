@@ -28,6 +28,9 @@ void COptionsMenuState::Enter()
 	m_nSliderImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\optionsMenuSlider.png").c_str());
 	m_pCurrentControl = NULL;
 
+	m_bfFont.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.7f, 0.7f, 2, 0xFF000000, 0xFF00CC00);
+	m_bfFont.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
+
 	//add controls to the vector (ALL OF THEM..GAH)
 	tMenuControl mcInit;
 	SetRect(&mcInit.rArea, 511, 235, 646, 259);
@@ -152,6 +155,10 @@ bool COptionsMenuState::Input()
 			{
 				CGame::GetInstance()->PopState();
 			}
+			else if(m_pCurrentControl->szIdentifier == "fullscreen")
+			{
+				CGame::GetInstance()->ToggleFullScreen();
+			}
 		}
 	}
 
@@ -195,6 +202,11 @@ void COptionsMenuState::Render()
 	if(m_pCurrentControl)
 		DrawHollowRect(&m_pCurrentControl->rArea);
 
+	CSGD_TextureManager::GetInstance()->Draw(m_nSliderImageID, 415, 396, 0.75f, 0.75f);
+	CSGD_TextureManager::GetInstance()->Draw(m_nSliderImageID, 415, 474, 0.75f, 0.75f);
+	CSGD_TextureManager::GetInstance()->Draw(m_nSliderImageID, 415, 550, 0.75f, 0.75f);
+
+	m_bfFont.RenderText(((CGame::GetInstance()->IsWindowed()) ? "False" : "True"), 511, 235);
 
 	CMovementControl::GetInstance()->RenderCursor();
 }

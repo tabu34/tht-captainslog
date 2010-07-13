@@ -36,6 +36,7 @@ public:
 	int		MousePosY()	{ return CSGD_DirectInput::GetInstance()->MouseGetPosY(); }
 
 	static CMovementControl* GetInstance();
+	vector<CBase*>* GetSelectedUnits(){return m_vSelected;}
 	void Init();
 	void Input();
 	void CheckDragRect();

@@ -33,6 +33,11 @@ class COptionsMenuState : public IGameState
 	int m_nMousePrevX;
 	int m_nMousePrevY;
 
+	//actual game options
+	int m_nMusicVolume;
+	int m_nSFXVolume;
+	int m_nVoiceVolume;
+
 	COptionsMenuState();
 	~COptionsMenuState();
 	COptionsMenuState(const COptionsMenuState&);
