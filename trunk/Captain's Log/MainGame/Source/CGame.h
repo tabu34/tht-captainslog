@@ -51,12 +51,16 @@ class CGame
 	void			Render();
 	void			Update();
 
-	void			ToggleFullScreen();
 
 public:
+
+
+	void			ToggleFullScreen();
+
 	// Accessors
 	int				GetScreenHeight(void) {return m_nWindowHeight;}
 	int				GetScreenWidth(void) {return m_nWindowWidth;}
+	bool			IsWindowed(void) {return m_bWindowed;}
 	CCamera*		GetCamera() { return m_pCAM; }
 
 	string			ResourcePath() const { return m_strResourcePath; }

@@ -14,6 +14,7 @@
 #include "CPauseMenuState.h"
 #include "..\GameObjects\CMedic.h"
 #include "..\GameObjects\CScout.h"
+#include "..\GameObjects\CBasicEnemies.h"
 
 CGamePlayState::CGamePlayState(void)
 {
@@ -221,6 +222,48 @@ void CGamePlayState::RenderHUD(void)
 
 	// Render Speech
 	RenderLargeShadowText((char *)(m_szSpeechText.substr(0, (unsigned int)m_nCurCount)).c_str(), 135, 494);
+
+	// Render selected object stats (if a single object is selected)
+	if(CMovementControl::GetInstance()->GetSelectedUnits()->size() > 0)
+	{
+		CBase* pBase = (*CMovementControl::GetInstance()->GetSelectedUnits())[0];
+		switch(pBase->Type())
+		{
+		case CBase::OBJ_PLAYER:
+			{
+				CUnit* pUnit = (CUnit*)pBase;
+				m_ftTextSmall.RenderText("Health", 460, 755);
+				char buff[128];
+				sprintf_s(buff, 128, "%i/%i", pUnit->CurHealth(), pUnit->MaxHealth());
+				m_ftTextSmall.RenderText(buff, 460, 770);
+
+				sprintf_s(buff, 128, "Attack: %i", pUnit->AttackDamage());
+				m_ftTextSmall.RenderText(buff, 840, 755);
+				sprintf_s(buff, 128, "Speed: %i", pUnit->AttackSpeed());
+				m_ftTextSmall.RenderText(buff, 840, 770);
+				sprintf_s(buff, 128, "Armor: %i", pUnit->Armor());
+				m_ftTextSmall.RenderText(buff, 840, 785);
+			}
+			break;
+		case CBase::OBJ_ENEMY:
+			{
+				CUnit* pEnemy = (CUnit*)pBase;
+				m_ftTextSmall.RenderText("Health", 460, 755);
+				char buff[128];
+				sprintf_s(buff, 128, "%i/%i", pEnemy->CurHealth(), pEnemy->MaxHealth());
+				m_ftTextSmall.RenderText(buff, 460, 770);
+
+				sprintf_s(buff, 128, "Attack: %i", pEnemy->AttackDamage());
+				m_ftTextSmall.RenderText(buff, 840, 755);
+				sprintf_s(buff, 128, "Speed: %i", pEnemy->AttackSpeed());
+				m_ftTextSmall.RenderText(buff, 840, 770);
+				sprintf_s(buff, 128, "Armor: %i", pEnemy->Armor());
+				m_ftTextSmall.RenderText(buff, 840, 785);
+
+			}
+			break;
+		}
+	}
 
 	// Render ToolTip Text
 	if(m_szTooltipText != "")
