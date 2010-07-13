@@ -42,6 +42,13 @@ class CGame
 	string					m_strFontPath;
 	////////////////////////////////////////////
 
+	//Game Options
+	int						m_nSFXVolume;
+	int						m_nMusicVolume;
+	int						m_nVoiceVolume;
+	unsigned char			m_arrKeybinds[18];
+	////////////////////////////////////////////
+
 	~CGame();
 	CGame();
 	CGame(CGame&);
@@ -56,6 +63,8 @@ public:
 
 
 	void			ToggleFullScreen();
+
+	void			SettingsChanged();
 
 	// Accessors
 	int				GetScreenHeight(void) {return m_nWindowHeight;}
