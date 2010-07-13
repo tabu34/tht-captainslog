@@ -61,7 +61,7 @@ void COptionsMenuState::Enter()
 
 	//ALL THE FRIGGIN KEYBINDS
 	char buffer[128];
-	for(int i=0; i<18; i++)
+	for(int i=0; i<17; i++)
 	{
 		sprintf_s(buffer, 128, "key%i", i);
 		SetRect(&mcInit.rArea, 779, 272+(i*25)+(int)(i*1.5f), 1041, 298+(i*25)+(int)(i*1.5f));
@@ -80,6 +80,7 @@ void COptionsMenuState::Enter()
 	m_vControls.push_back(mcInit);
 
 	LoadSettings();
+	m_bError=false;
 
 }
 
@@ -98,6 +99,8 @@ bool COptionsMenuState::Input()
 			{
 				if(m_arrKeybinds[i]==dikCode && i!=m_nBindIndex)
 				{
+					m_bError=true;
+					m_fErrorTimer=1.0f;
 					bUnique=false;
 					break;
 				}
@@ -212,6 +215,8 @@ bool COptionsMenuState::Input()
 			if(m_pCurrentControl->szIdentifier == "saveexit")
 			{
 				//save options
+				SaveSettings();
+				CGame::GetInstance()->SettingsChanged();
 				CGame::GetInstance()->PopState();
 			}
 			else if(m_pCurrentControl->szIdentifier == "exit")
@@ -221,10 +226,55 @@ bool COptionsMenuState::Input()
 			else if(m_pCurrentControl->szIdentifier == "fullscreen")
 			{
 				CGame::GetInstance()->ToggleFullScreen();
+				m_bWindowed=!m_bWindowed;
 			}
 			else if(m_pCurrentControl->szIdentifier.substr(0,3)=="key")
 			{
 				m_bBinding=true;
+			}
+			else if(m_pCurrentControl->szIdentifier == "restoredefaults")
+			{
+				m_bWindowed=true;
+				m_nSFXVolume=50;
+				m_nVoiceVolume=50;
+				m_nMusicVolume=50;
+				m_arrKeybinds[0]=DIK_1;
+				m_arrKeybinds[1]=DIK_2;
+				m_arrKeybinds[2]=DIK_3;
+				m_arrKeybinds[3]=DIK_4;
+				m_arrKeybinds[4]=DIK_5;
+				m_arrKeybinds[5]=DIK_Q;
+				m_arrKeybinds[6]=DIK_W;
+				m_arrKeybinds[7]=DIK_E;
+				m_arrKeybinds[8]=DIK_R;
+				m_arrKeybinds[9]=DIK_A;
+				m_arrKeybinds[10]=DIK_S;
+				m_arrKeybinds[11]=DIK_D;
+				m_arrKeybinds[12]=DIK_F;
+				m_arrKeybinds[13]=DIK_UP;
+				m_arrKeybinds[14]=DIK_DOWN;
+				m_arrKeybinds[15]=DIK_LEFT;
+				m_arrKeybinds[16]=DIK_RIGHT;
+			}
+			else if(m_pCurrentControl->szIdentifier == "layout")
+			{
+				m_arrKeybinds[0]=DIK_1;
+				m_arrKeybinds[1]=DIK_2;
+				m_arrKeybinds[2]=DIK_3;
+				m_arrKeybinds[3]=DIK_4;
+				m_arrKeybinds[4]=DIK_5;
+				m_arrKeybinds[5]=DIK_Q;
+				m_arrKeybinds[6]=DIK_W;
+				m_arrKeybinds[7]=DIK_E;
+				m_arrKeybinds[8]=DIK_R;
+				m_arrKeybinds[9]=DIK_A;
+				m_arrKeybinds[10]=DIK_S;
+				m_arrKeybinds[11]=DIK_D;
+				m_arrKeybinds[12]=DIK_F;
+				m_arrKeybinds[13]=DIK_UP;
+				m_arrKeybinds[14]=DIK_DOWN;
+				m_arrKeybinds[15]=DIK_LEFT;
+				m_arrKeybinds[16]=DIK_RIGHT;
 			}
 		}
 	}
@@ -267,6 +317,12 @@ bool COptionsMenuState::Input()
 
 void COptionsMenuState::Update(float fElapsedTime)
 {
+	if(m_bError)
+	{
+		m_fErrorTimer-=fElapsedTime;
+		if(m_fErrorTimer<=0.0f)
+			m_bError=false;
+	}
 	if(m_nMouseX < 0)
 		CSGD_DirectInput::GetInstance()->MouseSetPosX(0);
 
@@ -540,7 +596,9 @@ void COptionsMenuState::Render()
 				CreateKeybindBuffer(buff, "Camera Right: ", m_arrKeybinds[16]);
 				break;
 			}
-			if(j-1 == m_nBindIndex && m_bBinding)
+			if(j-1 == m_nBindIndex && m_bBinding && m_bError)
+				sprintf_s(buff, 128, "Key Already Bound");
+			else if(j-1 == m_nBindIndex && m_bBinding)
 				sprintf_s(buff, 128, "Awaiting Keypress...");
 
 			m_bfWhite.RenderText(buff, 780, 273+((j-1)*25)+(int)((j-1)*1.5f));
@@ -554,6 +612,7 @@ void COptionsMenuState::Render()
 
 void COptionsMenuState::Exit()
 {
+	m_vControls.clear();
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nBGImageID);
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nSliderImageID);
 }

@@ -5,6 +5,9 @@
 #include "States\CTestState.h"
 #include "Managers\MovementControl.h"
 #include "GameObjects\CAnimationManager.h"
+#include <fstream>
+using std::ifstream;
+using std::ios_base;
 
 CGame::~CGame()
 {
@@ -99,12 +102,58 @@ void CGame::ToggleFullScreen()
 {
 	m_bWindowed=!m_bWindowed;
 	m_pD3D->ChangeDisplayParam(m_nWindowWidth, m_nWindowHeight, m_bWindowed);
-
+	ShowCursor(FALSE);
 }
 
 void CGame::SettingsChanged()
 {
 	//reload keybinds and settings and make changes here
+	ifstream fin;
+	std::string szPath = ResourcePath()+"Settings.bin";
+	fin.open(szPath.c_str(), ios_base::binary | ios_base::in);
+
+	if(fin.fail())
+	{
+		fin.clear(ios_base::failbit);
+		m_bWindowed=true;
+		m_nSFXVolume=50;
+		m_nVoiceVolume=50;
+		m_nMusicVolume=50;
+		m_arrKeybinds[0]=DIK_1;
+		m_arrKeybinds[1]=DIK_2;
+		m_arrKeybinds[2]=DIK_3;
+		m_arrKeybinds[3]=DIK_4;
+		m_arrKeybinds[4]=DIK_5;
+		m_arrKeybinds[5]=DIK_Q;
+		m_arrKeybinds[6]=DIK_W;
+		m_arrKeybinds[7]=DIK_E;
+		m_arrKeybinds[8]=DIK_R;
+		m_arrKeybinds[9]=DIK_A;
+		m_arrKeybinds[10]=DIK_S;
+		m_arrKeybinds[11]=DIK_D;
+		m_arrKeybinds[12]=DIK_F;
+		m_arrKeybinds[13]=DIK_UP;
+		m_arrKeybinds[14]=DIK_DOWN;
+		m_arrKeybinds[15]=DIK_LEFT;
+		m_arrKeybinds[16]=DIK_RIGHT;
+		m_bWindowed=false;
+		ToggleFullScreen();
+	}
+	else if(fin.is_open() && fin.good())
+	{
+		fin.read((char*)&m_bWindowed, sizeof(bool));
+		fin.read((char*)&m_nSFXVolume, sizeof(int));
+		fin.read((char*)&m_nVoiceVolume, sizeof(int));
+		fin.read((char*)&m_nMusicVolume, sizeof(int));
+
+		for(int i=0; i<18; i++)
+		{
+			fin.read((char*)&m_arrKeybinds[i], sizeof(unsigned char));
+		}
+		m_bWindowed=!m_bWindowed;
+		ToggleFullScreen();
+		fin.close();
+	}
 }
 
 void CGame::ChangeState( IGameState* pNewState )
@@ -156,6 +205,8 @@ void CGame::Initialize( HWND hWnd, HINSTANCE hInstance, int nScreenWidth, int nS
 
 	CGamePlayState::GetInstance();
 	ChangeState(CMainMenuState::GetInstance());
+
+	SettingsChanged();
 }
 
 bool CGame::Main()

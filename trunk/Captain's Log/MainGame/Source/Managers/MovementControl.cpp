@@ -140,7 +140,7 @@ void CMovementControl::Input()
 		m_bDragging = false;
 	}
 
-	if(m_DI->KeyDown(DIK_LEFT))
+	if(m_DI->KeyDown(CGame::GetInstance()->KeyBinds(CGame::KEY_LEFT)))
 	{
 		CGame::GetInstance()->GetCamera()->SetX( CGame::GetInstance()->GetCamera()->GetX() - 1.5f );
 		if(CGame::GetInstance()->GetCamera()->GetX() < 0.0f)
@@ -148,7 +148,7 @@ void CMovementControl::Input()
 		//m_esEventSystem->SendEvent("LeftKeyPressed");
 	}
 
-	if(m_DI->KeyDown(DIK_RIGHT))
+	if(m_DI->KeyDown(CGame::GetInstance()->KeyBinds(CGame::KEY_RIGHT)))
 	{
 		CGame::GetInstance()->GetCamera()->SetX( CGame::GetInstance()->GetCamera()->GetX() + 1.5f );
 		if(CGame::GetInstance()->GetCamera()->GetX() > 1000.0f)
@@ -156,7 +156,7 @@ void CMovementControl::Input()
 		//m_esEventSystem->SendEvent("RightKeyPressed");
 	}
 
-	if(m_DI->KeyDown(DIK_UP))
+	if(m_DI->KeyDown(CGame::GetInstance()->KeyBinds(CGame::KEY_UP)))
 	{
 		CGame::GetInstance()->GetCamera()->SetY( CGame::GetInstance()->GetCamera()->GetY() - 1.5f );
 		if(CGame::GetInstance()->GetCamera()->GetY() < 0.0f)
@@ -164,7 +164,7 @@ void CMovementControl::Input()
 		//m_esEventSystem->SendEvent("UpKeyPressed");
 	}
 
-	if(m_DI->KeyDown(DIK_DOWN))
+	if(m_DI->KeyDown(CGame::GetInstance()->KeyBinds(CGame::KEY_DOWN)))
 	{
 		CGame::GetInstance()->GetCamera()->SetY( CGame::GetInstance()->GetCamera()->GetY() + 1.5f );
 		if(CGame::GetInstance()->GetCamera()->GetY() > 1000.0f)

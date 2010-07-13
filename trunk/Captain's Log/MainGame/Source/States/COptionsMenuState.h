@@ -45,6 +45,9 @@ class COptionsMenuState : public IGameState
 	bool m_bBinding;
 	int m_nBindIndex;
 
+	bool m_bError;
+	float m_fErrorTimer;
+
 	COptionsMenuState();
 	~COptionsMenuState();
 	COptionsMenuState(const COptionsMenuState&);

@@ -70,6 +70,9 @@ public:
 	int				GetScreenHeight(void) {return m_nWindowHeight;}
 	int				GetScreenWidth(void) {return m_nWindowWidth;}
 	bool			IsWindowed(void) {return m_bWindowed;}
+	enum {KEY_UNIT1, KEY_UNIT2, KEY_UNIT3, KEY_UNIT4, KEY_ALLUNIT, KEY_ABILITY1, KEY_ABILITY2, KEY_ABILITY3, KEY_ABILITY4,
+	KEY_INV1, KEY_INV2, KEY_INV3, KEY_INV4, KEY_UP, KEY_DOWN, KEY_LEFT, KEY_RIGHT};
+	unsigned char	KeyBinds(int index_key) {return m_arrKeybinds[index_key];}
 	CCamera*		GetCamera() { return m_pCAM; }
 
 	string			ResourcePath() const { return m_strResourcePath; }
