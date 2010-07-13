@@ -162,6 +162,25 @@ bool COptionsMenuState::Input()
 		}
 	}
 
+	if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
+	{
+		if(m_pCurrentControl)
+		{
+			if(m_pCurrentControl->szIdentifier == "musicvolume")
+			{
+				
+			}
+			else if(m_pCurrentControl->szIdentifier == "sfxvolume")
+			{
+
+			}
+			else if(m_pCurrentControl->szIdentifier == "voiceovervolume")
+			{
+
+			}
+		}
+	}
+
 	m_nMousePrevX = m_nMouseX;
 	m_nMousePrevY = m_nMouseY;
 	return true;
@@ -202,9 +221,9 @@ void COptionsMenuState::Render()
 	if(m_pCurrentControl)
 		DrawHollowRect(&m_pCurrentControl->rArea);
 
-	CSGD_TextureManager::GetInstance()->Draw(m_nSliderImageID, 415, 396, 0.75f, 0.75f);
-	CSGD_TextureManager::GetInstance()->Draw(m_nSliderImageID, 415, 474, 0.75f, 0.75f);
-	CSGD_TextureManager::GetInstance()->Draw(m_nSliderImageID, 415, 550, 0.75f, 0.75f);
+	CSGD_TextureManager::GetInstance()->Draw(m_nSliderImageID, (int)(415.0f + ((float)m_nSFXVolume/100.0f)*185.0f), 396, 0.75f, 0.75f);
+	CSGD_TextureManager::GetInstance()->Draw(m_nSliderImageID, (int)(415.0f + ((float)m_nVoiceVolume/100.0f)*185.0f), 474, 0.75f, 0.75f);
+	CSGD_TextureManager::GetInstance()->Draw(m_nSliderImageID, (int)(415.0f + ((float)m_nMusicVolume/100.0f)*185.0f), 550, 0.75f, 0.75f);
 
 	m_bfFont.RenderText(((CGame::GetInstance()->IsWindowed()) ? "False" : "True"), 511, 235);
 

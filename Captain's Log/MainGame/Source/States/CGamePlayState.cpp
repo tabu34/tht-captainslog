@@ -237,9 +237,9 @@ void CGamePlayState::RenderHUD(void)
 				sprintf_s(buff, 128, "%i/%i", pUnit->CurHealth(), pUnit->MaxHealth());
 				m_ftTextSmall.RenderText(buff, 460, 770);
 
-				sprintf_s(buff, 128, "Attack: %i", pUnit->AttackDamage());
+				sprintf_s(buff, 128, "Attack: %.2f", pUnit->AttackDamage());
 				m_ftTextSmall.RenderText(buff, 840, 755);
-				sprintf_s(buff, 128, "Speed: %i", pUnit->AttackSpeed());
+				sprintf_s(buff, 128, "Speed: %.2f", pUnit->AttackSpeed());
 				m_ftTextSmall.RenderText(buff, 840, 770);
 				sprintf_s(buff, 128, "Armor: %i", pUnit->Armor());
 				m_ftTextSmall.RenderText(buff, 840, 785);
@@ -253,9 +253,9 @@ void CGamePlayState::RenderHUD(void)
 				sprintf_s(buff, 128, "%i/%i", pEnemy->CurHealth(), pEnemy->MaxHealth());
 				m_ftTextSmall.RenderText(buff, 460, 770);
 
-				sprintf_s(buff, 128, "Attack: %i", pEnemy->AttackDamage());
+				sprintf_s(buff, 128, "Attack: %.2f", pEnemy->AttackDamage());
 				m_ftTextSmall.RenderText(buff, 840, 755);
-				sprintf_s(buff, 128, "Speed: %i", pEnemy->AttackSpeed());
+				sprintf_s(buff, 128, "Speed: %.2f", pEnemy->AttackSpeed());
 				m_ftTextSmall.RenderText(buff, 840, 770);
 				sprintf_s(buff, 128, "Armor: %i", pEnemy->Armor());
 				m_ftTextSmall.RenderText(buff, 840, 785);
