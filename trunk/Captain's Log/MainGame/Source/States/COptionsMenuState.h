@@ -20,6 +20,7 @@ class COptionsMenuState : public IGameState
 	} tMenuControl;
 
 	CBMPFont m_bfFont;
+	CBMPFont m_bfWhite;
 
 	vector<tMenuControl> m_vControls;
 
@@ -37,11 +38,20 @@ class COptionsMenuState : public IGameState
 	int m_nMusicVolume;
 	int m_nSFXVolume;
 	int m_nVoiceVolume;
+	unsigned char m_arrKeybinds[18];
+	bool m_bWindowed;
+
+
+	bool m_bBinding;
+	int m_nBindIndex;
 
 	COptionsMenuState();
 	~COptionsMenuState();
 	COptionsMenuState(const COptionsMenuState&);
 	COptionsMenuState& operator=(const COptionsMenuState&);
+
+	void LoadSettings();
+	void SaveSettings();
 public:
 	static COptionsMenuState* GetInstance();
 

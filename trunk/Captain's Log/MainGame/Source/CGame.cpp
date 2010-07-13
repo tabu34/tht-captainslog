@@ -102,6 +102,11 @@ void CGame::ToggleFullScreen()
 
 }
 
+void CGame::SettingsChanged()
+{
+	//reload keybinds and settings and make changes here
+}
+
 void CGame::ChangeState( IGameState* pNewState )
 {
 	for (unsigned int i = 0; i < m_vStateStack.size(); i++)
