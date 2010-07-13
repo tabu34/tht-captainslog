@@ -2,6 +2,7 @@
 #include "CGame.h"
 #include "States\CGamePlayState.h"
 #include "States\CMainMenuState.h"
+#include "States\CSplashState.h"
 #include "States\CTestState.h"
 #include "Managers\MovementControl.h"
 #include "GameObjects\CAnimationManager.h"
@@ -205,6 +206,7 @@ void CGame::Initialize( HWND hWnd, HINSTANCE hInstance, int nScreenWidth, int nS
 
 	CGamePlayState::GetInstance();
 	ChangeState(CMainMenuState::GetInstance());
+	PushState(CSplashState::GetInstance());
 
 	SettingsChanged();
 }
