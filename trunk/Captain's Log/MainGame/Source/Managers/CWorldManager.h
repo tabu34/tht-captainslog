@@ -63,8 +63,11 @@ public:
 	void Load(string sFileName);
 	void Render();
 
-	Blocker* GetBlockers() {return m_Blockers;}
-	int		GetNumBlockers(){return m_nNumBlockers;}
+	Blocker* GetBlockers() { return m_Blockers; }
+	int		GetNumBlockers(){ return m_nNumBlockers; }
+
+	int WorldHeight() const { return m_nWorldHeight * m_nTilesetHeight; }
+	int WorldWidth() const { return m_nWorldWidth * m_nTilesetWidth; }
 
 	friend class CPathManager;
 };
