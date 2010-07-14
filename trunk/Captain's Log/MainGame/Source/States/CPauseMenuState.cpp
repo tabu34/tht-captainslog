@@ -2,6 +2,7 @@
 #include "CPauseMenuState.h"
 #include "COptionsMenuState.h"
 #include "CMainMenuState.h"
+#include "CHelpState.h"
 #include "../SGD Wrappers/CSGD_TextureManager.h"
 #include "../SGD Wrappers/CSGD_DirectInput.h"
 #include "../CGame.h"
@@ -73,6 +74,7 @@ bool CPauseMenuState::Input(void)
 			CGame::GetInstance()->PushState(COptionsMenuState::GetInstance());
 			break;
 		case 4: //help
+			CGame::GetInstance()->PushState(CHelpState::GetInstance());
 			break;
 		case 5: //main menu
 			CGame::GetInstance()->ChangeState(CMainMenuState::GetInstance());

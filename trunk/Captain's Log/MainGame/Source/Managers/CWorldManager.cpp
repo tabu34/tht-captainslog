@@ -113,6 +113,7 @@ void CWorldManager::Load(string sFileName)
 // 	m_Blockers->m_Points[4].x = 516;
 // 	m_Blockers->m_Points[4].y = 325;
 
+
 	//create pathing
 	CPathManager::GetInstance()->GenerateMap();
 }
