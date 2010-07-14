@@ -47,9 +47,10 @@ class CUnit : public CBase
 
 	CUnit*				m_pTarget;
 
-	enum { UNIT_IDLE, UNIT_MOVING, UNIT_MOVING_ATTACK, UNIT_ATTACK, UNIT_FIRE };
+
 
 public:
+		enum { UNIT_IDLE, UNIT_MOVING, UNIT_MOVING_ATTACK, UNIT_ATTACK, UNIT_FIRE };
 	CUnit();
 	virtual void Update(float fElapsedTime);
 	virtual void Render();

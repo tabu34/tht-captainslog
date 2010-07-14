@@ -137,7 +137,7 @@ void CGamePlayState::Exit(void)
 
 bool CGamePlayState::Input(void)
 {
-	CMovementControl::GetInstance()->Input();
+	
 
 	// Tooltips
 	RECT mousePos, collide, collider;
@@ -170,7 +170,6 @@ bool CGamePlayState::Input(void)
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
 	{
 		CGame::GetInstance()->PushState(CPauseMenuState::GetInstance());
-
 	}
 
 	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_B))
@@ -203,6 +202,9 @@ bool CGamePlayState::Input(void)
 			}
 		}
 	}
+
+	CMovementControl::GetInstance()->Input();
+
 	return true;
 }
 
