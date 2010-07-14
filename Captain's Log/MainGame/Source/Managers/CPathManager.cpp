@@ -99,6 +99,11 @@ bool InsideBlocker(POINT p)
 	return false;
 }
 
+bool CPathManager::IsPointInside(POINT p)
+{
+	return InsideBlocker(p);
+}
+
 CPathManager* CPathManager::GetInstance()
 {
 	static CPathManager instance;
