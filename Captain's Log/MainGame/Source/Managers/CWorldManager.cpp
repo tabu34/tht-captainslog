@@ -98,20 +98,20 @@ void CWorldManager::Load(string sFileName)
 	fin.close();
 
 	//DEBUG::  hard-coded blocker to test pathing
-	m_nNumBlockers=1;
-	m_Blockers = new Blocker;
-	m_Blockers->m_nNumPoints=5;
-	m_Blockers->m_Points = new Blocker::Point[5];
-	m_Blockers->m_Points[0].x = 516;
-	m_Blockers->m_Points[0].y = 325;
-	m_Blockers->m_Points[1].x = 910;
-	m_Blockers->m_Points[1].y = 325;
-	m_Blockers->m_Points[2].x = 910;
-	m_Blockers->m_Points[2].y = 550;
-	m_Blockers->m_Points[3].x = 516;
-	m_Blockers->m_Points[3].y = 550;
-	m_Blockers->m_Points[4].x = 516;
-	m_Blockers->m_Points[4].y = 325;
+// 	m_nNumBlockers=1;
+// 	m_Blockers = new Blocker;
+// 	m_Blockers->m_nNumPoints=5;
+// 	m_Blockers->m_Points = new Blocker::Point[5];
+// 	m_Blockers->m_Points[0].x = 516;
+// 	m_Blockers->m_Points[0].y = 325;
+// 	m_Blockers->m_Points[1].x = 910;
+// 	m_Blockers->m_Points[1].y = 325;
+// 	m_Blockers->m_Points[2].x = 910;
+// 	m_Blockers->m_Points[2].y = 550;
+// 	m_Blockers->m_Points[3].x = 516;
+// 	m_Blockers->m_Points[3].y = 550;
+// 	m_Blockers->m_Points[4].x = 516;
+// 	m_Blockers->m_Points[4].y = 325;
 
 	//create pathing
 	CPathManager::GetInstance()->GenerateMap();

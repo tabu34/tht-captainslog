@@ -6,6 +6,7 @@
 #include "..\SGD Wrappers\CSGD_Direct3D.h"
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
+#include "..\Managers\CWorldManager.h"
 #include "..\GameObjects\CUnit.h"
 
 CMovementControl* CMovementControl::GetInstance()
@@ -256,8 +257,8 @@ void CMovementControl::Input()
 	if(m_DI->KeyDown(CGame::GetInstance()->KeyBinds(CGame::KEY_RIGHT)))
 	{
 		CGame::GetInstance()->GetCamera()->SetX( CGame::GetInstance()->GetCamera()->GetX() + 1.5f );
-		if(CGame::GetInstance()->GetCamera()->GetX() > 1000.0f)
-			CGame::GetInstance()->GetCamera()->SetX( 1000.0f );
+		if(CGame::GetInstance()->GetCamera()->GetX() > CWorldManager::GetInstance()->WorldWidth() - CGame::GetInstance()->GetScreenWidth() )
+			CGame::GetInstance()->GetCamera()->SetX( CWorldManager::GetInstance()->WorldWidth() - CGame::GetInstance()->GetScreenWidth() );
 		//m_esEventSystem->SendEvent("RightKeyPressed");
 	}
 
@@ -272,8 +273,8 @@ void CMovementControl::Input()
 	if(m_DI->KeyDown(CGame::GetInstance()->KeyBinds(CGame::KEY_DOWN)))
 	{
 		CGame::GetInstance()->GetCamera()->SetY( CGame::GetInstance()->GetCamera()->GetY() + 1.5f );
-		if(CGame::GetInstance()->GetCamera()->GetY() > 1000.0f)
-			CGame::GetInstance()->GetCamera()->SetY( 1000.0f );
+		if(CGame::GetInstance()->GetCamera()->GetY() > CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight())
+			CGame::GetInstance()->GetCamera()->SetY( CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight());
 		//m_esEventSystem->SendEvent("DownKeyPressed");
 	}
 }
@@ -351,7 +352,7 @@ void CMovementControl::UpdateCamera( float fElapsedTime )
 	float nSpeed	= 50;
 
 	RECT rCameraBounds;
-	SetRect(&rCameraBounds, 0, 0, 2000, 2000);
+	SetRect(&rCameraBounds, 0, 0, CWorldManager::GetInstance()->WorldWidth(), CWorldManager::GetInstance()->WorldHeight());
 
 	m_cCAM->VelX(0);
 	m_cCAM->VelY(0);
@@ -372,27 +373,27 @@ void CMovementControl::UpdateCamera( float fElapsedTime )
 	m_cCAM->Update(fElapsedTime);
 
 
-	if (m_cCAM->GetX() < rCameraBounds.left)
-	{
-		m_cCAM->SetX((float)rCameraBounds.left);
-		m_cCAM->VelX(0);
-	}
-	else if (m_cCAM->GetX() + CGame::GetInstance()->GetScreenWidth() > rCameraBounds.right)
-	{
-		m_cCAM->SetX((float)(rCameraBounds.right - CGame::GetInstance()->GetScreenWidth()));
-		m_cCAM->VelX(0);
-	}
-
-	if (m_cCAM->GetY() < rCameraBounds.top)
-	{
-		m_cCAM->SetY((float)rCameraBounds.top);
-		m_cCAM->VelY(0);
-	}
-	else if (m_cCAM->GetY() + CGame:: GetInstance()->GetScreenHeight() > rCameraBounds.bottom)
-	{
-		m_cCAM->SetY((float)(rCameraBounds.bottom - CGame::GetInstance()->GetScreenHeight()));
-		m_cCAM->VelY(0);
-	}
+ 	if (m_cCAM->GetX() < rCameraBounds.left)
+ 	{
+ 		m_cCAM->SetX((float)rCameraBounds.left);
+ 		m_cCAM->VelX(0);
+ 	}
+ 	else if (m_cCAM->GetX() + CGame::GetInstance()->GetScreenWidth() > rCameraBounds.right)
+ 	{
+ 		m_cCAM->SetX((float)(rCameraBounds.right - CGame::GetInstance()->GetScreenWidth()));
+ 		m_cCAM->VelX(0);
+ 	}
+ 
+ 	if (m_cCAM->GetY() < rCameraBounds.top)
+ 	{
+ 		m_cCAM->SetY((float)rCameraBounds.top);
+ 		m_cCAM->VelY(0);
+ 	}
+ 	else if (m_cCAM->GetY() + CGame:: GetInstance()->GetScreenHeight() > rCameraBounds.bottom)
+ 	{
+ 		m_cCAM->SetY((float)(rCameraBounds.bottom - CGame::GetInstance()->GetScreenHeight()));
+ 		m_cCAM->VelY(0);
+ 	}
 
 
 }
