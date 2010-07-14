@@ -101,6 +101,9 @@ class CGamePlayState : public IGameState
 	// Tooltip
 	string				m_szTooltipText;
 
+	// Communication between HUD and movement control
+	string				m_szSelectedCommand;
+
 	// Particles
 	CParticleEmitter	m_peEmitter;
 	int					m_nParticleImageID;
@@ -118,6 +121,8 @@ public:
 	int  FindButton(string _name);
 	void RenderSmallShadowText(char* _text, int _x, int _y);
 	void RenderLargeShadowText(char* _text, int _x, int _y);
+	string CurrentCommand(){return m_szSelectedCommand;}
+	void ClearCommand(){m_szSelectedCommand="";}
 
 	void Enter(void);
 	bool Input(void);
