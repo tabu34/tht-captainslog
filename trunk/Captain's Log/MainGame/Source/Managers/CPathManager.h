@@ -4,19 +4,18 @@
 #include <map>
 #include <queue>
 #include <stack>
+#include "..\SGD Wrappers\SGD_Math.h"
 using std::stack;
 using std::queue;
 using std::map;
 using std::pair;
 using std::multimap;
 using std::vector;
-
 typedef struct
 {
 	float fX;
 	float fY;
 } tNode;
-
 typedef struct  
 {
 	tNode* pFrom;
@@ -35,6 +34,7 @@ struct tAStarNode
 
 	//used to construct path once search is over
 	tAStarNode* pCameFrom;
+	size_t nIndexParent;
 
 	//distance from source along optimal path
 	float fG;
@@ -43,12 +43,21 @@ struct tAStarNode
 	float fH;
 };
 
+
+struct tLine
+{
+	tVector2D start;
+	tVector2D end;
+};
+
 class CPathManager
 {
+public:
 	vector<tNode> m_lstNodeList;
 
 	map<tNode*, tAdjacency> m_mpAdjacencies;
-
+	vector<tLine> m_vLines;
+private:
 	CPathManager();
 	~CPathManager();
 	CPathManager(const CPathManager&);

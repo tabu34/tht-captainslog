@@ -63,6 +63,9 @@ public:
 	void Load(string sFileName);
 	void Render();
 
+	Blocker* GetBlockers() {return m_Blockers;}
+	int		GetNumBlockers(){return m_nNumBlockers;}
+
 	friend class CPathManager;
 };
 
