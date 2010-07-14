@@ -92,7 +92,7 @@ bool COptionsMenuState::Input()
 	if(m_bBinding)
 	{
 		UCHAR dikCode = CSGD_DirectInput::GetInstance()->GetDIKCode();
-		if(dikCode!=0)
+		if(dikCode!=0 && dikCode!=DIK_ESCAPE)
 		{
 			bool bUnique=true;
 			for(int i=0; i<18; i++)
