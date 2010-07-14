@@ -16,14 +16,46 @@ CUnit::CUnit()
 void CUnit::OrderMove( POINT _dest )
 {
 	m_nState = UNIT_MOVING;
-	m_pDestinationMove = _dest;
+	if(CPathManager::GetInstance()->CheckPath(PosX(), PosY(), (float)_dest.x, (float)_dest.y))
+	{
+		m_vDirections.clear();
+		m_pDestinationMove = _dest;
+	}
+	else
+	{
+		m_vDirections = CPathManager::GetInstance()->GetPath(PosX(), PosY(), (float)_dest.x, (float)_dest.y);
+		if(m_vDirections.size()>0)
+		{
+			m_pDestinationMove.x = (LONG)m_vDirections[0]->fX;
+			m_pDestinationMove.y = (LONG)m_vDirections[0]->fY;
+			m_nNextMove = 1;
+		}
+		else
+			m_nState = UNIT_IDLE;
+	}
 }
 
 void CUnit::OrderMove( int _x, int _y)
 {
 	m_nState = UNIT_MOVING;
-	m_pDestinationMove.x = _x;
-	m_pDestinationMove.y = _y;
+	if(CPathManager::GetInstance()->CheckPath(PosX(), PosY(), (float)_x, (float)_y))
+	{
+		m_vDirections.clear();
+		m_pDestinationMove.x = _x;
+		m_pDestinationMove.y = _y;
+	}
+	else
+	{
+		m_vDirections = CPathManager::GetInstance()->GetPath(PosX(), PosY(), (float)_x, (float)_y);
+		if(m_vDirections.size()>0)
+		{
+			m_pDestinationMove.x = (LONG)m_vDirections[0]->fX;
+			m_pDestinationMove.y = (LONG)m_vDirections[0]->fY;
+			m_nNextMove = 1;
+		}
+		else
+			m_nState = UNIT_IDLE;
+	}
 }
 
 void CUnit::OrderAttack(CUnit* pTarget)
@@ -86,7 +118,25 @@ void CUnit::Update(float fElapsedTime)
 		}
 
 		if(VelX() == 0.0f && VelY() == 0.0f)
-			m_nState = UNIT_IDLE;
+		{
+			if(m_vDirections.size()>0)
+			{
+				if(m_nNextMove<m_vDirections.size())
+				{
+					m_pDestinationMove.x = (LONG)m_vDirections[m_nNextMove]->fX;
+					m_pDestinationMove.y = (LONG)m_vDirections[m_nNextMove]->fY;
+					m_nNextMove++;
+				}
+				else
+				{
+					m_nState=UNIT_IDLE;
+				}
+			}
+			else
+			{
+				m_nState=UNIT_IDLE;
+			}
+		}
 	}
 	else if (m_nState == UNIT_MOVING_ATTACK)
 	{

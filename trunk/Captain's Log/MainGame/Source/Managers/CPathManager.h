@@ -67,6 +67,7 @@ public:
 
 	void GenerateMap();
 	vector<tNode*> GetPath(float fX1, float fY1, float fX2, float fY2);
+	bool CheckPath(float fX1, float fY1, float fX2, float fY2);
 
 
 };

@@ -127,4 +127,20 @@ void CWorldManager::Render()
 			}
 		}
 	}
+
+	
+	//DEBUG:: render the blockers
+	CSGD_Direct3D::GetInstance()->SpriteEnd();
+	for(int i=0; i<m_nNumBlockers; i++)
+	{
+		for(int j=0; j<m_Blockers[i].m_nNumPoints; j++)
+		{
+			if(j>0)
+			{
+				CSGD_Direct3D::GetInstance()->DrawLine(m_Blockers[i].m_Points[j-1].x,
+					m_Blockers[i].m_Points[j-1].y, m_Blockers[i].m_Points[j].x, m_Blockers[i].m_Points[j].y);
+			}
+		}
+	}
+	CSGD_Direct3D::GetInstance()->SpriteBegin();
 }
