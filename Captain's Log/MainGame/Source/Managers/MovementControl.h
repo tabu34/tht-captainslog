@@ -4,6 +4,10 @@
 class CBase;
 class CEventSystem;
 class CCamera;
+class CMarine;
+class CMedic;
+class CHeavy;
+class CScout;
 #include <vector>
 using namespace std;
 
@@ -25,6 +29,12 @@ class CMovementControl
 	// Cursor variables
 	int					m_nCursorImageID;
 
+	//	references to the four player units (for individual unit selection via keyboard)
+	CMarine*			m_pMarine;
+	CHeavy*				m_pHeavy;
+	CScout*				m_pScout;
+	CMedic*				m_pMedic;
+
 	CMovementControl(void) {};
 	~CMovementControl(void) {};
 	CMovementControl(CMovementControl&) {};
@@ -42,6 +52,8 @@ public:
 	void RenderCursor();
 	void Shutdown();
 	void UpdateCamera(float fElapsedTime);
+	void SetPlayerUnits(CMarine* pMarine, CHeavy* pHeavy, CScout* pScout, CMedic* pMedic) { m_pMarine = pMarine; m_pHeavy=pHeavy; m_pScout=pScout; m_pMedic=pMedic;}
+
 };
 
 #endif

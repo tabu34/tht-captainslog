@@ -96,6 +96,8 @@ void CGamePlayState::Enter(void)
 	alliedMedic->PosX(50);
 	alliedMedic->PosY(150);
 
+	CMovementControl::GetInstance()->SetPlayerUnits(alliedMarine, alliedHeavy, alliedScout, alliedMedic);
+
 	CObjectManager::GetInstance()->AddObject(alliedHeavy);
 	CObjectManager::GetInstance()->AddObject(alliedMedic);
 	CObjectManager::GetInstance()->AddObject(alliedScout);
