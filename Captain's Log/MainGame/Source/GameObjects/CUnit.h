@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "CBase.h"
+#include "..\Managers\CPathManager.h"
 using namespace std;
 
 class CAbility;
@@ -34,6 +35,10 @@ class CUnit : public CBase
 	//DEBUGGING
 	float				m_fFireLineTime;
 	//END
+
+	//PATHING
+	vector<tNode*>		m_vDirections;
+	size_t				m_nNextMove;
 
 	POINT				m_pDestinationMove;
 	int					m_nState;

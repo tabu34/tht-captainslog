@@ -212,6 +212,24 @@ inline int PointDistance(POINT p1, POINT p2)
 	return (int)sqrt(static_cast<double>((p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y)));
 }
 
+bool CPathManager::CheckPath(float fX1, float fY1, float fX2, float fY2)
+{
+	//check path to see if A* is necessary
+	//Return false if there is an obstruction
+	bool bRet=true;
+	tVector2D pos = {fX1, fY1};
+	tVector2D dst = {fX2, fY2};
+	for(size_t i=0; i<m_vLines.size(); i++)
+	{
+		if(IntersectLine(pos, dst, m_vLines[i].start, m_vLines[i].end))
+		{
+			bRet=false;
+			break;
+		}
+	}
+	return bRet;
+}
+
 vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 {
 	//THIS is A*
