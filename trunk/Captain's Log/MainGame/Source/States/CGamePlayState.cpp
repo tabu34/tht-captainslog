@@ -150,22 +150,44 @@ bool CGamePlayState::Input(void)
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
 		m_szTooltipText = "  Move To Position";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
+		{
+			m_szSelectedCommand = "MoveOrder";
+			return true;
+		}
 	} else if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("AttackOrder")].GetCollisionRect()), &mousePos)) {
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
 		m_szTooltipText = "     Attack Target";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
+		{
+			m_szSelectedCommand = "AttackOrder";
+			return true;
+		}
 	} else if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("HoldOrder")].GetCollisionRect()), &mousePos)) {
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
 		m_szTooltipText = "   Hold";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
+		{
+			m_szSelectedCommand = "HoldOrder";
+			return true;
+		}
 	} else if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("CancelOrder")].GetCollisionRect()), &mousePos)) {
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
 		m_szTooltipText = " Cancel";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
+		{
+			m_szSelectedCommand = "CancelOrder";
+			return true;
+		}
 	} else {
 		m_szTooltipText = "";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(false);
 	}
+
+
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
 	{
@@ -265,14 +287,12 @@ void CGamePlayState::RenderHUD(void)
 				char buff[128];
 				sprintf_s(buff, 128, "%i/%i", pEnemy->CurHealth(), pEnemy->MaxHealth());
 				m_ftTextSmall.RenderText(buff, 460, 770);
-
 				sprintf_s(buff, 128, "Attack: %.2f", pEnemy->AttackDamage());
 				m_ftTextSmall.RenderText(buff, 840, 755);
 				sprintf_s(buff, 128, "Speed: %.2f", pEnemy->AttackSpeed());
 				m_ftTextSmall.RenderText(buff, 840, 770);
 				sprintf_s(buff, 128, "Armor: %i", pEnemy->Armor());
 				m_ftTextSmall.RenderText(buff, 840, 785);
-
 			}
 			break;
 		}
