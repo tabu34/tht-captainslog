@@ -3,6 +3,7 @@
 #include "../SGD Wrappers/CSGD_Direct3D.h"
 #include "../SGD Wrappers/CSGD_TextureManager.h"
 #include "../CGame.h"
+#include "CPathManager.h"
 
 #include <fstream>
 using namespace std;
@@ -95,6 +96,9 @@ void CWorldManager::Load(string sFileName)
 
 
 	fin.close();
+
+	//create pathing
+	CPathManager::GetInstance()->GenerateMap();
 }
 
 void CWorldManager::Render()
