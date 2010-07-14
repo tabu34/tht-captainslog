@@ -1,5 +1,6 @@
 #include "precompiled_header.h"
 #include "CMedic.h"
+#include "CAbilities.h"
 
 CMedic::CMedic()
 {
@@ -26,6 +27,9 @@ CMedic::CMedic()
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medic-Walk-S"));
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medic-Idle"));
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medic-Fire"));
+
+	Abilities().push_back(new CAbility_DefensiveMatrix());
+	Abilities().push_back(new CAbility_Refresh());
 }
 
 void CMedic::Initialize()

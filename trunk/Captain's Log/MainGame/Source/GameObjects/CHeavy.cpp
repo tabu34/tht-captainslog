@@ -2,6 +2,7 @@
 #include "CHeavy.h"
 #include "..\SGD Wrappers\CSGD_Direct3D.h"
 #include "CAnimationManager.h"
+#include "CAbilities.h"
 
 CHeavy::CHeavy()
 {
@@ -27,6 +28,8 @@ CHeavy::CHeavy()
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Firebat-Walk-S"));
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Firebat-Idle"));
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Firebat-Fire"));
+
+	Abilities().push_back(new CAbility_ArmorLockdown());
 
 	m_nCurFrame = 0;
 }

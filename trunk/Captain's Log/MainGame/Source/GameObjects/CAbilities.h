@@ -7,6 +7,12 @@
 class CAbility_DefensiveMatrix : public CTargetAbility
 {
 public:
+	CAbility_DefensiveMatrix()
+	{
+		Cooldown(50);
+		Duration(8);
+	}
+
 	void Activate();
 	void Deactivate();
 
@@ -17,6 +23,11 @@ class CAbility_PinningShot : public CTargetAbility
 {
 	float m_fMovementSpeed;
 public:
+	CAbility_PinningShot()
+	{
+		Cooldown(20);
+		Duration(6);
+	}
 
 	void Activate();
 	void Deactivate();
@@ -28,23 +39,16 @@ class CAbility_Cloak : public CTargetAbility
 {
 public:
 	void Activate();
-	void Deactivate();
-
-	void Update(float fElapsedTime);
-};
-
-class CAbility_RodOfLightning : public CTargetAbility
-{
-public:
-	void Activate();
-	void Deactivate();
-
-	void Update(float fElapsedTime);
 };
 
 class CAbility_Refresh : public CTargetAbility
 {
 public:
+	CAbility_Refresh()
+	{
+		Cooldown(12);
+	}
+
 	void Activate();
 
 	void Update(float fElapsedTime);
@@ -52,7 +56,14 @@ public:
 
 class CAbility_Overdrive : public CTargetAbility
 {
+	float m_fAttackSpeed;
 public:
+	CAbility_Overdrive()
+	{
+		Cooldown(60);
+		Duration(15);
+	}
+
 	void Activate();
 	void Deactivate();
 
@@ -62,6 +73,12 @@ public:
 class CAbility_ArmorLockdown : public CTargetAbility
 {
 public:
+	CAbility_ArmorLockdown()
+	{
+		Cooldown(60);
+		Duration(12);
+	}
+
 	void Activate();
 	void Deactivate();
 
@@ -69,6 +86,15 @@ public:
 };
 
 class CAbility_TacticalDrone : public CTargetAbility
+{
+public:
+	void Activate();
+	void Deactivate();
+
+	void Update(float fElapsedTime);
+};
+
+class CAbility_RodOfLightning : public CTargetAbility
 {
 public:
 	void Activate();
