@@ -16,7 +16,7 @@ CUnit::CUnit()
 void CUnit::OrderMove( POINT _dest )
 {
 	m_nState = UNIT_MOVING;
-	if(CPathManager::GetInstance()->CheckPath(PosX(), PosY(), (float)_dest.x, (float)_dest.y))
+	if(CPathManager::GetInstance()->CheckPath(PosX(), PosY(), (float)_dest.x, (float)_dest.y) && !CPathManager::GetInstance()->IsPointInside(_dest))
 	{
 		m_vDirections.clear();
 		m_pDestinationMove = _dest;
@@ -29,6 +29,16 @@ void CUnit::OrderMove( POINT _dest )
 			m_pDestinationMove.x = (LONG)m_vDirections[0]->fX;
 			m_pDestinationMove.y = (LONG)m_vDirections[0]->fY;
 			m_nNextMove = 1;
+
+			POINT p = _dest;
+			if(!CPathManager::GetInstance()->IsPointInside(p))
+			{
+				m_pFinalDest = p;
+			}
+			else
+			{
+				m_pFinalDest.x = m_pFinalDest.y = -1;
+			}
 		}
 		else
 			m_nState = UNIT_IDLE;
@@ -38,7 +48,8 @@ void CUnit::OrderMove( POINT _dest )
 void CUnit::OrderMove( int _x, int _y)
 {
 	m_nState = UNIT_MOVING;
-	if(CPathManager::GetInstance()->CheckPath(PosX(), PosY(), (float)_x, (float)_y))
+	POINT pP = {_x, _y};
+	if(CPathManager::GetInstance()->CheckPath(PosX(), PosY(), (float)_x, (float)_y) && !CPathManager::GetInstance()->IsPointInside(pP))
 	{
 		m_vDirections.clear();
 		m_pDestinationMove.x = _x;
@@ -52,6 +63,16 @@ void CUnit::OrderMove( int _x, int _y)
 			m_pDestinationMove.x = (LONG)m_vDirections[0]->fX;
 			m_pDestinationMove.y = (LONG)m_vDirections[0]->fY;
 			m_nNextMove = 1;
+
+			POINT p = {_x, _y};
+			if(!CPathManager::GetInstance()->IsPointInside(p))
+			{
+				m_pFinalDest = p;
+			}
+			else
+			{
+				m_pFinalDest.x = m_pFinalDest.y = -1;
+			}
 		}
 		else
 			m_nState = UNIT_IDLE;
@@ -93,7 +114,8 @@ void CUnit::Update(float fElapsedTime)
 
 	if (m_nState == UNIT_IDLE)
 	{
-
+		VelX(0.0f);
+		VelY(0.0f);
 	}
 	else if(m_nState == UNIT_MOVING)
 	{
@@ -129,7 +151,13 @@ void CUnit::Update(float fElapsedTime)
 				}
 				else
 				{
-					m_nState=UNIT_IDLE;
+					if(m_pFinalDest.x!=-1 && m_pFinalDest.y!=-1)
+					{
+						m_pDestinationMove=m_pFinalDest;
+						m_vDirections.clear();
+					}
+					else
+						m_nState=UNIT_IDLE;
 				}
 			}
 			else

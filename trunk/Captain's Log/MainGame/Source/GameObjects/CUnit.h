@@ -40,6 +40,8 @@ class CUnit : public CBase
 	vector<tNode*>		m_vDirections;
 	size_t				m_nNextMove;
 
+	POINT				m_pFinalDest;
+
 	POINT				m_pDestinationMove;
 	int					m_nState;
 

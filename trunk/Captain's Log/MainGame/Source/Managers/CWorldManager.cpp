@@ -97,6 +97,22 @@ void CWorldManager::Load(string sFileName)
 
 	fin.close();
 
+	//DEBUG::  hard-coded blocker to test pathing
+	m_nNumBlockers=1;
+	m_Blockers = new Blocker;
+	m_Blockers->m_nNumPoints=5;
+	m_Blockers->m_Points = new Blocker::Point[5];
+	m_Blockers->m_Points[0].x = 516;
+	m_Blockers->m_Points[0].y = 325;
+	m_Blockers->m_Points[1].x = 910;
+	m_Blockers->m_Points[1].y = 325;
+	m_Blockers->m_Points[2].x = 910;
+	m_Blockers->m_Points[2].y = 550;
+	m_Blockers->m_Points[3].x = 516;
+	m_Blockers->m_Points[3].y = 550;
+	m_Blockers->m_Points[4].x = 516;
+	m_Blockers->m_Points[4].y = 325;
+
 	//create pathing
 	CPathManager::GetInstance()->GenerateMap();
 }
@@ -127,20 +143,4 @@ void CWorldManager::Render()
 			}
 		}
 	}
-
-	
-	//DEBUG:: render the blockers
-	CSGD_Direct3D::GetInstance()->SpriteEnd();
-	for(int i=0; i<m_nNumBlockers; i++)
-	{
-		for(int j=0; j<m_Blockers[i].m_nNumPoints; j++)
-		{
-			if(j>0)
-			{
-				CSGD_Direct3D::GetInstance()->DrawLine(m_Blockers[i].m_Points[j-1].x,
-					m_Blockers[i].m_Points[j-1].y, m_Blockers[i].m_Points[j].x, m_Blockers[i].m_Points[j].y);
-			}
-		}
-	}
-	CSGD_Direct3D::GetInstance()->SpriteBegin();
 }
