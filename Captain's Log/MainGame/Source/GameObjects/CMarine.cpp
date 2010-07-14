@@ -2,6 +2,7 @@
 #include "CMarine.h"
 #include "..\SGD Wrappers\CSGD_Direct3D.h"
 #include "CAnimationManager.h"
+#include "CAbilities.h"
 
 CMarine::CMarine()
 {
@@ -28,6 +29,8 @@ CMarine::CMarine()
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Walk-S"));
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Idle"));
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Fire"));
+
+	Abilities().push_back(new CAbility_Overdrive());
 }
 
 void CMarine::Update( float fElapsedTime )

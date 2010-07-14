@@ -1,5 +1,6 @@
 #include "precompiled_header.h"
 #include "CScout.h"
+#include "CAbilities.h"
 
 CScout::CScout()
 {
@@ -26,6 +27,9 @@ CScout::CScout()
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Ghost-Walk-S"));
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Ghost-Idle"));
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Ghost-Fire"));
+
+	Abilities().push_back(new CAbility_Cloak());
+	Abilities().push_back(new CAbility_PinningShot());
 }
 
 void CScout::Update( float fElapsedTime )

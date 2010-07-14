@@ -57,27 +57,15 @@ void CAbility_PinningShot::Update(float fElapsedTime)
 
 void CAbility_Cloak::Activate()
 {
-	if (TimePassed() > Cooldown())
+	if (!IsActive())
 	{
-		TimePassed(0);
 		IsActive(true);
 		Target()->Cloaked(true);
 	}
-}
-
-void CAbility_Cloak::Deactivate()
-{
-	Target()->Cloaked(false);
-	IsActive(false);
-}
-
-void CAbility_Cloak::Update(float fElapsedTime)
-{
-	TimePassed(TimePassed() + fElapsedTime);
-
-	if (IsActive() && TimePassed() > Duration())
+	else
 	{
-		Deactivate();
+		Target()->Cloaked(false);
+		IsActive(false);
 	}
 }
 
@@ -93,6 +81,33 @@ void CAbility_Refresh::Activate()
 void CAbility_Refresh::Update(float fElapsedTime)
 {
 	TimePassed(TimePassed() + fElapsedTime);
+}
+
+void CAbility_Overdrive::Activate()
+{
+	if (TimePassed() > Cooldown())
+	{
+		TimePassed(0);
+		IsActive(true);
+		m_fAttackSpeed = Target()->AttackSpeed();
+		Target()->AttackSpeed(Target()->AttackSpeed() - (Target()->AttackSpeed() * 0.05f));
+	}
+}
+
+void CAbility_Overdrive::Deactivate()
+{
+	Target()->AttackSpeed(m_fAttackSpeed);
+	IsActive(false);
+}
+
+void CAbility_Overdrive::Update(float fElapsedTime)
+{
+	TimePassed(TimePassed() + fElapsedTime);
+
+	if (IsActive() && TimePassed() > Duration())
+	{
+		Deactivate();
+	}
 }
 
 void CAbility_ArmorLockdown::Activate()

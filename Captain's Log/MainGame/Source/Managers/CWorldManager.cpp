@@ -76,6 +76,24 @@ void CWorldManager::Load(string sFileName)
 		}
 	}
 
+	fin.read((char*)&m_nNumBlockers, sizeof(int));
+	
+	m_Blockers = new Blocker[m_nNumBlockers];
+	
+	for (int b = 0; b < m_nNumBlockers; b++)
+	{
+		fin.read((char*)&m_Blockers[b].m_nNumPoints, sizeof(int));
+
+		m_Blockers[b].m_Points = new Blocker::Point[m_Blockers[b].m_nNumPoints];
+
+		for (int p = 0; p < m_Blockers[b].m_nNumPoints; p++)
+		{
+			fin.read((char*)&m_Blockers[b].m_Points[p].x, sizeof(int));
+			fin.read((char*)&m_Blockers[b].m_Points[p].y, sizeof(int));
+		}
+	}
+
+
 	fin.close();
 }
 
