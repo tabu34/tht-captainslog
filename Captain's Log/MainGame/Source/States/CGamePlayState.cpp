@@ -13,6 +13,7 @@
 #include "..\Managers\CWorldManager.h"
 #include "CPauseMenuState.h"
 #include "CSaveState.h"
+#include "CGameOverState.h"
 #include "..\GameObjects\CMedic.h"
 #include "..\GameObjects\CScout.h"
 #include "..\GameObjects\CBasicEnemies.h"
@@ -193,6 +194,8 @@ void CGamePlayState::Enter(void)
 {
 	CMessageSystem::GetInstance()->InitMessageSystem(CGamePlayState::MessageProc);
 
+	m_nLevel = 0;
+
 	// Setup GUI
 	m_vButtons.push_back(CHUDButton(-76, 645, 2048, 512, "BottomHUD", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/0.png").c_str())));
 	m_vButtons.push_back(CHUDButton(270, 706, 256, 256, "UnitPortrait", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/1.png").c_str())));
@@ -227,11 +230,6 @@ void CGamePlayState::Enter(void)
 	m_ftTextLargeShadow.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.80f, 0.80f, 2, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(0, 0, 0));
  	m_ftTextLargeShadow.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
 
-	// Test BG
-	//m_nBG = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("testBG.png").c_str());
-	CWorldManager::GetInstance()->Load("Resource//Graphics//Intro Level Take 2.mfl");
-	m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap.png").c_str());
-
 	// Load Animations
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\marine\\marine.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\firebat\\firebat.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
@@ -239,27 +237,10 @@ void CGamePlayState::Enter(void)
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\ghost\\ghost.bin").c_str(), D3DCOLOR_XRGB(0, 255, 255));
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\tempenemy\\tempenemy.bin").c_str(), D3DCOLOR_XRGB(0, 255, 255));
 
-	// Objects
-	CMarine* alliedMarine = new CMarine();
-	CHeavy*  alliedHeavy  = new CHeavy();
-	CMedic*  alliedMedic  = new CMedic();
-	CScout*  alliedScout  = new CScout();
+	LoadNextLevel();
+	m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap.png").c_str());
 
-	alliedMarine->PosX(50);
-	alliedMarine->PosY(50);
-	alliedHeavy->PosX(150);
-	alliedHeavy->PosY(50);
-	alliedScout->PosX(150);
-	alliedScout->PosY(150);
-	alliedMedic->PosX(50);
-	alliedMedic->PosY(150);
 
-	CMovementControl::GetInstance()->SetPlayerUnits(alliedMarine, alliedHeavy, alliedScout, alliedMedic);
-
-	CObjectManager::GetInstance()->AddObject(alliedHeavy);
-	CObjectManager::GetInstance()->AddObject(alliedMedic);
-	CObjectManager::GetInstance()->AddObject(alliedScout);
-	CObjectManager::GetInstance()->AddObject(alliedMarine);
 
 // 	CMarine* badGuy = new CMarine();
 // 	badGuy->Type(CBase::OBJ_ENEMY);
@@ -523,6 +504,18 @@ bool CGamePlayState::Input(void)
 
 void CGamePlayState::Update(float fElapsedTime)
 {
+	for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
+	{
+		if ((*CObjectManager::GetInstance()->GetObjectList())[i]->Type() == CBase::OBJ_PLAYER)
+		{
+			break;
+		}
+		if (i == CObjectManager::GetInstance()->GetObjectList()->size() - 1 && (*CObjectManager::GetInstance()->GetObjectList())[i]->Type() != CBase::OBJ_PLAYER)
+		{
+			CGame::GetInstance()->ChangeState(CGameOverState::GetInstance());
+		}
+	}
+
 	m_nCurCount += 25.0f * fElapsedTime;
 	CMovementControl::GetInstance()->CheckDragRect();
 	CMovementControl::GetInstance()->UpdateCamera(fElapsedTime);
@@ -531,6 +524,18 @@ void CGamePlayState::Update(float fElapsedTime)
 	m_peEmitter.Update(fElapsedTime);
 
 	m_fTotalGameTime+=fElapsedTime;
+
+	//Check for level clear
+
+	for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
+	{
+		if ((*CObjectManager::GetInstance()->GetObjectList())[i]->Type() == CBase::OBJ_ENEMY)
+		{
+			return;
+		}
+	}
+
+	LoadNextLevel();
 }
 
 void CGamePlayState::RenderMiniMap()
@@ -771,5 +776,81 @@ void CGamePlayState::MessageProc(CBaseMessage* pMSG)
 		CObjectManager::GetInstance()->FindAndRemove(udMSG->GetUnit());
 
 		CObjectManager::GetInstance()->RemoveObject(udMSG->GetUnit());
+	}
+}
+
+void CGamePlayState::LoadNextLevel()
+{
+	m_nLevel++;
+
+	if (m_nLevel > 2)
+	{
+		m_nLevel = 1;
+	}
+
+	switch (m_nLevel)
+	{
+	case 1:
+		{
+			CWorldManager::GetInstance()->Load("Resource//Graphics//Intro Level Take 2.mfl");
+
+			CMarine* alliedMarine = new CMarine();
+			CHeavy*  alliedHeavy  = new CHeavy();
+			CMedic*  alliedMedic  = new CMedic();
+			CScout*  alliedScout  = new CScout();
+
+			alliedMarine->PosX(50);
+			alliedMarine->PosY(50);
+			alliedHeavy->PosX(150);
+			alliedHeavy->PosY(50);
+			alliedScout->PosX(150);
+			alliedScout->PosY(150);
+			alliedMedic->PosX(50);
+			alliedMedic->PosY(150);
+
+			CMovementControl::GetInstance()->SetPlayerUnits(alliedMarine, alliedHeavy, alliedScout, alliedMedic);
+
+			CObjectManager::GetInstance()->AddObject(alliedHeavy);
+			CObjectManager::GetInstance()->AddObject(alliedMedic);
+			CObjectManager::GetInstance()->AddObject(alliedScout);
+			CObjectManager::GetInstance()->AddObject(alliedMarine);
+		}
+
+		break;
+	case 2:
+		{
+			CWorldManager::GetInstance()->Load("Resource//Graphics//test.mfl");
+
+			CMarine* alliedMarine = new CMarine();
+			CHeavy*  alliedHeavy  = new CHeavy();
+			CMedic*  alliedMedic  = new CMedic();
+			CScout*  alliedScout  = new CScout();
+
+			alliedMarine->PosX(50);
+			alliedMarine->PosY(50);
+			alliedHeavy->PosX(150);
+			alliedHeavy->PosY(50);
+			alliedScout->PosX(150);
+			alliedScout->PosY(150);
+			alliedMedic->PosX(50);
+			alliedMedic->PosY(150);
+
+			CMovementControl::GetInstance()->SetPlayerUnits(alliedMarine, alliedHeavy, alliedScout, alliedMedic);
+
+			CObjectManager::GetInstance()->AddObject(alliedHeavy);
+			CObjectManager::GetInstance()->AddObject(alliedMedic);
+			CObjectManager::GetInstance()->AddObject(alliedScout);
+			CObjectManager::GetInstance()->AddObject(alliedMarine);
+
+			CBasicEnemy* badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+			badGuy->Type(CBase::OBJ_ENEMY);
+			badGuy->PosX(1600);
+			badGuy->PosY(230);
+			CObjectManager::GetInstance()->AddObject(badGuy);
+		}
+
+		break;
+	default:
+		break;
 	}
 }
