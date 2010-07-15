@@ -3,7 +3,7 @@
 
 CAppliedItem::CAppliedItem()
 {
-	Type(ITEMTYPE_APPLIED);
+	ItemType(ITEMTYPE_APPLIED);
 }
 
 void CAppliedItem::AddEffect()

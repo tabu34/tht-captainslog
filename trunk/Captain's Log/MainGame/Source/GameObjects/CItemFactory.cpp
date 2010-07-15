@@ -73,7 +73,7 @@ CItem* CItemFactory::CreateItem(string id)
 	bool found = false;
 
 
-	switch (iter->second->Type())
+	switch (iter->second->ItemType())
 	{
 	case CItem::ITEMTYPE_ACTIVE:
 		for (unsigned int i = 0; i < m_vActiveItems.size(); i++)

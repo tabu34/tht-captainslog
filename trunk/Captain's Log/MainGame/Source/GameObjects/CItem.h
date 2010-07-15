@@ -8,19 +8,19 @@ class CUnit;
 class CItem : public CBase
 {
 	int		m_nItemName;
-	int		m_nType;
+	int		m_nItemType;
 	int		m_nAmountType;
 	int		m_nAmountCategory;
 	float	m_fAmount;
 	CUnit*	m_pTarget;
 
 protected:
-	void Type(int val) { m_nType = val; }
+	void ItemType (int val) { m_nItemType = val; }
 
 public:
 
 	int ItemName() const { return m_nItemName; }
-	int Type() const { return m_nType; }
+	int ItemType() const { return m_nItemType; }
 	int AmountType() const { return m_nAmountType; }
 	float Amount() const { return m_fAmount; }
 	CUnit* Target() { return m_pTarget; }
