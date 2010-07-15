@@ -308,7 +308,7 @@ void CMovementControl::Input()
 	{
 		CGame::GetInstance()->GetCamera()->SetX( CGame::GetInstance()->GetCamera()->GetX() + 1.5f );
 		if(CGame::GetInstance()->GetCamera()->GetX() > CWorldManager::GetInstance()->WorldWidth() - CGame::GetInstance()->GetScreenWidth() )
-			CGame::GetInstance()->GetCamera()->SetX( CWorldManager::GetInstance()->WorldWidth() - CGame::GetInstance()->GetScreenWidth() );
+			CGame::GetInstance()->GetCamera()->SetX( float(CWorldManager::GetInstance()->WorldWidth() - CGame::GetInstance()->GetScreenWidth()) );
 		//m_esEventSystem->SendEvent("RightKeyPressed");
 	}
 
@@ -324,7 +324,7 @@ void CMovementControl::Input()
 	{
 		CGame::GetInstance()->GetCamera()->SetY( CGame::GetInstance()->GetCamera()->GetY() + 1.5f );
 		if(CGame::GetInstance()->GetCamera()->GetY() > CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight())
-			CGame::GetInstance()->GetCamera()->SetY( CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight());
+			CGame::GetInstance()->GetCamera()->SetY( float(CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight()));
 		//m_esEventSystem->SendEvent("DownKeyPressed");
 	}
 }

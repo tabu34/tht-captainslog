@@ -6,6 +6,8 @@
 class CAppliedItem : public CItem
 {
 public:
+	CAppliedItem();
+
 	void	AddEffect();
 	void	RemoveEffect();
 };

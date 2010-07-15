@@ -1,18 +1,354 @@
 #include "precompiled_header.h"
 #include "CItemFactory.h"
+#include "CAppliedItem.h"
+#include "CPassive.h"
+#include "CActive.h"
 
 CItemFactory::CItemFactory()
 {
+	for (int i = 0; i < STARTING_ITEMS; i++)
+	{
+		ItemUnit* tempItemUnit = new ItemUnit();
+		tempItemUnit->bIsBeingUsed = false;
+		tempItemUnit->pItem = new CActive();
+		m_vActiveItems.push_back(tempItemUnit);
 
+		tempItemUnit = new ItemUnit();
+		tempItemUnit->bIsBeingUsed = false;
+		tempItemUnit->pItem = new CAppliedItem();
+		m_vAppliedItems.push_back(tempItemUnit);
+
+		tempItemUnit = new ItemUnit();
+		tempItemUnit->bIsBeingUsed = false;
+		tempItemUnit->pItem = new CPassive();
+		m_vPassiveItems.push_back(tempItemUnit);
+	}
 }
 
 CItemFactory::~CItemFactory()
 {
+	for (unsigned int i = 0; i < m_vActiveItems.size(); i++)
+	{
+		SAFE_RELEASE(m_vActiveItems[i]->pItem);
+		SAFE_DELETE(m_vActiveItems[i]);
+	}
+	m_vActiveItems.clear();
 
+	for (unsigned int i = 0; i < m_vAppliedItems.size(); i++)
+	{
+		SAFE_RELEASE(m_vAppliedItems[i]->pItem);
+		SAFE_DELETE(m_vAppliedItems[i]);
+	}
+	m_vAppliedItems.clear();
+
+	for (unsigned int i = 0; i < m_vPassiveItems.size(); i++)
+	{
+		SAFE_RELEASE(m_vPassiveItems[i]->pItem);
+		SAFE_DELETE(m_vPassiveItems[i]);
+	}
+	m_vPassiveItems.clear();
+
+	while (!m_ItemTemplates.empty())
+	{
+		map<string, CItem*>::iterator iter = m_ItemTemplates.begin();
+		SAFE_RELEASE(iter->second);
+		m_ItemTemplates.erase(iter);
+	}
 }
 
 CItemFactory* CItemFactory::GetInstance()
 {
 	static CItemFactory instance;
 	return &instance;
+}
+
+CItem* CItemFactory::CreateItem(string id)
+{
+	map<string, CItem*>::iterator iter = m_ItemTemplates.find(id);
+
+	if(iter == m_ItemTemplates.end())
+		return NULL;
+
+	CItem* returnItem;
+	bool found = false;
+
+
+	switch (iter->second->Type())
+	{
+	case CItem::ITEMTYPE_ACTIVE:
+		for (unsigned int i = 0; i < m_vActiveItems.size(); i++)
+		{
+			if (!m_vActiveItems[i]->bIsBeingUsed)
+			{
+				m_vActiveItems[i]->bIsBeingUsed = true;
+				returnItem = m_vActiveItems[i]->pItem;
+				*returnItem = *(iter->second);
+				returnItem->AddRef();
+				found = true;
+				break;
+			}
+		}
+		if (!found)
+		{
+			ItemUnit* newItemUnit = new ItemUnit();
+			newItemUnit->pItem = new CActive();
+			newItemUnit->bIsBeingUsed = true;
+			*(newItemUnit->pItem) = *(iter->second);
+			returnItem = newItemUnit->pItem;
+			returnItem->AddRef();
+			m_vActiveItems.push_back(newItemUnit);
+		}
+		break;
+
+	case CItem::ITEMTYPE_APPLIED:
+		for (unsigned int i = 0; i < m_vAppliedItems.size(); i++)
+		{
+			if (!m_vAppliedItems[i]->bIsBeingUsed)
+			{
+				m_vAppliedItems[i]->bIsBeingUsed = true;
+				returnItem = m_vAppliedItems[i]->pItem;
+				*returnItem = *(iter->second);
+				returnItem->AddRef();
+				found = true;
+				break;
+			}
+		}
+		if (!found)
+		{
+			ItemUnit* newItemUnit = new ItemUnit();
+			newItemUnit->pItem = new CAppliedItem();
+			newItemUnit->bIsBeingUsed = true;
+			*(newItemUnit->pItem) = *(iter->second);
+			returnItem = newItemUnit->pItem;
+			returnItem->AddRef();
+			m_vAppliedItems.push_back(newItemUnit);
+		}
+		break;
+
+	case CItem::ITEMTYPE_PASSIVE:
+		for (unsigned int i = 0; i < m_vPassiveItems.size(); i++)
+		{
+			if (!m_vPassiveItems[i]->bIsBeingUsed)
+			{
+				m_vPassiveItems[i]->bIsBeingUsed = true;
+				returnItem = m_vPassiveItems[i]->pItem;
+				*returnItem = *(iter->second);
+				returnItem->AddRef();
+				found = true;
+				break;
+			}
+		}
+		if (!found)
+		{
+			ItemUnit* newItemUnit = new ItemUnit();
+			newItemUnit->pItem = new CPassive();
+			newItemUnit->bIsBeingUsed = true;
+			*(newItemUnit->pItem) = *(iter->second);
+			returnItem = newItemUnit->pItem;
+			returnItem->AddRef();
+			m_vPassiveItems.push_back(newItemUnit);
+		}
+		break;
+	}
+
+	return returnItem;
+}
+
+void CItemFactory::RegisterItems()
+{
+	// Applied Items
+
+	// Book of Haste
+	{
+		pair<string, CItem*> objDef;
+
+		CItem* BookOfHaste = new CAppliedItem();
+		BookOfHaste->ItemName(CItem::ITEM_BOOKOFHASTE);
+		BookOfHaste->AmountType(CItem::VALUETYPE_PERCENTAGE);
+		BookOfHaste->AmountCategory(CItem::VALUECATEGORY_ATTACKSPEED);
+		BookOfHaste->Amount(3);
+
+		objDef.first = "Book of Haste";
+		objDef.second = BookOfHaste;
+
+		m_ItemTemplates.insert(objDef);
+	}
+
+	// Book of Swiftness
+	{
+		pair<string, CItem*> objDef;
+
+		CItem* BookOfSwiftness = new CAppliedItem();
+		BookOfSwiftness->ItemName(CItem::ITEM_BOOKOFSWIFTNESS);
+		BookOfSwiftness->AmountType(CItem::VALUETYPE_PERCENTAGE);
+		BookOfSwiftness->AmountCategory(CItem::VALUECATEGORY_MOVEMENTSPEED);
+		BookOfSwiftness->Amount(3);
+
+		objDef.first = "Book of Swiftness";
+		objDef.second = BookOfSwiftness;
+
+		m_ItemTemplates.insert(objDef);
+	}
+
+	// Book of Protection
+	{
+		pair<string, CItem*> objDef;
+
+		CItem* BookOfProtection = new CAppliedItem();
+		BookOfProtection->ItemName(CItem::ITEM_BOOKOFPROTECTION);
+		BookOfProtection->AmountType(CItem::VALUETYPE_PERCENTAGE);
+		BookOfProtection->AmountCategory(CItem::VALUECATEGORY_ARMOR);
+		BookOfProtection->Amount(3);
+
+		objDef.first = "Book of Protection";
+		objDef.second = BookOfProtection;
+
+		m_ItemTemplates.insert(objDef);
+	}
+
+	// Book of Strength
+	{
+		pair<string, CItem*> objDef;
+
+		CItem* BookOfStrength = new CAppliedItem();
+		BookOfStrength->ItemName(CItem::ITEM_BOOKOFSTRENGTH);
+		BookOfStrength->AmountType(CItem::VALUETYPE_PERCENTAGE);
+		BookOfStrength->AmountCategory(CItem::VALUECATEGORY_ATTACKDAMAGE);
+		BookOfStrength->Amount(3);
+
+		objDef.first = "Book of Strength";
+		objDef.second = BookOfStrength;
+
+		m_ItemTemplates.insert(objDef);
+	}
+
+	// Book of Vitality
+	{
+		pair<string, CItem*> objDef;
+
+		CItem* BookOfVitality = new CAppliedItem();
+		BookOfVitality->ItemName(CItem::ITEM_BOOKOFVITALITY);
+		BookOfVitality->AmountType(CItem::VALUETYPE_INTEGER);
+		BookOfVitality->AmountCategory(CItem::VALUECATEGORY_HP);
+		BookOfVitality->Amount(3);
+
+		objDef.first = "Book of Vitality";
+		objDef.second = BookOfVitality;
+
+		m_ItemTemplates.insert(objDef);
+	}
+
+	// Passive (Held)
+
+	// Gloves of Haste
+	{
+		pair<string, CItem*> objDef;
+
+		CItem* GlovesOfHaste = new CPassive();
+		GlovesOfHaste->ItemName(CItem::ITEM_GLOVESOFHASTE);
+		GlovesOfHaste->AmountType(CItem::VALUETYPE_PERCENTAGE);
+		GlovesOfHaste->AmountCategory(CItem::VALUECATEGORY_ATTACKSPEED);
+		GlovesOfHaste->Amount(10);
+
+		objDef.first = "Gloves of Haste";
+		objDef.second = GlovesOfHaste;
+
+		m_ItemTemplates.insert(objDef);
+	}
+
+	// Boots of Swiftness
+	{
+		pair<string, CItem*> objDef;
+
+		CItem* BootsOfSwiftness = new CPassive();
+		BootsOfSwiftness->ItemName(CItem::ITEM_BOOTSOFSWIFTNESS);
+		BootsOfSwiftness->AmountType(CItem::VALUETYPE_PERCENTAGE);
+		BootsOfSwiftness->AmountCategory(CItem::VALUECATEGORY_MOVEMENTSPEED);
+		BootsOfSwiftness->Amount(10);
+
+		objDef.first = "Boots of Swiftness";
+		objDef.second = BootsOfSwiftness;
+
+		m_ItemTemplates.insert(objDef);
+	}
+
+	// Shield of Angels
+	{
+		pair<string, CItem*> objDef;
+
+		CItem* ShieldOfAngels = new CPassive();
+		ShieldOfAngels->ItemName(CItem::ITEM_SHIELDOFANGELS);
+		ShieldOfAngels->AmountType(CItem::VALUETYPE_PERCENTAGE);
+		ShieldOfAngels->AmountCategory(CItem::VALUECATEGORY_ARMOR);
+		ShieldOfAngels->Amount(10);
+
+		objDef.first = "Shield of Angels";
+		objDef.second = ShieldOfAngels;
+
+		m_ItemTemplates.insert(objDef);
+	}
+
+	// Sword of Titans
+	{
+		pair<string, CItem*> objDef;
+
+		CItem* SwordOfTitans = new CPassive();
+		SwordOfTitans->ItemName(CItem::ITEM_SWORDOFTITANS);
+		SwordOfTitans->AmountType(CItem::VALUETYPE_PERCENTAGE);
+		SwordOfTitans->AmountCategory(CItem::VALUECATEGORY_ATTACKDAMAGE);
+		SwordOfTitans->Amount(10);
+
+		objDef.first = "Sword of Titans";
+		objDef.second = SwordOfTitans;
+
+		m_ItemTemplates.insert(objDef);
+	}
+
+	// Resurrection Stone
+	{
+		pair<string, CItem*> objDef;
+
+		CItem* ResurrectionStone = new CPassive();
+		ResurrectionStone->ItemName(CItem::ITEM_RESURRECTIONSTONE);
+		ResurrectionStone->AmountType(CItem::VALUETYPE_PERCENTAGE);
+		ResurrectionStone->AmountCategory(CItem::VALUECATEGORY_HP);
+		ResurrectionStone->Amount(30);
+
+		objDef.first = "Resurrection Stone";
+		objDef.second = ResurrectionStone;
+
+		m_ItemTemplates.insert(objDef);
+	}
+
+	// Gem of Life
+	{
+		pair<string, CItem*> objDef;
+
+		CItem* GemOfLife = new CPassive();
+		GemOfLife->ItemName(CItem::ITEM_GEMOFLIFE);
+		GemOfLife->AmountType(CItem::VALUETYPE_INTEGER);
+		GemOfLife->AmountCategory(CItem::VALUECATEGORY_HP);
+		GemOfLife->Amount(1);
+
+		objDef.first = "Gem of Life";
+		objDef.second = GemOfLife;
+
+		m_ItemTemplates.insert(objDef);
+	}
+
+	// Active (Held)
+
+	// Medusa's Torch
+
+	// Rod of Lightning
+
+	// Tsunami Stone
+
+	// Ring of War
+
+	// Arc of Life
+
+	// Wizard's Staff
+
+	// Stone of the Dead
 }

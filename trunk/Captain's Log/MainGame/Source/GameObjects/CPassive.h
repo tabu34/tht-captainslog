@@ -6,6 +6,8 @@
 class CPassive : public CItem
 {
 public:
+	CPassive();
+
 	void	AddEffect();
 	void	RemoveEffect();
 };
