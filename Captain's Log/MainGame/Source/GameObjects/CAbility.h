@@ -12,7 +12,9 @@ class CAbility
 
 public:
 
-	virtual void Update(float fElapsedTime){}
+	virtual void Update(float fElapsedTime) {}
+
+	virtual void Activate() {}
 
 	// Accessors ///////////////////////////////////
 	float Cooldown() const { return m_fCooldown; }

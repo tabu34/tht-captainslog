@@ -69,10 +69,6 @@ void CMovementControl::Input()
 
 			for (unsigned int j = 0; j < m_vObjectList->size(); j++)
 			{
-				// 				if ((*m_vObjectList)[j]->Type() != CBase::OBJ_ENEMY)
-				// 				{
-				// 					continue;
-				// 				}
 				if (IntersectRect(&resultRect, &mouseRect, &((*m_vObjectList)[j]->GetCollisionRect())))
 				{
 					nTarget = j;
@@ -90,18 +86,18 @@ void CMovementControl::Input()
 		//m_esEventSystem->SendEvent("LeftMouseButtonPressed");
 	}
 
-	if(m_DI->MouseButtonPressed(MOUSE_LEFT) && CGamePlayState::GetInstance()->CurrentCommand()!="")
+	if(m_DI->MouseButtonPressed(MOUSE_LEFT) && CGamePlayState::GetInstance()->CurrentCommand() != "")
 	{
 		if(CGamePlayState::GetInstance()->CurrentCommand()=="MoveOrder")
 		{
-			for(size_t i=0; i<m_vSelected->size(); i++)
+			for(size_t i = 0; i<m_vSelected->size(); i++)
 			{
 				((CUnit*)(*m_vSelected)[i])->OrderMove(MousePosX(), MousePosY());
 			}
 			CGamePlayState::GetInstance()->ClearCommand();
 			return;
 		}
-		else if(CGamePlayState::GetInstance()->CurrentCommand()=="AttackOrder")
+		else if(CGamePlayState::GetInstance()->CurrentCommand() == "AttackOrder")
 		{
 			int nTarget;
 
@@ -113,7 +109,7 @@ void CMovementControl::Input()
 				mouseRect.left = LONG((float)CSGD_DirectInput::GetInstance()->MouseGetPosX() + CGame::GetInstance()->GetCamera()->GetX());
 				mouseRect.top = LONG((float)CSGD_DirectInput::GetInstance()->MouseGetPosY() + CGame::GetInstance()->GetCamera()->GetY());
 				mouseRect.right = mouseRect.left + 1;
-				mouseRect.bottom = mouseRect.top +1;
+				mouseRect.bottom = mouseRect.top + 1;
 
 				RECT resultRect;
 
@@ -134,7 +130,7 @@ void CMovementControl::Input()
 		}
 	}
 
-	if(m_DI->MouseButtonReleased(MOUSE_LEFT) && CGamePlayState::GetInstance()->CurrentCommand()=="")
+	if(m_DI->MouseButtonReleased(MOUSE_LEFT) && CGamePlayState::GetInstance()->CurrentCommand() == "")
 	{
 		if (m_ptStart.x	== CSGD_DirectInput::GetInstance()->MouseGetPosX() && m_ptStart.y == CSGD_DirectInput::GetInstance()->MouseGetPosY())
 		{
@@ -191,118 +187,118 @@ void CMovementControl::Input()
 	}
 	
 
-		//UNIT SELECTION (KEYBOARD)
-		if(m_DI->KeyPressed(CGame::GetInstance()->KeyBinds(CGame::KEY_UNIT1)))
+	//UNIT SELECTION (KEYBOARD)
+	if(m_DI->KeyPressed(CGame::GetInstance()->KeyBinds(CGame::KEY_UNIT1)))
+	{
+		//select the MARINE
+		for(size_t i=0; i<m_vObjectList->size(); i++)
 		{
-			//select the MARINE
-			for(size_t i=0; i<m_vObjectList->size(); i++)
+			if((CMarine*)(*m_vObjectList)[i] == m_pMarine)
 			{
-				if((CMarine*)(*m_vObjectList)[i] == m_pMarine)
+				if(!((CUnit*)(*m_vObjectList)[i])->Selected())
 				{
-					if(!((CUnit*)(*m_vObjectList)[i])->Selected())
-					{
-						((CUnit*)(*m_vObjectList)[i])->Selected(true);
-						(*m_vSelected).push_back((*m_vObjectList)[i]);
-					}
+					((CUnit*)(*m_vObjectList)[i])->Selected(true);
+					(*m_vSelected).push_back((*m_vObjectList)[i]);
 				}
-				else if(((CUnit*)(*m_vObjectList)[i])->Selected())
-				{
-					((CUnit*)(*m_vObjectList)[i])->Selected(false);
-					CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
-				}
+			}
+			else if(((CUnit*)(*m_vObjectList)[i])->Selected())
+			{
+				((CUnit*)(*m_vObjectList)[i])->Selected(false);
+				CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+			}
 
-			}
 		}
-		if(m_DI->KeyPressed(CGame::GetInstance()->KeyBinds(CGame::KEY_UNIT2)))
+	}
+	if(m_DI->KeyPressed(CGame::GetInstance()->KeyBinds(CGame::KEY_UNIT2)))
+	{
+		//select the HEAVY
+		for(size_t i=0; i<m_vObjectList->size(); i++)
 		{
-			//select the HEAVY
-			for(size_t i=0; i<m_vObjectList->size(); i++)
+			if((CHeavy*)(*m_vObjectList)[i] == m_pHeavy)
 			{
-				if((CHeavy*)(*m_vObjectList)[i] == m_pHeavy)
+				if(!((CUnit*)(*m_vObjectList)[i])->Selected())
 				{
-					if(!((CUnit*)(*m_vObjectList)[i])->Selected())
-					{
-						((CUnit*)(*m_vObjectList)[i])->Selected(true);
-						(*m_vSelected).push_back((*m_vObjectList)[i]);
-					}
-				}
-				else if(((CUnit*)(*m_vObjectList)[i])->Selected())
-				{
-					((CUnit*)(*m_vObjectList)[i])->Selected(false);
-					CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+					((CUnit*)(*m_vObjectList)[i])->Selected(true);
+					(*m_vSelected).push_back((*m_vObjectList)[i]);
 				}
 			}
+			else if(((CUnit*)(*m_vObjectList)[i])->Selected())
+			{
+				((CUnit*)(*m_vObjectList)[i])->Selected(false);
+				CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+			}
 		}
-		if(m_DI->KeyPressed(CGame::GetInstance()->KeyBinds(CGame::KEY_UNIT3)))
+	}
+	if(m_DI->KeyPressed(CGame::GetInstance()->KeyBinds(CGame::KEY_UNIT3)))
+	{
+		//select the MEDIC
+		for(size_t i=0; i<m_vObjectList->size(); i++)
 		{
-			//select the MEDIC
-			for(size_t i=0; i<m_vObjectList->size(); i++)
+			if((CMedic*)(*m_vObjectList)[i] == m_pMedic)
 			{
-				if((CMedic*)(*m_vObjectList)[i] == m_pMedic)
+				if(!((CUnit*)(*m_vObjectList)[i])->Selected())
 				{
-					if(!((CUnit*)(*m_vObjectList)[i])->Selected())
-					{
-						((CUnit*)(*m_vObjectList)[i])->Selected(true);
-						(*m_vSelected).push_back((*m_vObjectList)[i]);
-					}
-				}
-				else if(((CUnit*)(*m_vObjectList)[i])->Selected())
-				{
-					((CUnit*)(*m_vObjectList)[i])->Selected(false);
-					CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+					((CUnit*)(*m_vObjectList)[i])->Selected(true);
+					(*m_vSelected).push_back((*m_vObjectList)[i]);
 				}
 			}
+			else if(((CUnit*)(*m_vObjectList)[i])->Selected())
+			{
+				((CUnit*)(*m_vObjectList)[i])->Selected(false);
+				CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+			}
 		}
-		if(m_DI->KeyPressed(CGame::GetInstance()->KeyBinds(CGame::KEY_UNIT4)))
+	}
+	if(m_DI->KeyPressed(CGame::GetInstance()->KeyBinds(CGame::KEY_UNIT4)))
+	{
+		//select the SCOUT
+		for(size_t i=0; i<m_vObjectList->size(); i++)
 		{
-			//select the SCOUT
-			for(size_t i=0; i<m_vObjectList->size(); i++)
+			if((CScout*)(*m_vObjectList)[i] == m_pScout)
 			{
-				if((CScout*)(*m_vObjectList)[i] == m_pScout)
+				if(!((CUnit*)(*m_vObjectList)[i])->Selected())
 				{
-					if(!((CUnit*)(*m_vObjectList)[i])->Selected())
-					{
-						((CUnit*)(*m_vObjectList)[i])->Selected(true);
-						(*m_vSelected).push_back((*m_vObjectList)[i]);
-					}
-				}
-				else if(((CUnit*)(*m_vObjectList)[i])->Selected())
-				{
-					((CUnit*)(*m_vObjectList)[i])->Selected(false);
-					CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+					((CUnit*)(*m_vObjectList)[i])->Selected(true);
+					(*m_vSelected).push_back((*m_vObjectList)[i]);
 				}
 			}
+			else if(((CUnit*)(*m_vObjectList)[i])->Selected())
+			{
+				((CUnit*)(*m_vObjectList)[i])->Selected(false);
+				CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+			}
 		}
-		if(m_DI->KeyPressed(CGame::GetInstance()->KeyBinds(CGame::KEY_ALLUNIT)))
+	}
+	if(m_DI->KeyPressed(CGame::GetInstance()->KeyBinds(CGame::KEY_ALLUNIT)))
+	{
+		//select all PLAYER units
+		for(size_t i=0; i<m_vObjectList->size(); i++)
 		{
-			//select all PLAYER units
-			for(size_t i=0; i<m_vObjectList->size(); i++)
+			if(((CUnit*)(*m_vObjectList)[i])->Type()==CBase::OBJ_PLAYER)
 			{
-				if(((CUnit*)(*m_vObjectList)[i])->Type()==CBase::OBJ_PLAYER)
+				if(!((CUnit*)(*m_vObjectList)[i])->Selected())
 				{
-					if(!((CUnit*)(*m_vObjectList)[i])->Selected())
-					{
-						((CUnit*)(*m_vObjectList)[i])->Selected(true);
-						(*m_vSelected).push_back((*m_vObjectList)[i]);
-					}
-				}
-				else if(((CUnit*)(*m_vObjectList)[i])->Selected())
-				{
-					((CUnit*)(*m_vObjectList)[i])->Selected(false);
-					CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+					((CUnit*)(*m_vObjectList)[i])->Selected(true);
+					(*m_vSelected).push_back((*m_vObjectList)[i]);
 				}
 			}
+			else if(((CUnit*)(*m_vObjectList)[i])->Selected())
+			{
+				((CUnit*)(*m_vObjectList)[i])->Selected(false);
+				CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+			}
 		}
+	}
 
 
-		//CAMERA CONTROL (KEYBOARD)
-		if(m_DI->KeyDown(CGame::GetInstance()->KeyBinds(CGame::KEY_LEFT)))
-		{
-			CGame::GetInstance()->GetCamera()->SetX( CGame::GetInstance()->GetCamera()->GetX() - 1.5f );
-			if(CGame::GetInstance()->GetCamera()->GetX() < 0.0f)
-				CGame::GetInstance()->GetCamera()->SetX( 0.0f );
-			//m_esEventSystem->SendEvent("LeftKeyPressed");
-		}
+	//CAMERA CONTROL (KEYBOARD)
+	if(m_DI->KeyDown(CGame::GetInstance()->KeyBinds(CGame::KEY_LEFT)))
+	{
+		CGame::GetInstance()->GetCamera()->SetX( CGame::GetInstance()->GetCamera()->GetX() - 1.5f );
+		if(CGame::GetInstance()->GetCamera()->GetX() < 0.0f)
+			CGame::GetInstance()->GetCamera()->SetX( 0.0f );
+		//m_esEventSystem->SendEvent("LeftKeyPressed");
+	}
 
 	if(m_DI->KeyDown(CGame::GetInstance()->KeyBinds(CGame::KEY_RIGHT)))
 	{

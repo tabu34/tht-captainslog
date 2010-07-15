@@ -4,7 +4,7 @@
 
 void CAbility_DefensiveMatrix::Activate()
 {
-	if (TimePassed() > Cooldown())
+	if (TimePassed() >= Cooldown())
 	{
 		TimePassed(0);
 		IsActive(true);
@@ -30,7 +30,7 @@ void CAbility_DefensiveMatrix::Update(float fElapsedTime)
 
 void CAbility_PinningShot::Activate()
 {
-	if (TimePassed() > Cooldown())
+	if (TimePassed() >= Cooldown())
 	{
 		TimePassed(0);
 		IsActive(true);
@@ -71,7 +71,7 @@ void CAbility_Cloak::Activate()
 
 void CAbility_Refresh::Activate()
 {
-	if (TimePassed() > Cooldown())
+	if (TimePassed() >= Cooldown())
 	{
 		Target()->CurHealth(Target()->CurHealth() + 20);
 		TimePassed(0);
@@ -85,12 +85,12 @@ void CAbility_Refresh::Update(float fElapsedTime)
 
 void CAbility_Overdrive::Activate()
 {
-	if (TimePassed() > Cooldown())
+	if (TimePassed() >= Cooldown())
 	{
 		TimePassed(0);
 		IsActive(true);
 		m_fAttackSpeed = Target()->AttackSpeed();
-		Target()->AttackSpeed(Target()->AttackSpeed() - (Target()->AttackSpeed() * 0.05f));
+		Target()->AttackSpeed(Target()->AttackSpeed() - (Target()->AttackSpeed() * 0.5f));
 	}
 }
 
@@ -112,7 +112,7 @@ void CAbility_Overdrive::Update(float fElapsedTime)
 
 void CAbility_ArmorLockdown::Activate()
 {
-	if (TimePassed() > Cooldown())
+	if (TimePassed() >= Cooldown())
 	{
 		Target()->Armor(Target()->Armor() + 50);
 		TimePassed(0);

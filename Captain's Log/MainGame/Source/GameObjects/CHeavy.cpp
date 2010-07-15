@@ -29,7 +29,7 @@ CHeavy::CHeavy()
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Firebat-Idle"));
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Firebat-Fire"));
 
-	Abilities().push_back(new CAbility_ArmorLockdown());
+	Abilities()->push_back(new CAbility_ArmorLockdown(this));
 
 	m_nCurFrame = 0;
 }

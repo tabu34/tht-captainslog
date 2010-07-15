@@ -53,7 +53,6 @@ public:
 	void Shutdown();
 	void UpdateCamera(float fElapsedTime);
 	void SetPlayerUnits(CMarine* pMarine, CHeavy* pHeavy, CScout* pScout, CMedic* pMedic) { m_pMarine = pMarine; m_pHeavy=pHeavy; m_pScout=pScout; m_pMedic=pMedic;}
-
 };
 
 #endif
