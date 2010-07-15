@@ -73,6 +73,7 @@ void CGamePlayState::Enter(void)
 	// Test BG
 	//m_nBG = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("testBG.png").c_str());
 	CWorldManager::GetInstance()->Load("Resource//Graphics//Intro Level Take 2.mfl");
+	m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap.png").c_str());
 
 	// Load Animations
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\marine\\marine.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
@@ -131,14 +132,13 @@ void CGamePlayState::Exit(void)
 		CSGD_TextureManager::GetInstance()->UnloadTexture(m_vButtons[i].TextureID());
 	}
 
+	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nMiniMap);
 	CAnimationManager::GetInstance()->Shutdown();
 	CObjectManager::GetInstance()->RemoveAllObjects();
 }
 
 bool CGamePlayState::Input(void)
 {
-	
-
 	// Tooltips
 	RECT mousePos, collide, collider;
 	mousePos.left = CMovementControl::GetInstance()->MousePosX();
@@ -187,6 +187,22 @@ bool CGamePlayState::Input(void)
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(false);
 	}
 
+
+	RECT rMiniMap = {5, 690, 260, 896};
+	if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0) && IntersectRect(&collide, &rMiniMap, &mousePos))
+	{
+		float fPercent;
+		fPercent = (float)(mousePos.left-5)/255.0f;
+		
+		CGame::GetInstance()->GetCamera()->SetX(CWorldManager::GetInstance()->WorldWidth()*fPercent);
+		if(CGame::GetInstance()->GetCamera()->GetX() > CWorldManager::GetInstance()->WorldWidth() - CGame::GetInstance()->GetScreenWidth() )
+			CGame::GetInstance()->GetCamera()->SetX( CWorldManager::GetInstance()->WorldWidth() - CGame::GetInstance()->GetScreenWidth() );
+		fPercent = (float)(mousePos.top-690)/206.0f;
+		CGame::GetInstance()->GetCamera()->SetY(CWorldManager::GetInstance()->WorldHeight()*fPercent);
+		if(CGame::GetInstance()->GetCamera()->GetY() > CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight())
+			CGame::GetInstance()->GetCamera()->SetY( CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight());
+		return true;
+	}
 
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
@@ -238,6 +254,71 @@ void CGamePlayState::Update(float fElapsedTime)
 	CObjectManager::GetInstance()->UpdateObjects(fElapsedTime);
 	CMessageSystem::GetInstance()->ProcessMessages();
 	m_peEmitter.Update(fElapsedTime);
+}
+
+void CGamePlayState::RenderMiniMap()
+{
+	//background image
+	//objects
+	//screen rect
+	CSGD_TextureManager::GetInstance()->Draw(m_nMiniMap, 5, 690);
+	CSGD_Direct3D::GetInstance()->SpriteEnd();
+	int tempX, tempY, maxX, maxY;
+	int OffsetX = 5, OffsetY = 690, CX = 255, CY = 206;
+	unsigned char ucRed, ucBlue, ucGreen;
+	RECT rObj;
+	vector<CBase*>* pOM = CObjectManager::GetInstance()->GetObjectList();
+
+	maxX = CWorldManager::GetInstance()->WorldWidth();
+	maxY = CWorldManager::GetInstance()->WorldHeight();
+
+	for(size_t i=0; i<pOM->size(); i++)
+	{
+		switch((*pOM)[i]->Type())
+		{
+		case CBase::OBJ_PLAYER:
+			ucRed=0;
+			ucGreen=255;
+			ucBlue=0;
+			break;
+		case CBase::OBJ_ENEMY:
+			ucRed=255;
+			ucGreen=0;
+			ucBlue=0;
+			break;
+		default:
+			ucRed=255;
+			ucGreen=255;
+			ucBlue=255;
+			break;
+		}
+		tempX = (int)(*pOM)[i]->PosX();
+		tempY = (int)(*pOM)[i]->PosY();
+		
+		rObj.left = OffsetX + (int)(((float)tempX/(float)maxX)*(float)CX);
+		rObj.top = OffsetY + (int)(((float)tempY/(float)maxY)*(float)CY);
+		rObj.right = rObj.left+5;
+		rObj.bottom = rObj.top+5;
+		CSGD_Direct3D::GetInstance()->DrawRect(rObj, ucRed, ucGreen, ucBlue);
+
+	}
+
+	//screen rect
+	tempX = CGame::GetInstance()->GetCamera()->GetX();
+	tempY = CGame::GetInstance()->GetCamera()->GetY();
+	rObj.left = OffsetX + (int)(((float)tempX/(float)maxX)*(float)CX);
+	rObj.top = OffsetY + (int)(((float)tempY/(float)maxY)*(float)CY);
+	float fPercent;
+	fPercent = (float)CGame::GetInstance()->GetScreenWidth()/(float)CWorldManager::GetInstance()->WorldWidth();
+	rObj.right = rObj.left+ (int)((float)CX*fPercent);
+	fPercent = (float)CGame::GetInstance()->GetScreenHeight()/(float)CWorldManager::GetInstance()->WorldHeight();
+	rObj.bottom = rObj.top + (int)((float)CY*fPercent);
+	CSGD_Direct3D::GetInstance()->DrawLine(rObj.left, rObj.top, rObj.right, rObj.top);
+	CSGD_Direct3D::GetInstance()->DrawLine(rObj.right, rObj.top, rObj.right, rObj.bottom);
+	CSGD_Direct3D::GetInstance()->DrawLine(rObj.right, rObj.bottom, rObj.left, rObj.bottom);
+	CSGD_Direct3D::GetInstance()->DrawLine(rObj.left, rObj.bottom, rObj.left, rObj.top);
+
+	CSGD_Direct3D::GetInstance()->SpriteBegin();
 }
 
 void CGamePlayState::RenderHUD(void)
@@ -297,6 +378,8 @@ void CGamePlayState::RenderHUD(void)
 			break;
 		}
 	}
+
+	RenderMiniMap();
 
 	// Render ToolTip Text
 	if(m_szTooltipText != "")
