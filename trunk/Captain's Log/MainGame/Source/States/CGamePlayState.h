@@ -99,6 +99,8 @@ class CGamePlayState : public IGameState
 	float				m_nCurCount;
 	string				m_szSpeechText;
 
+	float				m_fTotalGameTime;
+
 	// Tooltip
 	string				m_szTooltipText;
 
@@ -133,6 +135,9 @@ public:
 	void ClearCommand(){m_szSelectedCommand="";}
 	void SetCommand(string val) { m_szSelectedCommand = val; }
 	void RenderMiniMap();
+
+	void LoadProfile(int nOffsetInBytes);
+	float GetTime(){return m_fTotalGameTime;}
 
 	//cheats
 	bool GodMode(){return m_bGodMode;}

@@ -8,6 +8,8 @@
 #include "../Managers/MovementControl.h"
 #include <fstream>
 #include <string>
+#include <ctime>
+#include <algorithm>
 using std::ifstream;
 using std::ofstream;
 using std::ios_base;
@@ -60,6 +62,266 @@ void CSaveState::LoadProfiles()
 	}
 }
 
+void CSaveState::SaveCurrent(int nSlot)
+{
+	vector<tUnitSaveInfo> vToSave;
+	vector<CBase*>*	vGame = CObjectManager::GetInstance()->GetObjectList();
+
+	tUnitSaveInfo temp;
+	CUnit* pCurUnit;
+
+	pCurUnit = (CUnit*)CMovementControl::GetInstance()->Marine();
+	temp.bBurned = pCurUnit->Burned();
+	temp.bCloaked = pCurUnit->Cloaked();
+	temp.bInvulnerable = pCurUnit->Invulnerable();
+	temp.bRanged = pCurUnit->Ranged();
+	temp.bStunned = pCurUnit->Stunned();
+	temp.fAttackDamage = pCurUnit->AttackDamage();
+	temp.fAttackRange = pCurUnit->AttackRange();
+	temp.fAttackSpeed = pCurUnit->AttackSpeed();
+	temp.fMovementSpeed = pCurUnit->MovementSpeed();
+	temp.fPosX = pCurUnit->PosX();
+	temp.fPosY = pCurUnit->PosY();
+	temp.nArmor = pCurUnit->Armor();
+	temp.nCurHealth = pCurUnit->CurHealth();
+	temp.nHealthRegenRate = pCurUnit->HealthRegenRate();
+	temp.nLevel = pCurUnit->Level();
+	temp.nMaxHealth = pCurUnit->MaxHealth();
+	temp.nSightRange = pCurUnit->SightRange();
+	temp.nSubType = pCurUnit->SubType();
+	temp.nType = pCurUnit->Type();
+	vToSave.push_back(temp);
+
+	pCurUnit = (CUnit*)CMovementControl::GetInstance()->Heavy();
+	temp.bBurned = pCurUnit->Burned();
+	temp.bCloaked = pCurUnit->Cloaked();
+	temp.bInvulnerable = pCurUnit->Invulnerable();
+	temp.bRanged = pCurUnit->Ranged();
+	temp.bStunned = pCurUnit->Stunned();
+	temp.fAttackDamage = pCurUnit->AttackDamage();
+	temp.fAttackRange = pCurUnit->AttackRange();
+	temp.fAttackSpeed = pCurUnit->AttackSpeed();
+	temp.fMovementSpeed = pCurUnit->MovementSpeed();
+	temp.fPosX = pCurUnit->PosX();
+	temp.fPosY = pCurUnit->PosY();
+	temp.nArmor = pCurUnit->Armor();
+	temp.nCurHealth = pCurUnit->CurHealth();
+	temp.nHealthRegenRate = pCurUnit->HealthRegenRate();
+	temp.nLevel = pCurUnit->Level();
+	temp.nMaxHealth = pCurUnit->MaxHealth();
+	temp.nSightRange = pCurUnit->SightRange();
+	temp.nSubType = pCurUnit->SubType();
+	temp.nType = pCurUnit->Type();
+	vToSave.push_back(temp);
+
+	pCurUnit = (CUnit*)CMovementControl::GetInstance()->Medic();
+	temp.bBurned = pCurUnit->Burned();
+	temp.bCloaked = pCurUnit->Cloaked();
+	temp.bInvulnerable = pCurUnit->Invulnerable();
+	temp.bRanged = pCurUnit->Ranged();
+	temp.bStunned = pCurUnit->Stunned();
+	temp.fAttackDamage = pCurUnit->AttackDamage();
+	temp.fAttackRange = pCurUnit->AttackRange();
+	temp.fAttackSpeed = pCurUnit->AttackSpeed();
+	temp.fMovementSpeed = pCurUnit->MovementSpeed();
+	temp.fPosX = pCurUnit->PosX();
+	temp.fPosY = pCurUnit->PosY();
+	temp.nArmor = pCurUnit->Armor();
+	temp.nCurHealth = pCurUnit->CurHealth();
+	temp.nHealthRegenRate = pCurUnit->HealthRegenRate();
+	temp.nLevel = pCurUnit->Level();
+	temp.nMaxHealth = pCurUnit->MaxHealth();
+	temp.nSightRange = pCurUnit->SightRange();
+	temp.nSubType = pCurUnit->SubType();
+	temp.nType = pCurUnit->Type();
+	vToSave.push_back(temp);
+
+	pCurUnit = (CUnit*)CMovementControl::GetInstance()->Scout();
+	temp.bBurned = pCurUnit->Burned();
+	temp.bCloaked = pCurUnit->Cloaked();
+	temp.bInvulnerable = pCurUnit->Invulnerable();
+	temp.bRanged = pCurUnit->Ranged();
+	temp.bStunned = pCurUnit->Stunned();
+	temp.fAttackDamage = pCurUnit->AttackDamage();
+	temp.fAttackRange = pCurUnit->AttackRange();
+	temp.fAttackSpeed = pCurUnit->AttackSpeed();
+	temp.fMovementSpeed = pCurUnit->MovementSpeed();
+	temp.fPosX = pCurUnit->PosX();
+	temp.fPosY = pCurUnit->PosY();
+	temp.nArmor = pCurUnit->Armor();
+	temp.nCurHealth = pCurUnit->CurHealth();
+	temp.nHealthRegenRate = pCurUnit->HealthRegenRate();
+	temp.nLevel = pCurUnit->Level();
+	temp.nMaxHealth = pCurUnit->MaxHealth();
+	temp.nSightRange = pCurUnit->SightRange();
+	temp.nSubType = pCurUnit->SubType();
+	temp.nType = pCurUnit->Type();
+	vToSave.push_back(temp);
+
+	for(size_t i=0; i<vGame->size(); i++)
+	{
+		pCurUnit = ((CUnit*)(*vGame)[i]);
+		if(pCurUnit!= (CUnit*)CMovementControl::GetInstance()->Marine() &&
+			pCurUnit != (CUnit*)CMovementControl::GetInstance()->Heavy() &&
+			pCurUnit != (CUnit*)CMovementControl::GetInstance()->Medic() &&
+			pCurUnit != (CUnit*)CMovementControl::GetInstance()->Scout())
+		{
+			temp.bBurned = pCurUnit->Burned();
+			temp.bCloaked = pCurUnit->Cloaked();
+			temp.bInvulnerable = pCurUnit->Invulnerable();
+			temp.bRanged = pCurUnit->Ranged();
+			temp.bStunned = pCurUnit->Stunned();
+			temp.fAttackDamage = pCurUnit->AttackDamage();
+			temp.fAttackRange = pCurUnit->AttackRange();
+			temp.fAttackSpeed = pCurUnit->AttackSpeed();
+			temp.fMovementSpeed = pCurUnit->MovementSpeed();
+			temp.fPosX = pCurUnit->PosX();
+			temp.fPosY = pCurUnit->PosY();
+			temp.nArmor = pCurUnit->Armor();
+			temp.nCurHealth = pCurUnit->CurHealth();
+			temp.nHealthRegenRate = pCurUnit->HealthRegenRate();
+			temp.nLevel = pCurUnit->Level();
+			temp.nMaxHealth = pCurUnit->MaxHealth();
+			temp.nSightRange = pCurUnit->SightRange();
+			temp.nSubType = pCurUnit->SubType();
+			temp.nType = pCurUnit->Type();
+			vToSave.push_back(temp);
+		}
+	}
+
+	tUnitSaveInfo* pData = new tUnitSaveInfo[vToSave.size()];
+
+	
+	for(size_t i=0; i<vToSave.size(); i++)
+	{
+		pData[i] = vToSave[i];	
+	}
+
+	Save(nSlot, CGamePlayState::GetInstance()->GetTime(), pData, (int)vToSave.size());
+
+	delete[] pData;
+
+}
+
+void CSaveState::Save(int nSlot, float fGameTime, tUnitSaveInfo* pData, int numUnits)
+{
+	//first, load in the entire file.
+	ifstream fin;
+	string szPath;
+	szPath = CGame::GetInstance()->ResourcePath();
+	szPath+="Save.bin";
+	fin.open(szPath.c_str(), ios_base::in | ios_base::binary);
+
+	time_t rawtime;
+	struct tm* timeinfo;
+	time(&rawtime);
+	timeinfo = localtime(&rawtime);
+	char *szTime = asctime(timeinfo);
+
+	tUnitSaveInfo** ppSaveData = NULL;
+
+	if(m_pProfiles)
+		delete[] m_pProfiles;
+	m_pProfiles=NULL;
+
+	if(fin.fail())
+	{
+		fin.clear(ios_base::failbit);
+
+		m_nNumProfiles=0;
+		nSlot=0;
+	}
+	else if(fin.is_open() && fin.good())
+	{
+		fin.read((char*)&m_nNumProfiles, sizeof(int));
+		ppSaveData = new tUnitSaveInfo*[m_nNumProfiles];
+		m_pProfiles = new tProfileHeader[m_nNumProfiles];
+		for(int i=0; i<m_nNumProfiles; i++)
+		{
+			int nNumUnits;
+			fin.read((char*)&m_pProfiles[i], sizeof(tProfileHeader));
+			fin.read((char*)&nNumUnits, sizeof(int));
+			ppSaveData[i] = new tUnitSaveInfo[nNumUnits];
+			fin.read((char*)ppSaveData[i], sizeof(tUnitSaveInfo)*nNumUnits);
+		}
+		fin.close();
+	}
+
+	if(nSlot>m_nNumProfiles)
+		nSlot=m_nNumProfiles;
+
+	if(nSlot>=0 && nSlot<m_nNumProfiles) //replacing an existing profile
+	{
+		delete[] ppSaveData[nSlot];
+
+		ppSaveData[nSlot] = new tUnitSaveInfo[numUnits];
+		memcpy(ppSaveData[nSlot], pData, numUnits*sizeof(tUnitSaveInfo));
+		m_pProfiles[nSlot].fGameTime = fGameTime;
+		m_pProfiles[nSlot].nProfileSizeInBytes = numUnits*sizeof(tUnitSaveInfo)+sizeof(int);
+		strcpy_s(m_pProfiles[nSlot].szLastPlayed, 256, szTime);
+
+		ofstream fout;
+		fout.open(szPath.c_str(), ios_base::out | ios_base::trunc | ios_base::binary);
+		if(fout.is_open() && fout.good())
+		{
+			fout.write((char*)&m_nNumProfiles, sizeof(int));
+			for(int i=0; i<m_nNumProfiles; i++)
+			{
+				fout.write((char*)&m_pProfiles[i], sizeof(tProfileHeader));
+				int j=(m_pProfiles[i].nProfileSizeInBytes-sizeof(int))/sizeof(tUnitSaveInfo);
+				fout.write((char*)&j, sizeof(int));
+				fout.write((char*)ppSaveData[i], m_pProfiles[i].nProfileSizeInBytes - sizeof(int));
+			}
+			fout.close();
+		}
+
+		for(int i=0; i<m_nNumProfiles; i++)
+			delete[] ppSaveData[i];
+	}
+	else //add a new profile
+	{
+		ofstream fout;
+		fout.open(szPath.c_str(), ios_base::out | ios_base::trunc | ios_base::binary);
+		m_nNumProfiles+=1;
+		if(fout.is_open() && fout.good())
+		{
+			fout.write((char*)&m_nNumProfiles, sizeof(int));
+			for(int i=0; i<m_nNumProfiles; i++)
+			{
+				if(i==m_nNumProfiles-1)
+				{
+					tProfileHeader pH;
+					pH.fGameTime = fGameTime;
+					pH.nProfileSizeInBytes = numUnits*sizeof(tUnitSaveInfo)+sizeof(int);
+					strcpy_s(pH.szLastPlayed, 256, szTime);
+
+					fout.write((char*)&pH, sizeof(tProfileHeader));
+					int j=(pH.nProfileSizeInBytes-sizeof(int))/sizeof(tUnitSaveInfo);
+					fout.write((char*)&j, sizeof(int));
+					fout.write((char*)pData, pH.nProfileSizeInBytes - sizeof(int));
+				}
+				else
+				{
+					fout.write((char*)&m_pProfiles[i], sizeof(tProfileHeader));
+					int j=(m_pProfiles[i].nProfileSizeInBytes-sizeof(int))/sizeof(tUnitSaveInfo);
+					fout.write((char*)&j, sizeof(int));
+					fout.write((char*)ppSaveData[i], m_pProfiles[i].nProfileSizeInBytes - sizeof(int));
+				}
+			}
+			fout.close();
+		}
+		for(int i=0; i<m_nNumProfiles-1; i++)
+			delete[] ppSaveData[i];
+	}
+
+	if(ppSaveData)
+		delete[] ppSaveData;
+
+	LoadProfiles();
+
+
+}
+
 void CSaveState::Enter()
 {
 	m_nBGImage = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("saveScreen.png").c_str());
@@ -67,6 +329,7 @@ void CSaveState::Enter()
 	m_bfFont.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
 	m_bfWhite.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 1.0f, 1.0f, 2, 0xFF000000, 0xFFFFFFFF);
 	m_bfWhite.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
+	LoadProfiles();
 }
 
 void CSaveState::Exit()
@@ -83,6 +346,16 @@ bool CSaveState::Input()
 		CGame::GetInstance()->PopState();
 	}
 
+	//DEBUG
+	//
+	//
+	//
+	//
+	//
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN))
+	{
+		SaveCurrent(0);
+	}
 	m_nMousePrevX = m_nMouseX;
 	m_nMousePrevY = m_nMouseY;
 	return true;
@@ -115,13 +388,12 @@ void CSaveState::Render()
 		for(int i=0; i<m_nNumProfiles; i++)
 		{
 			m_bfFont.RenderText(m_pProfiles[i].szLastPlayed, 180, 180+(i*25));
-			string szTimePlayed;
-			szTimePlayed += ((int)m_pProfiles[i].fGameTime)/3600;
-			szTimePlayed += ':';
-			szTimePlayed += (((int)m_pProfiles[i].fGameTime)%3600)/60;
-			szTimePlayed += ':';
-			szTimePlayed += (((int)m_pProfiles[i].fGameTime)%3600)%60;
-			m_bfFont.RenderText(const_cast<char*>(szTimePlayed.c_str()), 650, 180+(i*25));
+			char buffer[128];
+			sprintf_s(buffer, 128, "%i:%i:%i",
+				((int)m_pProfiles[i].fGameTime)/3600,
+				(((int)m_pProfiles[i].fGameTime)%3600)/60,
+				((((int)m_pProfiles[i].fGameTime)%3600)%60));
+			m_bfFont.RenderText(buffer, 650, 180+(i*25));
 		}
 	}
 	m_bfFont.RenderText("Press <ESC> to Exit", CGame::GetInstance()->GetScreenWidth()/3+100, CGame::GetInstance()->GetScreenHeight()-50);

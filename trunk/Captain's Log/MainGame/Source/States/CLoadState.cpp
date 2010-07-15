@@ -118,13 +118,12 @@ void CLoadState::Render()
 		for(int i=0; i<m_nNumProfiles; i++)
 		{
 			m_bfFont.RenderText(m_pProfiles[i].szLastPlayed, 180, 180+(i*25));
-			string szTimePlayed;
-			szTimePlayed += ((int)m_pProfiles[i].fGameTime)/3600;
-			szTimePlayed += ':';
-			szTimePlayed += (((int)m_pProfiles[i].fGameTime)%3600)/60;
-			szTimePlayed += ':';
-			szTimePlayed += (((int)m_pProfiles[i].fGameTime)%3600)%60;
-			m_bfFont.RenderText(const_cast<char*>(szTimePlayed.c_str()), 650, 180+(i*25));
+			char buffer[128];
+			sprintf_s(buffer, 128, "%i:%i:%i",
+				((int)m_pProfiles[i].fGameTime)/3600,
+				(((int)m_pProfiles[i].fGameTime)%3600)/60,
+				((((int)m_pProfiles[i].fGameTime)%3600)%60));
+			m_bfFont.RenderText(buffer, 650, 180+(i*25));
 		}
 	}
 

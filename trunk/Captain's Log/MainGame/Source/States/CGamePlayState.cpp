@@ -12,11 +12,14 @@
 #include "..\GameObjects\CHeavy.h"
 #include "..\Managers\CWorldManager.h"
 #include "CPauseMenuState.h"
+#include "CSaveState.h"
 #include "..\GameObjects\CMedic.h"
 #include "..\GameObjects\CScout.h"
 #include "..\GameObjects\CBasicEnemies.h"
 #include "..\GameObjects\CAbilities.h"
 #include "..\Managers\CUnitFactory.h"
+#include <fstream>
+using std::ifstream;
 
 void ActivateAbilityOne();
 void ActivateAbilityTwo();
@@ -36,6 +39,154 @@ CGamePlayState* CGamePlayState::GetInstance()
 {
 	static CGamePlayState instance;
 	return &instance;
+}
+
+void CGamePlayState::LoadProfile(int nOffsetInBytes)
+{
+	ifstream fin;
+
+	std::string szPath = CGame::GetInstance()->ResourcePath();
+	szPath += "Save.bin";
+	fin.open(szPath.c_str(), ios_base::in | ios_base::binary);
+
+	fin.seekg(nOffsetInBytes);
+
+	int nNumUnits;
+	fin.read((char*)&nNumUnits, sizeof(int));
+
+	CMarine* pMar;
+	CHeavy* pHeav;
+	CMedic* pMed;
+	CScout* pSco;
+
+	CObjectManager::GetInstance()->RemoveAllObjects();
+	for(int i=0; i<nNumUnits; i++)
+	{
+		tUnitSaveInfo tempUnitInfo;
+		fin.read((char*)&tempUnitInfo, sizeof(tUnitSaveInfo));
+		if(i==0) //marine
+		{
+			CMarine* pMarine = new CMarine();
+			pMarine->Armor(tempUnitInfo.nArmor);
+			pMarine->AttackDamage(tempUnitInfo.fAttackDamage);
+			pMarine->AttackRange(tempUnitInfo.fAttackRange);
+			pMarine->AttackSpeed(tempUnitInfo.fAttackSpeed);
+			pMarine->HealthRegenRate(tempUnitInfo.nHealthRegenRate);
+			pMarine->Burned(tempUnitInfo.bBurned);
+			pMarine->Cloaked(tempUnitInfo.bCloaked);
+			pMarine->CurHealth(tempUnitInfo.nCurHealth);
+			pMarine->Invulnerable(tempUnitInfo.bInvulnerable);
+			pMarine->MaxHealth(tempUnitInfo.nMaxHealth);
+			pMarine->MovementSpeed(tempUnitInfo.fMovementSpeed);
+			pMarine->PosX(tempUnitInfo.fPosX);
+			pMarine->PosY(tempUnitInfo.fPosY);
+			pMarine->SightRange(tempUnitInfo.nSightRange);
+			pMarine->SubType(tempUnitInfo.nSubType);
+			pMarine->Type(tempUnitInfo.nType);
+			pMarine->Ranged(tempUnitInfo.bRanged);
+			pMarine->Stunned(tempUnitInfo.bStunned);
+			CObjectManager::GetInstance()->AddObject(pMarine);
+			pMar = pMarine;
+		}
+		else if(i==1) //heavy
+		{
+			CHeavy* pMarine = new CHeavy();
+			pMarine->Armor(tempUnitInfo.nArmor);
+			pMarine->AttackDamage(tempUnitInfo.fAttackDamage);
+			pMarine->AttackRange(tempUnitInfo.fAttackRange);
+			pMarine->AttackSpeed(tempUnitInfo.fAttackSpeed);
+			pMarine->HealthRegenRate(tempUnitInfo.nHealthRegenRate);
+			pMarine->Burned(tempUnitInfo.bBurned);
+			pMarine->Cloaked(tempUnitInfo.bCloaked);
+			pMarine->CurHealth(tempUnitInfo.nCurHealth);
+			pMarine->Invulnerable(tempUnitInfo.bInvulnerable);
+			pMarine->MaxHealth(tempUnitInfo.nMaxHealth);
+			pMarine->MovementSpeed(tempUnitInfo.fMovementSpeed);
+			pMarine->PosX(tempUnitInfo.fPosX);
+			pMarine->PosY(tempUnitInfo.fPosY);
+			pMarine->SightRange(tempUnitInfo.nSightRange);
+			pMarine->SubType(tempUnitInfo.nSubType);
+			pMarine->Type(tempUnitInfo.nType);
+			pMarine->Ranged(tempUnitInfo.bRanged);
+			pMarine->Stunned(tempUnitInfo.bStunned);
+			CObjectManager::GetInstance()->AddObject(pMarine);
+			pHeav=pMarine;
+		}
+		else if(i==2)
+		{
+			CMedic* pMarine = new CMedic();
+			pMarine->Armor(tempUnitInfo.nArmor);
+			pMarine->AttackDamage(tempUnitInfo.fAttackDamage);
+			pMarine->AttackRange(tempUnitInfo.fAttackRange);
+			pMarine->AttackSpeed(tempUnitInfo.fAttackSpeed);
+			pMarine->HealthRegenRate(tempUnitInfo.nHealthRegenRate);
+			pMarine->Burned(tempUnitInfo.bBurned);
+			pMarine->Cloaked(tempUnitInfo.bCloaked);
+			pMarine->CurHealth(tempUnitInfo.nCurHealth);
+			pMarine->Invulnerable(tempUnitInfo.bInvulnerable);
+			pMarine->MaxHealth(tempUnitInfo.nMaxHealth);
+			pMarine->MovementSpeed(tempUnitInfo.fMovementSpeed);
+			pMarine->PosX(tempUnitInfo.fPosX);
+			pMarine->PosY(tempUnitInfo.fPosY);
+			pMarine->SightRange(tempUnitInfo.nSightRange);
+			pMarine->SubType(tempUnitInfo.nSubType);
+			pMarine->Type(tempUnitInfo.nType);
+			pMarine->Ranged(tempUnitInfo.bRanged);
+			pMarine->Stunned(tempUnitInfo.bStunned);
+			CObjectManager::GetInstance()->AddObject(pMarine);
+			pMed = pMarine;
+		}
+		else if(i==3)
+		{
+			CScout* pMarine = new CScout();
+			pMarine->Armor(tempUnitInfo.nArmor);
+			pMarine->AttackDamage(tempUnitInfo.fAttackDamage);
+			pMarine->AttackRange(tempUnitInfo.fAttackRange);
+			pMarine->AttackSpeed(tempUnitInfo.fAttackSpeed);
+			pMarine->HealthRegenRate(tempUnitInfo.nHealthRegenRate);
+			pMarine->Burned(tempUnitInfo.bBurned);
+			pMarine->Cloaked(tempUnitInfo.bCloaked);
+			pMarine->CurHealth(tempUnitInfo.nCurHealth);
+			pMarine->Invulnerable(tempUnitInfo.bInvulnerable);
+			pMarine->MaxHealth(tempUnitInfo.nMaxHealth);
+			pMarine->MovementSpeed(tempUnitInfo.fMovementSpeed);
+			pMarine->PosX(tempUnitInfo.fPosX);
+			pMarine->PosY(tempUnitInfo.fPosY);
+			pMarine->SightRange(tempUnitInfo.nSightRange);
+			pMarine->SubType(tempUnitInfo.nSubType);
+			pMarine->Type(tempUnitInfo.nType);
+			pMarine->Ranged(tempUnitInfo.bRanged);
+			pMarine->Stunned(tempUnitInfo.bStunned);
+			CObjectManager::GetInstance()->AddObject(pMarine);
+			pSco = pMarine;
+		}
+		else
+		{
+			CBasicEnemy* pMarine = new CBasicEnemy();
+			pMarine->Armor(tempUnitInfo.nArmor);
+			pMarine->AttackDamage(tempUnitInfo.fAttackDamage);
+			pMarine->AttackRange(tempUnitInfo.fAttackRange);
+			pMarine->AttackSpeed(tempUnitInfo.fAttackSpeed);
+			pMarine->HealthRegenRate(tempUnitInfo.nHealthRegenRate);
+			pMarine->Burned(tempUnitInfo.bBurned);
+			pMarine->Cloaked(tempUnitInfo.bCloaked);
+			pMarine->CurHealth(tempUnitInfo.nCurHealth);
+			pMarine->Invulnerable(tempUnitInfo.bInvulnerable);
+			pMarine->MaxHealth(tempUnitInfo.nMaxHealth);
+			pMarine->MovementSpeed(tempUnitInfo.fMovementSpeed);
+			pMarine->PosX(tempUnitInfo.fPosX);
+			pMarine->PosY(tempUnitInfo.fPosY);
+			pMarine->SightRange(tempUnitInfo.nSightRange);
+			pMarine->SubType(tempUnitInfo.nSubType);
+			pMarine->Type(tempUnitInfo.nType);
+			pMarine->Ranged(tempUnitInfo.bRanged);
+			pMarine->Stunned(tempUnitInfo.bStunned);
+			CObjectManager::GetInstance()->AddObject(pMarine);
+		}
+
+	}
+	CMovementControl::GetInstance()->SetPlayerUnits(pMar, pHeav, pSco, pMed);
+	fin.close();
 }
 
 void CGamePlayState::Enter(void)
@@ -198,6 +349,8 @@ void CGamePlayState::Enter(void)
 	m_bEnteringCheat=false;
 	m_bGodMode=false;
 	m_bNoCooldown=false;
+
+	m_fTotalGameTime = 0.0f;
 
 }
 
@@ -376,6 +529,8 @@ void CGamePlayState::Update(float fElapsedTime)
 	CObjectManager::GetInstance()->UpdateObjects(fElapsedTime);
 	CMessageSystem::GetInstance()->ProcessMessages();
 	m_peEmitter.Update(fElapsedTime);
+
+	m_fTotalGameTime+=fElapsedTime;
 }
 
 void CGamePlayState::RenderMiniMap()
