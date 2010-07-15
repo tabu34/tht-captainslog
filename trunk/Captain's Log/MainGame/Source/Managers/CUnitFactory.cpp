@@ -117,5 +117,44 @@ CUnit* CUnitFactory::CreateItem(string id)
 
 void CUnitFactory::RegisterItems()
 {
+//	// Book of Haste
+//	{
+//		pair<string, CItem*> objDef;
+//
+//		CItem* BookOfHaste = new CAppliedItem();
+//		BookOfHaste->ItemName(CItem::ITEM_BOOKOFHASTE);
+//		BookOfHaste->AmountType(CItem::VALUETYPE_PERCENTAGE);
+//		BookOfHaste->AmountCategory(CItem::VALUECATEGORY_ATTACKSPEED);
+//		BookOfHaste->Amount(3);
+//
+//		objDef.first = "Book of Haste";
+//		objDef.second = BookOfHaste;
+//
+//		m_ItemTemplates.insert(objDef);
+//	}
+
+	// Footman
+	{
+		pair<string, CUnit*> objDef;
+
+		CUnit* Footman = new CBasicEnemy();
+		Footman->Armor(5);
+		Footman->AttackDamage(2);
+		Footman->AttackRange(40);
+		Footman->AttackSpeed(1);
+		Footman->Burned(false);
+		Footman->Cloaked(false);
+		Footman->MaxHealth(20);
+		Footman->CurHealth(Footman->MaxHealth());
+		Footman->Invulnerable(false);
+		Footman->MovementSpeed();
+		Footman->PortraitID();
+		Footman->Ranged();
+		Footman->Selected(false);
+		Footman->Stunned(false);
+		Footman->CurDirection();
+		Footman->State(CUnit::UNIT_IDLE);
+
+	}
 
 }
