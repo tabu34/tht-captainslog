@@ -12,6 +12,8 @@ CUnit::CUnit()
 	m_fAttackTimer = 0;
 	m_bStunned = false;
 	m_bInvulnerable = false;
+
+	MovementSpeed(100);
 }
 
 void CUnit::OrderMove( POINT _dest )
@@ -121,14 +123,14 @@ void CUnit::Update(float fElapsedTime)
 	else if(m_nState == UNIT_MOVING)
 	{
 		if(PosX() < m_pDestinationMove.x)
-			VelX(100.0f);
+			VelX(MovementSpeed());
 		else
-			VelX(-100.0f);
+			VelX(-MovementSpeed());
 
 		if(PosY() < m_pDestinationMove.y)
-			VelY(100.0f);
+			VelY(MovementSpeed());
 		else
-			VelY(-100.0f);
+			VelY(-MovementSpeed());
 
 		if(fabs(PosX() - m_pDestinationMove.x) < 1.0f)
 		{
@@ -185,14 +187,14 @@ void CUnit::Update(float fElapsedTime)
 		else
 		{
 			if(PosX() < m_pTarget->PosX())
-				VelX(100.0f);
+				VelX(MovementSpeed());
 			else
-				VelX(-100.0f);
+				VelX(-MovementSpeed());
 
 			if(PosY() < m_pTarget->PosY())
-				VelY(100.0f);
+				VelY(MovementSpeed());
 			else
-				VelY(-100.0f);
+				VelY(-MovementSpeed());
 		}
 	}
 	else if (m_nState == UNIT_ATTACK || UNIT_FIRE)
