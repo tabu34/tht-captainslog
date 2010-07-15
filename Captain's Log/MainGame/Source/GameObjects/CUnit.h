@@ -29,6 +29,7 @@ class CUnit : public CBase
 	int					m_nMaxHealth;
 	int					m_nPortraitID;
 	int					m_nCurDirection;
+	int					m_nSightRange;
 	int					m_nSubType;
 	vector<CAbility*>	m_vAbilities;
 	vector<int>			m_vAnimations;
@@ -58,6 +59,8 @@ public:
 	virtual void Render();
 	virtual void Attack(float fElapsedTime);
 
+	int DistanceSquared(int nOtherPosX, int nOtherPosY);
+
 	// Orders //////////////////////////////////////
 	void OrderMove( POINT _dest );
 	void OrderMove( int _x, int _y);
@@ -84,10 +87,11 @@ public:
 	int MaxHealth() const { return m_nMaxHealth; }
 	int PortraitID() const { return m_nPortraitID; }
 	int CurDirection() const { return m_nCurDirection; }
+	int SightRange() const { return m_nSightRange; }
 	int State() const { return m_nState; }
 	int SubType() const { return m_nSubType; }
 	POINT Destination() const { return m_pDestinationMove; }
-	CUnit* Target() const { return m_pTarget; }
+	CUnit* Target() { return m_pTarget; }
 	vector<CAbility*>* Abilities() { return &m_vAbilities; }
 	vector<int>* Animations() { return &m_vAnimations; }
 	////////////////////////////////////////////////
@@ -115,6 +119,7 @@ public:
 	void Stunned(bool val) { m_bStunned = val; }
 	void StunnedEndTime(float val) { m_fStunnedEndTime = val; }
 	void CurDirection(int val) { m_nCurDirection = val; }
+	void SightRange(int val) { m_nSightRange = val; }
 	void State(int val) { m_nState = val; }
 	void SubType(int val) { m_nSubType = val; }
 	void Target(CUnit* val) { m_pTarget = val; }

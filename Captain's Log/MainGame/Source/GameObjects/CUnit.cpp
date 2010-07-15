@@ -14,7 +14,13 @@ CUnit::CUnit()
 	m_bStunned = false;
 	m_bInvulnerable = false;
 	m_bSelected=false;
+	Width(64);
+	Height(64);
 	MovementSpeed(100);
+	Target(0);
+
+	Cloaked(false);
+	Invulnerable(false);
 }
 
 void CUnit::OrderMove( POINT _dest )
@@ -211,7 +217,7 @@ void CUnit::Update(float fElapsedTime)
 
 void CUnit::Attack(float fElapsedTime)
 {
-	if (m_pTarget->Type() != OBJ_ENEMY)
+	if (m_pTarget->Type() == Type())
 	{
 		m_nState = UNIT_MOVING;
 		m_pDestinationMove.x = (LONG)PosX();
@@ -263,4 +269,9 @@ void CUnit::Render()
 		CSGD_Direct3D::GetInstance()->DrawLine(int(PosX() - CGame::GetInstance()->GetCamera()->GetX()), int(PosY() - CGame::GetInstance()->GetCamera()->GetY()), int(m_pTarget->PosX() - CGame::GetInstance()->GetCamera()->GetX()), int(m_pTarget->PosY() - CGame::GetInstance()->GetCamera()->GetY()), 255, 255, 255);
 	}
 	//END
+}
+
+int CUnit::DistanceSquared(int nOtherPosX, int nOtherPosY)
+{
+	return (PosX() - nOtherPosX) * (PosX() - nOtherPosX) + (PosY() - nOtherPosY) * (PosY() - nOtherPosY);
 }
