@@ -30,10 +30,13 @@ void CMovementControl::Init()
 	m_nCursorImageID = CSGD_TextureManager::GetInstance()->LoadTexture("Resource\\Graphics\\gameCursor.png");
 	CSGD_DirectInput::GetInstance()->MouseSetPosX(100);
 	CSGD_DirectInput::GetInstance()->MouseSetPosY(100);
+	m_bCommand=false;
 }
 
 void CMovementControl::Input()
 {
+	if(CGamePlayState::GetInstance()->CurrentCommand()!="")
+		m_bCommand=true;
 
 	// Update Mouse Pos
 
@@ -153,7 +156,7 @@ void CMovementControl::Input()
 		}
 	}
 
-	if(m_DI->MouseButtonReleased(MOUSE_LEFT) && CGamePlayState::GetInstance()->CurrentCommand() == "")
+	if(m_DI->MouseButtonReleased(MOUSE_LEFT) && CGamePlayState::GetInstance()->CurrentCommand() == "" && !m_bCommand)
 	{
 		if (m_ptStart.x	== CSGD_DirectInput::GetInstance()->MouseGetPosX() && m_ptStart.y == CSGD_DirectInput::GetInstance()->MouseGetPosY())
 		{
@@ -188,7 +191,7 @@ void CMovementControl::Input()
 	}
 
 
-	if (CGamePlayState::GetInstance()->CurrentCommand()=="")
+	if (CGamePlayState::GetInstance()->CurrentCommand()=="" && !m_bCommand)
 	{
 		if(m_DI->MouseButtonDown(MOUSE_LEFT))
 		{
@@ -346,6 +349,9 @@ void CMovementControl::Input()
 			CGame::GetInstance()->GetCamera()->SetY( float(CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight()));
 		//m_esEventSystem->SendEvent("DownKeyPressed");
 	}
+
+	if(m_DI->MouseButtonUp(0) && CGamePlayState::GetInstance()->CurrentCommand()=="")
+		m_bCommand=false;
 }
 void CMovementControl::Shutdown()
 {
