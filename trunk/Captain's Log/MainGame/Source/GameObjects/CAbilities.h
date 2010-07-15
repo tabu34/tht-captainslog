@@ -126,8 +126,12 @@ public:
 class CAbility_RocketBarrage : public CLocationAbility
 {
 public:
+	CAbility_RocketBarrage()
+	{
+		Range(150);
+	}
+
 	void Activate();
-	void Deactivate();
 
 	void Update(float fElapsedTime);
 };
@@ -135,6 +139,11 @@ public:
 class CAbility_StunGrenade : public CLocationAbility
 {
 public:
+	CAbility_StunGrenade()
+	{
+		Range(150);
+	}
+
 	void Activate();
 
 	void Update(float fElapsedTime);

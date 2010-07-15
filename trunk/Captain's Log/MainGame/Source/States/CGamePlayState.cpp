@@ -20,6 +20,7 @@
 
 void ActivateAbilityOne();
 void ActivateAbilityTwo();
+void ActivateAbilityThree();
 
 CGamePlayState::CGamePlayState(void)
 {
@@ -575,7 +576,9 @@ void ActivateAbilityOne()
 	}
 	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Type() == 2)
 	{
-
+		CGamePlayState::GetInstance()->SetCommand("Ability2");
+		CMovementControl::GetInstance()->SetUnit((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]));
+		CMovementControl::GetInstance()->SetPosition(1);
 	}
 }
 
@@ -595,9 +598,11 @@ void ActivateAbilityTwo()
 		CMovementControl::GetInstance()->SetUnit((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]));
 		CMovementControl::GetInstance()->SetPosition(1);
 	}
-	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Type() == 2)
+	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Type() == 2)
 	{
-
+		CGamePlayState::GetInstance()->SetCommand("Ability2");
+		CMovementControl::GetInstance()->SetUnit((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]));
+		CMovementControl::GetInstance()->SetPosition(1);
 	}
 }
 

@@ -142,11 +142,14 @@ void CAbility_StunGrenade::Activate()
 	{
 		for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
 		{
-			if(((*CObjectManager::GetInstance()->GetObjectList())[i]->PosX() - Location().x) * ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosX() - Location().x) + ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosY() - Location().y) * ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosY() - Location().y) < (Range() * Range()))
+			if ((*CObjectManager::GetInstance()->GetObjectList())[i]->Type() != CUnit::OBJ_PLAYER)
 			{
-				((CUnit*)(*CObjectManager::GetInstance()->GetObjectList())[i])->Stunned(true);
-				((CUnit*)(*CObjectManager::GetInstance()->GetObjectList())[i])->StunnedEndTime(5);
-				((CUnit*)(*CObjectManager::GetInstance()->GetObjectList())[i])->StunnedCurrTime(0);
+				if(((*CObjectManager::GetInstance()->GetObjectList())[i]->PosX() - Location().x) * ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosX() - Location().x) + ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosY() - Location().y) * ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosY() - Location().y) < (Range() * Range()))
+				{
+					((CUnit*)(*CObjectManager::GetInstance()->GetObjectList())[i])->Stunned(true);
+					((CUnit*)(*CObjectManager::GetInstance()->GetObjectList())[i])->StunnedEndTime(5);
+					((CUnit*)(*CObjectManager::GetInstance()->GetObjectList())[i])->StunnedCurrTime(0);
+				}
 			}
 		}
 		TimePassed(0);
@@ -154,6 +157,29 @@ void CAbility_StunGrenade::Activate()
 }
 
 void CAbility_StunGrenade::Update(float fElapsedTime)
+{
+	TimePassed(TimePassed() + fElapsedTime);
+}
+
+void CAbility_RocketBarrage::Activate()
+{
+	if (TimePassed() >= Cooldown())
+	{
+		for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
+		{
+			if ((*CObjectManager::GetInstance()->GetObjectList())[i]->Type() != CUnit::OBJ_PLAYER)
+			{
+				if(((*CObjectManager::GetInstance()->GetObjectList())[i]->PosX() - Location().x) * ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosX() - Location().x) + ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosY() - Location().y) * ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosY() - Location().y) < (Range() * Range()))
+				{
+					((CUnit*)(*CObjectManager::GetInstance()->GetObjectList())[i])->CurHealth(((CUnit*)(*CObjectManager::GetInstance()->GetObjectList())[i])->CurHealth() - 50);
+				}
+			}
+		}
+		TimePassed(0);
+	}
+}
+
+void CAbility_RocketBarrage::Update(float fElapsedTime)
 {
 	TimePassed(TimePassed() + fElapsedTime);
 }

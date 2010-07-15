@@ -249,6 +249,12 @@ void CMovementControl::Input()
 				(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Activate();
 				CGamePlayState::GetInstance()->ClearCommand();
 			}
+			else if ((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]->Type() == 2)
+			{
+				((CLocationAbility*)((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]))->Location(MousePosX(), MousePosY());
+				(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Activate();
+				CGamePlayState::GetInstance()->ClearCommand();
+			}
 		}
 		else if (CGamePlayState::GetInstance()->CurrentCommand() == "Ability2")
 		{
@@ -287,7 +293,13 @@ void CMovementControl::Input()
 					return;
 				}
 
-				((CTargetAbility*)((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]))->Target((CUnit*)((*m_vObjectList)[nTarget])); // <-----THIS
+				((CTargetAbility*)((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]))->Target((CUnit*)((*m_vObjectList)[nTarget]));
+				(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Activate();
+				CGamePlayState::GetInstance()->ClearCommand();
+			}
+			else if ((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]->Type() == 2)
+			{
+				((CLocationAbility*)((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]))->Location(MousePosX(), MousePosY());
 				(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Activate();
 				CGamePlayState::GetInstance()->ClearCommand();
 			}
