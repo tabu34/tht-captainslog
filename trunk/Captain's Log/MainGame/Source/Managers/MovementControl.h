@@ -52,6 +52,11 @@ public:
 	int		MousePosX()	{ return CSGD_DirectInput::GetInstance()->MouseGetPosX(); }
 	int		MousePosY()	{ return CSGD_DirectInput::GetInstance()->MouseGetPosY(); }
 
+	CMarine* Marine() { return m_pMarine; }
+	CHeavy* Heavy() { return m_pHeavy; }
+	CScout* Scout() { return m_pScout; }
+	CMedic* Medic() { return m_pMedic; }
+
 	static CMovementControl* GetInstance();
 	vector<CBase*>* GetSelectedUnits(){return m_vSelected;}
 	void Init();

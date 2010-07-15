@@ -16,6 +16,7 @@
 #include "..\GameObjects\CScout.h"
 #include "..\GameObjects\CBasicEnemies.h"
 #include "..\GameObjects\CAbilities.h"
+#include "..\Managers\CUnitFactory.h"
 
 void ActivateAbilityOne();
 
@@ -105,11 +106,19 @@ void CGamePlayState::Enter(void)
 	CObjectManager::GetInstance()->AddObject(alliedScout);
 	CObjectManager::GetInstance()->AddObject(alliedMarine);
 
-	CMarine* badGuy = new CMarine();
+// 	CMarine* badGuy = new CMarine();
+// 	badGuy->Type(CBase::OBJ_ENEMY);
+// 	badGuy->PosX(400);
+// 	badGuy->PosY(200);
+// 	CObjectManager::GetInstance()->AddObject(badGuy);
+
+	CBasicEnemy* badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
 	badGuy->Type(CBase::OBJ_ENEMY);
 	badGuy->PosX(400);
 	badGuy->PosY(200);
+
 	CObjectManager::GetInstance()->AddObject(badGuy);
+	
 
 	// Test Speech
 	m_nCurCount = 0;

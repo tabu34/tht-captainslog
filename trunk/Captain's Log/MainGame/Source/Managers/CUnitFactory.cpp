@@ -17,6 +17,8 @@ CUnitFactory::CUnitFactory()
 		tempFactoryUnit->pUnit = new CBossEnemy();
 		m_vBossEnemies.push_back(tempFactoryUnit);
 	}
+
+	RegisterItems();
 }
 
 CUnitFactory::~CUnitFactory()
@@ -49,7 +51,7 @@ CUnitFactory* CUnitFactory::GetInstance()
 	return &instance;
 }
 
-CUnit* CUnitFactory::CreateItem(string id)
+CUnit* CUnitFactory::CreateUnit(string id)
 {
 	map<string, CUnit*>::iterator iter = m_UnitTemplates.find(id);
 
@@ -140,16 +142,17 @@ void CUnitFactory::RegisterItems()
 		CUnit* Footman = new CBasicEnemy();
 		Footman->Armor(5);
 		Footman->AttackDamage(2);
-		Footman->AttackRange(40);
+		Footman->AttackRange(50);
 		Footman->AttackSpeed(1);
 		Footman->Burned(false);
 		Footman->Cloaked(false);
-		Footman->MaxHealth(20);
+		Footman->MaxHealth(120);
 		Footman->CurHealth(Footman->MaxHealth());
 		Footman->Invulnerable(false);
 		Footman->MovementSpeed(80);
 		Footman->Ranged(false);
 		Footman->Selected(false);
+		Footman->SightRange(500);
 		Footman->Stunned(false);
 		Footman->CurDirection();
 		Footman->State(CUnit::UNIT_IDLE);
@@ -159,6 +162,34 @@ void CUnitFactory::RegisterItems()
 
 		m_UnitTemplates.insert(objDef);
 
+	}
+
+	// Fire Elemental
+	{
+		pair<string, CUnit*> objDef;
+
+		CUnit* Footman = new CBasicEnemy();
+		Footman->Armor(5);
+		Footman->AttackDamage(2);
+		Footman->AttackRange(50);
+		Footman->AttackSpeed(1);
+		Footman->Burned(false);
+		Footman->Cloaked(false);
+		Footman->MaxHealth(120);
+		Footman->CurHealth(Footman->MaxHealth());
+		Footman->Invulnerable(false);
+		Footman->MovementSpeed(80);
+		Footman->Ranged(false);
+		Footman->Selected(false);
+		Footman->SightRange(500);
+		Footman->Stunned(false);
+		Footman->CurDirection();
+		Footman->State(CUnit::UNIT_IDLE);
+
+		objDef.first = "Footman";
+		objDef.second = Footman;
+
+		m_UnitTemplates.insert(objDef);
 	}
 
 }

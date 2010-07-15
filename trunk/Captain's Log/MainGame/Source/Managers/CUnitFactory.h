@@ -32,7 +32,7 @@ public:
 
 public:
 	static CUnitFactory* GetInstance();
-	CUnit* CreateItem(string id);
+	CUnit* CreateUnit(string id);
 
 };
 #endif // CUnitFactory_h__

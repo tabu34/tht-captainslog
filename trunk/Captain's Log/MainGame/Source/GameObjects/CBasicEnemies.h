@@ -7,7 +7,8 @@ class CBasicEnemy : public CUnit
 {
 public:
 	CBasicEnemy();
-	//void Update(float fElapsedTime);
+	void Update(float fElapsedTime);
+	void Render();
 };
 
 //////////////////////////////////////////////////////////////////////////
