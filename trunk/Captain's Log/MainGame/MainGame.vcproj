@@ -266,6 +266,14 @@
 			Name="States"
 			>
 			<File
+				RelativePath=".\Source\States\CDebriefState.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\States\CDebriefState.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\States\CGamePlayState.cpp"
 				>
 			</File>
