@@ -18,7 +18,7 @@ CScout::CScout()
 	AttackTimer(0);
 	AttackRange(250);
 	Armor(15);
-
+	Cloaked(false);
 
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Ghost-Walk-N"));
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Ghost-Walk-NE"));

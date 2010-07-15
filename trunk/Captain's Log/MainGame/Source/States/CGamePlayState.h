@@ -149,6 +149,8 @@ public:
 	void Render(void);
 	void RenderHUD(void);
 	void Exit(void);
+
+	void LoadNextLevel();
 };
 
 #endif

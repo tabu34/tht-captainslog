@@ -13,7 +13,7 @@ CUnit::CUnit()
 	m_fAttackTimer = 0;
 	m_bStunned = false;
 	m_bInvulnerable = false;
-	m_bSelected=false;
+	m_bSelected = false;
 	Width(64);
 	Height(64);
 	MovementSpeed(100);
