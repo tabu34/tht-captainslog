@@ -27,5 +27,9 @@ public:
 	float Range() const { return m_fRange; }
 	////////////////////////////////////////////////
 
+	void Location(int x, int y) { m_pLocation.x = x; m_pLocation.y = y; }
+	void Line(bool line) { m_bLine = line; }
+	void Range(float range) { m_fRange = range; }
+
 };
 #endif // CLocationAbility_h__

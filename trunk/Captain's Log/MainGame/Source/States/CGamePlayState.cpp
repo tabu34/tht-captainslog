@@ -19,6 +19,7 @@
 #include "..\Managers\CUnitFactory.h"
 
 void ActivateAbilityOne();
+void ActivateAbilityTwo();
 
 CGamePlayState::CGamePlayState(void)
 {
@@ -54,9 +55,11 @@ void CGamePlayState::Enter(void)
 	m_vButtons.push_back(CHUDButton(32, 484, 128, 256, "SpeechSpeaker", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/15.png").c_str())));
 	m_vButtons.push_back(CHUDButton(37, 577, 128, 32, "SpeechSpeakerNameLine", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/16.png").c_str())));
 	m_vButtons.push_back(CHUDButton(41, 31, 256, 64, "ObjectivesSmallBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/17.png").c_str()), false));
-	m_vButtons.push_back(CHUDButton(0, 0, 256, 64, "ToolTipBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/20.png").c_str()), false));
 
 	m_vButtons.push_back(CHUDButton(1113, 752, 64, 64, "Ability 1", ActivateAbilityOne, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str())));
+	m_vButtons.push_back(CHUDButton(1177, 752, 64, 64, "Ability 2", ActivateAbilityTwo, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str())));
+
+	m_vButtons.push_back(CHUDButton(0, 0, 256, 64, "ToolTipBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/20.png").c_str()), false));
 
 	m_vButtons.push_back(CHUDButton(0, 0, 512, 32, "ObjectivesLargeBG-NoCheck", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/18.png").c_str()), false));
 	m_vButtons.push_back(CHUDButton(0, 0, 512, 32, "ObjectivesLargeBG-Check", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/19.png").c_str()), false));
@@ -142,6 +145,8 @@ void CGamePlayState::Exit(void)
 		CSGD_TextureManager::GetInstance()->UnloadTexture(m_vButtons[i].TextureID());
 	}
 
+	m_vButtons.clear();
+
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nMiniMap);
 	CAnimationManager::GetInstance()->Shutdown();
 	CObjectManager::GetInstance()->RemoveAllObjects();
@@ -167,7 +172,7 @@ bool CGamePlayState::Input(void)
 		}
 	} else if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("AttackOrder")].GetCollisionRect()), &mousePos)) {
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
-		m_szTooltipText = "     Attack Target";
+		m_szTooltipText = " Attack Target";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
@@ -176,7 +181,7 @@ bool CGamePlayState::Input(void)
 		}
 	} else if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("HoldOrder")].GetCollisionRect()), &mousePos)) {
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
-		m_szTooltipText = "   Hold";
+		m_szTooltipText = " Hold";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
@@ -194,9 +199,23 @@ bool CGamePlayState::Input(void)
 	}
 	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Ability 1")].GetCollisionRect()), &mousePos))
 	{
+		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
+		m_szTooltipText = " Ability 1";
+		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
 			m_vButtons[FindButton("Ability 1")].Activate();
+			return true;
+		}
+	}
+	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Ability 2")].GetCollisionRect()), &mousePos))
+	{
+		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
+		m_szTooltipText = " Ability 2";
+		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
+		{
+			m_vButtons[FindButton("Ability 2")].Activate();
 			return true;
 		}
 	}
@@ -477,6 +496,10 @@ void CGamePlayState::RenderLargeShadowText(char* _text, int _x, int _y)
 
 void ActivateAbilityOne()
 {
+	if ((*CMovementControl::GetInstance()->GetSelectedUnits()).size() == NULL)
+	{
+		return;
+	}
 	if((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Type() == 0)
 	{
 		(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Activate();
@@ -486,7 +509,32 @@ void ActivateAbilityOne()
 		CGamePlayState::GetInstance()->SetCommand("Ability1");
 		CMovementControl::GetInstance()->SetUnit((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]));
 		CMovementControl::GetInstance()->SetPosition(0);
-		(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Activate();
+	}
+	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Type() == 2)
+	{
+
+	}
+}
+
+void ActivateAbilityTwo()
+{
+	if ((*CMovementControl::GetInstance()->GetSelectedUnits()).size() == NULL)
+	{
+		return;
+	}
+	if((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Type() == 0)
+	{
+		(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Activate();
+	}
+	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Type() == 1)
+	{
+		CGamePlayState::GetInstance()->SetCommand("Ability2");
+		CMovementControl::GetInstance()->SetUnit((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]));
+		CMovementControl::GetInstance()->SetPosition(1);
+	}
+	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Type() == 2)
+	{
+
 	}
 }
 

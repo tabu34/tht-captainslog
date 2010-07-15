@@ -136,7 +136,6 @@ class CAbility_StunGrenade : public CLocationAbility
 {
 public:
 	void Activate();
-	void Deactivate();
 
 	void Update(float fElapsedTime);
 };
