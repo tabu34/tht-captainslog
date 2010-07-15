@@ -140,8 +140,8 @@ void CUnitFactory::RegisterItems()
 		pair<string, CUnit*> objDef;
 
 		CUnit* Footman = new CBasicEnemy();
-		Footman->Armor(5);
-		Footman->AttackDamage(2);
+		Footman->Armor(15);
+		Footman->AttackDamage(4);
 		Footman->AttackRange(50);
 		Footman->AttackSpeed(1);
 		Footman->Burned(false);
@@ -152,10 +152,18 @@ void CUnitFactory::RegisterItems()
 		Footman->MovementSpeed(80);
 		Footman->Ranged(false);
 		Footman->Selected(false);
-		Footman->SightRange(500);
+		Footman->SightRange(150);
 		Footman->Stunned(false);
 		Footman->CurDirection();
 		Footman->State(CUnit::UNIT_IDLE);
+
+		Footman->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Walk-N"));
+		Footman->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Walk-NE"));
+		Footman->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Walk-E"));
+		Footman->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Walk-SE"));
+		Footman->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Walk-S"));
+		Footman->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Idle"));
+		Footman->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Fire"));
 
 		objDef.first = "Footman";
 		objDef.second = Footman;
@@ -168,26 +176,34 @@ void CUnitFactory::RegisterItems()
 	{
 		pair<string, CUnit*> objDef;
 
-		CUnit* Footman = new CBasicEnemy();
-		Footman->Armor(5);
-		Footman->AttackDamage(2);
-		Footman->AttackRange(50);
-		Footman->AttackSpeed(1);
-		Footman->Burned(false);
-		Footman->Cloaked(false);
-		Footman->MaxHealth(120);
-		Footman->CurHealth(Footman->MaxHealth());
-		Footman->Invulnerable(false);
-		Footman->MovementSpeed(80);
-		Footman->Ranged(false);
-		Footman->Selected(false);
-		Footman->SightRange(500);
-		Footman->Stunned(false);
-		Footman->CurDirection();
-		Footman->State(CUnit::UNIT_IDLE);
+		CUnit* FireElemental = new CBasicEnemy();
+		FireElemental->Armor(25);
+		FireElemental->AttackDamage(10);
+		FireElemental->AttackRange(200);
+		FireElemental->AttackSpeed(2);
+		FireElemental->Burned(false);
+		FireElemental->Cloaked(false);
+		FireElemental->MaxHealth(200);
+		FireElemental->CurHealth(FireElemental->MaxHealth());
+		FireElemental->Invulnerable(false);
+		FireElemental->MovementSpeed(80);
+		FireElemental->Ranged(false);
+		FireElemental->Selected(false);
+		FireElemental->SightRange(300);
+		FireElemental->Stunned(false);
+		FireElemental->CurDirection();
+		FireElemental->State(CUnit::UNIT_IDLE);
 
-		objDef.first = "Footman";
-		objDef.second = Footman;
+		FireElemental->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Ghost-Walk-N"));
+		FireElemental->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Ghost-Walk-NE"));
+		FireElemental->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Ghost-Walk-E"));
+		FireElemental->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Ghost-Walk-SE"));
+		FireElemental->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Ghost-Walk-S"));
+		FireElemental->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Ghost-Idle"));
+		FireElemental->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Ghost-Fire"));
+
+		objDef.first = "Fire Elemental";
+		objDef.second = FireElemental;
 
 		m_UnitTemplates.insert(objDef);
 	}

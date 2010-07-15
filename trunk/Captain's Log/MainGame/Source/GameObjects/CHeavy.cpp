@@ -18,7 +18,7 @@ CHeavy::CHeavy()
 	AttackSpeed(2);
 	AttackDamage(50);
 	AttackTimer(0);
-	AttackRange(250);
+	AttackRange(100);
 	Armor(40);
 
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Firebat-Walk-N"));

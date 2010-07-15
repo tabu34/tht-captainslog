@@ -16,7 +16,7 @@ CMedic::CMedic()
 	AttackSpeed(2);
 	AttackDamage(15);
 	AttackTimer(0);
-	AttackRange(250);
+	AttackRange(125);
 	Armor(20);
 
 

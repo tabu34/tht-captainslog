@@ -113,14 +113,77 @@ void CGamePlayState::Enter(void)
 // 	badGuy->Type(CBase::OBJ_ENEMY);
 // 	badGuy->PosX(400);
 // 	badGuy->PosY(200);
-// 	CObjectManager::GetInstance()->AddObject(badGuy);
+	// 	CObjectManager::GetInstance()->AddObject(badGuy);
 
 	CBasicEnemy* badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
 	badGuy->Type(CBase::OBJ_ENEMY);
+	badGuy->PosX(1700);
+	badGuy->PosY(200);
+	CObjectManager::GetInstance()->AddObject(badGuy);
+
+	badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+	badGuy->Type(CBase::OBJ_ENEMY);
+	badGuy->PosX(1600);
+	badGuy->PosY(230);
+	CObjectManager::GetInstance()->AddObject(badGuy);
+
+
+	CBasicEnemy* FElemental = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Fire Elemental");
+	FElemental->Type(CBase::OBJ_ENEMY);
+	FElemental->PosX(1800);
+	FElemental->PosY(200);
+	CObjectManager::GetInstance()->AddObject(FElemental);
+
+	FElemental = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Fire Elemental");
+	FElemental->Type(CBase::OBJ_ENEMY);
+	FElemental->PosX(1800);
+	FElemental->PosY(260);
+	CObjectManager::GetInstance()->AddObject(FElemental);
+
+	FElemental = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Fire Elemental");
+	FElemental->Type(CBase::OBJ_ENEMY);
+	FElemental->PosX(1860);
+	FElemental->PosY(230);
+	CObjectManager::GetInstance()->AddObject(FElemental);
+
+	//////////////////////////////////////////////////////////////////////////
+
+	badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+	badGuy->Type(CBase::OBJ_ENEMY);
 	badGuy->PosX(400);
 	badGuy->PosY(200);
-
 	CObjectManager::GetInstance()->AddObject(badGuy);
+
+	badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+	badGuy->Type(CBase::OBJ_ENEMY);
+	badGuy->PosX(1600);
+	badGuy->PosY(900);
+	CObjectManager::GetInstance()->AddObject(badGuy);
+
+	badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+	badGuy->Type(CBase::OBJ_ENEMY);
+	badGuy->PosX(1700);
+	badGuy->PosY(930);
+	CObjectManager::GetInstance()->AddObject(badGuy);
+
+
+	FElemental = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Fire Elemental");
+	FElemental->Type(CBase::OBJ_ENEMY);
+	FElemental->PosX(1500);
+	FElemental->PosY(900);
+	CObjectManager::GetInstance()->AddObject(FElemental);
+
+	FElemental = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Fire Elemental");
+	FElemental->Type(CBase::OBJ_ENEMY);
+	FElemental->PosX(1500);
+	FElemental->PosY(960);
+	CObjectManager::GetInstance()->AddObject(FElemental);
+
+	FElemental = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Fire Elemental");
+	FElemental->Type(CBase::OBJ_ENEMY);
+	FElemental->PosX(1560);
+	FElemental->PosY(930);
+	CObjectManager::GetInstance()->AddObject(FElemental);
 	
 
 	// Test Speech

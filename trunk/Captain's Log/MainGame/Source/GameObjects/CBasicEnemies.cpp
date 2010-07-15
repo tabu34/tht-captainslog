@@ -10,13 +10,6 @@ CBasicEnemy::CBasicEnemy()
 {
 	SubType(ENEMY_BASIC);
 
-	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Walk-N"));
-	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Walk-NE"));
-	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Walk-E"));
-	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Walk-SE"));
-	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Walk-S"));
-	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Idle"));
-	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Fire"));
 }
 
 void CBasicEnemy::Update( float fElapsedTime )
@@ -24,6 +17,9 @@ void CBasicEnemy::Update( float fElapsedTime )
 	int closestDistance = INT_MAX;
 	int currentObjDistance;
 	int sightRangeSqrd = SightRange() * SightRange();
+	bool found = false;
+
+	Target(NULL);
 
 
 	currentObjDistance = DistanceSquared((int)CMovementControl::GetInstance()->Marine()->PosX(), (int)CMovementControl::GetInstance()->Marine()->PosY());
@@ -33,6 +29,7 @@ void CBasicEnemy::Update( float fElapsedTime )
 		{
 			closestDistance = currentObjDistance;
 			Target(CMovementControl::GetInstance()->Marine());
+			found = true;
 		}
 	}
 
@@ -43,6 +40,7 @@ void CBasicEnemy::Update( float fElapsedTime )
 		{
 			closestDistance = currentObjDistance;
 			Target(CMovementControl::GetInstance()->Medic());
+			found = true;
 		}
 	}
 
@@ -53,6 +51,7 @@ void CBasicEnemy::Update( float fElapsedTime )
 		{
 			closestDistance = currentObjDistance;
 			Target(CMovementControl::GetInstance()->Heavy());
+			found = true;
 		}
 	}
 
@@ -63,8 +62,11 @@ void CBasicEnemy::Update( float fElapsedTime )
 		{
 			closestDistance = currentObjDistance;
 			Target(CMovementControl::GetInstance()->Scout());
+			found = true;
 		}
 	}
+	if (!found)
+		State(UNIT_IDLE);
 
 	if (Target() != NULL && State() != UNIT_ATTACK && State() != UNIT_FIRE)
 	{

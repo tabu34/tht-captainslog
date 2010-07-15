@@ -17,5 +17,7 @@ public:
 	////////////////////////////////////////////////
 
 	void	Initialize();
+
+	void Update(float fElapsedTime);
 };
 #endif // CPlayerUnit_h__
