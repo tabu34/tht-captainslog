@@ -62,41 +62,70 @@ bool IntersectLine(tVector2D A1, tVector2D A2, tVector2D B1, tVector2D B2)
 #define MAX(x,y) (x > y ? x : y)
 bool InsideBlocker(POINT p)
 {
-	int counter=0;
-	float xInters;
-	Blocker::Point p1, p2;
+	int i, j;
+	bool oddNodes = false;
 
-	for(int i=0; i<CWorldManager::GetInstance()->GetNumBlockers(); i++)
+	for(int n=0; n<CWorldManager::GetInstance()->GetNumBlockers(); n++)
 	{
-		counter=0;
-		p1 = CWorldManager::GetInstance()->GetBlockers()[i].m_Points[0];
-
-		for(int j=1; j<=CWorldManager::GetInstance()->GetBlockers()[i].m_nNumPoints; j++)
+		j=CWorldManager::GetInstance()->GetBlockers()[n].m_nNumPoints-1;
+		for(i=0; i<CWorldManager::GetInstance()->GetBlockers()[n].m_nNumPoints; i++)
 		{
-			p2 = CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j%CWorldManager::GetInstance()->GetBlockers()[i].m_nNumPoints];
-			if(p.y > MIN(p1.y, p2.y))
+			if((float)CWorldManager::GetInstance()->GetBlockers()[n].m_Points[i].y<(float)p.y && 
+				(float)CWorldManager::GetInstance()->GetBlockers()[n].m_Points[j].y>=(float)p.y ||
+				(float)CWorldManager::GetInstance()->GetBlockers()[n].m_Points[j].y<(float)p.y &&
+				(float)CWorldManager::GetInstance()->GetBlockers()[n].m_Points[i].y>=(float)p.y)
 			{
-				if(p.y <= MAX(p1.y, p2.y))
+				if((float)CWorldManager::GetInstance()->GetBlockers()[n].m_Points[i].x + 
+					((float)p.y - (float)CWorldManager::GetInstance()->GetBlockers()[n].m_Points[i].y)/ 
+					((float)CWorldManager::GetInstance()->GetBlockers()[n].m_Points[j].y -
+					(float)CWorldManager::GetInstance()->GetBlockers()[n].m_Points[i].y)*
+					((float)CWorldManager::GetInstance()->GetBlockers()[n].m_Points[j].x - 
+					(float)CWorldManager::GetInstance()->GetBlockers()[n].m_Points[i].x)<(float)p.x)
 				{
-					if(p.x <= MAX(p1.x, p2.x))
-					{
-						if(p1.y!=p2.y)
-						{
-							xInters = float((p.y-p1.y)*(p2.x-p1.x)/(p2.y-p1.y)+p1.x);
-							if(p1.x == p2.x || p.x<=xInters)
-								counter++;
-						}
-					}
+					oddNodes=!oddNodes;
 				}
 			}
-			p1=p2;
+			j=i;
 		}
-
-		if(counter!=0 && counter%2!=0)
+		if(oddNodes==true)
 			return true;
-
 	}
 	return false;
+// 	int counter=0;
+// 	float xInters;
+// 	Blocker::Point p1, p2;
+// 
+// 	for(int i=0; i<CWorldManager::GetInstance()->GetNumBlockers(); i++)
+// 	{
+// 		counter=0;
+// 		p1 = CWorldManager::GetInstance()->GetBlockers()[i].m_Points[0];
+// 
+// 		for(int j=1; j<=CWorldManager::GetInstance()->GetBlockers()[i].m_nNumPoints; j++)
+// 		{
+// 			p2 = CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j%CWorldManager::GetInstance()->GetBlockers()[i].m_nNumPoints];
+// 			if(p.y > MIN(p1.y, p2.y))
+// 			{
+// 				if(p.y <= MAX(p1.y, p2.y))
+// 				{
+// 					if(p.x <= MAX(p1.x, p2.x))
+// 					{
+// 						if(p1.y!=p2.y)
+// 						{
+// 							xInters = float((p.y-p1.y)*(p2.x-p1.x)/(p2.y-p1.y)+p1.x);
+// 							if(p1.x == p2.x || p.x<=xInters)
+// 								counter++;
+// 						}
+// 					}
+// 				}
+// 			}
+// 			p1=p2;
+// 		}
+// 
+// 		if(counter!=0 && counter%2!=0)
+// 			return true;
+// 
+// 	}
+// 	return false;
 }
 
 bool CPathManager::IsPointInside(POINT p)
