@@ -18,7 +18,7 @@ CMarine::CMarine()
 	AttackSpeed(1);
 	AttackDamage(20);
 	AttackTimer(0);
-	AttackRange(250);
+	AttackRange(175);
 	Armor(25);
 	
 

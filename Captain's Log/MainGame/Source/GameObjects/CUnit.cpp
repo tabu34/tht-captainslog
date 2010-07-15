@@ -292,5 +292,5 @@ void CUnit::Render()
 
 int CUnit::DistanceSquared(int nOtherPosX, int nOtherPosY)
 {
-	return (PosX() - nOtherPosX) * (PosX() - nOtherPosX) + (PosY() - nOtherPosY) * (PosY() - nOtherPosY);
+	return int((PosX() - nOtherPosX) * (PosX() - nOtherPosX) + (PosY() - nOtherPosY) * (PosY() - nOtherPosY));
 }
