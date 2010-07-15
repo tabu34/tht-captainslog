@@ -12,6 +12,15 @@ class CLocationAbility : public CAbility
 
 public:
 
+	CLocationAbility()
+	{
+		Type(2);
+		m_pLocation.x = 0;
+		m_pLocation.y = 0;
+		m_bLine = false;
+		m_fRange = 0.0f;
+	}
+
 	// Accessors ///////////////////////////////////
 	POINT Location() const { return m_pLocation; }
 	bool Line() const { return m_bLine; }

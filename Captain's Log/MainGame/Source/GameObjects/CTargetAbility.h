@@ -10,6 +10,11 @@ class CTargetAbility : public CAbility
 	CUnit*	m_pTarget;
 
 public:
+	CTargetAbility()
+	{
+		Type(1);
+		m_pTarget = NULL;
+	}
 
 	// Accessors ///////////////////////////////////
 	CUnit* Target() const { return m_pTarget; }

@@ -227,28 +227,6 @@ bool CGamePlayState::Input(void)
 		CObjectManager::GetInstance()->AddObject(badGuy);
 	}
 
-	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_M))
-	{
-		for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
-		{
-			if ((*CObjectManager::GetInstance()->GetObjectList())[i]->Type() == CUnit::OBJ_PLAYER)
-			{
-				((CUnit*)((*CObjectManager::GetInstance()->GetObjectList())[i]))->CurHealth(((CUnit*)((*CObjectManager::GetInstance()->GetObjectList())[i]))->CurHealth() + 2);
-			}
-		}
-	}
-
-	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_K))
-	{
-		for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
-		{
-			if ((*CObjectManager::GetInstance()->GetObjectList())[i]->Type() == CUnit::OBJ_PLAYER)
-			{
-				((CUnit*)((*CObjectManager::GetInstance()->GetObjectList())[i]))->CurHealth(((CUnit*)((*CObjectManager::GetInstance()->GetObjectList())[i]))->CurHealth() - 2);
-			}
-		}
-	}
-
 	CMovementControl::GetInstance()->Input();
 
 	return true;
@@ -432,7 +410,17 @@ void CGamePlayState::RenderLargeShadowText(char* _text, int _x, int _y)
 
 void ActivateAbilityOne()
 {
-	(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Activate();
+	if((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Type() == 0)
+	{
+		(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Activate();
+	}
+	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Type() == 1)
+	{
+		CGamePlayState::GetInstance()->SetCommand("Ability1");
+		CMovementControl::GetInstance()->SetUnit((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]));
+		CMovementControl::GetInstance()->SetPosition(0);
+		(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Activate();
+	}
 }
 
 void CGamePlayState::MessageProc(CBaseMessage* pMSG)

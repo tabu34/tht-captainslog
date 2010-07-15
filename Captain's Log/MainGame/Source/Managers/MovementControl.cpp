@@ -9,6 +9,7 @@
 #include "..\Managers\CWorldManager.h"
 #include "..\GameObjects\CUnit.h"
 #include "..\States\CGamePlayState.h"
+#include "..\GameObjects\CAbilities.h"
 
 CMovementControl* CMovementControl::GetInstance()
 {
@@ -127,6 +128,18 @@ void CMovementControl::Input()
 				}
 			}
 			return;
+		}
+		else if (CGamePlayState::GetInstance()->CurrentCommand() == "Ability1")
+		{
+			if((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]->Type() == 0)
+			{
+				(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Activate();
+			}
+			else if ((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]->Type() == 1)
+			{
+				((CTargetAbility*)((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]))->Target(m_pUnitAbilitySelection);
+				(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Activate();
+			}
 		}
 	}
 
