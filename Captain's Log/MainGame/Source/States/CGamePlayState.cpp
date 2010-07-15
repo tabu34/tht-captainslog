@@ -193,7 +193,8 @@ bool CGamePlayState::Input(void)
 	}
 	else {
 		m_szTooltipText = "";
-		m_vButtonInstances[FindButton("ToolTipBG")].Visible(false);
+		if(!m_bEnteringCheat)
+			m_vButtonInstances[FindButton("ToolTipBG")].Visible(false);
 	}
 
 
@@ -416,7 +417,13 @@ void CGamePlayState::RenderHUD(void)
 	if(m_bNoCooldown)
 		RenderSmallShadowText("Cooldowns Disabled", 10, 20);
 	if(m_bEnteringCheat)
-		RenderLargeShadowText("Enter A Cheat...", 10, 35);
+	{
+		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		m_vButtonInstances[FindButton("ToolTipBG")].Point(0, 35);
+		m_ftTextLargeShadow.RenderText("Enter a Cheat", 10, 37);	
+	}
+	else
+		m_vButtonInstances[FindButton("ToolTipBG")].Visible(false);
 
 	// Render ToolTip Text
 	if(m_szTooltipText != "")
