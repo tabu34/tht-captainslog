@@ -553,11 +553,11 @@
 					>
 				</File>
 				<File
-					RelativePath=".\CItems.cpp"
+					RelativePath=".\Source\GameObjects\CItems.cpp"
 					>
 				</File>
 				<File
-					RelativePath=".\CItems.h"
+					RelativePath=".\Source\GameObjects\CItems.h"
 					>
 				</File>
 				<File
