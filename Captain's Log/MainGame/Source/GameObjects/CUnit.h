@@ -29,6 +29,7 @@ class CUnit : public CBase
 	int					m_nMaxHealth;
 	int					m_nPortraitID;
 	int					m_nCurDirection;
+	int					m_nSubType;
 	vector<CAbility*>	m_vAbilities;
 	vector<int>			m_vAnimations;
 
@@ -51,6 +52,7 @@ class CUnit : public CBase
 
 public:
 		enum { UNIT_IDLE, UNIT_MOVING, UNIT_MOVING_ATTACK, UNIT_ATTACK, UNIT_FIRE };
+		enum { ENEMY_NULL, ENEMY_BASIC, ENEMY_BOSS, ENEMY_MAX };
 	CUnit();
 	virtual void Update(float fElapsedTime);
 	virtual void Render();
@@ -83,6 +85,7 @@ public:
 	int PortraitID() const { return m_nPortraitID; }
 	int CurDirection() const { return m_nCurDirection; }
 	int State() const { return m_nState; }
+	int SubType() const { return m_nSubType; }
 	POINT Destination() const { return m_pDestinationMove; }
 	CUnit* Target() const { return m_pTarget; }
 	vector<CAbility*>* Abilities() { return &m_vAbilities; }
@@ -113,6 +116,7 @@ public:
 	void StunnedEndTime(float val) { m_fStunnedEndTime = val; }
 	void CurDirection(int val) { m_nCurDirection = val; }
 	void State(int val) { m_nState = val; }
+	void SubType(int val) { m_nSubType = val; }
 	void Target(CUnit* val) { m_pTarget = val; }
 	void Destination (LONG x, LONG y) { m_pDestinationMove.x = x; m_pDestinationMove.y = y; }
 	////////////////////////////////////////////////

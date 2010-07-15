@@ -6,6 +6,7 @@
 class CBasicEnemy : public CUnit
 {
 public:
+	CBasicEnemy();
 	//void Update(float fElapsedTime);
 };
 
