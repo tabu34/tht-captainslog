@@ -282,6 +282,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Source\States\CLoadState.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\States\CLoadState.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\States\CMainMenuState.cpp"
 				>
 			</File>
@@ -303,6 +311,14 @@
 			</File>
 			<File
 				RelativePath=".\Source\States\CPauseMenuState.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\States\CSaveState.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\States\CSaveState.h"
 				>
 			</File>
 			<File

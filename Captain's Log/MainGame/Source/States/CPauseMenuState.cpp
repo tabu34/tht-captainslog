@@ -3,6 +3,8 @@
 #include "COptionsMenuState.h"
 #include "CMainMenuState.h"
 #include "CHelpState.h"
+#include "CLoadState.h"
+#include "CSaveState.h"
 #include "../SGD Wrappers/CSGD_TextureManager.h"
 #include "../SGD Wrappers/CSGD_DirectInput.h"
 #include "../CGame.h"
@@ -67,8 +69,10 @@ bool CPauseMenuState::Input(void)
 			CGame::GetInstance()->PopState();
 			break;
 		case 1: //save
+			CGame::GetInstance()->PushState(CSaveState::GetInstance());
 			break;
 		case 2: //load
+			CGame::GetInstance()->PushState(CLoadState::GetInstance());
 			break;
 		case 3: //options
 			CGame::GetInstance()->PushState(COptionsMenuState::GetInstance());
