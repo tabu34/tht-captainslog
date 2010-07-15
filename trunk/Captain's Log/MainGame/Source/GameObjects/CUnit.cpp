@@ -2,6 +2,7 @@
 #include "CUnit.h"
 #include "../Managers/CMessageSystem.h"
 #include "../SGD Wrappers/CSGD_Direct3D.h"
+#include "../States/CGamePlayState.h"
 #include "CAbilities.h"
 #include <cmath>
 
@@ -238,7 +239,7 @@ void CUnit::Attack(float fElapsedTime)
 		m_fAttackTimer += fElapsedTime;
 		if (m_fAttackTimer >= m_fAttackSpeed)
 		{
-			if (m_pTarget->Invulnerable() == false)
+			if (m_pTarget->Invulnerable() == false && !CGamePlayState::GetInstance()->GodMode())
 			{
 				m_pTarget->CurHealth(m_pTarget->CurHealth() - (int)(m_fAttackDamage - (m_fAttackDamage * m_pTarget->Armor() * 0.01f)));
 			}
