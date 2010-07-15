@@ -10,6 +10,7 @@
 #include "CGamePlayState.h"
 #include "COptionsMenuState.h"
 #include "CHelpState.h"
+#include "CLoadState.h"
 #include "../Managers/MovementControl.h"
 #include "..\CGame.h"
 
@@ -59,6 +60,11 @@ bool CMainMenuState::Input(void)
 	{
 		if(m_sCurrentChoice == 0)
 			CGame::GetInstance()->ChangeState( CGamePlayState::GetInstance() );
+		if(m_sCurrentChoice == 1)
+		{
+			//load game
+			CGame::GetInstance()->PushState(CLoadState::GetInstance());
+		}
 		if(m_sCurrentChoice == 2)
 			CGame::GetInstance()->PushState(COptionsMenuState::GetInstance());
 		if(m_sCurrentChoice == 3)
