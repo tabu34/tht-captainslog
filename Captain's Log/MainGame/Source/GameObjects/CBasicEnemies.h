@@ -3,6 +3,14 @@
 
 #include "CUnit.h"
 
+class CBasicEnemy : public CUnit
+{
+public:
+	//void Update(float fElapsedTime);
+};
+
+//////////////////////////////////////////////////////////////////////////
+
 class CFootman : public CUnit
 {
 public:

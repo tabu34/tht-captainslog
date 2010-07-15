@@ -3,7 +3,7 @@
 
 CActive::CActive()
 {
-	Type(ITEMTYPE_ACTIVE);
+	ItemType(ITEMTYPE_ACTIVE);
 }
 
 void CActive::AddEffect()

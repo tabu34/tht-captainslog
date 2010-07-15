@@ -3,7 +3,7 @@
 
 CPassive::CPassive()
 {
-	Type(ITEMTYPE_PASSIVE);
+	ItemType(ITEMTYPE_PASSIVE);
 }
 
 void CPassive::AddEffect()

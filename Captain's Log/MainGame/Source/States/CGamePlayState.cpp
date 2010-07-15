@@ -196,11 +196,11 @@ bool CGamePlayState::Input(void)
 		
 		CGame::GetInstance()->GetCamera()->SetX(CWorldManager::GetInstance()->WorldWidth()*fPercent);
 		if(CGame::GetInstance()->GetCamera()->GetX() > CWorldManager::GetInstance()->WorldWidth() - CGame::GetInstance()->GetScreenWidth() )
-			CGame::GetInstance()->GetCamera()->SetX( CWorldManager::GetInstance()->WorldWidth() - CGame::GetInstance()->GetScreenWidth() );
+			CGame::GetInstance()->GetCamera()->SetX( float(CWorldManager::GetInstance()->WorldWidth() - CGame::GetInstance()->GetScreenWidth()) );
 		fPercent = (float)(mousePos.top-690)/206.0f;
 		CGame::GetInstance()->GetCamera()->SetY(CWorldManager::GetInstance()->WorldHeight()*fPercent);
 		if(CGame::GetInstance()->GetCamera()->GetY() > CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight())
-			CGame::GetInstance()->GetCamera()->SetY( CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight());
+			CGame::GetInstance()->GetCamera()->SetY( float(CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight()));
 		return true;
 	}
 
@@ -304,8 +304,8 @@ void CGamePlayState::RenderMiniMap()
 	}
 
 	//screen rect
-	tempX = CGame::GetInstance()->GetCamera()->GetX();
-	tempY = CGame::GetInstance()->GetCamera()->GetY();
+	tempX = (int)CGame::GetInstance()->GetCamera()->GetX();
+	tempY = (int)CGame::GetInstance()->GetCamera()->GetY();
 	rObj.left = OffsetX + (int)(((float)tempX/(float)maxX)*(float)CX);
 	rObj.top = OffsetY + (int)(((float)tempY/(float)maxY)*(float)CY);
 	float fPercent;
