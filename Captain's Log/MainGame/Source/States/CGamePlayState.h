@@ -85,6 +85,7 @@ class CGamePlayState : public IGameState
 	int					m_nLevel;
 	int					m_nScore;
 	int					m_nBG;
+	int					m_nMiniMap;
 
 	// Interface Elements
 	CBMPFont			m_ftTextSmall;
@@ -123,6 +124,7 @@ public:
 	void RenderLargeShadowText(char* _text, int _x, int _y);
 	string CurrentCommand(){return m_szSelectedCommand;}
 	void ClearCommand(){m_szSelectedCommand="";}
+	void RenderMiniMap();
 
 	void Enter(void);
 	bool Input(void);
