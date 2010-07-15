@@ -100,6 +100,72 @@ void CMovementControl::Input()
 		return;
 	}
 
+	if(CGamePlayState::GetInstance()->CurrentCommand()=="cooldown_cheat")
+	{
+		//select all PLAYER units
+		for(size_t i=0; i<m_vObjectList->size(); i++)
+		{
+			if(((CUnit*)(*m_vObjectList)[i])->Type()==CBase::OBJ_PLAYER)
+			{
+				if(!((CUnit*)(*m_vObjectList)[i])->Selected())
+				{
+					((CUnit*)(*m_vObjectList)[i])->Selected(true);
+					(*m_vSelected).push_back((*m_vObjectList)[i]);
+				}
+			}
+			else if(((CUnit*)(*m_vObjectList)[i])->Selected())
+			{
+				((CUnit*)(*m_vObjectList)[i])->Selected(false);
+				CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+			}
+		}
+
+		for(size_t i=0; i<m_vSelected->size(); i++)
+		{
+			CUnit* pGuy = ((CUnit*)(*m_vSelected)[i]);
+			for(size_t j=0; j<pGuy->Abilities()->size(); j++)
+			{
+				((CAbility*)(*pGuy->Abilities())[j])->Cooldown(0.0f);
+			}
+		}
+		CGamePlayState::GetInstance()->ClearCommand();
+		return;
+	}
+
+	if(CGamePlayState::GetInstance()->CurrentCommand()=="stats_cheat")
+	{
+		//select all PLAYER units
+		for(size_t i=0; i<m_vObjectList->size(); i++)
+		{
+			if(((CUnit*)(*m_vObjectList)[i])->Type()==CBase::OBJ_PLAYER)
+			{
+				if(!((CUnit*)(*m_vObjectList)[i])->Selected())
+				{
+					((CUnit*)(*m_vObjectList)[i])->Selected(true);
+					(*m_vSelected).push_back((*m_vObjectList)[i]);
+				}
+			}
+			else if(((CUnit*)(*m_vObjectList)[i])->Selected())
+			{
+				((CUnit*)(*m_vObjectList)[i])->Selected(false);
+				CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+			}
+		}
+
+		for(size_t i=0; i<m_vSelected->size(); i++)
+		{
+			CUnit* pGuy = ((CUnit*)(*m_vSelected)[i]);
+			pGuy->Armor(pGuy->Armor()+10);
+			pGuy->AttackDamage(pGuy->AttackDamage()+10.0f);
+			pGuy->AttackRange(pGuy->AttackRange()+10);
+			pGuy->AttackSpeed(pGuy->AttackSpeed()*0.9f);
+			pGuy->MaxHealth(pGuy->MaxHealth()+10);
+			pGuy->CurHealth(pGuy->MaxHealth());
+		}
+		CGamePlayState::GetInstance()->ClearCommand();
+		return;
+	}
+
 	if(m_DI->MouseButtonPressed(MOUSE_LEFT) && CGamePlayState::GetInstance()->CurrentCommand() != "")
 	{
 		if(CGamePlayState::GetInstance()->CurrentCommand()=="MoveOrder")

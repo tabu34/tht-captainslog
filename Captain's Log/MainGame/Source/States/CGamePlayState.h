@@ -105,6 +105,11 @@ class CGamePlayState : public IGameState
 	// Communication between HUD and movement control
 	string				m_szSelectedCommand;
 
+	//cheats
+	string				m_szCheatBuffer;
+	bool				m_bGodMode;
+	bool				m_bNoCooldown;
+
 	// Particles
 	CParticleEmitter	m_peEmitter;
 	int					m_nParticleImageID;
@@ -127,6 +132,10 @@ public:
 	void ClearCommand(){m_szSelectedCommand="";}
 	void SetCommand(string val) { m_szSelectedCommand = val; }
 	void RenderMiniMap();
+
+	//cheats
+	bool GodMode(){return m_bGodMode;}
+	bool NoCooldown(){return m_bNoCooldown;}
 
 	void Enter(void);
 	bool Input(void);

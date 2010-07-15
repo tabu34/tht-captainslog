@@ -118,6 +118,7 @@ void CGamePlayState::Enter(void)
 	// Camera
 	CGame::GetInstance()->GetCamera()->SetX( 0.0f );
 	CGame::GetInstance()->GetCamera()->SetY( 0.0f );
+	m_szCheatBuffer="                             ";
 
 }
 
@@ -207,6 +208,35 @@ bool CGamePlayState::Input(void)
 		if(CGame::GetInstance()->GetCamera()->GetY() > CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight())
 			CGame::GetInstance()->GetCamera()->SetY( float(CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight()));
 		return true;
+	}
+
+	//cheats here
+	if(CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx()!='\0')
+	{
+		m_szCheatBuffer+=CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx();
+		m_szCheatBuffer = (m_szCheatBuffer.c_str()+1);
+
+		if(strstr(m_szCheatBuffer.c_str(), "dog"))
+		{
+			m_szCheatBuffer="                             ";
+			m_bGodMode=!m_bGodMode;
+		}
+		else if(strstr(m_szCheatBuffer.c_str(), "gogo"))
+		{
+			m_szCheatBuffer="                             ";
+			m_bNoCooldown=true;
+			m_szSelectedCommand="cooldown_cheat";
+		}
+		else if(strstr(m_szCheatBuffer.c_str(), "stats"))
+		{
+			m_szCheatBuffer="                             ";
+			m_szSelectedCommand="stats_cheat";
+		}
+		else if(strstr(m_szCheatBuffer.c_str(), "bored"))
+		{
+			m_szCheatBuffer="                             ";
+			//TODO: skip level
+		}
 	}
 
 
@@ -363,6 +393,12 @@ void CGamePlayState::RenderHUD(void)
 	}
 
 	RenderMiniMap();
+
+	//cheat text
+	if(m_bGodMode)
+		RenderSmallShadowText("God Mode Enabled", 10, 10);
+	if(m_bNoCooldown)
+		RenderSmallShadowText("Cooldowns Disabled", 10, 20);
 
 	// Render ToolTip Text
 	if(m_szTooltipText != "")
