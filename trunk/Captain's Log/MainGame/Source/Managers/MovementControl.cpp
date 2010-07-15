@@ -87,6 +87,16 @@ void CMovementControl::Input()
 		//m_esEventSystem->SendEvent("LeftMouseButtonPressed");
 	}
 
+	if(CGamePlayState::GetInstance()->CurrentCommand()=="HoldOrder")
+	{
+		for(size_t i=0; i<m_vSelected->size(); i++)
+		{
+			(((CUnit*)(*m_vSelected)[i])->State(CUnit::UNIT_IDLE));
+		}
+		CGamePlayState::GetInstance()->ClearCommand();
+		return;
+	}
+
 	if(m_DI->MouseButtonPressed(MOUSE_LEFT) && CGamePlayState::GetInstance()->CurrentCommand() != "")
 	{
 		if(CGamePlayState::GetInstance()->CurrentCommand()=="MoveOrder")

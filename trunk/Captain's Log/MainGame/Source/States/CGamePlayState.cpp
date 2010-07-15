@@ -48,13 +48,11 @@ void CGamePlayState::Enter(void)
 	m_vButtons.push_back(CHUDButton(1177, 688, 64, 64, "AttackOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/8.png").c_str())));
 	m_vButtons.push_back(CHUDButton(1243, 688, 64, 64, "HoldOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/9.png").c_str())));
 	m_vButtons.push_back(CHUDButton(1357, 819, 64, 64, "CancelOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str())));
-	m_vButtons.push_back(CHUDButton(515, 0, 128, 64, "TipsHelpButton", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/11.png").c_str())));
-	m_vButtons.push_back(CHUDButton(797, 0, 128, 32, "TacticalMapButton", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/12.png").c_str())));
 	m_vButtons.push_back(CHUDButton(641, 0, 256, 64, "OverMenuButton", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/13.png").c_str())));
 	m_vButtons.push_back(CHUDButton(28, 480, 512, 256, "SpeechBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/14.png").c_str())));
 	m_vButtons.push_back(CHUDButton(32, 484, 128, 256, "SpeechSpeaker", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/15.png").c_str())));
 	m_vButtons.push_back(CHUDButton(37, 577, 128, 32, "SpeechSpeakerNameLine", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/16.png").c_str())));
-	m_vButtons.push_back(CHUDButton(41, 31, 256, 64, "ObjectivesSmallBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/17.png").c_str())));
+	m_vButtons.push_back(CHUDButton(41, 31, 256, 64, "ObjectivesSmallBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/17.png").c_str()), false));
 	m_vButtons.push_back(CHUDButton(0, 0, 256, 64, "ToolTipBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/20.png").c_str()), false));
 
 	m_vButtons.push_back(CHUDButton(1113, 752, 64, 64, "Ability 1", ActivateAbilityOne, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str())));
@@ -170,7 +168,6 @@ bool CGamePlayState::Input(void)
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
 			m_szSelectedCommand = "HoldOrder";
-			return true;
 		}
 	} else if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("CancelOrder")].GetCollisionRect()), &mousePos)) {
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
@@ -178,7 +175,7 @@ bool CGamePlayState::Input(void)
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
-			m_szSelectedCommand = "CancelOrder";
+			m_szSelectedCommand = "";
 			return true;
 		}
 	}
@@ -321,7 +318,7 @@ void CGamePlayState::RenderHUD(void)
 	RenderLargeShadowText("Unit Name", 284, 852);
 
 	// Render Objectives
-	RenderLargeShadowText("Objectives", 54, 35);
+	//RenderLargeShadowText("Objectives", 54, 35);
 
 	// Render Speech
 	RenderLargeShadowText((char *)(m_szSpeechText.substr(0, (unsigned int)m_nCurCount)).c_str(), 135, 494);
