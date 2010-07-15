@@ -30,6 +30,7 @@ public:
 	void TimePassed(float val) { m_fTimePassed = val; }
 	void Cooldown(float val) { m_fCooldown = val; }
 	void Duration(float val) { m_fDuration = val; }
+	void Type(int val) { m_nType = val; }
 	////////////////////////////////////////////////
 
 };

@@ -125,6 +125,7 @@ public:
 	void RenderLargeShadowText(char* _text, int _x, int _y);
 	string CurrentCommand(){return m_szSelectedCommand;}
 	void ClearCommand(){m_szSelectedCommand="";}
+	void SetCommand(string val) { m_szSelectedCommand = val; }
 	void RenderMiniMap();
 
 	void Enter(void);

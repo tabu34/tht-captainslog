@@ -8,6 +8,7 @@ class CMarine;
 class CMedic;
 class CHeavy;
 class CScout;
+class CUnit;
 #include <vector>
 using namespace std;
 
@@ -35,6 +36,12 @@ class CMovementControl
 	CScout*				m_pScout;
 	CMedic*				m_pMedic;
 
+	//	reference to the unit that you are selecting an ability for
+	CUnit*				m_pUnitAbilitySelection;
+
+	//	ID of the ability in the unit's vector of abilities
+	int					m_nUnitAbilityPosition;
+
 	CMovementControl(void) {};
 	~CMovementControl(void) {};
 	CMovementControl(CMovementControl&) {};
@@ -53,6 +60,9 @@ public:
 	void Shutdown();
 	void UpdateCamera(float fElapsedTime);
 	void SetPlayerUnits(CMarine* pMarine, CHeavy* pHeavy, CScout* pScout, CMedic* pMedic) { m_pMarine = pMarine; m_pHeavy=pHeavy; m_pScout=pScout; m_pMedic=pMedic;}
+
+	void SetUnit(CUnit* val) { m_pUnitAbilitySelection = val; }
+	void SetPosition(int val) { m_nUnitAbilityPosition = val; }
 };
 
 #endif

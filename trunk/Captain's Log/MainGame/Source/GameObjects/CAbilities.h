@@ -44,6 +44,7 @@ class CAbility_Cloak : public CTargetAbility
 public:
 	CAbility_Cloak(CUnit* tar)
 	{
+		Type(0);
 		Target(tar);
 		IsActive(false);
 	}
@@ -71,6 +72,7 @@ class CAbility_Overdrive : public CTargetAbility
 public:
 	CAbility_Overdrive(CUnit* tar)
 	{
+		Type(0);
 		Target(tar);
 		TimePassed(60);
 		Cooldown(60);
@@ -89,6 +91,7 @@ class CAbility_ArmorLockdown : public CTargetAbility
 public:
 	CAbility_ArmorLockdown(CUnit* tar)
 	{
+		Type(0);
 		Target(tar);
 		TimePassed(60);
 		Cooldown(60);
