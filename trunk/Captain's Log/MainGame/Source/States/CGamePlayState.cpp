@@ -15,6 +15,9 @@
 #include "..\GameObjects\CMedic.h"
 #include "..\GameObjects\CScout.h"
 #include "..\GameObjects\CBasicEnemies.h"
+#include "..\GameObjects\CAbilities.h"
+
+void ActivateAbilityOne();
 
 CGamePlayState::CGamePlayState(void)
 {
@@ -54,7 +57,7 @@ void CGamePlayState::Enter(void)
 	m_vButtons.push_back(CHUDButton(41, 31, 256, 64, "ObjectivesSmallBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/17.png").c_str())));
 	m_vButtons.push_back(CHUDButton(0, 0, 256, 64, "ToolTipBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/20.png").c_str()), false));
 
-	m_vButtons.push_back(CHUDButton(1113, 752, 64, 64, "Ability 1", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str())));
+	m_vButtons.push_back(CHUDButton(1113, 752, 64, 64, "Ability 1", ActivateAbilityOne, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str())));
 
 	m_vButtons.push_back(CHUDButton(0, 0, 512, 32, "ObjectivesLargeBG-NoCheck", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/18.png").c_str()), false));
 	m_vButtons.push_back(CHUDButton(0, 0, 512, 32, "ObjectivesLargeBG-Check", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/19.png").c_str()), false));
@@ -118,14 +121,10 @@ void CGamePlayState::Enter(void)
 	CGame::GetInstance()->GetCamera()->SetX( 0.0f );
 	CGame::GetInstance()->GetCamera()->SetY( 0.0f );
 
-	// Particles
-	m_nParticleImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("particle.png").c_str());
-	m_peEmitter.Initialize(m_nParticleImageID, 64, 64, 50, 50, 30, 5, 50, 0, 1, 1, 0, 0, 16, 16, 32, 32, 0, 0, 0, 3, 255, 255, 255);
 }
 
 void CGamePlayState::Exit(void)
 {
-	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nParticleImageID);
 
 	for(unsigned int i = 0; i < m_vButtons.size(); i++)
 	{
@@ -182,7 +181,16 @@ bool CGamePlayState::Input(void)
 			m_szSelectedCommand = "CancelOrder";
 			return true;
 		}
-	} else {
+	}
+	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Ability 1")].GetCollisionRect()), &mousePos))
+	{
+		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
+		{
+			m_vButtons[FindButton("Ability 1")].Activate();
+			return true;
+		}
+	}
+	else {
 		m_szTooltipText = "";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(false);
 	}
@@ -420,6 +428,11 @@ void CGamePlayState::RenderLargeShadowText(char* _text, int _x, int _y)
 {
 	m_ftTextLargeShadow.RenderText(_text, _x + 2, _y + 2);
 	m_ftTextLarge.RenderText(_text, _x, _y);
+}
+
+void ActivateAbilityOne()
+{
+	(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Activate();
 }
 
 void CGamePlayState::MessageProc(CBaseMessage* pMSG)

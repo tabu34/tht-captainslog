@@ -85,7 +85,7 @@ public:
 	int State() const { return m_nState; }
 	POINT Destination() const { return m_pDestinationMove; }
 	CUnit* Target() const { return m_pTarget; }
-	vector<CAbility*> Abilities() const { return m_vAbilities; }
+	vector<CAbility*>* Abilities() { return &m_vAbilities; }
 	vector<int>* Animations() { return &m_vAnimations; }
 	////////////////////////////////////////////////
 

@@ -28,8 +28,8 @@ CMedic::CMedic()
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medic-Idle"));
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medic-Fire"));
 
-	Abilities().push_back(new CAbility_DefensiveMatrix());
-	Abilities().push_back(new CAbility_Refresh());
+	Abilities()->push_back(new CAbility_DefensiveMatrix());
+	Abilities()->push_back(new CAbility_Refresh());
 }
 
 void CMedic::Initialize()

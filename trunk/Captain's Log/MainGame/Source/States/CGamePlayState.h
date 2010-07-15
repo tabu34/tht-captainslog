@@ -119,6 +119,7 @@ public:
 	static void MessageProc(CBaseMessage* pMSG);
 
 	// HUD Functions
+	vector<CHUDButton> GetButtons() { return m_vButtons; }
 	int  FindButton(string _name);
 	void RenderSmallShadowText(char* _text, int _x, int _y);
 	void RenderLargeShadowText(char* _text, int _x, int _y);

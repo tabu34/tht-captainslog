@@ -2,6 +2,7 @@
 #include "CUnit.h"
 #include "../Managers/CMessageSystem.h"
 #include "../SGD Wrappers/CSGD_Direct3D.h"
+#include "CAbilities.h"
 #include <cmath>
 
 CUnit::CUnit()
@@ -197,6 +198,11 @@ void CUnit::Update(float fElapsedTime)
 	else if (m_nState == UNIT_ATTACK || UNIT_FIRE)
 	{
 		Attack(fElapsedTime);
+	}
+
+	for (unsigned int i = 0; i < m_vAbilities.size(); i++)
+	{
+		m_vAbilities[i]->Update(fElapsedTime);
 	}
 }
 

@@ -28,8 +28,8 @@ CScout::CScout()
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Ghost-Idle"));
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Ghost-Fire"));
 
-	Abilities().push_back(new CAbility_Cloak());
-	Abilities().push_back(new CAbility_PinningShot());
+	Abilities()->push_back(new CAbility_Cloak(this));
+	Abilities()->push_back(new CAbility_PinningShot());
 }
 
 void CScout::Update( float fElapsedTime )

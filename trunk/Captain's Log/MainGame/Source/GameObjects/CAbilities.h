@@ -10,7 +10,9 @@ public:
 	CAbility_DefensiveMatrix()
 	{
 		Cooldown(50);
+		TimePassed(50);
 		Duration(8);
+		IsActive(false);
 	}
 
 	void Activate();
@@ -26,7 +28,9 @@ public:
 	CAbility_PinningShot()
 	{
 		Cooldown(20);
+		TimePassed(20);
 		Duration(6);
+		IsActive(false);
 	}
 
 	void Activate();
@@ -38,6 +42,11 @@ public:
 class CAbility_Cloak : public CTargetAbility
 {
 public:
+	CAbility_Cloak(CUnit* tar)
+	{
+		Target(tar);
+		IsActive(false);
+	}
 	void Activate();
 };
 
@@ -46,7 +55,9 @@ class CAbility_Refresh : public CTargetAbility
 public:
 	CAbility_Refresh()
 	{
+		TimePassed(12);
 		Cooldown(12);
+		IsActive(false);
 	}
 
 	void Activate();
@@ -58,10 +69,13 @@ class CAbility_Overdrive : public CTargetAbility
 {
 	float m_fAttackSpeed;
 public:
-	CAbility_Overdrive()
+	CAbility_Overdrive(CUnit* tar)
 	{
+		Target(tar);
+		TimePassed(60);
 		Cooldown(60);
 		Duration(15);
+		IsActive(false);
 	}
 
 	void Activate();
@@ -73,10 +87,13 @@ public:
 class CAbility_ArmorLockdown : public CTargetAbility
 {
 public:
-	CAbility_ArmorLockdown()
+	CAbility_ArmorLockdown(CUnit* tar)
 	{
+		Target(tar);
+		TimePassed(60);
 		Cooldown(60);
 		Duration(12);
+		IsActive(false);
 	}
 
 	void Activate();
