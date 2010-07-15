@@ -119,6 +119,9 @@ void CGamePlayState::Enter(void)
 	CGame::GetInstance()->GetCamera()->SetX( 0.0f );
 	CGame::GetInstance()->GetCamera()->SetY( 0.0f );
 	m_szCheatBuffer="                             ";
+	m_bEnteringCheat=false;
+	m_bGodMode=false;
+	m_bNoCooldown=false;
 
 }
 
@@ -211,7 +214,7 @@ bool CGamePlayState::Input(void)
 	}
 
 	//cheats here
-	if(CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx()!='\0')
+	if(CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx()!='\0' && m_bEnteringCheat)
 	{
 		m_szCheatBuffer+=CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx();
 		m_szCheatBuffer = (m_szCheatBuffer.c_str()+1);
@@ -220,25 +223,38 @@ bool CGamePlayState::Input(void)
 		{
 			m_szCheatBuffer="                             ";
 			m_bGodMode=!m_bGodMode;
+			m_bEnteringCheat=false;
 		}
 		else if(strstr(m_szCheatBuffer.c_str(), "gogo"))
 		{
 			m_szCheatBuffer="                             ";
 			m_bNoCooldown=true;
 			m_szSelectedCommand="cooldown_cheat";
+			m_bEnteringCheat=false;
+
 		}
 		else if(strstr(m_szCheatBuffer.c_str(), "stats"))
 		{
 			m_szCheatBuffer="                             ";
 			m_szSelectedCommand="stats_cheat";
+			m_bEnteringCheat=false;
 		}
 		else if(strstr(m_szCheatBuffer.c_str(), "bored"))
 		{
 			m_szCheatBuffer="                             ";
+			m_bEnteringCheat=false;
 			//TODO: skip level
 		}
 	}
 
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN))
+	{
+		m_bEnteringCheat=!m_bEnteringCheat;
+	}
+
+
+	if(m_bEnteringCheat)
+		return true;
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
 	{
@@ -399,6 +415,8 @@ void CGamePlayState::RenderHUD(void)
 		RenderSmallShadowText("God Mode Enabled", 10, 10);
 	if(m_bNoCooldown)
 		RenderSmallShadowText("Cooldowns Disabled", 10, 20);
+	if(m_bEnteringCheat)
+		RenderLargeShadowText("Enter A Cheat...", 10, 35);
 
 	// Render ToolTip Text
 	if(m_szTooltipText != "")
