@@ -147,13 +147,17 @@ void CUnitFactory::RegisterItems()
 		Footman->MaxHealth(20);
 		Footman->CurHealth(Footman->MaxHealth());
 		Footman->Invulnerable(false);
-		Footman->MovementSpeed();
-		Footman->PortraitID();
-		Footman->Ranged();
+		Footman->MovementSpeed(80);
+		Footman->Ranged(false);
 		Footman->Selected(false);
 		Footman->Stunned(false);
 		Footman->CurDirection();
 		Footman->State(CUnit::UNIT_IDLE);
+
+		objDef.first = "Footman";
+		objDef.second = Footman;
+
+		m_UnitTemplates.insert(objDef);
 
 	}
 
