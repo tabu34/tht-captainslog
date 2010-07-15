@@ -117,6 +117,15 @@ void CUnit::Update(float fElapsedTime)
 		m_nCurHealth--;
 	}
 
+	if (m_fStunnedCurrTime > m_fStunnedEndTime)
+	{
+		m_bStunned = false;
+	}
+	else
+	{
+		m_fStunnedCurrTime += fElapsedTime;
+	}
+
 	if (m_bStunned)
 	{
 		return;
@@ -126,6 +135,7 @@ void CUnit::Update(float fElapsedTime)
 	{
 		VelX(0.0f);
 		VelY(0.0f);
+		m_vDirections.clear();
 	}
 	else if(m_nState == UNIT_MOVING)
 	{
@@ -202,6 +212,15 @@ void CUnit::Update(float fElapsedTime)
 				VelY(MovementSpeed());
 			else
 				VelY(-MovementSpeed());
+		}
+		if(fabs(PosX() - m_pTarget->PosX()) < 1.0f)
+		{
+			VelX(0.0f);
+		}
+
+		if(fabs(PosY() - m_pTarget->PosY()) < 1.0f)
+		{
+			VelY(0.0f);
 		}
 	}
 	else if (m_nState == UNIT_ATTACK || UNIT_FIRE)

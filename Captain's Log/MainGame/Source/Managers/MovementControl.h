@@ -44,6 +44,9 @@ class CMovementControl
 	//	ID of the ability in the unit's vector of abilities
 	int					m_nUnitAbilityPosition;
 
+	//	position of the selected ability
+	POINT				m_ptUnitAbilityCenter;
+
 	CMovementControl(void) {};
 	~CMovementControl(void) {};
 	CMovementControl(CMovementControl&) {};
@@ -70,6 +73,7 @@ public:
 
 	void SetUnit(CUnit* val) { m_pUnitAbilitySelection = val; }
 	void SetPosition(int val) { m_nUnitAbilityPosition = val; }
+	void SetCenter(int x, int y)  {}
 };
 
 #endif

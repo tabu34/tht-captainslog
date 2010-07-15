@@ -21,6 +21,7 @@ class CUnit : public CBase
 	float				m_fAttackTimer;
 	float				m_fMovementSpeed;
 	float				m_fStunnedEndTime;
+	float				m_fStunnedCurrTime;
 	int					m_fAttackRange;
 	int					m_nArmor;
 	int					m_nCurHealth;
@@ -78,6 +79,7 @@ public:
 	float AttackTimer() const { return m_fAttackTimer; }
 	float MovementSpeed() const { return m_fMovementSpeed; }
 	float StunnedEndTime() const { return m_fStunnedEndTime; }
+	float StunnedCurrTime() const { return m_fStunnedCurrTime; }
 	float FireLineTime() const { return m_fFireLineTime; }
 	int Armor() const { return m_nArmor; }
 	int AttackRange() const { return m_fAttackRange; }
@@ -118,6 +120,7 @@ public:
 	void Selected(bool val) { m_bSelected = val; }
 	void Stunned(bool val) { m_bStunned = val; }
 	void StunnedEndTime(float val) { m_fStunnedEndTime = val; }
+	void StunnedCurrTime(float val) { m_fStunnedCurrTime = val; }
 	void CurDirection(int val) { m_nCurDirection = val; }
 	void SightRange(int val) { m_nSightRange = val; }
 	void State(int val) { m_nState = val; }

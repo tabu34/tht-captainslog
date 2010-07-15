@@ -31,6 +31,7 @@ CMarine::CMarine()
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Fire"));
 
 	Abilities()->push_back(new CAbility_Overdrive(this));
+	Abilities()->push_back(new CAbility_StunGrenade());
 }
 
 void CMarine::Update( float fElapsedTime )
