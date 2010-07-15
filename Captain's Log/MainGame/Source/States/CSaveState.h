@@ -6,6 +6,35 @@
 #include "../GameObjects/CBMPFont.h"
 #include "CLoadState.h"
 
+typedef struct 
+{
+	bool				bBurned;
+	bool				bCloaked;
+	bool				bInvulnerable;
+	bool				bRanged;
+	bool				bStunned;
+	float				fAttackDamage;
+	float				fAttackSpeed;
+	float				fMovementSpeed;
+	int					fAttackRange;
+	int					nArmor;
+	int					nCurHealth;
+	int					nHealthRegenRate;
+	int					nLevel;
+	int					nMaxHealth;
+	int					nSightRange;
+	int					nSubType;
+	float				fPosX;
+	float				fPosY;
+	int					nType;
+
+	int		nItemName[8];
+	int		nItemType[8];
+	int		nAmountType[8];
+	int		nAmountCategory[8];
+	float	fAmount[8];
+} tUnitSaveInfo;
+
 class CSaveState : public IGameState
 {
 	int m_nBGImage;
@@ -31,6 +60,9 @@ class CSaveState : public IGameState
 	void LoadProfiles();
 public:
 	static CSaveState* GetInstance();
+
+	void Save(int nSlot, float fGameTime, tUnitSaveInfo* pData, int numUnits);
+	void SaveCurrent(int nSlot);
 
 	void Enter();
 	void Exit();
