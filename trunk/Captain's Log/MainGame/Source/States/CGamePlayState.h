@@ -109,6 +109,7 @@ class CGamePlayState : public IGameState
 	string				m_szCheatBuffer;
 	bool				m_bGodMode;
 	bool				m_bNoCooldown;
+	bool				m_bEnteringCheat;
 
 	// Particles
 	CParticleEmitter	m_peEmitter;
