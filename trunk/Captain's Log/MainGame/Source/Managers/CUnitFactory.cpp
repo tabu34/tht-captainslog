@@ -59,27 +59,57 @@ CUnit* CUnitFactory::CreateItem(string id)
 	CUnit* returnUnit;
 	bool found = false;
 
-	for (unsigned int i = 0; i < m_vBasicEnemies.size(); i++)
+	switch (iter->second->SubType())
 	{
-		if (!m_vBasicEnemies[i]->bIsBeingUsed)
+	case CUnit::ENEMY_BASIC:
+		for (unsigned int i = 0; i < m_vBasicEnemies.size(); i++)
 		{
-			m_vBasicEnemies[i]->bIsBeingUsed = true;
-			returnUnit = m_vBasicEnemies[i]->pUnit;
-			*returnUnit = *(iter->second);
-			returnUnit->AddRef();
-			found = true;
-			break;
+			if (!m_vBasicEnemies[i]->bIsBeingUsed)
+			{
+				m_vBasicEnemies[i]->bIsBeingUsed = true;
+				returnUnit = m_vBasicEnemies[i]->pUnit;
+				*returnUnit = *(iter->second);
+				returnUnit->AddRef();
+				found = true;
+				break;
+			}
 		}
-	}
-	if (!found)
-	{
-		tFactoryUnit* newFactoryUnit = new tFactoryUnit();
-		newFactoryUnit->pUnit = new CUnit();
-		newFactoryUnit->bIsBeingUsed = true;
-		*(newFactoryUnit->pUnit) = *(iter->second);
-		returnUnit = newFactoryUnit->pUnit;
-		returnUnit->AddRef();
-		m_vBasicEnemies.push_back(newFactoryUnit);
+		if (!found)
+		{
+			tFactoryUnit* newFactoryUnit = new tFactoryUnit();
+			newFactoryUnit->pUnit = new CBasicEnemy();
+			newFactoryUnit->bIsBeingUsed = true;
+			*(newFactoryUnit->pUnit) = *(iter->second);
+			returnUnit = newFactoryUnit->pUnit;
+			returnUnit->AddRef();
+			m_vBasicEnemies.push_back(newFactoryUnit);
+		}
+		break;
+
+	case CUnit::ENEMY_BOSS:
+		for (unsigned int i = 0; i < m_vBossEnemies.size(); i++)
+		{
+			if (!m_vBossEnemies[i]->bIsBeingUsed)
+			{
+				m_vBossEnemies[i]->bIsBeingUsed = true;
+				returnUnit = m_vBossEnemies[i]->pUnit;
+				*returnUnit = *(iter->second);
+				returnUnit->AddRef();
+				found = true;
+				break;
+			}
+		}
+		if (!found)
+		{
+			tFactoryUnit* newFactoryUnit = new tFactoryUnit();
+			newFactoryUnit->pUnit = new CBossEnemy();
+			newFactoryUnit->bIsBeingUsed = true;
+			*(newFactoryUnit->pUnit) = *(iter->second);
+			returnUnit = newFactoryUnit->pUnit;
+			returnUnit->AddRef();
+			m_vBossEnemies.push_back(newFactoryUnit);
+		}
+		break;
 	}
 
 	return returnUnit;
