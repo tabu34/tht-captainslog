@@ -30,6 +30,7 @@ CHeavy::CHeavy()
 	Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Firebat-Fire"));
 
 	Abilities()->push_back(new CAbility_ArmorLockdown(this));
+	Abilities()->push_back(new CAbility_RocketBarrage());
 
 	m_nCurFrame = 0;
 }
