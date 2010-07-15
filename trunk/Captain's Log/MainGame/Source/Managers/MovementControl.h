@@ -27,6 +27,8 @@ class CMovementControl
 	bool				m_bDragging;
 	POINT				m_ptStart;
 
+	bool				m_bCommand;
+
 	// Cursor variables
 	int					m_nCursorImageID;
 
