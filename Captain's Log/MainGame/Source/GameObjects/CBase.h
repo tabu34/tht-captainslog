@@ -47,6 +47,8 @@ public:
 
 	enum {OBJ_NULL, OBJ_PLAYER, OBJ_ENEMY, OBJ_PROJECTILE, OBJ_OBSTACLE, OBJ_MAX};
 
+	CBase();
+
 	RECT GetCollisionRect();
 
 	virtual void	Update(float fElapsedTime);

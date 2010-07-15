@@ -7,6 +7,7 @@
 #include "Managers\MovementControl.h"
 #include "GameObjects\CAnimationManager.h"
 #include <fstream>
+#include "GameObjects\CItemFactory.h"
 using std::ifstream;
 using std::ios_base;
 
@@ -29,7 +30,7 @@ CGame::~CGame()
 
 CGame::CGame()
 {
-
+	CItemFactory::GetInstance();
 }
 
 bool CGame::Input()
@@ -50,15 +51,15 @@ bool CGame::Input()
 // 		return false;
 // 	}
 
-	if (m_pDI->KeyDown(DIK_9))
-	{
-		ChangeState(CTestState::GetInstance());
-	}
+	//if (m_pDI->KeyDown(DIK_9))
+	//{
+	//	ChangeState(CTestState::GetInstance());
+	//}
 
-	if (m_pDI->KeyDown(DIK_8))
-	{
-		ChangeState(CMainMenuState::GetInstance());
-	}
+	//if (m_pDI->KeyDown(DIK_8))
+	//{
+	//	ChangeState(CMainMenuState::GetInstance());
+	//}
 
 	if (m_vStateStack[m_vStateStack.size() - 1])
 		return m_vStateStack[m_vStateStack.size() - 1]->Input();

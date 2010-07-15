@@ -6,6 +6,8 @@
 class CActive : public CItem
 {
 public:
+	CActive();
+
 	void	AddEffect();
 	void	RemoveEffect();
 	void	Activate();

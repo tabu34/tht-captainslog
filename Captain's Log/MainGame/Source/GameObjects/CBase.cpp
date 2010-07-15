@@ -1,6 +1,21 @@
 #include "precompiled_header.h"
 #include "CBase.h"
 
+CBase::CBase()
+{
+	m_fPosX = 0;
+	m_fPosY = 0;
+	m_nZIndex = 0;
+	m_nType = 0;
+	m_nWidth = 0;
+	m_nHeight = 0;
+	m_fVelX = 0;
+	m_fVelY = 0;
+	m_fRotation = 0;
+	m_fScale = 1;
+	AddRef();
+}
+
 RECT CBase::GetCollisionRect()
 {
 	RECT tempRect;

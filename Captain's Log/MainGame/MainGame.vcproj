@@ -628,6 +628,14 @@
 					RelativePath=".\Source\GameObjects\CScout.h"
 					>
 				</File>
+				<File
+					RelativePath=".\Source\Managers\CUnitFactory.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\Managers\CUnitFactory.h"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Particles"
