@@ -52,6 +52,9 @@ class CSaveState : public IGameState
 	int m_nCurrentControl;
 	int m_nMaxControls;
 
+	bool m_bError;
+	float m_fErrorTimer;
+
 	CSaveState();
 	CSaveState(const CSaveState&);
 	~CSaveState();

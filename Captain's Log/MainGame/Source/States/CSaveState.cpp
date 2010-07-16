@@ -329,6 +329,9 @@ void CSaveState::Enter()
 	m_bfFont.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
 	m_bfWhite.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 1.0f, 1.0f, 2, 0xFF000000, 0xFFFFFFFF);
 	m_bfWhite.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
+	m_nCurrentControl=-1;
+	m_fErrorTimer=0.0f;
+	m_bError=false;
 	LoadProfiles();
 }
 
@@ -346,16 +349,30 @@ bool CSaveState::Input()
 		CGame::GetInstance()->PopState();
 	}
 
-	//DEBUG
-	//
-	//
-	//
-	//
-	//
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN))
+	RECT rSaveButton = {135, 428, 445, 481};
+	RECT rSelectionBox = {135, 175, 807, 414};
+	POINT ptMouse = {m_nMouseX, m_nMouseY};
+	if(CSGD_DirectInput::GetInstance()->MouseButtonPressed(0) && PtInRect(&rSelectionBox, ptMouse))
 	{
-		SaveCurrent(0);
+		int nSelect = (m_nMouseY-180)/25;
+		m_nCurrentControl = (nSelect>=0 && nSelect<m_nNumProfiles) ? nSelect : -1;
 	}
+	if(CSGD_DirectInput::GetInstance()->MouseButtonPressed(0) && PtInRect(&rSaveButton, ptMouse))
+	{
+		if(m_nCurrentControl == -1)
+		{
+			if(m_nNumProfiles==5)
+			{
+				m_bError=true;
+				m_fErrorTimer=2.0f;
+			}
+			else
+				SaveCurrent(m_nNumProfiles);
+		}
+		else
+			SaveCurrent(m_nCurrentControl);
+	}
+
 	m_nMousePrevX = m_nMouseX;
 	m_nMousePrevY = m_nMouseY;
 	return true;
@@ -374,6 +391,13 @@ void CSaveState::Update(float fElapsedTime)
 
 	if(m_nMouseY > CGame::GetInstance()->GetScreenHeight())
 		CSGD_DirectInput::GetInstance()->MouseSetPosY(CGame::GetInstance()->GetScreenHeight());
+
+	if(m_bError)
+	{
+		m_fErrorTimer-=fElapsedTime;
+		if(m_fErrorTimer<=0)
+			m_bError=false;
+	}
 }
 
 void CSaveState::Render()
@@ -387,15 +411,27 @@ void CSaveState::Render()
 	{
 		for(int i=0; i<m_nNumProfiles; i++)
 		{
-			m_bfFont.RenderText(m_pProfiles[i].szLastPlayed, 180, 180+(i*25));
+			if(i==m_nCurrentControl)
+				m_bfWhite.RenderText(m_pProfiles[i].szLastPlayed, 180, 180+(i*25));
+			else
+				m_bfFont.RenderText(m_pProfiles[i].szLastPlayed, 180, 180+(i*25));
 			char buffer[128];
 			sprintf_s(buffer, 128, "%i:%i:%i",
 				((int)m_pProfiles[i].fGameTime)/3600,
 				(((int)m_pProfiles[i].fGameTime)%3600)/60,
 				((((int)m_pProfiles[i].fGameTime)%3600)%60));
-			m_bfFont.RenderText(buffer, 650, 180+(i*25));
+			if(i==m_nCurrentControl)
+				m_bfWhite.RenderText(buffer, 650, 180+(i*25));
+			else
+				m_bfFont.RenderText(buffer, 650, 180+(i*25));
 		}
 	}
+
+	if(m_bError)
+	{
+		m_bfFont.RenderText("Error: Can't save more\nthan 5 profiles.", 135, 490);
+	}
+
 	m_bfFont.RenderText("Press <ESC> to Exit", CGame::GetInstance()->GetScreenWidth()/3+100, CGame::GetInstance()->GetScreenHeight()-50);
 
 	CMovementControl::GetInstance()->RenderCursor();
