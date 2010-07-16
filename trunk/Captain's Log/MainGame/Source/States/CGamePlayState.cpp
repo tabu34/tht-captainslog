@@ -726,7 +726,7 @@ void CGamePlayState::RenderLargeShadowText(char* _text, int _x, int _y)
 
 void ActivateAbilityOne()
 {
-	if ((*CMovementControl::GetInstance()->GetSelectedUnits()).size() == NULL)
+	if ((*CMovementControl::GetInstance()->GetSelectedUnits()).size() < 1 || ((CUnit*)(*CMovementControl::GetInstance()->GetSelectedUnits())[0])->Type() != CUnit::OBJ_PLAYER)
 	{
 		return;
 	}
@@ -750,7 +750,7 @@ void ActivateAbilityOne()
 
 void ActivateAbilityTwo()
 {
-	if ((*CMovementControl::GetInstance()->GetSelectedUnits()).size() == NULL)
+	if ((*CMovementControl::GetInstance()->GetSelectedUnits()).size() < 1 || ((CUnit*)(*CMovementControl::GetInstance()->GetSelectedUnits())[0])->Type() != CUnit::OBJ_PLAYER)
 	{
 		return;
 	}
