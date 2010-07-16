@@ -17,6 +17,10 @@ class CLoadState : public IGameState
 {
 	int m_nBGImage;
 	CBMPFont m_bfFont;
+	CBMPFont m_bfWhite;
+
+	bool m_bError;
+	float m_fErrorTimer;
 
 	int m_nMouseX;
 	int m_nMouseY;
@@ -35,6 +39,8 @@ class CLoadState : public IGameState
 	CLoadState& operator=(const CLoadState&);
 
 	void LoadProfiles();
+	void LoadGame();
+	void DeleteProfile();
 public:
 	static CLoadState* GetInstance();
 
