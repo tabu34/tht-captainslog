@@ -361,7 +361,7 @@ bool CSaveState::Input()
 	{
 		if(m_nCurrentControl == -1)
 		{
-			if(m_nNumProfiles==5)
+			if(m_nNumProfiles==8)
 			{
 				m_bError=true;
 				m_fErrorTimer=2.0f;
@@ -429,7 +429,7 @@ void CSaveState::Render()
 
 	if(m_bError)
 	{
-		m_bfFont.RenderText("Error: Can't save more\nthan 5 profiles.", 135, 490);
+		m_bfFont.RenderText("Error: Can't save more\nthan 8 profiles.", 135, 490);
 	}
 
 	m_bfFont.RenderText("Press <ESC> to Exit", CGame::GetInstance()->GetScreenWidth()/3+100, CGame::GetInstance()->GetScreenHeight()-50);

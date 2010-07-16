@@ -163,7 +163,12 @@ void CGamePlayState::LoadProfile(int nOffsetInBytes)
 		}
 		else
 		{
-			CBasicEnemy* pMarine = new CBasicEnemy();
+			//
+			//
+			//NOTE: VERY HACKED
+			//TODO:  Make some way of reading in the type of enemy
+			//
+			CBasicEnemy* pMarine = (rand()%2==0) ? (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman") : (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Fire Elemental");
 			pMarine->Armor(tempUnitInfo.nArmor);
 			pMarine->AttackDamage(tempUnitInfo.fAttackDamage);
 			pMarine->AttackRange(tempUnitInfo.fAttackRange);
