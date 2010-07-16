@@ -100,6 +100,7 @@ class CGamePlayState : public IGameState
 	string				m_szSpeechText;
 
 	float				m_fTotalGameTime;
+	int					m_nKills;
 
 	// Tooltip
 	string				m_szTooltipText;
@@ -142,6 +143,9 @@ public:
 	//cheats
 	bool GodMode(){return m_bGodMode;}
 	bool NoCooldown(){return m_bNoCooldown;}
+
+	int Kills(){return m_nKills;}
+	void Kills(int nKills){m_nKills=nKills;}
 
 	void Enter(void);
 	bool Input(void);

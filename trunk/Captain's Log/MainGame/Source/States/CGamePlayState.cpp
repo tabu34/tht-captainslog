@@ -14,6 +14,7 @@
 #include "CPauseMenuState.h"
 #include "CSaveState.h"
 #include "CGameOverState.h"
+#include "CDebriefState.h"
 #include "..\GameObjects\CMedic.h"
 #include "..\GameObjects\CScout.h"
 #include "..\GameObjects\CBasicEnemies.h"
@@ -858,4 +859,8 @@ void CGamePlayState::LoadNextLevel()
 	default:
 		break;
 	}
+
+	//debrief(level success)
+	if(m_nLevel!=1)
+	CGame::GetInstance()->PushState(CDebriefState::GetInstance());
 }
