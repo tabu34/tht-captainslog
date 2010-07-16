@@ -128,6 +128,8 @@ class CAbility_RocketBarrage : public CLocationAbility
 public:
 	CAbility_RocketBarrage()
 	{
+		TimePassed(30);
+		Cooldown(30);
 		Range(150);
 	}
 
