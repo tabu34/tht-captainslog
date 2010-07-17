@@ -2,6 +2,7 @@
 #include "CUnit.h"
 #include "../Managers/CMessageSystem.h"
 #include "../SGD Wrappers/CSGD_Direct3D.h"
+#include "../SGD Wrappers/CSGD_FModManager.h"
 #include "../States/CGamePlayState.h"
 #include "CAbilities.h"
 #include <cmath>
@@ -266,6 +267,7 @@ void CUnit::Attack(float fElapsedTime)
 		{
 			if (m_pTarget->Invulnerable() == false && !CGamePlayState::GetInstance()->GodMode())
 			{
+				CSGD_FModManager::GetInstance()->PlaySound(CGamePlayState::GetInstance()->GunshotSoundID());
 				m_pTarget->CurHealth(m_pTarget->CurHealth() - (int)(m_fAttackDamage - (m_fAttackDamage * m_pTarget->Armor() * 0.01f)));
 			}
 			m_fAttackTimer = 0;

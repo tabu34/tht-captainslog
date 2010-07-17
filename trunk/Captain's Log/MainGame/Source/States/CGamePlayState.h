@@ -86,6 +86,7 @@ class CGamePlayState : public IGameState
 	int					m_nScore;
 	int					m_nBG;
 	int					m_nMiniMap;
+	int					m_nGunshotSound;
 
 	// Interface Elements
 	CBMPFont			m_ftTextSmall;
@@ -155,6 +156,8 @@ public:
 	void Exit(void);
 
 	void LoadNextLevel();
+
+	int GunshotSoundID() { return m_nGunshotSound; }
 };
 
 #endif
