@@ -263,11 +263,6 @@ void CGamePlayState::Enter(void)
 
 
 
-// 	CMarine* badGuy = new CMarine();
-// 	badGuy->Type(CBase::OBJ_ENEMY);
-// 	badGuy->PosX(400);
-// 	badGuy->PosY(200);
-	// 	CObjectManager::GetInstance()->AddObject(badGuy);
 	
 
 	// Test Speech

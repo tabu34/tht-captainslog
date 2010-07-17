@@ -98,6 +98,7 @@ void CUnit::OrderAttack(CUnit* pTarget)
 
 void CUnit::Update(float fElapsedTime)
 {
+
 	CBase::Update(fElapsedTime);
 
 	//DEBUG
@@ -226,7 +227,10 @@ void CUnit::Update(float fElapsedTime)
 	}
 	else if (m_nState == UNIT_ATTACK || UNIT_FIRE)
 	{
-		Attack(fElapsedTime);
+		if (!m_pTarget)
+			m_nState = UNIT_IDLE;
+		else
+			Attack(fElapsedTime);
 	}
 
 	for (unsigned int i = 0; i < m_vAbilities.size(); i++)
@@ -245,9 +249,10 @@ void CUnit::Attack(float fElapsedTime)
 		return;
 	}
 
-	if (m_pTarget->CurHealth() <= 0)
+	if (m_pTarget && m_pTarget->CurHealth() <= 0)
 	{
-		m_nState = UNIT_MOVING;
+		m_nState = UNIT_IDLE;
+		Target(NULL);
 		m_pDestinationMove.x = (LONG)PosX();
 		m_pDestinationMove.y = (LONG)PosY();
 	}
@@ -285,7 +290,7 @@ void CUnit::Render()
 	sprintf_s(szHP, 16, "%i", CurHealth());
 
 	//DEBUG
-	if (m_fFireLineTime > 0)
+	if (m_fFireLineTime > 0 && Target())
 	{
 		CSGD_Direct3D::GetInstance()->DrawLine(int(PosX() - CGame::GetInstance()->GetCamera()->GetX()), int(PosY() - CGame::GetInstance()->GetCamera()->GetY()), int(m_pTarget->PosX() - CGame::GetInstance()->GetCamera()->GetX()), int(m_pTarget->PosY() - CGame::GetInstance()->GetCamera()->GetY()), 255, 255, 255);
 	}

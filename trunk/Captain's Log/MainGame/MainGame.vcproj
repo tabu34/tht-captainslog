@@ -710,6 +710,14 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="My Inspector Results"
+			>
+			<File
+				RelativePath="..\..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\My Inspector Results\r000mi1\r000mi1.insp"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\..\..\..\..\..\..\..\Program Files (x86)\FMOD SoundSystem\FMOD Programmers API Win32\api\fmodex.dll"
 			>

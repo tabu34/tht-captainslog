@@ -24,6 +24,8 @@ class CCollisionManager
 public:
 	static CCollisionManager* GetInstance();
 
+	vector<CBase*>* Enemies() { return &m_vEnemies; }
+
 	void	RunCollisions();
 	void	AddObject(CBase* pBase);
 	void CheckCollision();
