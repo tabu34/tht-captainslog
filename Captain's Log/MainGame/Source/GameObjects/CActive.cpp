@@ -8,7 +8,7 @@ CActive::CActive()
 
 void CActive::AddEffect()
 {
-
+	CItem::AddEffect();
 }
 
 void CActive::RemoveEffect()

@@ -81,7 +81,7 @@ public:
 
 class CGamePlayState : public IGameState
 {
-	CPlayerUnit*		m_pPlayerArray;
+	CPlayerUnit*		m_pPlayerArray[4];
 	int					m_nLevel;
 	int					m_nScore;
 	int					m_nBG;

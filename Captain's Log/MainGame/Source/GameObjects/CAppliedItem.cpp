@@ -8,7 +8,7 @@ CAppliedItem::CAppliedItem()
 
 void CAppliedItem::AddEffect()
 {
-
+	CItem::AddEffect();
 }
 
 void CAppliedItem::RemoveEffect()

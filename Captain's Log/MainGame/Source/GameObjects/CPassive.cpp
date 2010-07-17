@@ -1,5 +1,6 @@
 #include "precompiled_header.h"
 #include "CPassive.h"
+#include "CUnit.h"
 
 CPassive::CPassive()
 {
@@ -8,7 +9,7 @@ CPassive::CPassive()
 
 void CPassive::AddEffect()
 {
-
+	CItem::AddEffect();
 }
 
 void CPassive::RemoveEffect()
