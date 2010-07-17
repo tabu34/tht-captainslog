@@ -1,0 +1,10 @@
+C:\Users\Nick\Documents\School\SGP\Captain's Log\Tile Editor\Tile Editor\bin\Debug\Tile Editor.exe
+C:\Users\Nick\Documents\School\SGP\Captain's Log\Tile Editor\Tile Editor\bin\Debug\Tile Editor.pdb
+C:\Users\Nick\Documents\School\SGP\Captain's Log\Tile Editor\Tile Editor\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Nick\Documents\School\SGP\Captain's Log\Tile Editor\Tile Editor\obj\Debug\Tile_Editor.frmMain.resources
+C:\Users\Nick\Documents\School\SGP\Captain's Log\Tile Editor\Tile Editor\obj\Debug\Tile_Editor.frmTiles.resources
+C:\Users\Nick\Documents\School\SGP\Captain's Log\Tile Editor\Tile Editor\obj\Debug\Tile_Editor.frmOptions.resources
+C:\Users\Nick\Documents\School\SGP\Captain's Log\Tile Editor\Tile Editor\obj\Debug\Tile_Editor.Properties.Resources.resources
+C:\Users\Nick\Documents\School\SGP\Captain's Log\Tile Editor\Tile Editor\obj\Debug\Tile Editor.csproj.GenerateResource.Cache
+C:\Users\Nick\Documents\School\SGP\Captain's Log\Tile Editor\Tile Editor\obj\Debug\Tile Editor.exe
+C:\Users\Nick\Documents\School\SGP\Captain's Log\Tile Editor\Tile Editor\obj\Debug\Tile Editor.pdb
