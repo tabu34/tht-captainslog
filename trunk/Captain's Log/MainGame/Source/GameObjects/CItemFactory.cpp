@@ -23,6 +23,8 @@ CItemFactory::CItemFactory()
 		tempItemUnit->pItem = new CPassive();
 		m_vPassiveItems.push_back(tempItemUnit);
 	}
+
+	RegisterItems();
 }
 
 CItemFactory::~CItemFactory()

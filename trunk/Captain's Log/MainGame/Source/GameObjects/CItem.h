@@ -22,6 +22,7 @@ public:
 	int ItemName() const { return m_nItemName; }
 	int ItemType() const { return m_nItemType; }
 	int AmountType() const { return m_nAmountType; }
+	int AmountCategory() const { return m_nAmountCategory; }
 	float Amount() const { return m_fAmount; }
 	CUnit* Target() { return m_pTarget; }
 

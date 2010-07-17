@@ -22,6 +22,8 @@
 #include "..\Managers\CUnitFactory.h"
 #include "..\SGD Wrappers\CSGD_FModManager.h"
 #include <fstream>
+#include "..\GameObjects\CPassive.h"
+#include "..\GameObjects\CItemFactory.h"
 using std::ifstream;
 
 void ActivateAbilityOne();
@@ -222,6 +224,11 @@ void CGamePlayState::Enter(void)
 	m_vButtons.push_back(CHUDButton(1113, 752, 64, 64, "Ability 1", ActivateAbilityOne, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str())));
 	m_vButtons.push_back(CHUDButton(1177, 752, 64, 64, "Ability 2", ActivateAbilityTwo, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str())));
 
+	//////////////////////////////////////////////////////////////////////////
+	m_vButtons.push_back(CHUDButton(577, 752, 64, 64, "Item1", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/7.png").c_str())));
+	CItem* BookOfHaste = CItemFactory::GetInstance()->CreateItem("Book of Haste");
+	//////////////////////////////////////////////////////////////////////////
+
 	m_vButtons.push_back(CHUDButton(0, 0, 256, 64, "ToolTipBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/20.png").c_str()), false));
 
 	m_vButtons.push_back(CHUDButton(0, 0, 512, 32, "ObjectivesLargeBG-NoCheck", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/18.png").c_str()), false));
@@ -250,6 +257,9 @@ void CGamePlayState::Enter(void)
 	CMedic*  alliedMedic  = new CMedic();
 	CScout*  alliedScout  = new CScout();
 
+	alliedMarine->Inventory()->push_back(BookOfHaste);
+	BookOfHaste->Collect(alliedMarine);
+
 	CMovementControl::GetInstance()->SetPlayerUnits(alliedMarine, alliedHeavy, alliedScout, alliedMedic);
 
 	LoadNextLevel();
@@ -267,7 +277,7 @@ void CGamePlayState::Enter(void)
 
 	// Test Speech
 	m_nCurCount = 0;
-	m_szSpeechText = "Test Speech, Test Speech, \nTest Speech, Test Speech, \nTest Speech, Test Speech";
+	m_szSpeechText = "Destroy all enemies to \ncomplete the level...";
 
 	// Camera
 	CGame::GetInstance()->GetCamera()->SetX( 0.0f );
@@ -305,6 +315,7 @@ bool CGamePlayState::Input(void)
 	mousePos.top = CMovementControl::GetInstance()->MousePosY();
 	mousePos.right = mousePos.left + 1;
 	mousePos.bottom = mousePos.top + 1;
+
 
 	if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("MoveOrder")].GetCollisionRect()), &mousePos)) {
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
@@ -364,11 +375,25 @@ bool CGamePlayState::Input(void)
 			return true;
 		}
 	}
+	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Item1")].GetCollisionRect()), &mousePos))
+	{
+		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
+		m_szTooltipText = " Book of Haste";
+		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		if(CSGD_DirectInput::GetInstance()->MouseButtonReleased(0))
+		{
+			(*(CMovementControl::GetInstance()->Marine()->Inventory()))[0]->AddEffect();
+			return true;
+		}
+	}
 	else {
 		m_szTooltipText = "";
 		if(!m_bEnteringCheat)
 			m_vButtonInstances[FindButton("ToolTipBG")].Visible(false);
 	}
+
+
+
 
 
 	RECT rMiniMap = {5, 690, 260, 896};

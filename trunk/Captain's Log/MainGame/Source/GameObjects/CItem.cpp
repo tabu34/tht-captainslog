@@ -1,5 +1,6 @@
 #include "precompiled_header.h"
 #include "CItem.h"
+#include "CUnit.h"
 
 CItem::CItem()
 {
@@ -24,12 +25,41 @@ CItem& CItem::operator=( CItem& pItem )
 
 void CItem::Collect(CUnit* pTarget)
 {
-
+	m_pTarget = pTarget;
 }
 
 void CItem::AddEffect()
 {
 
+	switch (ItemType())
+	{
+	case ITEMTYPE_APPLIED:
+	case ITEMTYPE_PASSIVE:
+		switch (AmountCategory())
+		{
+		case VALUECATEGORY_ATTACKSPEED:
+			switch (AmountType())
+			{
+			case VALUETYPE_INTEGER:
+				break;
+			case VALUETYPE_PERCENTAGE:
+				Target()->AttackSpeed(Target()->AttackSpeed() * (Amount() * 0.01f + 1.0f));
+				break;
+			}
+			break;
+		case VALUECATEGORY_MOVEMENTSPEED:
+			break;
+		case VALUECATEGORY_ARMOR:
+			break;
+		case VALUECATEGORY_ATTACKDAMAGE:
+			break;
+		case VALUECATEGORY_HP:
+			break;
+		}
+		break;
+	case ITEMTYPE_ACTIVE:
+		break;
+	}
 }
 
 void CItem::RemoveEffect()
@@ -39,5 +69,6 @@ void CItem::RemoveEffect()
 
 void CItem::Drop()
 {
-
+	m_pTarget = NULL;
+	RemoveEffect();
 }
