@@ -36,7 +36,7 @@ CMarine::CMarine()
 
 void CMarine::Update( float fElapsedTime )
 {
-	CUnit::Update(fElapsedTime);
+	CPlayerUnit::Update(fElapsedTime);
 
 	if(VelX() == 0.0f && VelY() < 0.0f)
 	{
