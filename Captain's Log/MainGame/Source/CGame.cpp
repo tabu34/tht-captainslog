@@ -8,6 +8,7 @@
 #include "GameObjects\CAnimationManager.h"
 #include <fstream>
 #include "GameObjects\CItemFactory.h"
+#include "SGD Wrappers\CSGD_FModManager.h"
 using std::ifstream;
 using std::ios_base;
 
@@ -178,6 +179,8 @@ void CGame::Initialize( HWND hWnd, HINSTANCE hInstance, int nScreenWidth, int nS
 	m_pDI->InitDirectInput(hWnd, hInstance, DI_KEYBOARD | DI_MOUSE, DI_MOUSE);
 	m_pCAM = new CCamera();
 	m_pMC->Init();
+
+	CSGD_FModManager::GetInstance()->InitFModManager(hWnd);
 
 	//	Store initial program variables
 	m_nWindowHeight=nScreenHeight;

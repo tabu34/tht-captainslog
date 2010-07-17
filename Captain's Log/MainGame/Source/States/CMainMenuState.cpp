@@ -12,6 +12,7 @@
 #include "CHelpState.h"
 #include "CLoadState.h"
 #include "../Managers/MovementControl.h"
+#include "..\SGD Wrappers\CSGD_FModManager.h"
 #include "..\CGame.h"
 
 CMainMenuState::CMainMenuState(void)
@@ -38,6 +39,11 @@ void CMainMenuState::Enter(void)
 	m_nMenuCur[2] = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\mm2.png").c_str()); 
 	m_nMenuCur[3] = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\mm3.png").c_str()); 
 	m_nMenuCur[4] = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\mm4.png").c_str());
+
+	m_nMenuMusic = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("SGD_BGM.wav").c_str(), FMOD_LOOP_NORMAL);
+
+	CSGD_FModManager::GetInstance()->PlaySound(m_nMenuMusic);
+
 	m_sCurrentChoice = 0;
 }
 
@@ -119,4 +125,5 @@ void CMainMenuState::Exit(void)
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nMenuCur[2]); 
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nMenuCur[3]); 
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nMenuCur[4]); 
+	CSGD_FModManager::GetInstance()->StopSound(m_nMenuMusic);
 }
