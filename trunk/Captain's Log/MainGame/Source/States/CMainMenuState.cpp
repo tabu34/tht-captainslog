@@ -14,6 +14,7 @@
 #include "../Managers/MovementControl.h"
 #include "..\SGD Wrappers\CSGD_FModManager.h"
 #include "..\CGame.h"
+#include "CLoadLevelState.h"
 
 CMainMenuState::CMainMenuState(void)
 {
@@ -65,7 +66,10 @@ bool CMainMenuState::Input(void)
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
 	{
 		if(m_sCurrentChoice == 0)
-			CGame::GetInstance()->ChangeState( CGamePlayState::GetInstance() );
+		{
+			CLoadLevelState::GetInstance()->SetLoadLevel(CGamePlayState::GetInstance()->NextLevel());
+			CGame::GetInstance()->ChangeState( CLoadLevelState::GetInstance() );
+		}
 		if(m_sCurrentChoice == 1)
 		{
 			//load game

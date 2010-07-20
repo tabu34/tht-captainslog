@@ -3,6 +3,7 @@
 #include "CWorldManager.h"
 #include "../SGD Wrappers/SGD_Math.h"
 #include <math.h>
+#include "../States/CLoadLevelState.h"
 
 CPathManager::CPathManager()
 {
@@ -177,17 +178,22 @@ void CPathManager::GenerateMap()
 			// 				OutputDebugString(buff);
 			// 			}
 		}
-		for(size_t i=0; i<vNodesInShape.size(); i++)
+		for(size_t k=0; k<vNodesInShape.size(); k++) {
 			for(size_t j=0; j<vNodesInShape.size(); j++)
 			{
 				tLine line;
-				line.start.fX = vNodesInShape[i].fX;
-				line.start.fY = vNodesInShape[i].fY;
+				line.start.fX = vNodesInShape[k].fX;
+				line.start.fY = vNodesInShape[k].fY;
 				line.end.fX = vNodesInShape[j].fX;
 				line.end.fY = vNodesInShape[j].fY;
 				vLines.push_back(line);
-			}
+			} }
+
+		CLoadLevelState::GetInstance()->SetPercentage(5.0f + (((float)i / (CWorldManager::GetInstance()->GetNumBlockers())) * 25.0f));
+		CLoadLevelState::GetInstance()->Render();
 	}
+	CLoadLevelState::GetInstance()->SetPercentage(30.0f);
+	CLoadLevelState::GetInstance()->Render();
 	//add helper nodes
 // 	for(int i=0; i<6; i++)
 // 	{
@@ -232,8 +238,12 @@ void CPathManager::GenerateMap()
 				}
 			}
 		}
-		m_mpAdjacencies[adjacency.pNode] = adjacency;	
+		m_mpAdjacencies[adjacency.pNode] = adjacency;
+		CLoadLevelState::GetInstance()->SetPercentage(30.0f + (((float)i / (m_lstNodeList.size())) * 70.0f));
+		CLoadLevelState::GetInstance()->Render();
 	}
+	CLoadLevelState::GetInstance()->SetPercentage(100.0f);
+	CLoadLevelState::GetInstance()->Render();
 }
 
 inline float ManhattanDistance(tNode& source, tNode& target)

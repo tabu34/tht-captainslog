@@ -4,7 +4,7 @@
 #include "../SGD Wrappers/CSGD_TextureManager.h"
 #include "../CGame.h"
 #include "CPathManager.h"
-
+#include "../States/CLoadLevelState.h"
 #include <fstream>
 using namespace std;
 
@@ -73,9 +73,14 @@ void CWorldManager::Load(string sFileName)
 				fin.read((char*)&tempTile.m_nLeft, sizeof(int));
 
 				m_World[l][i][j] = tempTile;
+
 			}
 		}
+		CLoadLevelState::GetInstance()->SetPercentage((l / (m_nWorldDepth)) * 5.0f);
+		CLoadLevelState::GetInstance()->Render();
 	}
+	CLoadLevelState::GetInstance()->SetPercentage(5.0f);
+	CLoadLevelState::GetInstance()->Render();
 
 	fin.read((char*)&m_nNumBlockers, sizeof(int));
 	

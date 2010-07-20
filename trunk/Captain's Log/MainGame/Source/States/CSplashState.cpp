@@ -3,6 +3,7 @@
 #include "CSplashState.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
+#include "CMainMenuState.h"
 
 CSplashState::CSplashState()
 {

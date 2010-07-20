@@ -194,6 +194,21 @@ void CGame::Initialize( HWND hWnd, HINSTANCE hInstance, int nScreenWidth, int nS
 
 
 	CGamePlayState::GetInstance();
+
+	m_pD3D->Clear(0,0,0);
+	m_pD3D->DeviceBegin();
+	m_pD3D->SpriteBegin();
+
+	CBMPFont m_ftText;
+	m_ftText.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 1.0f, 1.0f, 2, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(0, 255, 0));
+ 	m_ftText.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
+
+	m_ftText.RenderText("Initializing Maps", 600, 760);
+
+	m_pD3D->SpriteEnd();
+	m_pD3D->DeviceEnd();
+	m_pD3D->Present();
+
 	ChangeState(CMainMenuState::GetInstance());
 	PushState(CSplashState::GetInstance());
 
