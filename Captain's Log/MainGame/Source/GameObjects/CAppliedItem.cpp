@@ -6,12 +6,12 @@ CAppliedItem::CAppliedItem()
 	ItemType(ITEMTYPE_APPLIED);
 }
 
-void CAppliedItem::AddEffect()
-{
-	CItem::AddEffect();
-}
-
-void CAppliedItem::RemoveEffect()
-{
-
-}
+//void CAppliedItem::AddEffect()
+//{
+//	CItem::AddEffect();
+//}
+//
+//void CAppliedItem::RemoveEffect()
+//{
+//	CItem::RemoveEffect();
+//}

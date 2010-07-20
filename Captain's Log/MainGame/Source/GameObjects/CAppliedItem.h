@@ -8,7 +8,7 @@ class CAppliedItem : public CItem
 public:
 	CAppliedItem();
 
-	void	AddEffect();
-	void	RemoveEffect();
+	//void	AddEffect();
+	//void	RemoveEffect();
 };
 #endif // CAppliedItem_h__
