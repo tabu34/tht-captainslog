@@ -129,6 +129,7 @@ public:
 	static void MessageProc(CBaseMessage* pMSG);
 
 	int NextLevel() { return ++m_nLevel; }
+	void SetLevel(int _lvl) { m_nLevel = _lvl; }
 
 	// HUD Functions
 	vector<CHUDButton> GetButtons() { return m_vButtons; }

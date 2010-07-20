@@ -441,10 +441,11 @@ bool CGamePlayState::Input(void)
 	if(m_bEnteringCheat)
 		return true;
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || ((CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LALT) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_TAB))))
 	{
 		CGame::GetInstance()->PushState(CPauseMenuState::GetInstance());
 	}
+
 
 	CMovementControl::GetInstance()->Input();
 
