@@ -24,6 +24,7 @@
 #include <fstream>
 #include "..\GameObjects\CPassive.h"
 #include "..\GameObjects\CItemFactory.h"
+#include "..\States\CLoadLevelState.h"
 using std::ifstream;
 
 void ActivateAbilityOne();
@@ -204,7 +205,6 @@ void CGamePlayState::Enter(void)
 	CMessageSystem::GetInstance()->InitMessageSystem(CGamePlayState::MessageProc);
 	m_nGunshotSound = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("\\THT_gunshoot.wav").c_str(), FMOD_LOOP_OFF);
 
-	m_nLevel = 0;
 
 	// Setup GUI
 	m_vButtons.push_back(CHUDButton(-76, 645, 2048, 512, "BottomHUD", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/0.png").c_str())));
@@ -245,29 +245,15 @@ void CGamePlayState::Enter(void)
 	m_ftTextLargeShadow.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.80f, 0.80f, 2, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(0, 0, 0));
  	m_ftTextLargeShadow.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
 
-	// Load Animations
-	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\marine\\marine.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
-	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\firebat\\firebat.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
-	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\medic\\medic.bin").c_str(), D3DCOLOR_XRGB(0, 255, 255));
-	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\ghost\\ghost.bin").c_str(), D3DCOLOR_XRGB(0, 255, 255));
-	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\tempenemy\\tempenemy.bin").c_str(), D3DCOLOR_XRGB(0, 255, 255));
 
-	CMarine* alliedMarine = new CMarine();
-	CHeavy*  alliedHeavy  = new CHeavy();
-	CMedic*  alliedMedic  = new CMedic();
-	CScout*  alliedScout  = new CScout();
 
-	alliedMarine->Inventory()->push_back(BookOfHaste);
-	BookOfHaste->Collect(alliedMarine);
 
-	CMovementControl::GetInstance()->SetPlayerUnits(alliedMarine, alliedHeavy, alliedScout, alliedMedic);
+	//LoadNextLevel();
 
-	LoadNextLevel();
-
-	CObjectManager::GetInstance()->AddObject(alliedHeavy);
-	CObjectManager::GetInstance()->AddObject(alliedMedic);
-	CObjectManager::GetInstance()->AddObject(alliedScout);
-	CObjectManager::GetInstance()->AddObject(alliedMarine);
+	CObjectManager::GetInstance()->AddObject(CMovementControl::GetInstance()->Marine());
+	CObjectManager::GetInstance()->AddObject(CMovementControl::GetInstance()->Heavy());
+	CObjectManager::GetInstance()->AddObject(CMovementControl::GetInstance()->Scout());
+	CObjectManager::GetInstance()->AddObject(CMovementControl::GetInstance()->Medic());
 
 	m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap.png").c_str());
 
@@ -498,7 +484,8 @@ void CGamePlayState::Update(float fElapsedTime)
 		}
 	}
 
-	LoadNextLevel();
+	CLoadLevelState::GetInstance()->SetLoadLevel( CGamePlayState::GetInstance()->NextLevel() );
+	CGame::GetInstance()->ChangeState( CLoadLevelState::GetInstance() );
 }
 
 void CGamePlayState::RenderMiniMap()

@@ -128,6 +128,8 @@ public:
 
 	static void MessageProc(CBaseMessage* pMSG);
 
+	int NextLevel() { return ++m_nLevel; }
+
 	// HUD Functions
 	vector<CHUDButton> GetButtons() { return m_vButtons; }
 	int  FindButton(string _name);
