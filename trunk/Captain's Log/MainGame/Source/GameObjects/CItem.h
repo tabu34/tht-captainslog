@@ -54,7 +54,7 @@ public:
 	virtual void	AddEffect();
 	virtual void	RemoveEffect();
 
-	void	Collect(CUnit* pTarget);
+	bool Collect(CUnit* pTarget);
 	void	Drop();
 
 };
