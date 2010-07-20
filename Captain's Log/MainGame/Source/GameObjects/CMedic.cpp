@@ -17,6 +17,7 @@ CMedic::CMedic()
 	AttackDamage(15);
 	AttackTimer(0);
 	AttackRange(125);
+	SightRange(AttackRange() + 100);
 	Armor(20);
 
 

@@ -8,15 +8,18 @@ void CPlayerUnit::Initialize()
 
 void CPlayerUnit::Update( float fElapsedTime )
 {
+
 	int closestDistance = INT_MAX;
 	int currentObjDistance;
-	int sightRangeSqrd = AttackRange() * AttackRange();
+	int sightRangeSqrd = SightRange() * SightRange();
+	bool found = false;
 
-	if (!UNIT_MOVING_ATTACK)
-		Target(NULL);
+
 
 	if (!Selected())
 	{
+		Target(NULL);
+
 		for (unsigned int i = 0; i < CCollisionManager::GetInstance()->Enemies()->size(); i++)
 		{
 			currentObjDistance = DistanceSquared(int((*CCollisionManager::GetInstance()->Enemies())[i]->PosX()), int((*CCollisionManager::GetInstance()->Enemies())[i]->PosY()));
@@ -26,14 +29,55 @@ void CPlayerUnit::Update( float fElapsedTime )
 				{
 					closestDistance = currentObjDistance;
 					Target((CUnit*)(*CCollisionManager::GetInstance()->Enemies())[i]);
+					found = true;
 				}
 			}
 		}
+
+		if (!found)
+			State(UNIT_IDLE);
+
 		if (Target() != NULL && State() != UNIT_ATTACK && State() != UNIT_FIRE)
 		{
-			State(UNIT_ATTACK);
+			State(UNIT_MOVING_ATTACK);
 		}
 	}
+
+
+	//////////////////////////////////////////////////////////////////////////
+
+
+	//int closestDistance = INT_MAX;
+	//int currentObjDistance;
+	//int sightRangeSqrd = AttackRange() * AttackRange();
+
+	//if (!UNIT_MOVING_ATTACK)
+	//	Target(NULL);
+
+	//if (!Selected())
+	//{
+	//	for (unsigned int i = 0; i < CCollisionManager::GetInstance()->Enemies()->size(); i++)
+	//	{
+	//		currentObjDistance = DistanceSquared(int((*CCollisionManager::GetInstance()->Enemies())[i]->PosX()), int((*CCollisionManager::GetInstance()->Enemies())[i]->PosY()));
+	//		if (currentObjDistance < sightRangeSqrd)
+	//		{
+	//			if (currentObjDistance < closestDistance)
+	//			{
+	//				closestDistance = currentObjDistance;
+	//				Target((CUnit*)(*CCollisionManager::GetInstance()->Enemies())[i]);
+	//			}
+	//		}
+	//	}
+	//	if (Target() != NULL && State() != UNIT_ATTACK && State() != UNIT_FIRE)
+	//	{
+	//		State(UNIT_ATTACK);
+	//	}
+	//}
+
+
+	//////////////////////////////////////////////////////////////////////////
+
+
 
 //	if(!Selected())
 
