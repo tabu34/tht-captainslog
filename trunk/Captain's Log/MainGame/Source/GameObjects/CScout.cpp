@@ -17,6 +17,7 @@ CScout::CScout()
 	AttackDamage(60);
 	AttackTimer(0);
 	AttackRange(250);
+	SightRange(AttackRange() + 100);
 	Armor(15);
 	Cloaked(false);
 
