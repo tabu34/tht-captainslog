@@ -1,6 +1,7 @@
 #include "precompiled_header.h"
 #include "CItem.h"
 #include "CUnit.h"
+#include "CPlayerUnit.h"
 
 CItem::CItem()
 {
@@ -23,11 +24,15 @@ CItem& CItem::operator=( CItem& pItem )
 	return *this;
 }
 
-void CItem::Collect(CUnit* pTarget)
+bool CItem::Collect( CUnit* pTarget )
 {
+	if (((CPlayerUnit*)pTarget)->Inventory()->size() >= MAX_INVENTORY)
+		return false;
 	m_pTarget = pTarget;
 	if (ItemType() == ITEMTYPE_PASSIVE)
 		AddEffect();
+	((CPlayerUnit*)Target())->Inventory()->push_back(this);
+	return true;
 }
 
 void CItem::AddEffect()
@@ -164,6 +169,12 @@ void CItem::RemoveEffect()
 
 void CItem::Drop()
 {
-	m_pTarget = NULL;
 	RemoveEffect();
+	m_pTarget = NULL;
+	vector<CItem*>* tempItemVector = ((CPlayerUnit*)Target())->Inventory();
+	for (unsigned int i = 0; i < tempItemVector->size(); i++)
+	{
+		if (tempItemVector->operator [](i) == this)
+			tempItemVector->erase(tempItemVector->begin() + i);
+	}
 }
