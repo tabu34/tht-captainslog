@@ -20,7 +20,7 @@
 
 CLoadLevelState::CLoadLevelState(void)
 {
-	m_nLevelNum = 0;
+	m_nLevelNum = 1;
 }
 
 CLoadLevelState::~CLoadLevelState(void)
@@ -183,7 +183,6 @@ void CLoadLevelState::Load()
 		CObjectManager::GetInstance()->AddObject(badGuy);
 	}
 	
-	m_nLevelNum = 0;
 	CGame::GetInstance()->ChangeState( CGamePlayState::GetInstance() );
 }
 
@@ -231,6 +230,7 @@ void CLoadLevelState::Render(void)
 
 void CLoadLevelState::Exit(void)
 {
+	CGamePlayState::GetInstance()->SetLevel( m_nLevelNum );
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nMenuBG);
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nLoadBar);
 }

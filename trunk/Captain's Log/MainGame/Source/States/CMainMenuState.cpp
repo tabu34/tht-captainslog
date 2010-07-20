@@ -40,6 +40,7 @@ void CMainMenuState::Enter(void)
 	m_nMenuCur[2] = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\mm2.png").c_str()); 
 	m_nMenuCur[3] = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\mm3.png").c_str()); 
 	m_nMenuCur[4] = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\mm4.png").c_str());
+	m_nMenuCur[5] = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\mm5.png").c_str());
 
 	m_nMenuMusic = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("SGD_BGM.wav").c_str(), FMOD_LOOP_NORMAL);
 
@@ -59,15 +60,15 @@ bool CMainMenuState::Input(void)
 		m_sCurrentChoice++;
 
 	if(m_sCurrentChoice < 0)
-		m_sCurrentChoice = 4;
-	if(m_sCurrentChoice > 4)
+		m_sCurrentChoice = 5;
+	if(m_sCurrentChoice > 5)
 		m_sCurrentChoice = 0;
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
 	{
 		if(m_sCurrentChoice == 0)
 		{
-			CLoadLevelState::GetInstance()->SetLoadLevel(CGamePlayState::GetInstance()->NextLevel());
+			CLoadLevelState::GetInstance()->SetLoadLevel(1);
 			CGame::GetInstance()->ChangeState( CLoadLevelState::GetInstance() );
 		}
 		if(m_sCurrentChoice == 1)
@@ -80,6 +81,8 @@ bool CMainMenuState::Input(void)
 		if(m_sCurrentChoice == 3)
 			CGame::GetInstance()->PushState(CHelpState::GetInstance());
 		if(m_sCurrentChoice == 4)
+			return true;
+		if(m_sCurrentChoice == 5)
 			return false;
 	}
 
@@ -90,8 +93,8 @@ bool CMainMenuState::Input(void)
 
 		if(m_sCurrentChoice < 0)
 			m_sCurrentChoice = 0;
-		if(m_sCurrentChoice > 4)
-			m_sCurrentChoice = 4;
+		if(m_sCurrentChoice > 5)
+			m_sCurrentChoice = 5;
 	}
 
 	m_nMousePrevX = m_nMouseX;
@@ -129,5 +132,6 @@ void CMainMenuState::Exit(void)
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nMenuCur[2]); 
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nMenuCur[3]); 
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nMenuCur[4]); 
+	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nMenuCur[5]); 
 	CSGD_FModManager::GetInstance()->StopSound(m_nMenuMusic);
 }
