@@ -522,14 +522,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Source\GameObjects\CUnit.cpp"
-				>
-			</File>
-			<File
-				RelativePath=".\Source\GameObjects\CUnit.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Source\GameObjects\IBaseInterface.h"
 				>
 			</File>
@@ -666,6 +658,14 @@
 				</File>
 				<File
 					RelativePath=".\Source\GameObjects\CScout.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\GameObjects\CUnit.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Source\GameObjects\CUnit.h"
 					>
 				</File>
 				<File

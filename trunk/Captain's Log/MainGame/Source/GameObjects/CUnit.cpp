@@ -141,15 +141,15 @@ void CUnit::Update(float fElapsedTime)
 	}
 	else if(m_nState == UNIT_MOVING)
 	{
-		//if(PosX() < m_pDestinationMove.x)
-		//	VelX(MovementSpeed());
-		//else
-		//	VelX(-MovementSpeed());
+		if(PosX() < m_pDestinationMove.x)
+			VelX(MovementSpeed());
+		else
+			VelX(-MovementSpeed());
 
-		//if(PosY() < m_pDestinationMove.y)
-		//	VelY(MovementSpeed());
-		//else
-		//	VelY(-MovementSpeed());
+		if(PosY() < m_pDestinationMove.y)
+			VelY(MovementSpeed());
+		else
+			VelY(-MovementSpeed());
 
 		if(fabs(PosX() - m_pDestinationMove.x) < 1.0f)
 		{
