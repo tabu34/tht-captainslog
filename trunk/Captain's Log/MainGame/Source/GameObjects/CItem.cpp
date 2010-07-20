@@ -26,6 +26,8 @@ CItem& CItem::operator=( CItem& pItem )
 void CItem::Collect(CUnit* pTarget)
 {
 	m_pTarget = pTarget;
+	if (ItemType() == ITEMTYPE_PASSIVE)
+		AddEffect();
 }
 
 void CItem::AddEffect()
@@ -43,17 +45,49 @@ void CItem::AddEffect()
 			case VALUETYPE_INTEGER:
 				break;
 			case VALUETYPE_PERCENTAGE:
-				Target()->AttackSpeed(Target()->AttackSpeed() * (Amount() * 0.01f + 1.0f));
+				Target()->AttackSpeed(Target()->AttackSpeed() * (1.0f - Amount() * 0.01f));
 				break;
 			}
 			break;
 		case VALUECATEGORY_MOVEMENTSPEED:
+			switch (AmountType())
+			{
+			case VALUETYPE_INTEGER:
+				break;
+			case VALUETYPE_PERCENTAGE:
+				Target()->MovementSpeed(Target()->MovementSpeed() * (Amount() * 0.01f + 1.0f));
+				break;
+			}
 			break;
 		case VALUECATEGORY_ARMOR:
+			switch (AmountType())
+			{
+			case VALUETYPE_INTEGER:
+				break;
+			case VALUETYPE_PERCENTAGE:
+				Target()->Armor(Target()->Armor() * int(Amount() * 0.01f + 1.0f));
+				break;
+			}
 			break;
 		case VALUECATEGORY_ATTACKDAMAGE:
+			switch (AmountType())
+			{
+			case VALUETYPE_INTEGER:
+				break;
+			case VALUETYPE_PERCENTAGE:
+				Target()->AttackDamage(Target()->AttackDamage() * (Amount() * 0.01f + 1.0f));
+				break;
+			}
 			break;
 		case VALUECATEGORY_HP:
+			switch (AmountType())
+			{
+			case VALUETYPE_INTEGER:
+				Target()->CurHealth(Target()->CurHealth() + (int)Amount());
+				break;
+			case VALUETYPE_PERCENTAGE:
+				break;
+			}
 			break;
 		}
 		break;
@@ -64,7 +98,68 @@ void CItem::AddEffect()
 
 void CItem::RemoveEffect()
 {
-
+	switch (ItemType())
+	{
+	case ITEMTYPE_APPLIED:
+		break;
+	case ITEMTYPE_PASSIVE:
+		switch (AmountCategory())
+		{
+		case VALUECATEGORY_ATTACKSPEED:
+			switch (AmountType())
+			{
+			case VALUETYPE_INTEGER:
+				break;
+			case VALUETYPE_PERCENTAGE:
+				Target()->AttackSpeed(Target()->AttackSpeed() / (1.0f - Amount() * 0.01f));
+				break;
+			}
+			break;
+		case VALUECATEGORY_MOVEMENTSPEED:
+			switch (AmountType())
+			{
+			case VALUETYPE_INTEGER:
+				break;
+			case VALUETYPE_PERCENTAGE:
+				Target()->MovementSpeed(Target()->MovementSpeed() / (Amount() * 0.01f + 1.0f));
+				break;
+			}
+			break;
+		case VALUECATEGORY_ARMOR:
+			switch (AmountType())
+			{
+			case VALUETYPE_INTEGER:
+				break;
+			case VALUETYPE_PERCENTAGE:
+				Target()->Armor(Target()->Armor() / int(Amount() * 0.01f + 1.0f));
+				break;
+			}
+			break;
+		case VALUECATEGORY_ATTACKDAMAGE:
+			switch (AmountType())
+			{
+			case VALUETYPE_INTEGER:
+				break;
+			case VALUETYPE_PERCENTAGE:
+				Target()->AttackDamage(Target()->AttackDamage() / (Amount() * 0.01f + 1.0f));
+				break;
+			}
+			break;
+		case VALUECATEGORY_HP:
+			switch (AmountType())
+			{
+			case VALUETYPE_INTEGER:
+				Target()->CurHealth(Target()->CurHealth() - (int)Amount());
+				break;
+			case VALUETYPE_PERCENTAGE:
+				break;
+			}
+			break;
+		}
+		break;
+	case ITEMTYPE_ACTIVE:
+		break;
+	}
 }
 
 void CItem::Drop()

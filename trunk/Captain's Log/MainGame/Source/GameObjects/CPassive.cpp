@@ -7,12 +7,12 @@ CPassive::CPassive()
 	ItemType(ITEMTYPE_PASSIVE);
 }
 
-void CPassive::AddEffect()
-{
-	CItem::AddEffect();
-}
-
-void CPassive::RemoveEffect()
-{
-
-}
+//void CPassive::AddEffect()
+//{
+//	CItem::AddEffect();
+//}
+//
+//void CPassive::RemoveEffect()
+//{
+//
+//}

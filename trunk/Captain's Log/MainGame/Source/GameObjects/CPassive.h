@@ -8,7 +8,7 @@ class CPassive : public CItem
 public:
 	CPassive();
 
-	void	AddEffect();
-	void	RemoveEffect();
+	//void	AddEffect();
+	//void	RemoveEffect();
 };
 #endif // CPassive_h__
