@@ -63,6 +63,8 @@ void CObjectManager::RemoveObject( CBase* pObject )
 			break;
 		}
 	}
+
+	CCollisionManager::GetInstance()->RemoveObject(pObject);
 }
 
 void CObjectManager::RenderObjects()

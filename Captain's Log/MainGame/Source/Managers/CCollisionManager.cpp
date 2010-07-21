@@ -94,3 +94,41 @@ CCollisionManager* CCollisionManager::GetInstance()
 	static CCollisionManager instance;
 	return &instance;
 }
+
+void CCollisionManager::RemoveObject( CBase* pObject )
+{
+	if (pObject == NULL)
+		return;
+
+	switch (pObject->Type())
+	{
+	case CBase::OBJ_ENEMY:
+		for (vector<CBase*>::iterator iter = m_vEnemies.begin();
+			iter != m_vEnemies.end();
+			iter++)
+		{
+			if ((*iter) == pObject)
+			{
+				(*iter)->Release();
+
+				iter = m_vEnemies.erase(iter);
+				break;
+			}
+		}
+		break;
+	case CBase::OBJ_PLAYER:
+		for (vector<CBase*>::iterator iter = m_vPlayers.begin();
+			iter != m_vPlayers.end();
+			iter++)
+		{
+			if ((*iter) == pObject)
+			{
+				(*iter)->Release();
+
+				iter = m_vPlayers.erase(iter);
+				break;
+			}
+		}
+		break;
+	}
+}

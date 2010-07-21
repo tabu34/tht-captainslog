@@ -99,6 +99,7 @@ void CUnit::OrderAttack(CUnit* pTarget)
 void CUnit::Update(float fElapsedTime)
 {
 
+
 	CBase::Update(fElapsedTime);
 
 	//DEBUG
@@ -270,7 +271,7 @@ void CUnit::Attack(float fElapsedTime)
 		m_fAttackTimer += fElapsedTime;
 		if (m_fAttackTimer >= m_fAttackSpeed)
 		{
-			if (m_pTarget->Invulnerable() == false && !CGamePlayState::GetInstance()->GodMode())
+			if (m_pTarget->Invulnerable() == false && (!CGamePlayState::GetInstance()->GodMode() || m_pTarget->Type() == OBJ_ENEMY))
 			{
 				CSGD_FModManager::GetInstance()->PlaySound(CGamePlayState::GetInstance()->GunshotSoundID());
 				m_pTarget->CurHealth(m_pTarget->CurHealth() - (int)(m_fAttackDamage - (m_fAttackDamage * m_pTarget->Armor() * 0.01f)));
