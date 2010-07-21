@@ -22,49 +22,65 @@ void CBasicEnemy::Update( float fElapsedTime )
 	Target(NULL);
 
 
-	currentObjDistance = DistanceSquared((int)CMovementControl::GetInstance()->Marine()->PosX(), (int)CMovementControl::GetInstance()->Marine()->PosY());
-	if (currentObjDistance < sightRangeSqrd)
+	for (unsigned int i = 0; i < CCollisionManager::GetInstance()->Players()->size(); i++)
 	{
-		if (currentObjDistance < closestDistance)
+		currentObjDistance = DistanceSquared(int((*CCollisionManager::GetInstance()->Players())[i]->PosX()), int((*CCollisionManager::GetInstance()->Players())[i]->PosY()));
+
+		if (currentObjDistance < sightRangeSqrd)
 		{
-			closestDistance = currentObjDistance;
-			Target(CMovementControl::GetInstance()->Marine());
-			found = true;
+			if (currentObjDistance < closestDistance)
+			{
+				closestDistance = currentObjDistance;
+				Target((CUnit*)(*CCollisionManager::GetInstance()->Players())[i]);
+				found = true;
+			}
 		}
 	}
 
-	currentObjDistance = DistanceSquared((int)CMovementControl::GetInstance()->Medic()->PosX(), (int)CMovementControl::GetInstance()->Medic()->PosY());
-	if (currentObjDistance < sightRangeSqrd)
-	{
-		if (currentObjDistance < closestDistance)
-		{
-			closestDistance = currentObjDistance;
-			Target(CMovementControl::GetInstance()->Medic());
-			found = true;
-		}
-	}
 
-	currentObjDistance = DistanceSquared((int)CMovementControl::GetInstance()->Heavy()->PosX(), (int)CMovementControl::GetInstance()->Heavy()->PosY());
-	if (currentObjDistance < sightRangeSqrd)
-	{
-		if (currentObjDistance < closestDistance)
-		{
-			closestDistance = currentObjDistance;
-			Target(CMovementControl::GetInstance()->Heavy());
-			found = true;
-		}
-	}
+	//currentObjDistance = DistanceSquared((int)CMovementControl::GetInstance()->Marine()->PosX(), (int)CMovementControl::GetInstance()->Marine()->PosY());
+	//if (currentObjDistance < sightRangeSqrd)
+	//{
+	//	if (currentObjDistance < closestDistance)
+	//	{
+	//		closestDistance = currentObjDistance;
+	//		Target(CMovementControl::GetInstance()->Marine());
+	//		found = true;
+	//	}
+	//}
 
-	currentObjDistance = DistanceSquared((int)CMovementControl::GetInstance()->Scout()->PosX(), (int)CMovementControl::GetInstance()->Scout()->PosY());
-	if (currentObjDistance < sightRangeSqrd && !CMovementControl::GetInstance()->Scout()->Cloaked())
-	{
-		if (currentObjDistance < closestDistance)
-		{
-			closestDistance = currentObjDistance;
-			Target(CMovementControl::GetInstance()->Scout());
-			found = true;
-		}
-	}
+	//currentObjDistance = DistanceSquared((int)CMovementControl::GetInstance()->Medic()->PosX(), (int)CMovementControl::GetInstance()->Medic()->PosY());
+	//if (currentObjDistance < sightRangeSqrd)
+	//{
+	//	if (currentObjDistance < closestDistance)
+	//	{
+	//		closestDistance = currentObjDistance;
+	//		Target(CMovementControl::GetInstance()->Medic());
+	//		found = true;
+	//	}
+	//}
+
+	//currentObjDistance = DistanceSquared((int)CMovementControl::GetInstance()->Heavy()->PosX(), (int)CMovementControl::GetInstance()->Heavy()->PosY());
+	//if (currentObjDistance < sightRangeSqrd)
+	//{
+	//	if (currentObjDistance < closestDistance)
+	//	{
+	//		closestDistance = currentObjDistance;
+	//		Target(CMovementControl::GetInstance()->Heavy());
+	//		found = true;
+	//	}
+	//}
+
+	//currentObjDistance = DistanceSquared((int)CMovementControl::GetInstance()->Scout()->PosX(), (int)CMovementControl::GetInstance()->Scout()->PosY());
+	//if (currentObjDistance < sightRangeSqrd && !CMovementControl::GetInstance()->Scout()->Cloaked())
+	//{
+	//	if (currentObjDistance < closestDistance)
+	//	{
+	//		closestDistance = currentObjDistance;
+	//		Target(CMovementControl::GetInstance()->Scout());
+	//		found = true;
+	//	}
+	//}
 	if (!found)
 		State(UNIT_IDLE);
 

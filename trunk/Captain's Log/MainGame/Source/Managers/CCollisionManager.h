@@ -25,10 +25,11 @@ public:
 	static CCollisionManager* GetInstance();
 
 	vector<CBase*>* Enemies() { return &m_vEnemies; }
+	vector<CBase*>* Players() { return &m_vPlayers; }
 
 	void	RunCollisions();
 	void	AddObject(CBase* pBase);
-	void CheckCollision();
-
+	void	CheckCollision();
+	void	RemoveObject( CBase* pObject );
 };
 #endif // CCollisionManager_h__

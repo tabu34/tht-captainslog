@@ -424,6 +424,12 @@ bool CGamePlayState::Input(void)
 			m_szSelectedCommand="stats_cheat";
 			m_bEnteringCheat=false;
 		}
+		else if(strstr(m_szCheatBuffer.c_str(), "deeps"))
+		{
+			m_szCheatBuffer="                             ";
+			m_szSelectedCommand="speed_cheat";
+			m_bEnteringCheat=false;
+		}
 		else if(strstr(m_szCheatBuffer.c_str(), "bored"))
 		{
 			m_szCheatBuffer="                             ";

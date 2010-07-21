@@ -166,6 +166,35 @@ void CMovementControl::Input()
 		return;
 	}
 
+	if(CGamePlayState::GetInstance()->CurrentCommand()=="speed_cheat")
+	{
+		//select all PLAYER units
+		for(size_t i=0; i<m_vObjectList->size(); i++)
+		{
+			if(((CUnit*)(*m_vObjectList)[i])->Type()==CBase::OBJ_PLAYER)
+			{
+				if(!((CUnit*)(*m_vObjectList)[i])->Selected())
+				{
+					((CUnit*)(*m_vObjectList)[i])->Selected(true);
+					(*m_vSelected).push_back((*m_vObjectList)[i]);
+				}
+			}
+			else if(((CUnit*)(*m_vObjectList)[i])->Selected())
+			{
+				((CUnit*)(*m_vObjectList)[i])->Selected(false);
+				CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+			}
+		}
+
+		for(size_t i=0; i<m_vSelected->size(); i++)
+		{
+			CUnit* pGuy = ((CUnit*)(*m_vSelected)[i]);
+			pGuy->MovementSpeed(pGuy->MovementSpeed() * 1.5f);
+		}
+		CGamePlayState::GetInstance()->ClearCommand();
+		return;
+	}
+
 	if(m_DI->MouseButtonPressed(MOUSE_LEFT) && CGamePlayState::GetInstance()->CurrentCommand() != "")
 	{
 		if(CGamePlayState::GetInstance()->CurrentCommand()=="MoveOrder")

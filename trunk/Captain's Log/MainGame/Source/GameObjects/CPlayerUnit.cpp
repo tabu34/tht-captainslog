@@ -16,7 +16,7 @@ void CPlayerUnit::Update( float fElapsedTime )
 
 
 
-	if (!Selected())
+	if (!Selected() && State() != UNIT_MOVING_ATTACK && State() != UNIT_MOVING && Target() == NULL)
 	{
 		Target(NULL);
 
