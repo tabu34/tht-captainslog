@@ -208,4 +208,51 @@ void CUnitFactory::RegisterItems()
 		m_UnitTemplates.insert(objDef);
 	}
 
+	// Cyclops
+	{
+		pair<string, CUnit*> objDef;
+
+		CUnit* Cyclops = new CBasicEnemy();
+		Cyclops->Armor(35);
+		Cyclops->AttackDamage(15);
+		Cyclops->AttackRange(50);
+		Cyclops->AttackSpeed(2);
+		Cyclops->Burned(false);
+		Cyclops->Cloaked(false);
+		Cyclops->MaxHealth(200);
+		Cyclops->CurHealth(Cyclops->MaxHealth());
+		Cyclops->Invulnerable(false);
+		Cyclops->MovementSpeed(75);
+		Cyclops->Ranged(false);
+		Cyclops->Selected(false);
+		Cyclops->SightRange(300);
+		Cyclops->Stunned(false);
+		Cyclops->CurDirection();
+		Cyclops->State(CUnit::UNIT_IDLE);
+		((CBasicEnemy*)Cyclops)->SetMirrored(false);
+
+		Cyclops->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Cyclops-Walk-N"));
+		Cyclops->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Cyclops-Walk-NE"));
+		Cyclops->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Cyclops-Walk-E"));
+		Cyclops->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Cyclops-Walk-SE"));
+		Cyclops->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Cyclops-Walk-S"));
+		Cyclops->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Cyclops-Walk-SW"));
+		Cyclops->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Cyclops-Walk-W"));
+		Cyclops->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Cyclops-Walk-NW"));
+
+		Cyclops->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Cyclops-Attack-N"));
+		Cyclops->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Cyclops-Attack-NE"));
+		Cyclops->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Cyclops-Attack-E"));
+		Cyclops->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Cyclops-Attack-SE"));
+		Cyclops->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Cyclops-Attack-S"));
+		Cyclops->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Cyclops-Attack-SW"));
+		Cyclops->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Cyclops-Attack-W"));
+		Cyclops->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Cyclops-Attack-NW"));
+
+		objDef.first = "Cyclops";
+		objDef.second = Cyclops;
+
+		m_UnitTemplates.insert(objDef);
+	}
+
 }
