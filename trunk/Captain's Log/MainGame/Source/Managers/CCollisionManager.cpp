@@ -85,8 +85,6 @@ void CCollisionManager::AddObject( CBase* pBase )
 		m_vPlayers.push_back(pBase);
 	else if (pBase->Type() == CBase::OBJ_ENEMY)
 		m_vEnemies.push_back(pBase);
-	else if (pBase->Type() == CBase::OBJ_PROJECTILE)
-		m_vProjectiles.push_back(pBase);
 }
 
 CCollisionManager* CCollisionManager::GetInstance()

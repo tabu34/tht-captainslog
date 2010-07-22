@@ -11,6 +11,7 @@ CItem::CItem()
 	m_nAmountCategory = 0;
 	m_fAmount = 0;
 	m_pTarget = NULL;
+	Type(OBJ_ITEM);
 }
 
 CItem& CItem::operator=( CItem& pItem )
@@ -170,11 +171,16 @@ void CItem::RemoveEffect()
 void CItem::Drop()
 {
 	RemoveEffect();
-	m_pTarget = NULL;
 	vector<CItem*>* tempItemVector = ((CPlayerUnit*)Target())->Inventory();
 	for (unsigned int i = 0; i < tempItemVector->size(); i++)
 	{
 		if (tempItemVector->operator [](i) == this)
+		{
+			tempItemVector->operator [](i)->PosX(m_pTarget->PosX());
+			tempItemVector->operator [](i)->PosY(m_pTarget->PosY());
+			CObjectManager::GetInstance()->GetObjectList()->push_back(tempItemVector->operator [](i));
 			tempItemVector->erase(tempItemVector->begin() + i);
+		}
 	}
+	m_pTarget = NULL;
 }

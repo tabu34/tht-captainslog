@@ -15,6 +15,7 @@
 #define END_PROFILING CCodeProfiler::GetInstance()->EndFunction(__FUNCTION__);
 
 #define MAX_INVENTORY 8
+#define ITEM_RANGE 100
 
 
 #endif // precompiled_header_h__

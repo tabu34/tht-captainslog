@@ -447,17 +447,17 @@ bool CGamePlayState::CheckButtonInput()
 			return true;
 		}
 	}
-	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Item1")].GetCollisionRect()), &mousePos))
-	{
-		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
-		m_szTooltipText = " Book of Haste";
-		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
-		if(CSGD_DirectInput::GetInstance()->MouseButtonReleased(0))
-		{
-			(*(CMovementControl::GetInstance()->Marine()->Inventory()))[0]->AddEffect();
-			return true;
-		}
-	}
+	//else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Item1")].GetCollisionRect()), &mousePos))
+	//{
+	//	m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
+	//	m_szTooltipText = " Book of Haste";
+	//	m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+	//	if(CSGD_DirectInput::GetInstance()->MouseButtonReleased(0))
+	//	{
+	//		(*(CMovementControl::GetInstance()->Marine()->Inventory()))[0]->AddEffect();
+	//		return true;
+	//	}
+	//}
 	else 
 	{
 		m_szTooltipText = "";
