@@ -123,12 +123,6 @@ void CLoadLevelState::Load()
 
 		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
 		badGuy->Type(CBase::OBJ_ENEMY);
-		badGuy->PosX(400);
-		badGuy->PosY(200);
-		CObjectManager::GetInstance()->AddObject(badGuy);
-
-		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
-		badGuy->Type(CBase::OBJ_ENEMY);
 		badGuy->PosX(1600);
 		badGuy->PosY(900);
 		CObjectManager::GetInstance()->AddObject(badGuy);
