@@ -1,0 +1,14 @@
+Line Count 7409
+
+Known Bugs:
+
+- When the player grows with big boned powerup collisions get screwed, sometimes the player will slide through breakable bricks.
+
+- Ninja Jumping glitches sometimes and the character will climb walls automatically.
+
+- All maps from the third level onward are using a new version of the tile editor, so they won't load assets on the first try. They will trigger an exception and the user must accept it.
+
+- Some Platforms go beyond where they should. They still return.
+
+Manny - darth.kerpal@gmail.com - 4079231876
+Alan - alan.condevillamar@yahoo.com - 4073943198
