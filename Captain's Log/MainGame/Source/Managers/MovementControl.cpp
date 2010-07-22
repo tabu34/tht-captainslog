@@ -78,9 +78,23 @@ void CMovementControl::Input()
 					nTarget = j;
 				}
 			}
-			if (nTarget != -1)
+			if (nTarget != -1 && ((*m_vObjectList)[nTarget]->Type() == CBase::OBJ_ENEMY ||
+								(*m_vObjectList)[nTarget]->Type() == CBase::OBJ_PLAYER))
 			{
 				((CUnit*)(*m_vSelected)[i])->OrderAttack((CUnit*)(*m_vObjectList)[nTarget]);
+			}
+			else if (nTarget != -1 && (*m_vObjectList)[nTarget]->Type() == CBase::OBJ_ITEM && 
+				((*m_vObjectList)[nTarget]->PosX() - (*m_vSelected)[i]->PosX()) * 
+				((*m_vObjectList)[nTarget]->PosX() - (*m_vSelected)[i]->PosX()) + 
+				((*m_vObjectList)[nTarget]->PosY() - (*m_vSelected)[i]->PosY()) * 
+				((*m_vObjectList)[nTarget]->PosY() - (*m_vSelected)[i]->PosY()) < ITEM_RANGE
+				)
+			{
+				if (((CItem*)(*m_vObjectList)[nTarget])->Collect((CUnit*)(*m_vSelected)[i]))
+				{
+					(*m_vObjectList).erase((*m_vObjectList).begin() + nTarget);
+				}
+
 			}
 			else
 			{
