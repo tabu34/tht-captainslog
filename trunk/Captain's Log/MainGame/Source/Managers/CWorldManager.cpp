@@ -82,6 +82,18 @@ void CWorldManager::Load(string sFileName)
 	CLoadLevelState::GetInstance()->SetPercentage(5.0f);
 	CLoadLevelState::GetInstance()->Render();
 
+	int numHelperNodes;
+	fin.read((char*)&numHelperNodes, sizeof(int));
+
+	for (int b = 0; b < numHelperNodes; b++)
+	{
+		POINT tempPoint;
+		fin.read((char*)&tempPoint.x, sizeof(int));
+		fin.read((char*)&tempPoint.y, sizeof(int));
+		m_HelperNodes.push_back(tempPoint);
+	}
+	
+	
 	fin.read((char*)&m_nNumBlockers, sizeof(int));
 	
 	m_Blockers = new Blocker[m_nNumBlockers];
@@ -141,6 +153,8 @@ void CWorldManager::Render()
 						RECT src = {tempTile.m_nTileNumber % (m_nTilesetWidth) * tempTile.m_nWidth,
 							tempTile.m_nTileNumber / (m_nTilesetWidth) * tempTile.m_nHeight,
 							0, 0};
+						src.left += tempTile.m_nTileNumber % (m_nTilesetWidth);
+						src.top += tempTile.m_nTileNumber / (m_nTilesetWidth);
 						src.bottom = src.top + tempTile.m_nHeight;
 						src.right = src.left + tempTile.m_nWidth;
 						CSGD_TextureManager::GetInstance()->Draw(m_nTilesetImageID, tempTile.m_nLeft - (int)CGame::GetInstance()->GetCamera()->GetX(), tempTile.m_nTop - (int)CGame::GetInstance()->GetCamera()->GetY(), 1.0f, 1.0f, &src, 0.0f, 0.0f, 0.0f);

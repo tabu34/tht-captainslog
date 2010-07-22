@@ -778,6 +778,7 @@ void CGamePlayState::Render(void)
 	CMovementControl::GetInstance()->RenderDragRect();
 	m_peEmitter.Render();
 	RenderHUD();
+	CPathManager::GetInstance()->RenderLines();
 	CMovementControl::GetInstance()->RenderCursor();
 }
 

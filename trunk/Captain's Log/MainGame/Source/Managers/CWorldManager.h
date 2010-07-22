@@ -44,6 +44,7 @@ private:
 	Tile*** m_World;
 	Object* m_Objects;
 	Blocker* m_Blockers;
+	vector<POINT> m_HelperNodes;
 	int m_nNumBlockers;
 
 	int m_nWorldHeight;
@@ -66,8 +67,10 @@ public:
 	Blocker* GetBlockers() { return m_Blockers; }
 	int		GetNumBlockers(){ return m_nNumBlockers; }
 
-	int WorldHeight() const { return m_nWorldHeight * m_nTilesetHeight; }
-	int WorldWidth() const { return m_nWorldWidth * m_nTilesetWidth; }
+	vector<POINT>* GetHelperNodes() { return &m_HelperNodes; }
+
+	int WorldHeight() const { return m_nWorldHeight * 16; }
+	int WorldWidth() const { return m_nWorldWidth * 16; }
 
 	friend class CPathManager;
 };

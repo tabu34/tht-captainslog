@@ -40,6 +40,7 @@
             this.pnlTiles.Name = "pnlTiles";
             this.pnlTiles.Size = new System.Drawing.Size(516, 394);
             this.pnlTiles.TabIndex = 0;
+            this.pnlTiles.Paint += new System.Windows.Forms.PaintEventHandler(this.pnlTiles_Paint);
             this.pnlTiles.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pnlTiles_MouseClick);
             this.pnlTiles.Resize += new System.EventHandler(this.pnlTiles_Resize);
             // 

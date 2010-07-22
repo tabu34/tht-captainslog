@@ -5,6 +5,8 @@
 #include <queue>
 #include <stack>
 #include "..\SGD Wrappers\SGD_Math.h"
+#include "..\SGD Wrappers\CSGD_Direct3D.h"
+
 using std::stack;
 using std::queue;
 using std::map;
@@ -69,6 +71,13 @@ public:
 	vector<tNode*> GetPath(float fX1, float fY1, float fX2, float fY2);
 	bool CheckPath(float fX1, float fY1, float fX2, float fY2);
 	bool IsPointInside(POINT p);
+	void RenderLines()
+	{
+		for(size_t i=0; i<m_lstNodeList.size(); i++)
+		{
+			CSGD_Direct3D::GetInstance()->DrawLine(m_lstNodeList[i].fX, m_lstNodeList[i].fY, m_lstNodeList[i].fX + 1, m_lstNodeList[i].fY +1, 255, 255, 255);
+		}
+	}
 
 
 };

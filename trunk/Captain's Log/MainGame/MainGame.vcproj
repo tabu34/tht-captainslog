@@ -717,6 +717,14 @@
 				RelativePath=".\My Amplifier Results\r001hs\r001hs.ampl"
 				>
 			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r002hs\r002hs.ampl"
+				>
+			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r003hs\r003hs.ampl"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="My Inspector Results"

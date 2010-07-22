@@ -52,14 +52,14 @@ namespace Tile_Editor
             
             for (int i = 0; i <= tileset.m_nCols; i++)
             {
-                D3D.DrawLine(i * tileset.m_nWidth + pnlTiles.AutoScrollPosition.X, pnlTiles.AutoScrollPosition.Y, 
-                            i * tileset.m_nWidth + pnlTiles.AutoScrollPosition.X, pnlTiles.AutoScrollMinSize.Height + pnlTiles.AutoScrollPosition.Y, 0, 0, 0);
+                D3D.DrawLine(i * tileset.m_nWidth + pnlTiles.AutoScrollPosition.X + i, pnlTiles.AutoScrollPosition.Y,
+                            i * tileset.m_nWidth + pnlTiles.AutoScrollPosition.X + i, pnlTiles.AutoScrollMinSize.Height + pnlTiles.AutoScrollPosition.Y, 0, 0, 0);
             }
 
             for (int i = 0; i <= tileset.m_nRows; i++)
             {
-                D3D.DrawLine(pnlTiles.AutoScrollPosition.X, i * tileset.m_nHeight + pnlTiles.AutoScrollPosition.Y,
-                            pnlTiles.AutoScrollMinSize.Width + pnlTiles.AutoScrollPosition.X,
+                D3D.DrawLine(pnlTiles.AutoScrollPosition.X, i * tileset.m_nHeight + pnlTiles.AutoScrollPosition.Y + i,
+                            pnlTiles.AutoScrollMinSize.Width + pnlTiles.AutoScrollPosition.X + i,
                             i * tileset.m_nHeight + pnlTiles.AutoScrollPosition.Y, 0, 0, 0);
             }
 
@@ -121,6 +121,11 @@ namespace Tile_Editor
                     selectTile(this, new EventArgs());
                 }
             }
+        }
+
+        private void pnlTiles_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

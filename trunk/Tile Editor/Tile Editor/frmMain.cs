@@ -29,6 +29,7 @@ namespace Tile_Editor
         List<Layer> m_lLayers;      // All of the layers on the map
         List<Object> m_lObjects;    // All of the objects on the map
         List<Blocker> m_lBlockers;  // All of the blockers on the map
+        List<Point> m_lHelperNodes; // All of the helper nodes on the map
 
         Tileset m_Tiles;
 
@@ -38,14 +39,19 @@ namespace Tile_Editor
         String m_sFileName;
         String m_sFilePath;
 
+        int m_nOffsetX;
+        int m_nOffsetY;
+
         bool m_bUpdated;
         bool m_bLooping;
         bool m_bBlock;
+        bool m_bHelperNode;
 
         int m_nCurrentLayer;
         int m_nCurrentBlocker;
 
         selectedTile selected;
+
 
         public bool Looping
         {
@@ -73,7 +79,7 @@ namespace Tile_Editor
             optionsWindow.blockerAdded += new EventHandler(optionsWindow_blockerAdded);
             optionsWindow.blockerRemoved += new EventHandler(optionsWindow_blockerRemoved);
             optionsWindow.pointAddToggle += new EventHandler(optionsWindow_pointAddToggle);
-
+            optionsWindow.helperNodeAddToggle += new EventHandler(optionsWindow_helperNodeAddToggle);
             optionsWindow.Show();
 
             MTM = ManagedTextureManager.Instance;
@@ -81,6 +87,8 @@ namespace Tile_Editor
 
             m_nMapWidth = 256;
             m_nMapHeight = 256;
+            m_nOffsetY = 1;
+            m_nOffsetX = 1;
             m_sFileName = @"Resource\Graphics\tilesetpok.png";
             m_sFilePath = Path.Combine(Environment.CurrentDirectory, m_sFileName);
 
@@ -88,7 +96,7 @@ namespace Tile_Editor
             m_lOldLayers = new List<Layer>();
             m_lObjects = new List<Object>();
             m_lBlockers = new List<Blocker>();
-
+            m_lHelperNodes = new List<Point>();
             m_Tiles = new Tileset();
             
             m_Tiles.m_nImageID = MTM.LoadTexture(m_sFilePath, 0);
@@ -123,6 +131,7 @@ namespace Tile_Editor
             tileWindow.SetTileset(m_Tiles);
 
             m_bBlock = false;
+            m_bHelperNode = false;
 
             SyncBackup();
             m_bUpdated = true;
@@ -165,7 +174,7 @@ namespace Tile_Editor
                         }
                         if (m_lLayers[l].m_tTiles[i, j].m_nTileNumber != -1)
                         {
-                            src = new Rectangle((m_lLayers[l].m_tTiles[i, j].m_nTileNumber % m_Tiles.m_nCols) * m_lLayers[l].m_tTiles[i, j].m_nWidth, (m_lLayers[l].m_tTiles[i, j].m_nTileNumber / m_Tiles.m_nCols) * m_lLayers[l].m_tTiles[i, j].m_nHeight, m_lLayers[l].m_tTiles[i, j].m_nWidth, m_lLayers[l].m_tTiles[i, j].m_nHeight);
+                            src = new Rectangle((m_lLayers[l].m_tTiles[i, j].m_nTileNumber % m_Tiles.m_nCols) * m_lLayers[l].m_tTiles[i, j].m_nWidth + (m_lLayers[l].m_tTiles[i, j].m_nTileNumber % m_Tiles.m_nCols), (m_lLayers[l].m_tTiles[i, j].m_nTileNumber / m_Tiles.m_nCols) * m_lLayers[l].m_tTiles[i, j].m_nHeight + (m_lLayers[l].m_tTiles[i, j].m_nTileNumber / m_Tiles.m_nCols), m_lLayers[l].m_tTiles[i, j].m_nWidth, m_lLayers[l].m_tTiles[i, j].m_nHeight);
                             MTM.Draw(m_Tiles.m_nImageID, m_lLayers[l].m_tTiles[i, j].m_nLeft + pnlWorld.AutoScrollPosition.X, m_lLayers[l].m_tTiles[i, j].m_nTop + pnlWorld.AutoScrollPosition.Y, 1.0f, 1.0f, src, 0, 0, 0.0f, 0);
                         }
                     }
@@ -206,7 +215,7 @@ namespace Tile_Editor
         {
             Point location = e.Location;
             
-            if (m_bBlock == false)
+            if (m_bBlock == false && m_bHelperNode == false)
             {
                 location.X = (location.X + (location.X / (pnlWorld.Width / 20)) - pnlWorld.AutoScrollPosition.X) / (selected.rect.Right - selected.rect.Left);
                 location.Y = (location.Y + (location.Y / (pnlWorld.Height / 20)) - pnlWorld.AutoScrollPosition.Y) / (selected.rect.Bottom - selected.rect.Top);
@@ -230,7 +239,8 @@ namespace Tile_Editor
                     }
                 }
             }
-            else
+            
+            if(m_bBlock == true && m_bHelperNode == false)
             {
                 location.X = (location.X + (location.X / (pnlWorld.Width / 20)) - pnlWorld.AutoScrollPosition.X);
                 location.Y = (location.Y + (location.Y / (pnlWorld.Height / 20)) - pnlWorld.AutoScrollPosition.Y);
@@ -243,11 +253,25 @@ namespace Tile_Editor
                     m_lBlockers[m_nCurrentBlocker].m_Points.Add(tempPoint);
                 }
             }
+
+            if (m_bHelperNode == true && m_bBlock == false)
+            {
+                location.X = (location.X + (location.X / (pnlWorld.Width / 20)) - pnlWorld.AutoScrollPosition.X);
+                location.Y = (location.Y + (location.Y / (pnlWorld.Height / 20)) - pnlWorld.AutoScrollPosition.Y);
+
+                if (location.X >= 0 && location.X < m_nMapWidth * 16 && location.Y >= 0 && location.Y < m_nMapHeight * 16)
+                {
+                    Point tempPoint = new Point();
+                    tempPoint.X = location.X;
+                    tempPoint.Y = location.Y;
+                    m_lHelperNodes.Add(tempPoint);
+                }
+            }
         }
 
         private void pnlWorld_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left && m_bBlock == false)
+            if (e.Button == MouseButtons.Left && m_bBlock == false && m_bHelperNode == false)
             {
                 pnlWorld_MouseClick(sender, e);
             }
@@ -396,6 +420,12 @@ namespace Tile_Editor
             m_bBlock = !m_bBlock;
         }
 
+        void optionsWindow_helperNodeAddToggle(object sender, EventArgs e)
+        {
+            frmOptions window = (frmOptions)sender;
+            m_bHelperNode = !m_bHelperNode;
+        }
+
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog dlg = new SaveFileDialog();
@@ -431,6 +461,13 @@ namespace Tile_Editor
                             }
                         }
 
+                        binWriter.Write(m_lHelperNodes.Count);
+                        for (int i = 0; i < m_lHelperNodes.Count; i++)
+                        {
+                            binWriter.Write(m_lHelperNodes[i].X);
+                            binWriter.Write(m_lHelperNodes[i].Y);
+                        }
+
                         binWriter.Write(m_lBlockers.Count);
                         for (int i = 0; i < m_lBlockers.Count; i++)
                         {
@@ -442,13 +479,8 @@ namespace Tile_Editor
                             }
                         }
                         
-                        binWriter.Write(m_lObjects.Count);
-                        for (int i = 0; i < m_lObjects.Count; i++)
-                        {
-                            binWriter.Write(m_lObjects[i].m_nTop);
-                            binWriter.Write(m_lObjects[i].m_nLeft);
-                            binWriter.Write(m_lObjects[i].m_nID);
-                        }
+
+
                     }
                 }
                 else
@@ -559,20 +591,15 @@ namespace Tile_Editor
                     m_lLayers.Add(tempLayer);
                 }
 
-                int objectCount = binReader.ReadInt32();
 
-                m_lObjects.RemoveRange(0, m_lObjects.Count);
-                m_lObjects = new List<Object>();
-
-                for (int i = 0; i < objectCount; i++)
+                int helperNodeCount = binReader.ReadInt32();
+                m_lHelperNodes.Clear();
+                for (int i = 0; i < helperNodeCount; i++)
                 {
-                    Object tempObject = new Object();
-
-                    tempObject.m_nTop = binReader.ReadInt32();
-                    tempObject.m_nLeft = binReader.ReadInt32();
-                    tempObject.m_nID = binReader.ReadInt32();
-
-                    m_lObjects.Add(tempObject);
+                    Point tempPoint = new Point();
+                    tempPoint.X = binReader.ReadInt32();
+                    tempPoint.Y = binReader.ReadInt32();
+                    m_lHelperNodes.Add(tempPoint);
                 }
 
                 int blockerCount = binReader.ReadInt32();
@@ -586,6 +613,8 @@ namespace Tile_Editor
                         tempPoint.Y = binReader.ReadInt32();
                     }
                 }
+
+
             }
             optionsWindow.SetInfo(m_nMapHeight, m_nMapWidth, m_Tiles.m_nRows, m_Tiles.m_nCols, m_Tiles.m_nWidth, m_Tiles.m_nHeight, 0);
             optionsWindow.SetLayers(m_lLayers.Count);
@@ -768,6 +797,18 @@ namespace Tile_Editor
         {
             Undo();
         }
+
+        private void fillToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            for(int x = 0; x < m_nMapWidth; x++)
+                for (int y = 0; y < m_nMapHeight; y++)
+                {
+                    m_lLayers[m_nCurrentLayer].m_tTiles[x, y].m_nWidth = selected.rect.Width;
+                    m_lLayers[m_nCurrentLayer].m_tTiles[x, y].m_nHeight = selected.rect.Height;
+                    m_lLayers[m_nCurrentLayer].m_tTiles[x, y].m_nTileNumber = selected.tileNumber;
+                }
+        }
+
     }
 
     public struct selectedTile

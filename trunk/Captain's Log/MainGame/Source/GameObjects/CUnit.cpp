@@ -88,6 +88,7 @@ void CUnit::OrderMove( int _x, int _y)
 		else
 			m_nState = UNIT_IDLE;
 	}
+
 }
 
 void CUnit::OrderAttack(CUnit* pTarget)
@@ -152,12 +153,12 @@ void CUnit::Update(float fElapsedTime)
 		else
 			VelY(-MovementSpeed());
 
-		if(fabs(PosX() - m_pDestinationMove.x) < 1.0f)
+		if(fabs(PosX() - m_pDestinationMove.x) < 3.0f)
 		{
 			VelX(0.0f);
 		}
 
-		if(fabs(PosY() - m_pDestinationMove.y) < 1.0f)
+		if(fabs(PosY() - m_pDestinationMove.y) < 3.0f)
 		{
 			VelY(0.0f);
 		}
@@ -296,6 +297,13 @@ void CUnit::Render()
 		CSGD_Direct3D::GetInstance()->DrawLine(int(PosX() - CGame::GetInstance()->GetCamera()->GetX()), int(PosY() - CGame::GetInstance()->GetCamera()->GetY()), int(m_pTarget->PosX() - CGame::GetInstance()->GetCamera()->GetX()), int(m_pTarget->PosY() - CGame::GetInstance()->GetCamera()->GetY()), 255, 255, 255);
 	}
 	//END
+
+	// DRAW DIRECTIONS
+	for(int i = 0; i < m_vDirections.size(); i++)
+	{
+		if(i+1 < m_vDirections.size())
+			CSGD_Direct3D::GetInstance()->DrawLine(int(m_vDirections[i]->fX - CGame::GetInstance()->GetCamera()->GetX()), int(m_vDirections[i]->fY - CGame::GetInstance()->GetCamera()->GetY()), int(m_vDirections[i+1]->fX - CGame::GetInstance()->GetCamera()->GetX()), int(m_vDirections[i+1]->fY - CGame::GetInstance()->GetCamera()->GetY()), 255, 255, 255);
+	}
 }
 
 int CUnit::DistanceSquared(int nOtherPosX, int nOtherPosY)
