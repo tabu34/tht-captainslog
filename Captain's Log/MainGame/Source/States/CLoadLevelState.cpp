@@ -61,7 +61,8 @@ void CLoadLevelState::Load()
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\firebat\\firebat.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\medic\\medic.bin").c_str(), D3DCOLOR_XRGB(0, 255, 255));
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\ghost\\ghost.bin").c_str(), D3DCOLOR_XRGB(0, 255, 255));
-	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\tempenemy\\tempenemy.bin").c_str(), D3DCOLOR_XRGB(0, 255, 255));
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\cyclops\\cyclops.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\colossus\\colossus.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
 
 	// Do all our loading
 	if(m_nLevelNum == 1)

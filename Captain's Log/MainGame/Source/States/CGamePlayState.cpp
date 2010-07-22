@@ -697,15 +697,31 @@ void CGamePlayState::RenderHUD(void)
 				{
 				case CUnit::PLAYER_MARINE:
 					RenderLargeShadowText("  Marine", 284, 852);
+					sprintf_s(buff, 128, "%.0f", (*pUnit->Abilities())[0]->Cooldown() - (*pUnit->Abilities())[0]->TimePassed());
+					RenderLargeShadowText(buff, 1129, 768);
+					sprintf_s(buff, 128, "%.0f", (*pUnit->Abilities())[1]->Cooldown() - (*pUnit->Abilities())[1]->TimePassed());
+					RenderLargeShadowText(buff, 1193, 768);
 					break;
 				case CUnit::PLAYER_HEAVY:
 					RenderLargeShadowText("  Heavy", 284, 852);
+					sprintf_s(buff, 128, "%.0f", (*pUnit->Abilities())[0]->Cooldown() - (*pUnit->Abilities())[0]->TimePassed());
+					RenderLargeShadowText(buff, 1129, 768);
+					sprintf_s(buff, 128, "%.0f", (*pUnit->Abilities())[1]->Cooldown() - (*pUnit->Abilities())[1]->TimePassed());
+					RenderLargeShadowText(buff, 1193, 768);
 					break;
 				case CUnit::PLAYER_MEDIC:
 					RenderLargeShadowText("  Medic", 284, 852);
+					sprintf_s(buff, 128, "%.0f", (*pUnit->Abilities())[0]->Cooldown() - (*pUnit->Abilities())[0]->TimePassed());
+					RenderLargeShadowText(buff, 1129, 768);
+					sprintf_s(buff, 128, "%.0f", (*pUnit->Abilities())[1]->Cooldown() - (*pUnit->Abilities())[1]->TimePassed());
+					RenderLargeShadowText(buff, 1193, 768);
 					break;
 				case CUnit::PLAYER_SCOUT:
 					RenderLargeShadowText("  Scout", 284, 852);
+					sprintf_s(buff, 128, "%.0f", (*pUnit->Abilities())[0]->Cooldown() - (*pUnit->Abilities())[0]->TimePassed());
+					RenderLargeShadowText(buff, 1129, 768);
+					sprintf_s(buff, 128, "%.0f", (*pUnit->Abilities())[1]->Cooldown() - (*pUnit->Abilities())[1]->TimePassed());
+					RenderLargeShadowText(buff, 1193, 768);
 					break;
 				}
 			}
@@ -979,7 +995,7 @@ void CGamePlayState::InitHud()
 
 
 	//////////////////////////////////////////////////////////////////////////
-	m_vButtons.push_back(CHUDButton(577, 752, 64, 64, "Item1", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/7.png").c_str())));
+	m_vButtons.push_back(CHUDButton(577, 752, 64, 64, "Item1", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/7.png").c_str()), false));
 	CItem* BookOfHaste = CItemFactory::GetInstance()->CreateItem("Book of Haste");
 	//////////////////////////////////////////////////////////////////////////
 
