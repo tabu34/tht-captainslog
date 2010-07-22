@@ -67,7 +67,7 @@ void CLoadLevelState::Load()
 	// Do all our loading
 	if(m_nLevelNum == 1)
 	{
-		CWorldManager::GetInstance()->Load("Resource//Graphics//Intro Level Take 2.mfl");
+		CWorldManager::GetInstance()->Load("Resource//Graphics//lvl1-2.mfl");
 
 		CMarine* alliedMarine = new CMarine();
 		CHeavy*  alliedHeavy  = new CHeavy();

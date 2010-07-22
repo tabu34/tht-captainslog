@@ -21,6 +21,7 @@ namespace Tile_Editor
         int m_nSelectedBlocker;
         int m_nSelectedPoint;
         bool m_bBlock;
+        bool m_bHelperNode;
 
         public int MapRows
         {
@@ -72,6 +73,11 @@ namespace Tile_Editor
             get { return m_bBlock; }
             set { m_bBlock = value; }
         }
+        public bool Helper
+        {
+            get { return m_bHelperNode; }
+            set { m_bHelperNode = value; }
+        }
 
         public event EventHandler optionsChanged;
 
@@ -81,8 +87,8 @@ namespace Tile_Editor
         public event EventHandler blockerAdded;
         public event EventHandler blockerRemoved;
         public event EventHandler pointAddToggle;
-
-
+        public event EventHandler helperNodeAddToggle;
+    
         public frmOptions()
         {
             InitializeComponent();
@@ -273,6 +279,26 @@ namespace Tile_Editor
             if (pointAddToggle != null)
             {
                 pointAddToggle(this, new EventArgs());
+            }
+        }
+
+
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (m_bHelperNode)
+            {
+                button1.BackColor = Color.White;
+            }
+            else
+            {
+                button1.BackColor = Color.Red;
+            }
+            m_bHelperNode = !m_bHelperNode;
+
+            if (helperNodeAddToggle != null)
+            {
+                helperNodeAddToggle(this, new EventArgs());
             }
         }
     }
