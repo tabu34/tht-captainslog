@@ -74,9 +74,9 @@ public:
 	{
 		Type(0);
 		Target(tar);
-		TimePassed(60);
-		Cooldown(60);
-		Duration(15);
+		TimePassed(30);
+		Cooldown(30);
+		Duration(7);
 		IsActive(false);
 	}
 
@@ -143,6 +143,8 @@ class CAbility_StunGrenade : public CLocationAbility
 public:
 	CAbility_StunGrenade()
 	{
+		TimePassed(30);
+		Cooldown(30);
 		Range(150);
 	}
 

@@ -55,6 +55,7 @@ class CUnit : public CBase
 public:
 		enum { UNIT_IDLE, UNIT_MOVING, UNIT_MOVING_ATTACK, UNIT_ATTACK, UNIT_FIRE };
 		enum { ENEMY_NULL, ENEMY_BASIC, ENEMY_BOSS, ENEMY_MAX };
+		enum { PLAYER_NULL, PLAYER_MARINE, PLAYER_HEAVY, PLAYER_MEDIC, PLAYER_SCOUT };
 	CUnit();
 	virtual void Update(float fElapsedTime);
 	virtual void Render();

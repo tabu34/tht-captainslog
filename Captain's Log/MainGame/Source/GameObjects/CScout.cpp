@@ -5,6 +5,7 @@
 CScout::CScout()
 {
 	Type(OBJ_PLAYER);
+	SubType(PLAYER_SCOUT);
 	PosX(0);
 	PosY(0);
 	VelX(0);

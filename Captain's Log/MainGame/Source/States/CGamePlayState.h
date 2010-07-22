@@ -10,17 +10,14 @@
 #define _THEGAMEPLAYGAMESTATE_H_
 
 #include "IGameState.h"
-#include "..\GameObjects\CPlayerUnit.h"
-#include "..\GameObjects\CBMPFont.h"
-#include <vector>
-#include "..\GameObjects\CItem.h"
 #include "..\Managers\CMessageSystem.h"
-using namespace std;
-
+#include "..\GameObjects\CParticleEmitter.h"
+#include "..\GameObjects\CBMPFont.h"
+#include "..\GameObjects\CPlayerUnit.h"
+#include "..\GameObjects\CItem.h"
+#include <vector>
 #include <string>
 using namespace std;
-
-#include "..\GameObjects\CParticleEmitter.h"
 
 class CHUDButton
 {
@@ -140,6 +137,10 @@ public:
 	void ClearCommand(){m_szSelectedCommand="";}
 	void SetCommand(string val) { m_szSelectedCommand = val; }
 	void RenderMiniMap();
+	void InitHud();
+	bool CheckButtonInput();
+	
+	void CheckCheats();
 
 	void LoadProfile(int nOffsetInBytes);
 	float GetTime(){return m_fTotalGameTime;}

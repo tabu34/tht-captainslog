@@ -5,6 +5,7 @@
 CMedic::CMedic()
 {
 	Type(OBJ_PLAYER);
+	SubType(PLAYER_MEDIC);
 	PosX(0);
 	PosY(0);
 	VelX(0);
