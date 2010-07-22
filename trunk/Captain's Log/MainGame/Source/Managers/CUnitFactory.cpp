@@ -255,4 +255,51 @@ void CUnitFactory::RegisterItems()
 		m_UnitTemplates.insert(objDef);
 	}
 
+	// Colossus
+	{
+		pair<string, CUnit*> objDef;
+
+		CUnit* Colossus = new CBasicEnemy();
+		Colossus->Armor(35);
+		Colossus->AttackDamage(15);
+		Colossus->AttackRange(50);
+		Colossus->AttackSpeed(2);
+		Colossus->Burned(false);
+		Colossus->Cloaked(false);
+		Colossus->MaxHealth(200);
+		Colossus->CurHealth(Colossus->MaxHealth());
+		Colossus->Invulnerable(false);
+		Colossus->MovementSpeed(75);
+		Colossus->Ranged(false);
+		Colossus->Selected(false);
+		Colossus->SightRange(300);
+		Colossus->Stunned(false);
+		Colossus->CurDirection();
+		Colossus->State(CUnit::UNIT_IDLE);
+		((CBasicEnemy*)Colossus)->SetMirrored(false);
+
+		Colossus->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Colossus-Walk-N"));
+		Colossus->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Colossus-Walk-NE"));
+		Colossus->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Colossus-Walk-E"));
+		Colossus->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Colossus-Walk-SE"));
+		Colossus->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Colossus-Walk-S"));
+		Colossus->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Colossus-Walk-SW"));
+		Colossus->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Colossus-Walk-W"));
+		Colossus->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Colossus-Walk-NW"));
+
+		Colossus->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Colossus-Attack-N"));
+		Colossus->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Colossus-Attack-NE"));
+		Colossus->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Colossus-Attack-E"));
+		Colossus->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Colossus-Attack-SE"));
+		Colossus->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Colossus-Attack-S"));
+		Colossus->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Colossus-Attack-SW"));
+		Colossus->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Colossus-Attack-W"));
+		Colossus->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Colossus-Attack-NW"));
+
+		objDef.first = "Colossus";
+		objDef.second = Colossus;
+
+		m_UnitTemplates.insert(objDef);
+	}
+
 }

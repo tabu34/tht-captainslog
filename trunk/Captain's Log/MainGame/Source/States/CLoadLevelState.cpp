@@ -106,6 +106,12 @@ void CLoadLevelState::Load()
 		Cyclops->PosY(200);
 		CObjectManager::GetInstance()->AddObject(Cyclops);
 
+		CBasicEnemy* Colossus = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Colossus");
+		Colossus->Type(CBase::OBJ_ENEMY);
+		Colossus->PosX(900);
+		Colossus->PosY(200);
+		CObjectManager::GetInstance()->AddObject(Colossus);
+
 
 		CBasicEnemy* FElemental = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Fire Elemental");
 		FElemental->Type(CBase::OBJ_ENEMY);
