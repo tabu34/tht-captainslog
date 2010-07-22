@@ -9,7 +9,7 @@
 CBasicEnemy::CBasicEnemy()
 {
 	SubType(ENEMY_BASIC);
-
+	SetMirrored(true);
 }
 
 void CBasicEnemy::Update( float fElapsedTime )
@@ -20,7 +20,6 @@ void CBasicEnemy::Update( float fElapsedTime )
 	bool found = false;
 
 	Target(NULL);
-
 
 	for (unsigned int i = 0; i < CCollisionManager::GetInstance()->Players()->size(); i++)
 	{
@@ -37,52 +36,10 @@ void CBasicEnemy::Update( float fElapsedTime )
 		}
 	}
 
-
-	//currentObjDistance = DistanceSquared((int)CMovementControl::GetInstance()->Marine()->PosX(), (int)CMovementControl::GetInstance()->Marine()->PosY());
-	//if (currentObjDistance < sightRangeSqrd)
-	//{
-	//	if (currentObjDistance < closestDistance)
-	//	{
-	//		closestDistance = currentObjDistance;
-	//		Target(CMovementControl::GetInstance()->Marine());
-	//		found = true;
-	//	}
-	//}
-
-	//currentObjDistance = DistanceSquared((int)CMovementControl::GetInstance()->Medic()->PosX(), (int)CMovementControl::GetInstance()->Medic()->PosY());
-	//if (currentObjDistance < sightRangeSqrd)
-	//{
-	//	if (currentObjDistance < closestDistance)
-	//	{
-	//		closestDistance = currentObjDistance;
-	//		Target(CMovementControl::GetInstance()->Medic());
-	//		found = true;
-	//	}
-	//}
-
-	//currentObjDistance = DistanceSquared((int)CMovementControl::GetInstance()->Heavy()->PosX(), (int)CMovementControl::GetInstance()->Heavy()->PosY());
-	//if (currentObjDistance < sightRangeSqrd)
-	//{
-	//	if (currentObjDistance < closestDistance)
-	//	{
-	//		closestDistance = currentObjDistance;
-	//		Target(CMovementControl::GetInstance()->Heavy());
-	//		found = true;
-	//	}
-	//}
-
-	//currentObjDistance = DistanceSquared((int)CMovementControl::GetInstance()->Scout()->PosX(), (int)CMovementControl::GetInstance()->Scout()->PosY());
-	//if (currentObjDistance < sightRangeSqrd && !CMovementControl::GetInstance()->Scout()->Cloaked())
-	//{
-	//	if (currentObjDistance < closestDistance)
-	//	{
-	//		closestDistance = currentObjDistance;
-	//		Target(CMovementControl::GetInstance()->Scout());
-	//		found = true;
-	//	}
-	//}
 	if (!found)
+	{
 		State(UNIT_IDLE);
+	}
 
 	if (Target() != NULL && State() != UNIT_ATTACK && State() != UNIT_FIRE)
 	{
@@ -92,7 +49,18 @@ void CBasicEnemy::Update( float fElapsedTime )
 
 	CUnit::Update(fElapsedTime);
 
+	if ((*Animations()).size() == 7)
+	{
+		Update7(fElapsedTime);
+	}
+	else
+	{
+		Update16(fElapsedTime);
+	}
+}
 
+void CBasicEnemy::Update7(float fElapsedTime)
+{
 	if(VelX() == 0.0f && VelY() < 0.0f)
 	{
 		CurDirection(0);
@@ -126,30 +94,91 @@ void CBasicEnemy::Update( float fElapsedTime )
 		CurDirection(7);
 	}
 
-	if (CurDirection() < 5)
+	if (m_bMirrored)
 	{
-		CAnimationManager::GetInstance()->GetAnimation((*Animations())[CurDirection()])->anAnimation.Update(fElapsedTime);
-	}
-	else if (CurDirection() == 5)
-	{
-		CAnimationManager::GetInstance()->GetAnimation((*Animations())[3])->anAnimation.Update(fElapsedTime);
-	}
-	else if (CurDirection() == 6)
-	{
-		CAnimationManager::GetInstance()->GetAnimation((*Animations())[2])->anAnimation.Update(fElapsedTime);
+		if (CurDirection() < 5)
+		{
+			CAnimationManager::GetInstance()->GetAnimation((*Animations())[CurDirection()])->anAnimation.Update(fElapsedTime);
+		}
+		else if (CurDirection() == 5)
+		{
+			CAnimationManager::GetInstance()->GetAnimation((*Animations())[3])->anAnimation.Update(fElapsedTime);
+		}
+		else if (CurDirection() == 6)
+		{
+			CAnimationManager::GetInstance()->GetAnimation((*Animations())[2])->anAnimation.Update(fElapsedTime);
+		}
+		else
+		{
+			CAnimationManager::GetInstance()->GetAnimation((*Animations())[1])->anAnimation.Update(fElapsedTime);
+		}
 	}
 	else
 	{
-		CAnimationManager::GetInstance()->GetAnimation((*Animations())[1])->anAnimation.Update(fElapsedTime);
+		CAnimationManager::GetInstance()->GetAnimation((*Animations())[CurDirection()])->anAnimation.Update(fElapsedTime);
 	}
+}
 
-
-
+void CBasicEnemy::Update16(float fElapsedTime)
+{
+	if(VelX() == 0.0f && VelY() < 0.0f)
+	{
+		CurDirection(0);
+	} 
+	else if(VelX() > 0.0f && VelY() < 0.0f)
+	{
+		CurDirection(1);
+	} 
+	else if(VelX() > 0.0f && VelY() == 0.0f)
+	{
+		CurDirection(2);
+	} 
+	else if(VelX() > 0.0f && VelY() > 0.0f)
+	{
+		CurDirection(3);
+	} 
+	else if(VelX() == 0.0f && VelY() > 0.0f)
+	{
+		CurDirection(4);
+	} 
+	else if(VelX() < 0.0f && VelY() > 0.0f)
+	{
+		CurDirection(5);
+	} 
+	else if(VelX() < 0.0f && VelY() == 0.0f)
+	{
+		CurDirection(6);
+	} 
+	else if(VelX() < 0.0f && VelY() < 0.0f)
+	{
+		CurDirection(7);
+	}
+	if (State() < 3)
+	{
+		CAnimationManager::GetInstance()->GetAnimation((*Animations())[CurDirection()])->anAnimation.Update(fElapsedTime);
+	}
+	else
+	{
+		CAnimationManager::GetInstance()->GetAnimation((*Animations())[CurDirection() + 7])->anAnimation.Update(fElapsedTime);
+	}
 }
 
 void CBasicEnemy::Render()
 {
 	CUnit::Render();
+
+	if ((*Animations()).size() == 7)
+	{
+		Render7();
+	}
+	else
+	{
+		Render16();
+	}
+}
+
+void CBasicEnemy::Render7()
+{
 	bool flipped = false;
 	DWORD dwColor = D3DCOLOR_XRGB(255, 0, 0);
 
@@ -262,6 +291,23 @@ void CBasicEnemy::Render()
 		}
 		CAnimationManager::GetInstance()->GetAnimation((*Animations())[6])->anAnimation.Render((int)PosX() - (int)CGame::GetInstance()->GetCamera()->GetX(), (int)PosY() - (int)CGame::GetInstance()->GetCamera()->GetY(), flipped, 2.0f, dwColor);
 	}
-
 }
 
+void CBasicEnemy::Render16()
+{
+	if (State() == 0)
+	{
+		CAnimationManager::GetInstance()->GetAnimation((*Animations())[CurDirection()])->anAnimation.CurFrame(0);
+		CAnimationManager::GetInstance()->GetAnimation((*Animations())[CurDirection()])->anAnimation.Render((int)PosX() - (int)CGame::GetInstance()->GetCamera()->GetX(), (int)PosY() - (int)CGame::GetInstance()->GetCamera()->GetY(), false, 0.75f);
+	}
+	else if (State() == 1 || State() == 2)
+	{
+		CAnimationManager::GetInstance()->GetAnimation((*Animations())[CurDirection()])->anAnimation.Play();
+		CAnimationManager::GetInstance()->GetAnimation((*Animations())[CurDirection()])->anAnimation.Render((int)PosX() - (int)CGame::GetInstance()->GetCamera()->GetX(), (int)PosY() - (int)CGame::GetInstance()->GetCamera()->GetY(), false, 0.75f);
+	}
+	else if (State() == 3 || State() == 4)
+	{
+		CAnimationManager::GetInstance()->GetAnimation((*Animations())[CurDirection() + 7])->anAnimation.Play();
+		CAnimationManager::GetInstance()->GetAnimation((*Animations())[CurDirection() + 7])->anAnimation.Render((int)PosX() - (int)CGame::GetInstance()->GetCamera()->GetX(), (int)PosY() - (int)CGame::GetInstance()->GetCamera()->GetY(), false, 0.75f);
+	}
+}
