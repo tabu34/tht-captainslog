@@ -55,7 +55,7 @@ public:
 	void Initialize();
 };
 
-class CHydra : public CUnit
+class CColossus : public CUnit
 {
 public:
 	void Update(float fElapsedTime);

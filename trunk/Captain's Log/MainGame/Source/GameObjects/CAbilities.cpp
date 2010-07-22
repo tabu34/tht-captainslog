@@ -20,7 +20,15 @@ void CAbility_DefensiveMatrix::Deactivate()
 
 void CAbility_DefensiveMatrix::Update(float fElapsedTime)
 {
-	TimePassed(TimePassed() + fElapsedTime);
+
+	if (TimePassed() < Cooldown())
+	{
+		TimePassed(TimePassed() + fElapsedTime);
+	}
+	else
+	{
+		TimePassed(Cooldown());
+	}
 
 	if (IsActive() && TimePassed() > Duration())
 	{
@@ -47,7 +55,14 @@ void CAbility_PinningShot::Deactivate()
 
 void CAbility_PinningShot::Update(float fElapsedTime)
 {
-	TimePassed(TimePassed() + fElapsedTime);
+	if (TimePassed() < Cooldown())
+	{
+		TimePassed(TimePassed() + fElapsedTime);
+	}
+	else
+	{
+		TimePassed(Cooldown());
+	}
 
 	if (IsActive() && TimePassed() > Duration())
 	{
@@ -80,7 +95,14 @@ void CAbility_Refresh::Activate()
 
 void CAbility_Refresh::Update(float fElapsedTime)
 {
-	TimePassed(TimePassed() + fElapsedTime);
+	if (TimePassed() < Cooldown())
+	{
+		TimePassed(TimePassed() + fElapsedTime);
+	}
+	else
+	{
+		TimePassed(Cooldown());
+	}
 }
 
 void CAbility_Overdrive::Activate()
@@ -102,7 +124,14 @@ void CAbility_Overdrive::Deactivate()
 
 void CAbility_Overdrive::Update(float fElapsedTime)
 {
-	TimePassed(TimePassed() + fElapsedTime);
+	if (TimePassed() < Cooldown())
+	{
+		TimePassed(TimePassed() + fElapsedTime);
+	}
+	else
+	{
+		TimePassed(Cooldown());
+	}
 
 	if (IsActive() && TimePassed() > Duration())
 	{
@@ -128,7 +157,14 @@ void CAbility_ArmorLockdown::Deactivate()
 
 void CAbility_ArmorLockdown::Update(float fElapsedTime)
 {
-	TimePassed(TimePassed() + fElapsedTime);
+	if (TimePassed() < Cooldown())
+	{
+		TimePassed(TimePassed() + fElapsedTime);
+	}
+	else
+	{
+		TimePassed(Cooldown());
+	}
 
 	if (IsActive() && TimePassed() > Duration())
 	{
@@ -138,7 +174,7 @@ void CAbility_ArmorLockdown::Update(float fElapsedTime)
 
 void CAbility_StunGrenade::Activate()
 {
-	if (TimePassed() >= Cooldown())
+	if (TimePassed() > Cooldown())
 	{
 		for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
 		{
@@ -158,7 +194,14 @@ void CAbility_StunGrenade::Activate()
 
 void CAbility_StunGrenade::Update(float fElapsedTime)
 {
-	TimePassed(TimePassed() + fElapsedTime);
+	if (TimePassed() < Cooldown())
+	{
+		TimePassed(TimePassed() + fElapsedTime);
+	}
+	else
+	{
+		TimePassed(Cooldown());
+	}
 }
 
 void CAbility_RocketBarrage::Activate()
@@ -181,5 +224,12 @@ void CAbility_RocketBarrage::Activate()
 
 void CAbility_RocketBarrage::Update(float fElapsedTime)
 {
-	TimePassed(TimePassed() + fElapsedTime);
+	if (TimePassed() < Cooldown())
+	{
+		TimePassed(TimePassed() + fElapsedTime);
+	}
+	else
+	{
+		TimePassed(Cooldown());
+	}
 }
