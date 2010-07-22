@@ -14,6 +14,7 @@ DefaultDirName={pf}\Captain's Log
 DefaultGroupName=Captain's Log
 DisableProgramGroupPage=yes
 OutputBaseFilename=Captain's Log Install
+SetupIconFile=C:\Users\Danny\Documents\FullSail\SGP -- Structure of Game Production\Captain's Log\Code Repo\Captain's Log\Logo16bit.ico
 Compression=lzma
 SolidCompression=yes
 
