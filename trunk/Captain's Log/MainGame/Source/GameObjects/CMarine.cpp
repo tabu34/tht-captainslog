@@ -7,6 +7,7 @@
 CMarine::CMarine()
 {
 	Type(OBJ_PLAYER);
+	SubType(PLAYER_MARINE);
 	PosX(0);
 	PosY(0);
 	VelX(0);

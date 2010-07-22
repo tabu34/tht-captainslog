@@ -29,7 +29,6 @@ using std::ifstream;
 
 void ActivateAbilityOne();
 void ActivateAbilityTwo();
-void ActivateAbilityThree();
 
 CGamePlayState::CGamePlayState(void)
 {
@@ -203,50 +202,12 @@ void CGamePlayState::LoadProfile(int nOffsetInBytes)
 void CGamePlayState::Enter(void)
 {
 	CMessageSystem::GetInstance()->InitMessageSystem(CGamePlayState::MessageProc);
+
+	InitHud();
+
+	// Assets
 	m_nGunshotSound = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("\\THT_gunshoot.wav").c_str(), FMOD_LOOP_OFF);
-
-
-	// Setup GUI
-	m_vButtons.push_back(CHUDButton(-76, 645, 2048, 512, "BottomHUD", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/0.png").c_str())));
-	m_vButtons.push_back(CHUDButton(270, 706, 256, 256, "UnitPortrait", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/1.png").c_str())));
-	m_vButtons.push_back(CHUDButton(274, 852, 256, 32, "PortraitNameLine", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/2.png").c_str())));
-	m_vButtons.push_back(CHUDButton(433, 728, 1024, 256, "MiddleHUDOutlines", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/3.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1113, 688, 64, 64, "MoveOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/7.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1177, 688, 64, 64, "AttackOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/8.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1243, 688, 64, 64, "HoldOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/9.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1357, 819, 64, 64, "CancelOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str())));
-	m_vButtons.push_back(CHUDButton(641, 0, 256, 64, "OverMenuButton", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/13.png").c_str())));
-	m_vButtons.push_back(CHUDButton(28, 480, 512, 256, "SpeechBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/14.png").c_str())));
-	m_vButtons.push_back(CHUDButton(32, 484, 128, 256, "SpeechSpeaker", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/15.png").c_str())));
-	m_vButtons.push_back(CHUDButton(37, 577, 128, 32, "SpeechSpeakerNameLine", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/16.png").c_str())));
-	m_vButtons.push_back(CHUDButton(41, 31, 256, 64, "ObjectivesSmallBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/17.png").c_str()), false));
-
-	m_vButtons.push_back(CHUDButton(1113, 752, 64, 64, "Ability 1", ActivateAbilityOne, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1177, 752, 64, 64, "Ability 2", ActivateAbilityTwo, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str())));
-
-	//////////////////////////////////////////////////////////////////////////
-	m_vButtons.push_back(CHUDButton(577, 752, 64, 64, "Item1", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/7.png").c_str())));
-	CItem* BookOfHaste = CItemFactory::GetInstance()->CreateItem("Book of Haste");
-	//////////////////////////////////////////////////////////////////////////
-
-	m_vButtons.push_back(CHUDButton(0, 0, 256, 64, "ToolTipBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/20.png").c_str()), false));
-
-	m_vButtons.push_back(CHUDButton(0, 0, 512, 32, "ObjectivesLargeBG-NoCheck", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/18.png").c_str()), false));
-	m_vButtons.push_back(CHUDButton(0, 0, 512, 32, "ObjectivesLargeBG-Check", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/19.png").c_str()), false));
-	
-	m_vButtonInstances = m_vButtons;
-
-	m_ftTextSmall.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.5f, 0.5f, 2, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(255, 255, 255));
- 	m_ftTextSmall.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
-	m_ftTextSmallShadow.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.5f, 0.5f, 2, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(0, 0, 0));
- 	m_ftTextSmallShadow.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
-	m_ftTextLarge.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.80f, 0.80f, 2, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(255, 255, 255));
- 	m_ftTextLarge.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
-	m_ftTextLargeShadow.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.80f, 0.80f, 2, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(0, 0, 0));
- 	m_ftTextLargeShadow.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
-
-
-
+	m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap.png").c_str());
 
 	//LoadNextLevel();
 
@@ -255,11 +216,6 @@ void CGamePlayState::Enter(void)
 	CObjectManager::GetInstance()->AddObject(CMovementControl::GetInstance()->Scout());
 	CObjectManager::GetInstance()->AddObject(CMovementControl::GetInstance()->Medic());
 
-	m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap.png").c_str());
-
-
-
-	
 
 	// Test Speech
 	m_nCurCount = 0;
@@ -268,10 +224,12 @@ void CGamePlayState::Enter(void)
 	// Camera
 	CGame::GetInstance()->GetCamera()->SetX( 0.0f );
 	CGame::GetInstance()->GetCamera()->SetY( 0.0f );
-	m_szCheatBuffer="                             ";
-	m_bEnteringCheat=false;
-	m_bGodMode=false;
-	m_bNoCooldown=false;
+
+	// Cheats
+	m_szCheatBuffer		= "                             ";
+	m_bEnteringCheat	= false;
+	m_bGodMode			= false;
+	m_bNoCooldown		= false;
 
 	m_fTotalGameTime = 0.0f;
 
@@ -295,15 +253,70 @@ void CGamePlayState::Exit(void)
 
 bool CGamePlayState::Input(void)
 {
-	// Tooltips
+	if(CheckButtonInput())
+	{
+		return true;
+	}
+
+	RECT mousePos, collide;
+	mousePos.left	= CMovementControl::GetInstance()->MousePosX();
+	mousePos.top	= CMovementControl::GetInstance()->MousePosY();
+	mousePos.right	= mousePos.left + 1;
+	mousePos.bottom	= mousePos.top + 1;
+
+	RECT rMiniMap = {5, 690, 260, 896};
+	
+	if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0) && IntersectRect(&collide, &rMiniMap, &mousePos))
+	{
+		float fPercent;
+		fPercent = (float)(mousePos.left - 5) / 255.0f;
+		
+		CGame::GetInstance()->GetCamera()->SetX(CWorldManager::GetInstance()->WorldWidth() * fPercent - (CGame::GetInstance()->GetScreenWidth() >> 1));
+
+		if(CGame::GetInstance()->GetCamera()->GetX() > CWorldManager::GetInstance()->WorldWidth() - CGame::GetInstance()->GetScreenWidth() )
+		{
+			CGame::GetInstance()->GetCamera()->SetX( float(CWorldManager::GetInstance()->WorldWidth() - CGame::GetInstance()->GetScreenWidth()) );
+		}
+		
+		fPercent = (float)(mousePos.top - 690) / 206.0f;
+
+		CGame::GetInstance()->GetCamera()->SetY(CWorldManager::GetInstance()->WorldHeight() * fPercent - (CGame::GetInstance()->GetScreenHeight() >> 1));
+
+		if(CGame::GetInstance()->GetCamera()->GetY() > CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight())
+		{
+			CGame::GetInstance()->GetCamera()->SetY( float(CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight()));
+		}
+		return true;
+	}
+
+	CheckCheats();
+
+	if(m_bEnteringCheat)
+	{
+		return true;
+	}
+
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) /*|| ((CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LALT) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_TAB)))*/)
+	{
+		CGame::GetInstance()->PushState(CPauseMenuState::GetInstance());
+	}
+
+	CMovementControl::GetInstance()->Input();
+
+	return true;
+}
+
+bool CGamePlayState::CheckButtonInput()
+{
 	RECT mousePos, collide, collider;
 	mousePos.left = CMovementControl::GetInstance()->MousePosX();
 	mousePos.top = CMovementControl::GetInstance()->MousePosY();
 	mousePos.right = mousePos.left + 1;
 	mousePos.bottom = mousePos.top + 1;
 
-
-	if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("MoveOrder")].GetCollisionRect()), &mousePos)) {
+	// Tooltips
+	if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("MoveOrder")].GetCollisionRect()), &mousePos)) 
+	{
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
 		m_szTooltipText = "  Move To Position";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
@@ -312,7 +325,9 @@ bool CGamePlayState::Input(void)
 			m_szSelectedCommand = "MoveOrder";
 			return true;
 		}
-	} else if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("AttackOrder")].GetCollisionRect()), &mousePos)) {
+	} 
+	else if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("AttackOrder")].GetCollisionRect()), &mousePos)) 
+	{
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
 		m_szTooltipText = " Attack Target";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
@@ -321,15 +336,20 @@ bool CGamePlayState::Input(void)
 			m_szSelectedCommand = "AttackOrder";
 			return true;
 		}
-	} else if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("HoldOrder")].GetCollisionRect()), &mousePos)) {
+	} 
+	else if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("HoldOrder")].GetCollisionRect()), &mousePos)) 
+	{
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
 		m_szTooltipText = " Hold";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
 			m_szSelectedCommand = "HoldOrder";
+			return true;
 		}
-	} else if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("CancelOrder")].GetCollisionRect()), &mousePos)) {
+	} 
+	else if(IntersectRect(&collide, &(collider = m_vButtons[FindButton("CancelOrder")].GetCollisionRect()), &mousePos)) 
+	{
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
 		m_szTooltipText = " Cancel";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
@@ -339,25 +359,91 @@ bool CGamePlayState::Input(void)
 			return true;
 		}
 	}
-	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Ability 1")].GetCollisionRect()), &mousePos))
+	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Marine 1")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Marine 1")].Visible())
 	{
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
-		m_szTooltipText = " Ability 1";
+		m_szTooltipText = " Overdrive\n 50% Attack Speed for 7 Seconds\n     30sec Cooldown";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
-			m_vButtons[FindButton("Ability 1")].Activate();
+			m_vButtons[FindButton("Marine 1")].Activate();
 			return true;
 		}
 	}
-	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Ability 2")].GetCollisionRect()), &mousePos))
+	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Marine 2")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Marine 2")].Visible())
 	{
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
-		m_szTooltipText = " Ability 2";
+		m_szTooltipText = " Stun Grenade\n 5sec area effect stun\n     30sec Cooldown";
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
-			m_vButtons[FindButton("Ability 2")].Activate();
+			m_vButtons[FindButton("Marine 2")].Activate();
+			return true;
+		}
+	}
+	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Heavy 1")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Heavy 1")].Visible())
+	{
+		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
+		m_szTooltipText = " Armor Lockdown\n Increases armor by 50 for 12sec\n     60sec Cooldown";
+		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
+		{
+			m_vButtons[FindButton("Heavy 1")].Activate();
+			return true;
+		}
+	}
+	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Heavy 2")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Heavy 2")].Visible())
+	{
+		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
+		m_szTooltipText = " Missile Barrage\n Deals 50 damage to enemies in range\n     30sec Cooldown";
+		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
+		{
+			m_vButtons[FindButton("Heavy 2")].Activate();
+			return true;
+		}
+	}
+	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Medic 1")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Medic 1")].Visible())
+	{
+		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
+		m_szTooltipText = " Defensive Matrix\n Makes target invulnerable for 8sec\n     50sec Cooldown";
+		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
+		{
+			m_vButtons[FindButton("Medic 1")].Activate();
+			return true;
+		}
+	}
+	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Medic 2")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Medic 2")].Visible())
+	{
+		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
+		m_szTooltipText = " Refresh\n Heal target for 20hp\n     12sec Cooldown";
+		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
+		{
+			m_vButtons[FindButton("Medic 2")].Activate();
+			return true;
+		}
+	}
+	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Scout 1")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Scout 1")].Visible())
+	{
+		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
+		m_szTooltipText = " Cloak\n Become invisible/visible\n     No Cooldown";
+		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
+		{
+			m_vButtons[FindButton("Scout 1")].Activate();
+			return true;
+		}
+	}
+	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Scout 2")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Scout 2")].Visible())
+	{
+		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
+		m_szTooltipText = " Pinning Shot\n Immobilize a unit for 6sec\n     20sec Cooldown";
+		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
+		{
+			m_vButtons[FindButton("Scout 2")].Activate();
 			return true;
 		}
 	}
@@ -372,92 +458,63 @@ bool CGamePlayState::Input(void)
 			return true;
 		}
 	}
-	else {
+	else 
+	{
 		m_szTooltipText = "";
 		if(!m_bEnteringCheat)
+		{
 			m_vButtonInstances[FindButton("ToolTipBG")].Visible(false);
+		}
 	}
+	return false;
+}
 
-
-
-
-
-	RECT rMiniMap = {5, 690, 260, 896};
-	if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0) && IntersectRect(&collide, &rMiniMap, &mousePos))
+void CGamePlayState::CheckCheats()
+{
+	if(CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx() != '\0' && m_bEnteringCheat)
 	{
-		float fPercent;
-		fPercent = (float)(mousePos.left-5)/255.0f;
-		
-		CGame::GetInstance()->GetCamera()->SetX(CWorldManager::GetInstance()->WorldWidth()*fPercent - (CGame::GetInstance()->GetScreenWidth() >> 1));
-		if(CGame::GetInstance()->GetCamera()->GetX() > CWorldManager::GetInstance()->WorldWidth() - CGame::GetInstance()->GetScreenWidth() )
-			CGame::GetInstance()->GetCamera()->SetX( float(CWorldManager::GetInstance()->WorldWidth() - CGame::GetInstance()->GetScreenWidth()) );
-		fPercent = (float)(mousePos.top-690)/206.0f;
-		CGame::GetInstance()->GetCamera()->SetY(CWorldManager::GetInstance()->WorldHeight()*fPercent - (CGame::GetInstance()->GetScreenHeight() >> 1));
-		if(CGame::GetInstance()->GetCamera()->GetY() > CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight())
-			CGame::GetInstance()->GetCamera()->SetY( float(CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight()));
-		return true;
-	}
-
-	//cheats here
-	if(CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx()!='\0' && m_bEnteringCheat)
-	{
-		m_szCheatBuffer+=CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx();
-		m_szCheatBuffer = (m_szCheatBuffer.c_str()+1);
+		m_szCheatBuffer += CSGD_DirectInput::GetInstance()->CheckBufferedKeysEx();
+		m_szCheatBuffer = (m_szCheatBuffer.c_str() + 1);
 
 		if(strstr(m_szCheatBuffer.c_str(), "dog"))
 		{
 			m_szCheatBuffer="                             ";
-			m_bGodMode=!m_bGodMode;
-			m_bEnteringCheat=false;
+			m_bGodMode =! m_bGodMode;
+			m_bEnteringCheat = false;
 		}
 		else if(strstr(m_szCheatBuffer.c_str(), "gogo"))
 		{
-			m_szCheatBuffer="                             ";
-			m_bNoCooldown=true;
-			m_szSelectedCommand="cooldown_cheat";
-			m_bEnteringCheat=false;
+			m_szCheatBuffer = "                             ";
+			m_bNoCooldown = true;
+			m_szSelectedCommand = "cooldown_cheat";
+			m_bEnteringCheat = false;
 
 		}
 		else if(strstr(m_szCheatBuffer.c_str(), "stats"))
 		{
-			m_szCheatBuffer="                             ";
-			m_szSelectedCommand="stats_cheat";
-			m_bEnteringCheat=false;
+			m_szCheatBuffer = "                             ";
+			m_szSelectedCommand = "stats_cheat";
+			m_bEnteringCheat = false;
 		}
 		else if(strstr(m_szCheatBuffer.c_str(), "deeps"))
 		{
-			m_szCheatBuffer="                             ";
-			m_szSelectedCommand="speed_cheat";
-			m_bEnteringCheat=false;
+			m_szCheatBuffer = "                             ";
+			m_szSelectedCommand = "speed_cheat";
+			m_bEnteringCheat = false;
 		}
 		else if(strstr(m_szCheatBuffer.c_str(), "bored"))
 		{
-			m_szCheatBuffer="                             ";
-			m_bEnteringCheat=false;
+			m_szCheatBuffer = "                             ";
+			m_bEnteringCheat = false;
 			//TODO: skip level
 		}
 	}
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN))
 	{
-		m_bEnteringCheat=!m_bEnteringCheat;
+		m_bEnteringCheat = !m_bEnteringCheat;
 	}
-
-
-	if(m_bEnteringCheat)
-		return true;
-
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) /*|| ((CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LALT) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_TAB)))*/)
-	{
-		CGame::GetInstance()->PushState(CPauseMenuState::GetInstance());
-	}
-
-
-	CMovementControl::GetInstance()->Input();
-
-	return true;
 }
-
 void CGamePlayState::Update(float fElapsedTime)
 {
 	for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
@@ -469,6 +526,42 @@ void CGamePlayState::Update(float fElapsedTime)
 		if (i == CObjectManager::GetInstance()->GetObjectList()->size() - 1 && (*CObjectManager::GetInstance()->GetObjectList())[i]->Type() != CBase::OBJ_PLAYER)
 		{
 			CGame::GetInstance()->ChangeState(CGameOverState::GetInstance());
+		}
+	}
+
+	m_vButtonInstances[FindButton("Marine 1")].Visible(false);
+	m_vButtonInstances[FindButton("Marine 2")].Visible(false);
+	m_vButtonInstances[FindButton("Heavy 1")].Visible(false);
+	m_vButtonInstances[FindButton("Heavy 2")].Visible(false);
+	m_vButtonInstances[FindButton("Medic 1")].Visible(false);
+	m_vButtonInstances[FindButton("Medic 2")].Visible(false);
+	m_vButtonInstances[FindButton("Scout 1")].Visible(false);
+	m_vButtonInstances[FindButton("Scout 2")].Visible(false);
+
+	if(CMovementControl::GetInstance()->GetSelectedUnits()->size() > 0)
+	{
+		CBase* pSelected = (*CMovementControl::GetInstance()->GetSelectedUnits())[0];
+		if (pSelected->Type() == CUnit::OBJ_PLAYER)
+		{
+			switch (((CUnit*)pSelected)->SubType())
+			{
+			case CUnit::PLAYER_MARINE:
+				m_vButtonInstances[FindButton("Marine 1")].Visible(true);
+				m_vButtonInstances[FindButton("Marine 2")].Visible(true);
+				break;
+			case CUnit::PLAYER_HEAVY:
+				m_vButtonInstances[FindButton("Heavy 1")].Visible(true);
+				m_vButtonInstances[FindButton("Heavy 2")].Visible(true);
+				break;
+			case CUnit::PLAYER_MEDIC:
+				m_vButtonInstances[FindButton("Medic 1")].Visible(true);
+				m_vButtonInstances[FindButton("Medic 2")].Visible(true);
+				break;
+			case CUnit::PLAYER_SCOUT:
+				m_vButtonInstances[FindButton("Scout 1")].Visible(true);
+				m_vButtonInstances[FindButton("Scout 2")].Visible(true);
+				break;
+			}
 		}
 	}
 
@@ -566,12 +659,13 @@ void CGamePlayState::RenderHUD(void)
 	for(unsigned int i = 0; i < m_vButtonInstances.size(); i++)
 	{
 		if(m_vButtonInstances[i].Visible())
+		{
 			CSGD_TextureManager::GetInstance()->Draw(m_vButtonInstances[i].TextureID(), m_vButtonInstances[i].Point().x, m_vButtonInstances[i].Point().y, 1.0f, 1.0f);
+		}
 	}
 
 	// Render Names
 	RenderSmallShadowText("Speaker", 42, 575);
-	RenderLargeShadowText("Unit Name", 284, 852);
 
 	// Render Objectives
 	//RenderLargeShadowText("Objectives", 54, 35);
@@ -598,6 +692,22 @@ void CGamePlayState::RenderHUD(void)
 				m_ftTextSmall.RenderText(buff, 840, 770);
 				sprintf_s(buff, 128, "Armor: %i", pUnit->Armor());
 				m_ftTextSmall.RenderText(buff, 840, 785);
+
+				switch(pUnit->SubType())
+				{
+				case CUnit::PLAYER_MARINE:
+					RenderLargeShadowText("  Marine", 284, 852);
+					break;
+				case CUnit::PLAYER_HEAVY:
+					RenderLargeShadowText("  Heavy", 284, 852);
+					break;
+				case CUnit::PLAYER_MEDIC:
+					RenderLargeShadowText("  Medic", 284, 852);
+					break;
+				case CUnit::PLAYER_SCOUT:
+					RenderLargeShadowText("  Scout", 284, 852);
+					break;
+				}
 			}
 			break;
 		case CBase::OBJ_ENEMY:
@@ -613,6 +723,7 @@ void CGamePlayState::RenderHUD(void)
 				m_ftTextSmall.RenderText(buff, 840, 770);
 				sprintf_s(buff, 128, "Armor: %i", pEnemy->Armor());
 				m_ftTextSmall.RenderText(buff, 840, 785);
+				RenderLargeShadowText("Unknown", 284, 852);
 			}
 			break;
 		}
@@ -636,7 +747,9 @@ void CGamePlayState::RenderHUD(void)
 
 	// Render ToolTip Text
 	if(m_szTooltipText != "")
+	{
 		m_ftTextSmallShadow.RenderText((char*)m_szTooltipText.c_str(), CMovementControl::GetInstance()->MousePosX(), CMovementControl::GetInstance()->MousePosY() - 25);
+	}
 }
 
 void CGamePlayState::Render(void)
@@ -673,54 +786,6 @@ void CGamePlayState::RenderLargeShadowText(char* _text, int _x, int _y)
 {
 	m_ftTextLargeShadow.RenderText(_text, _x + 2, _y + 2);
 	m_ftTextLarge.RenderText(_text, _x, _y);
-}
-
-void ActivateAbilityOne()
-{
-	if ((*CMovementControl::GetInstance()->GetSelectedUnits()).size() < 1 || ((CUnit*)(*CMovementControl::GetInstance()->GetSelectedUnits())[0])->Type() != CUnit::OBJ_PLAYER)
-	{
-		return;
-	}
-	if((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Type() == 0)
-	{
-		(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Activate();
-	}
-	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Type() == 1)
-	{
-		CGamePlayState::GetInstance()->SetCommand("Ability1");
-		CMovementControl::GetInstance()->SetUnit((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]));
-		CMovementControl::GetInstance()->SetPosition(0);
-	}
-	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Type() == 2)
-	{
-		CGamePlayState::GetInstance()->SetCommand("Ability2");
-		CMovementControl::GetInstance()->SetUnit((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]));
-		CMovementControl::GetInstance()->SetPosition(1);
-	}
-}
-
-void ActivateAbilityTwo()
-{
-	if ((*CMovementControl::GetInstance()->GetSelectedUnits()).size() < 1 || ((CUnit*)(*CMovementControl::GetInstance()->GetSelectedUnits())[0])->Type() != CUnit::OBJ_PLAYER)
-	{
-		return;
-	}
-	if((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Type() == 0)
-	{
-		(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Activate();
-	}
-	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Type() == 1)
-	{
-		CGamePlayState::GetInstance()->SetCommand("Ability2");
-		CMovementControl::GetInstance()->SetUnit((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]));
-		CMovementControl::GetInstance()->SetPosition(1);
-	}
-	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Type() == 2)
-	{
-		CGamePlayState::GetInstance()->SetCommand("Ability2");
-		CMovementControl::GetInstance()->SetUnit((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]));
-		CMovementControl::GetInstance()->SetPosition(1);
-	}
 }
 
 void CGamePlayState::MessageProc(CBaseMessage* pMSG)
@@ -873,5 +938,112 @@ void CGamePlayState::LoadNextLevel()
 		break;
 	default:
 		break;
+	}
+}
+
+void CGamePlayState::InitHud()
+{
+	// Setup GUI
+	m_vButtons.push_back(CHUDButton(-76, 645, 2048, 512, "BottomHUD", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/0.png").c_str())));
+	m_vButtons.push_back(CHUDButton(270, 706, 256, 256, "UnitPortrait", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/1.png").c_str())));
+	m_vButtons.push_back(CHUDButton(274, 852, 256, 32, "PortraitNameLine", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/2.png").c_str())));
+	m_vButtons.push_back(CHUDButton(433, 728, 1024, 256, "MiddleHUDOutlines", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/3.png").c_str())));
+	m_vButtons.push_back(CHUDButton(1113, 688, 64, 64, "MoveOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/7.png").c_str())));
+	m_vButtons.push_back(CHUDButton(1177, 688, 64, 64, "AttackOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/8.png").c_str())));
+	m_vButtons.push_back(CHUDButton(1243, 688, 64, 64, "HoldOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/9.png").c_str())));
+	m_vButtons.push_back(CHUDButton(1357, 819, 64, 64, "CancelOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str())));
+	m_vButtons.push_back(CHUDButton(641, 0, 256, 64, "OverMenuButton", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/13.png").c_str())));
+	m_vButtons.push_back(CHUDButton(28, 480, 512, 256, "SpeechBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/14.png").c_str())));
+	m_vButtons.push_back(CHUDButton(32, 484, 128, 256, "SpeechSpeaker", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/15.png").c_str())));
+	m_vButtons.push_back(CHUDButton(37, 577, 128, 32, "SpeechSpeakerNameLine", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/16.png").c_str())));
+	m_vButtons.push_back(CHUDButton(41, 31, 256, 64, "ObjectivesSmallBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/17.png").c_str()), false));
+
+
+	// Unit Ability Buttons
+	// Marine
+	m_vButtons.push_back(CHUDButton(1113, 752, 64, 64, "Marine 1", ActivateAbilityOne, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str()), false));
+	m_vButtons.push_back(CHUDButton(1177, 752, 64, 64, "Marine 2", ActivateAbilityTwo, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str()), false));
+	
+	//Heavy
+	m_vButtons.push_back(CHUDButton(1113, 752, 64, 64, "Heavy 1", ActivateAbilityOne, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str()), false));
+	m_vButtons.push_back(CHUDButton(1177, 752, 64, 64, "Heavy 2", ActivateAbilityTwo, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str()), false));
+
+	//Medic
+	m_vButtons.push_back(CHUDButton(1113, 752, 64, 64, "Medic 1", ActivateAbilityOne, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str()), false));
+	m_vButtons.push_back(CHUDButton(1177, 752, 64, 64, "Medic 2", ActivateAbilityTwo, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str()), false));
+
+	//Scout
+	m_vButtons.push_back(CHUDButton(1113, 752, 64, 64, "Scout 1", ActivateAbilityOne, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str()), false));
+	m_vButtons.push_back(CHUDButton(1177, 752, 64, 64, "Scout 2", ActivateAbilityTwo, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str()), false));
+
+
+
+	//////////////////////////////////////////////////////////////////////////
+	m_vButtons.push_back(CHUDButton(577, 752, 64, 64, "Item1", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/7.png").c_str())));
+	CItem* BookOfHaste = CItemFactory::GetInstance()->CreateItem("Book of Haste");
+	//////////////////////////////////////////////////////////////////////////
+
+	m_vButtons.push_back(CHUDButton(0, 0, 256, 64, "ToolTipBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/20.png").c_str()), false));
+
+	m_vButtons.push_back(CHUDButton(0, 0, 512, 32, "ObjectivesLargeBG-NoCheck", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/18.png").c_str()), false));
+	m_vButtons.push_back(CHUDButton(0, 0, 512, 32, "ObjectivesLargeBG-Check", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/19.png").c_str()), false));
+
+	m_vButtonInstances = m_vButtons;
+
+	m_ftTextSmall.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.5f, 0.5f, 2, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(255, 255, 255));
+	m_ftTextSmall.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
+	m_ftTextSmallShadow.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.5f, 0.5f, 2, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(0, 0, 0));
+	m_ftTextSmallShadow.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
+	m_ftTextLarge.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.80f, 0.80f, 2, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(255, 255, 255));
+	m_ftTextLarge.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
+	m_ftTextLargeShadow.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.80f, 0.80f, 2, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(0, 0, 0));
+	m_ftTextLargeShadow.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
+}
+
+void ActivateAbilityOne()
+{
+	if ((*CMovementControl::GetInstance()->GetSelectedUnits()).size() < 1 || ((CUnit*)(*CMovementControl::GetInstance()->GetSelectedUnits())[0])->Type() != CUnit::OBJ_PLAYER)
+	{
+		return;
+	}
+	if((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Type() == 0)
+	{
+		(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Activate();
+	}
+	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Type() == 1)
+	{
+		CGamePlayState::GetInstance()->SetCommand("Ability1");
+		CMovementControl::GetInstance()->SetUnit((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]));
+		CMovementControl::GetInstance()->SetPosition(0);
+	}
+	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Type() == 2)
+	{
+		CGamePlayState::GetInstance()->SetCommand("Ability2");
+		CMovementControl::GetInstance()->SetUnit((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]));
+		CMovementControl::GetInstance()->SetPosition(1);
+	}
+}
+
+void ActivateAbilityTwo()
+{
+	if ((*CMovementControl::GetInstance()->GetSelectedUnits()).size() < 1 || ((CUnit*)(*CMovementControl::GetInstance()->GetSelectedUnits())[0])->Type() != CUnit::OBJ_PLAYER)
+	{
+		return;
+	}
+	if((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Type() == 0)
+	{
+		(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Activate();
+	}
+	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Type() == 1)
+	{
+		CGamePlayState::GetInstance()->SetCommand("Ability2");
+		CMovementControl::GetInstance()->SetUnit((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]));
+		CMovementControl::GetInstance()->SetPosition(1);
+	}
+	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Type() == 2)
+	{
+		CGamePlayState::GetInstance()->SetCommand("Ability2");
+		CMovementControl::GetInstance()->SetUnit((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]));
+		CMovementControl::GetInstance()->SetPosition(1);
 	}
 }

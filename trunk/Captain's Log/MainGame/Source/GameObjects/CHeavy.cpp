@@ -7,6 +7,7 @@
 CHeavy::CHeavy()
 {
 	Type(OBJ_PLAYER);
+	SubType(PLAYER_HEAVY);
 	PosX(0);
 	PosY(0);
 	VelX(0);

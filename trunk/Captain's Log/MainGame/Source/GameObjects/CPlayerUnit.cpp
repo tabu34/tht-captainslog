@@ -8,13 +8,10 @@ void CPlayerUnit::Initialize()
 
 void CPlayerUnit::Update( float fElapsedTime )
 {
-
 	int closestDistance = INT_MAX;
 	int currentObjDistance;
 	int sightRangeSqrd = SightRange() * SightRange();
 	bool found = false;
-
-
 
 	if (!Selected() && State() != UNIT_MOVING_ATTACK && State() != UNIT_MOVING && Target() == NULL)
 	{
