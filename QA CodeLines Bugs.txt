@@ -1,0 +1,11 @@
+number of lines: 21814
+
+known bugs:
+	second level takes ages to load (don't test level 2 at all)
+	tooltip backgrounds for abilities are too small (text overlaps the background)
+	don't report bugs related to pathfinding
+	loading a saved game breaks it
+	HUD is not TRC compliant
+	mouse cannot right click to move on minimap
+	mouse clicks behind hud if not selecting a button
+	options full screen does not drop down
