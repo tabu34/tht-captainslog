@@ -119,7 +119,8 @@
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
-				UsePrecompiledHeader="0"
+				UsePrecompiledHeader="2"
+				PrecompiledHeaderThrough="precompiled_header.h"
 				WarningLevel="3"
 				DebugInformationFormat="3"
 			/>
@@ -182,6 +183,14 @@
 				>
 				<FileConfiguration
 					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						UsePrecompiledHeader="1"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
 					>
 					<Tool
 						Name="VCCLCompilerTool"
@@ -705,46 +714,6 @@
 					>
 				</File>
 			</Filter>
-		</Filter>
-		<Filter
-			Name="My Amplifier Results"
-			>
-			<File
-				RelativePath=".\My Amplifier Results\r000hs\r000hs.ampl"
-				>
-			</File>
-			<File
-				RelativePath=".\My Amplifier Results\r001hs\r001hs.ampl"
-				>
-			</File>
-			<File
-				RelativePath=".\My Amplifier Results\r002hs\r002hs.ampl"
-				>
-			</File>
-			<File
-				RelativePath=".\My Amplifier Results\r003hs\r003hs.ampl"
-				>
-			</File>
-			<File
-				RelativePath=".\My Amplifier Results\r004hs\r004hs.ampl"
-				>
-			</File>
-			<File
-				RelativePath=".\My Amplifier Results\r005hs\r005hs.ampl"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="My Inspector Results"
-			>
-			<File
-				RelativePath=".\My Inspector Results\r000mi1\r000mi1.insp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\My Inspector Results\r000mi1\r000mi1.insp"
-				>
-			</File>
 		</Filter>
 		<File
 			RelativePath="..\..\..\..\..\..\..\..\..\Program Files (x86)\FMOD SoundSystem\FMOD Programmers API Win32\api\fmodex.dll"
