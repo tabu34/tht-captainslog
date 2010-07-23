@@ -215,9 +215,9 @@ void CLoadLevelState::Render(void)
 	char load2[] = "Generating Pathing Data";
 	char load3[] = "Generating MORE Pathing Data";
 	char loadDone[] = "Done!";
-	if(m_fPercentage < 50.0f)
+	if(m_fPercentage < 29.0f)
 		sprintf_s(loadBuffer, 50, "%s", load1);
-	else if(m_fPercentage < 75.0f)
+	else if(m_fPercentage < 68.0f)
 		sprintf_s(loadBuffer, 50, "%s", load2);
 	else if(m_fPercentage < 100.0f)
 		sprintf_s(loadBuffer, 50, "%s", load3);

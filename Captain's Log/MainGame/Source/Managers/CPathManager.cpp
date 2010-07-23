@@ -240,6 +240,7 @@ void CPathManager::GenerateMap()
 	int m_nNumGridLinesY = CWorldManager::GetInstance()->WorldHeight() / GRID_SCALE;
 
 	for(int y = 0; y < m_nNumGridLinesY; y++)
+	{
 		for(int x = 0; x < m_nNumGridLinesX; x++)
 		{
 			tNode node;
@@ -280,12 +281,13 @@ void CPathManager::GenerateMap()
 			//// Node left below
 			//adj.pNeighbors[7]->fX = x.pNode->fX - GRID_SCALE;
 			//adj.pNeighbors[7]->fY = x.pNode->fY + GRID_SCALE;
-
-
-
  		}
+		CLoadLevelState::GetInstance()->SetPercentage(5.0f + (((float)y/ (m_nNumGridLinesY)) * 45.0f));
+		CLoadLevelState::GetInstance()->Render();
+	}
 
 	for(int x = 0; x < m_nNumGridLinesX; x++)
+	{
 		for(int y = 0; y < m_nNumGridLinesY; y++)
 		{
 			// Setup adjancies for this node
@@ -311,6 +313,9 @@ void CPathManager::GenerateMap()
 
 			m_mpAdjacencies[adj.pNode] = adj;
 		}
+		CLoadLevelState::GetInstance()->SetPercentage(50.0f + (((float)x/ (m_nNumGridLinesX)) * 50.0f));
+		CLoadLevelState::GetInstance()->Render();
+	}
 
 
 	////step 2: set up adjacencies and edges

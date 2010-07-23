@@ -725,10 +725,22 @@
 				RelativePath=".\My Amplifier Results\r003hs\r003hs.ampl"
 				>
 			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r004hs\r004hs.ampl"
+				>
+			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r005hs\r005hs.ampl"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="My Inspector Results"
 			>
+			<File
+				RelativePath=".\My Inspector Results\r000mi1\r000mi1.insp"
+				>
+			</File>
 			<File
 				RelativePath="..\..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft Visual Studio 9.0\Common7\IDE\My Inspector Results\r000mi1\r000mi1.insp"
 				>
