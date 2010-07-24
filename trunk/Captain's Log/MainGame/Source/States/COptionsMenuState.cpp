@@ -82,6 +82,9 @@ void COptionsMenuState::Enter()
 	LoadSettings();
 	m_bError=false;
 
+	m_bWindowed = CGame::GetInstance()->IsWindowed();
+	m_bPrevWindowed = CGame::GetInstance()->IsWindowed();
+
 }
 
 bool COptionsMenuState::Input()
@@ -122,6 +125,8 @@ bool COptionsMenuState::Input()
 	
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE))
 	{
+		if (m_bWindowed != m_bPrevWindowed)
+			CGame::GetInstance()->ToggleFullScreen();
 		CGame::GetInstance()->PopState();
 	}
 
@@ -225,6 +230,8 @@ bool COptionsMenuState::Input()
 			}
 			else if(m_pCurrentControl->szIdentifier == "exit")
 			{
+				if (m_bWindowed != m_bPrevWindowed)
+					CGame::GetInstance()->ToggleFullScreen();
 				CGame::GetInstance()->PopState();
 			}
 			else if(m_pCurrentControl->szIdentifier == "fullscreen")
@@ -239,6 +246,8 @@ bool COptionsMenuState::Input()
 			else if(m_pCurrentControl->szIdentifier == "restoredefaults")
 			{
 				m_bWindowed=true;
+				if (CGame::GetInstance()->IsWindowed() != m_bWindowed)
+					CGame::GetInstance()->ToggleFullScreen();
 				m_nSFXVolume=50;
 				m_nVoiceVolume=50;
 				m_nMusicVolume=50;
@@ -393,7 +402,7 @@ void CreateKeybindBuffer(char* buffer, char* keybind, unsigned char DIKCode)
 		DIK_DECIMAL, 		".",
 		DIK_DELETE, 		"DEL",
 		DIK_DIVIDE, 		"/",
-		DIK_DOWN, 			"DN",
+		DIK_DOWN, 			"DOWN",
 		DIK_E, 				"E",
 		DIK_END, 			"END",
 		DIK_EQUALS, 		"=",
