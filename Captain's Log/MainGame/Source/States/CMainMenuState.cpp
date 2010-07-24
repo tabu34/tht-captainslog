@@ -44,7 +44,7 @@ void CMainMenuState::Enter(void)
 	m_nMenuCur[5] = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\mm5.png").c_str());
 	m_nMenuCur[6] = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\mm6.png").c_str());
 
-	m_nMenuMusic = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("SGD_BGM.wav").c_str(), FMOD_LOOP_NORMAL);
+	m_nMenuMusic = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("No_Allies.mp3").c_str(), FMOD_LOOP_NORMAL);
 
 	CSGD_FModManager::GetInstance()->PlaySound(m_nMenuMusic);
 	CSGD_FModManager::GetInstance()->SetVolume(m_nMenuMusic, (float)CGame::GetInstance()->MusicVolume() / 100.0f);
