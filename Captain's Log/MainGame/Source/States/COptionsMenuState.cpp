@@ -12,9 +12,10 @@ using std::ios_base;
 
 COptionsMenuState::COptionsMenuState()
 {
-	m_nMusicVolume=0;
-	m_nSFXVolume = 0;
-	m_nVoiceVolume=0;
+	m_nMusicVolume =	0;
+	m_nSFXVolume =		0;
+	m_nVoiceVolume =	0;
+	m_nCurIndex =		-1;
 }
 
 COptionsMenuState::~COptionsMenuState()
@@ -200,6 +201,16 @@ bool COptionsMenuState::Input()
 
 		m_pCurrentControl = &m_vControls[nCurIndex];
 		m_nBindIndex = nCurIndex-5;
+	}
+
+	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP))
+	{
+		m_nCurIndex = (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN))?
+			((m_nCurIndex + 1 < m_vControls.size()) ? m_nCurIndex + 1 : 0):
+			((m_nCurIndex - 1 < 0) ? m_vControls.size() - 1 : m_nCurIndex - 1);
+
+		m_pCurrentControl = &m_vControls[m_nCurIndex];
+		m_nBindIndex = m_nCurIndex - 5;
 	}
 
 	if((m_nMouseX!=m_nMousePrevX || m_nMouseY!=m_nMousePrevY) && !CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
