@@ -66,7 +66,7 @@ void COptionsMenuState::Enter()
 
 	//ALL THE FRIGGIN KEYBINDS
 	char buffer[128];
-	for(int i=0; i<17; i++)
+	for(int i=0; i<15; i++)
 	{
 		sprintf_s(buffer, 128, "key%i", i);
 		SetRect(&mcInit.rArea, 779, 272+(i*25)+(int)(i*1.5f), 1041, 298+(i*25)+(int)(i*1.5f));
@@ -394,16 +394,16 @@ bool COptionsMenuState::Input()
 				m_arrKeybinds[4]=DIK_5;
 				m_arrKeybinds[5]=DIK_Q;
 				m_arrKeybinds[6]=DIK_W;
-				m_arrKeybinds[7]=DIK_E;
-				m_arrKeybinds[8]=DIK_R;
-				m_arrKeybinds[9]=DIK_A;
-				m_arrKeybinds[10]=DIK_S;
-				m_arrKeybinds[11]=DIK_D;
-				m_arrKeybinds[12]=DIK_F;
-				m_arrKeybinds[13]=DIK_UP;
-				m_arrKeybinds[14]=DIK_DOWN;
-				m_arrKeybinds[15]=DIK_LEFT;
-				m_arrKeybinds[16]=DIK_RIGHT;
+				//m_arrKeybinds[7]=DIK_E;
+				//m_arrKeybinds[8]=DIK_R;
+				m_arrKeybinds[7]=DIK_A;
+				m_arrKeybinds[8]=DIK_S;
+				m_arrKeybinds[9]=DIK_D;
+				m_arrKeybinds[10]=DIK_F;
+				m_arrKeybinds[11]=DIK_UP;
+				m_arrKeybinds[12]=DIK_DOWN;
+				m_arrKeybinds[13]=DIK_LEFT;
+				m_arrKeybinds[14]=DIK_RIGHT;
 			}
 			else if(m_pCurrentControl->szIdentifier == "layout")
 			{
@@ -414,16 +414,16 @@ bool COptionsMenuState::Input()
 				m_arrKeybinds[4]=DIK_5;
 				m_arrKeybinds[5]=DIK_Q;
 				m_arrKeybinds[6]=DIK_W;
-				m_arrKeybinds[7]=DIK_E;
-				m_arrKeybinds[8]=DIK_R;
-				m_arrKeybinds[9]=DIK_A;
-				m_arrKeybinds[10]=DIK_S;
-				m_arrKeybinds[11]=DIK_D;
-				m_arrKeybinds[12]=DIK_F;
-				m_arrKeybinds[13]=DIK_UP;
-				m_arrKeybinds[14]=DIK_DOWN;
-				m_arrKeybinds[15]=DIK_LEFT;
-				m_arrKeybinds[16]=DIK_RIGHT;
+				//m_arrKeybinds[7]=DIK_E;
+				//m_arrKeybinds[8]=DIK_R;
+				m_arrKeybinds[7]=DIK_A;
+				m_arrKeybinds[8]=DIK_S;
+				m_arrKeybinds[9]=DIK_D;
+				m_arrKeybinds[10]=DIK_F;
+				m_arrKeybinds[11]=DIK_UP;
+				m_arrKeybinds[12]=DIK_DOWN;
+				m_arrKeybinds[13]=DIK_LEFT;
+				m_arrKeybinds[14]=DIK_RIGHT;
 			}
 		}
 	}
@@ -691,7 +691,7 @@ void COptionsMenuState::Render()
 	CSGD_TextureManager::GetInstance()->Draw(m_nSliderImageID, (int)(415.0f + ((float)m_nMusicVolume/100.0f)*185.0f)-3, 550, 0.75f, 0.75f);
 	
 	int j=0;
-	for(size_t i=0; i<m_vControls.size(); i++)
+	for(size_t i=0; i<m_vControls.size()-2; i++)
 	{
 		if(m_vControls[i].szIdentifier.substr(0, 3) == "key")
 		{
@@ -719,35 +719,35 @@ void COptionsMenuState::Render()
 			case 6:
 				CreateKeybindBuffer(buff, "Ability 2: ", m_arrKeybinds[6]);
 				break;
+			//case 7:
+			//	CreateKeybindBuffer(buff, "Ability 3: ", m_arrKeybinds[7]);
+			//	break;
+			//case 8:
+			//	CreateKeybindBuffer(buff, "Ability 4: ", m_arrKeybinds[8]);
+			//	break;
 			case 7:
-				CreateKeybindBuffer(buff, "Ability 3: ", m_arrKeybinds[7]);
+				CreateKeybindBuffer(buff, "Inventory 1: ", m_arrKeybinds[7]);
 				break;
 			case 8:
-				CreateKeybindBuffer(buff, "Ability 4: ", m_arrKeybinds[8]);
+				CreateKeybindBuffer(buff, "Inventory 2: ", m_arrKeybinds[8]);
 				break;
 			case 9:
-				CreateKeybindBuffer(buff, "Inventory 1: ", m_arrKeybinds[9]);
+				CreateKeybindBuffer(buff, "Inventory 3: ", m_arrKeybinds[9]);
 				break;
 			case 10:
-				CreateKeybindBuffer(buff, "Inventory 2: ", m_arrKeybinds[10]);
+				CreateKeybindBuffer(buff, "Inventory 4: ", m_arrKeybinds[10]);
 				break;
 			case 11:
-				CreateKeybindBuffer(buff, "Inventory 3: ", m_arrKeybinds[11]);
+				CreateKeybindBuffer(buff, "Camera Up: ", m_arrKeybinds[11]);
 				break;
 			case 12:
-				CreateKeybindBuffer(buff, "Inventory 4: ", m_arrKeybinds[12]);
+				CreateKeybindBuffer(buff, "Camera Down: ", m_arrKeybinds[12]);
 				break;
 			case 13:
-				CreateKeybindBuffer(buff, "Camera Up: ", m_arrKeybinds[13]);
+				CreateKeybindBuffer(buff, "Camera Left: ", m_arrKeybinds[13]);
 				break;
 			case 14:
-				CreateKeybindBuffer(buff, "Camera Down: ", m_arrKeybinds[14]);
-				break;
-			case 15:
-				CreateKeybindBuffer(buff, "Camera Left: ", m_arrKeybinds[15]);
-				break;
-			case 16:
-				CreateKeybindBuffer(buff, "Camera Right: ", m_arrKeybinds[16]);
+				CreateKeybindBuffer(buff, "Camera Right: ", m_arrKeybinds[14]);
 				break;
 			}
 			if(j-1 == m_nBindIndex && m_bBinding && m_bError)
@@ -799,16 +799,16 @@ void COptionsMenuState::LoadSettings()
 		m_arrKeybinds[4]=DIK_5;
 		m_arrKeybinds[5]=DIK_Q;
 		m_arrKeybinds[6]=DIK_W;
-		m_arrKeybinds[7]=DIK_E;
-		m_arrKeybinds[8]=DIK_R;
-		m_arrKeybinds[9]=DIK_A;
-		m_arrKeybinds[10]=DIK_S;
-		m_arrKeybinds[11]=DIK_D;
-		m_arrKeybinds[12]=DIK_F;
-		m_arrKeybinds[13]=DIK_UP;
-		m_arrKeybinds[14]=DIK_DOWN;
-		m_arrKeybinds[15]=DIK_LEFT;
-		m_arrKeybinds[16]=DIK_RIGHT;
+		//m_arrKeybinds[7]=DIK_E;
+		//m_arrKeybinds[8]=DIK_R;
+		m_arrKeybinds[7]=DIK_A;
+		m_arrKeybinds[8]=DIK_S;
+		m_arrKeybinds[9]=DIK_D;
+		m_arrKeybinds[10]=DIK_F;
+		m_arrKeybinds[11]=DIK_UP;
+		m_arrKeybinds[12]=DIK_DOWN;
+		m_arrKeybinds[13]=DIK_LEFT;
+		m_arrKeybinds[14]=DIK_RIGHT;
 		SaveSettings();
 		return;
 	}
