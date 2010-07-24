@@ -291,6 +291,20 @@ void CUnit::Render()
 	char szHP[16];
 	sprintf_s(szHP, 16, "%i", CurHealth());
 
+	// Selection Cirle
+	if(m_bSelected && Type() == OBJ_PLAYER)
+		CSGD_TextureManager::GetInstance()->Draw(CGamePlayState::GetInstance()->GetSelectionCircleID(), (PosX()) - 24 - CGame::GetInstance()->GetCamera()->GetX(), PosY() + (Height() / 3) - 12 - CGame::GetInstance()->GetCamera()->GetY(), 0.75f, 0.75f);
+
+	// Healthbars
+	RECT hpBar;
+	hpBar.left = PosX() - 20 - CGame::GetInstance()->GetCamera()->GetX();
+	hpBar.top = PosY() - (Height() / 2) - 15 - CGame::GetInstance()->GetCamera()->GetY();
+	hpBar.right = hpBar.left + 40;
+	hpBar.bottom = hpBar.top + 5;
+
+	CSGD_Direct3D::GetInstance()->DrawRect(hpBar, 255, 0, 0);
+	hpBar.right = hpBar.left + 40.0f * ((float)CurHealth() / MaxHealth());
+	CSGD_Direct3D::GetInstance()->DrawRect(hpBar, 0, 255, 0);
 	//DEBUG
 	if (m_fFireLineTime > 0 && Target())
 	{

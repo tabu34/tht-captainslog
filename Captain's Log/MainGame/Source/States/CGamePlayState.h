@@ -84,6 +84,7 @@ class CGamePlayState : public IGameState
 	int					m_nBG;
 	int					m_nMiniMap;
 	int					m_nGunshotSound;
+	int					m_nSelectionCircle;
 
 	// Interface Elements
 	CBMPFont			m_ftTextSmall;
@@ -139,6 +140,7 @@ public:
 	void RenderMiniMap();
 	void InitHud();
 	bool CheckButtonInput();
+	int GetSelectionCircleID() { return m_nSelectionCircle; }
 	
 	void CheckCheats();
 

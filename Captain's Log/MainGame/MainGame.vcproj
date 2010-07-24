@@ -715,6 +715,18 @@
 				</File>
 			</Filter>
 		</Filter>
+		<Filter
+			Name="My Amplifier Results"
+			>
+			<File
+				RelativePath=".\My Amplifier Results\r006hs\r006hs.ampl"
+				>
+			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r007hs\r007hs.ampl"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\..\..\..\..\..\..\..\Program Files (x86)\FMOD SoundSystem\FMOD Programmers API Win32\api\fmodex.dll"
 			>

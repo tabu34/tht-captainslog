@@ -43,6 +43,9 @@ struct tAStarNode
 
 	//estimate of distance from here to target node (heuristic)
 	float fH;
+
+	// F SCORE
+	float fF;
 };
 
 
