@@ -38,6 +38,8 @@ public:
 	void Update(float fElapsedTime);
 	void Render(void);
 	void Exit(void);
+
+	int MenuMusic() { return m_nMenuMusic; }
 };
 
 #endif

@@ -1,12 +1,13 @@
 #include "precompiled_header.h"
 #include "COptionsMenuState.h"
+#include "../CGame.h"
 #include "../SGD Wrappers/CSGD_TextureManager.h"
 #include "../SGD Wrappers/CSGD_DirectInput.h"
-#include "../CGame.h"
-#include "../Managers/MovementControl.h"
 #include "../SGD Wrappers/CSGD_Direct3D.h"
-#include <fstream>
 #include "../SGD Wrappers/CSGD_FModManager.h"
+#include "../Managers/MovementControl.h"
+#include "CMainMenuState.h"
+#include <fstream>
 using std::ifstream;
 using std::ofstream;
 using std::ios_base;
@@ -36,6 +37,7 @@ void COptionsMenuState::Enter()
 {
 	m_nBGImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\optionsMenu.png").c_str());
 	m_nSliderImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\optionsMenuSlider.png").c_str());
+	m_nSoundChangedID = CSGD_FModManager::GetInstance()->LoadSound(CGame::GetInstance()->SoundPath("THT_SoundChange.wav").c_str());
 	m_pCurrentControl = NULL;
 
 
@@ -148,6 +150,10 @@ bool COptionsMenuState::Input()
 			else if(m_pCurrentControl->szIdentifier == "sfxvolume")
 			{
 				m_nSFXVolume = (m_nSFXVolume >= 100) ? 100 : m_nSFXVolume+1;
+				if (!CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSoundChangedID)) 
+				{
+					CSGD_FModManager::GetInstance()->PlaySound(m_nSoundChangedID);
+				}
 			}
 			else if(m_pCurrentControl->szIdentifier == "voiceovervolume")
 			{
@@ -192,6 +198,10 @@ bool COptionsMenuState::Input()
 					else if(m_pCurrentControl->szIdentifier == "sfxvolume")
 					{
 						m_nSFXVolume = (m_nSFXVolume >= 100) ? 100 : m_nSFXVolume+1;
+						if (!CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSoundChangedID)) 
+						{
+							CSGD_FModManager::GetInstance()->PlaySound(m_nSoundChangedID);
+						}
 					}
 					else if(m_pCurrentControl->szIdentifier == "voiceovervolume")
 					{
@@ -225,6 +235,10 @@ bool COptionsMenuState::Input()
 			else if(m_pCurrentControl->szIdentifier == "sfxvolume")
 			{
 				m_nSFXVolume = (m_nSFXVolume <=0) ? 0 : m_nSFXVolume-1;
+				if (!CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSoundChangedID)) 
+				{
+					CSGD_FModManager::GetInstance()->PlaySound(m_nSoundChangedID);
+				}
 			}
 			else if(m_pCurrentControl->szIdentifier == "voiceovervolume")
 			{
@@ -268,6 +282,10 @@ bool COptionsMenuState::Input()
 					else if(m_pCurrentControl->szIdentifier == "sfxvolume")
 					{
 						m_nSFXVolume = (m_nSFXVolume <=0) ? 0 : m_nSFXVolume-1;
+						if (!CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSoundChangedID)) 
+						{
+							CSGD_FModManager::GetInstance()->PlaySound(m_nSoundChangedID);
+						}
 					}
 					else if(m_pCurrentControl->szIdentifier == "voiceovervolume")
 					{
@@ -447,6 +465,10 @@ bool COptionsMenuState::Input()
 					m_nSFXVolume=100;
 				else if(m_nSFXVolume<0)
 					m_nSFXVolume=0;
+				if (!CSGD_FModManager::GetInstance()->IsSoundPlaying(m_nSoundChangedID)) 
+				{
+					CSGD_FModManager::GetInstance()->PlaySound(m_nSoundChangedID);
+				}
 			}
 			else if(m_pCurrentControl->szIdentifier == "voiceovervolume")
 			{
@@ -466,10 +488,8 @@ bool COptionsMenuState::Input()
 
 void COptionsMenuState::Update(float fElapsedTime)
 {
-	//////////////////////////////////////////////////////////////////////////
-	CSGD_FModManager::GetInstance()->SetVolume(0, (float)CGame::GetInstance()->MusicVolume() / 100.0f);
-	//////////////////////////////////////////////////////////////////////////
-
+	CSGD_FModManager::GetInstance()->SetVolume(m_nSoundChangedID, (float)CGame::GetInstance()->SFXVolume() / 100.0f);
+	CSGD_FModManager::GetInstance()->SetVolume(CMainMenuState::GetInstance()->MenuMusic(), (float)CGame::GetInstance()->MusicVolume() / 100.0f);
 
 	if(m_bError)
 	{

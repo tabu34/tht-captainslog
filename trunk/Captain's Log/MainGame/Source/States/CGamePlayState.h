@@ -83,7 +83,7 @@ class CGamePlayState : public IGameState
 	int					m_nScore;
 	int					m_nBG;
 	int					m_nMiniMap;
-	int					m_nGunshotSound;
+	int					m_nGunshotSound[4];
 	int					m_nSelectionCircle;
 	int					m_nToolTipOffsetY;
 	int					m_nBGMusic;
@@ -165,7 +165,7 @@ public:
 
 	void LoadNextLevel();
 
-	int GunshotSoundID() { return m_nGunshotSound; }
+	int GunshotSoundID(int num) { return m_nGunshotSound[num]; }
 };
 
 #endif
