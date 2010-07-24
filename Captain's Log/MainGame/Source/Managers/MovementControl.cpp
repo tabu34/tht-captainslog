@@ -470,11 +470,12 @@ void CMovementControl::Input()
 		}
 	}
 
-
+	float fSpeed = 1000;
 	//CAMERA CONTROL (KEYBOARD)
 	if(m_DI->KeyDown(CGame::GetInstance()->KeyBinds(CGame::KEY_LEFT)))
 	{
-		CGame::GetInstance()->GetCamera()->SetX( CGame::GetInstance()->GetCamera()->GetX() - 1.5f );
+		//CGame::GetInstance()->GetCamera()->SetX( CGame::GetInstance()->GetCamera()->GetX() - fSpeed );
+		CGame::GetInstance()->GetCamera()->VelX(-fSpeed);
 		if(CGame::GetInstance()->GetCamera()->GetX() < 0.0f)
 			CGame::GetInstance()->GetCamera()->SetX( 0.0f );
 		//m_esEventSystem->SendEvent("LeftKeyPressed");
@@ -482,7 +483,8 @@ void CMovementControl::Input()
 
 	if(m_DI->KeyDown(CGame::GetInstance()->KeyBinds(CGame::KEY_RIGHT)))
 	{
-		CGame::GetInstance()->GetCamera()->SetX( CGame::GetInstance()->GetCamera()->GetX() + 1.5f );
+		//CGame::GetInstance()->GetCamera()->SetX( CGame::GetInstance()->GetCamera()->GetX() + fSpeed );
+		CGame::GetInstance()->GetCamera()->VelX(fSpeed);
 		if(CGame::GetInstance()->GetCamera()->GetX() > CWorldManager::GetInstance()->WorldWidth() - CGame::GetInstance()->GetScreenWidth() )
 			CGame::GetInstance()->GetCamera()->SetX( float(CWorldManager::GetInstance()->WorldWidth() - CGame::GetInstance()->GetScreenWidth()) );
 		//m_esEventSystem->SendEvent("RightKeyPressed");
@@ -490,7 +492,8 @@ void CMovementControl::Input()
 
 		if(m_DI->KeyDown(CGame::GetInstance()->KeyBinds(CGame::KEY_UP)))
 		{
-			CGame::GetInstance()->GetCamera()->SetY( CGame::GetInstance()->GetCamera()->GetY() - 1.5f );
+			//CGame::GetInstance()->GetCamera()->SetY( CGame::GetInstance()->GetCamera()->GetY() - fSpeed );
+			CGame::GetInstance()->GetCamera()->VelY(-fSpeed);
 			if(CGame::GetInstance()->GetCamera()->GetY() < 0.0f)
 				CGame::GetInstance()->GetCamera()->SetY( 0.0f );
 			//m_esEventSystem->SendEvent("UpKeyPressed");
@@ -498,7 +501,8 @@ void CMovementControl::Input()
 
 	if(m_DI->KeyDown(CGame::GetInstance()->KeyBinds(CGame::KEY_DOWN)))
 	{
-		CGame::GetInstance()->GetCamera()->SetY( CGame::GetInstance()->GetCamera()->GetY() + 1.5f );
+		//CGame::GetInstance()->GetCamera()->SetY( CGame::GetInstance()->GetCamera()->GetY() + fSpeed );
+		CGame::GetInstance()->GetCamera()->VelY(fSpeed);
 		if(CGame::GetInstance()->GetCamera()->GetY() > CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight())
 			CGame::GetInstance()->GetCamera()->SetY( float(CWorldManager::GetInstance()->WorldHeight() - CGame::GetInstance()->GetScreenHeight()));
 		//m_esEventSystem->SendEvent("DownKeyPressed");
@@ -576,8 +580,11 @@ void CMovementControl::RenderCursor()
 
 void CMovementControl::UpdateCamera( float fElapsedTime )
 {
-	int nBuffer		= 80;
-	float nSpeed	= 50;
+	m_cCAM->Update(fElapsedTime);
+
+
+	int nBuffer		= 5;
+	float nSpeed	= 2000;
 
 	RECT rCameraBounds;
 	SetRect(&rCameraBounds, 0, 0, CWorldManager::GetInstance()->WorldWidth(), CWorldManager::GetInstance()->WorldHeight());
@@ -587,18 +594,17 @@ void CMovementControl::UpdateCamera( float fElapsedTime )
 
 	if (CSGD_DirectInput::GetInstance()->MouseGetPosX() < nBuffer)
 	{
-		m_cCAM->VelX(-(nSpeed * ((nBuffer - CSGD_DirectInput::GetInstance()->MouseGetPosX()) >> 2)));
+		m_cCAM->VelX(-nSpeed);
 	}
 	else if (CSGD_DirectInput::GetInstance()->MouseGetPosX() > + CGame::GetInstance()->GetScreenWidth() - nBuffer)
-		m_cCAM->VelX(nSpeed * ((nBuffer - (CGame::GetInstance()->GetScreenWidth() - CSGD_DirectInput::GetInstance()->MouseGetPosX())) >> 2));
+		m_cCAM->VelX(nSpeed);
 
 	if (CSGD_DirectInput::GetInstance()->MouseGetPosY() < nBuffer)
-		m_cCAM->VelY(-(nSpeed * ((nBuffer - CSGD_DirectInput::GetInstance()->MouseGetPosY()) >> 2)));
+		m_cCAM->VelY(-nSpeed);
 	else if (CSGD_DirectInput::GetInstance()->MouseGetPosY() > CGame::GetInstance()->GetScreenHeight() - nBuffer)
-		m_cCAM->VelY(nSpeed * ((nBuffer - (CGame::GetInstance()->GetScreenHeight() - CSGD_DirectInput::GetInstance()->MouseGetPosY())) >> 2));
+		m_cCAM->VelY(nSpeed);
 
 
-	m_cCAM->Update(fElapsedTime);
 
 
  	if (m_cCAM->GetX() < rCameraBounds.left)
