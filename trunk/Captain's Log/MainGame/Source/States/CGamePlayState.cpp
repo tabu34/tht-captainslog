@@ -208,7 +208,7 @@ void CGamePlayState::Enter(void)
 	// Assets
 	m_nGunshotSound = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("\\THT_gunshoot.wav").c_str(), FMOD_LOOP_OFF);
 	m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap_lvl1.png").c_str());
-
+	m_nSelectionCircle = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("selectionCircle.png").c_str());
 	//LoadNextLevel();
 
 	CObjectManager::GetInstance()->AddObject(CMovementControl::GetInstance()->Marine());
@@ -246,6 +246,7 @@ void CGamePlayState::Exit(void)
 	m_vButtons.clear();
 
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nMiniMap);
+	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nSelectionCircle);
 	CAnimationManager::GetInstance()->Shutdown();
 	CObjectManager::GetInstance()->RemoveAllObjects();
 	CSGD_FModManager::GetInstance()->StopSound(m_nGunshotSound);

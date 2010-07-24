@@ -162,6 +162,9 @@ void CMedic::Render()
 	CUnit::Render();
 	bool flipped = false;
 
+
+
+
 	if (State() == 0 || State() == 3)
 	{
 		switch (CurDirection())

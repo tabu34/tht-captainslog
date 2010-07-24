@@ -139,26 +139,34 @@ void CWorldManager::Render()
 {
 	for (int l = 0; l < m_nWorldDepth; l++)
 	{
-		for (int i = 0; i < m_nWorldWidth; i++)
+		int tileHeight, tileWidth;
+		tileHeight = m_World[l][0][0].m_nHeight;
+		tileWidth = m_World[l][0][0].m_nWidth;
+
+		int startCulledRow = ((int)CGame::GetInstance()->GetCamera()->GetY()) / tileHeight;
+		int endCulledRow = ((int)CGame::GetInstance()->GetCamera()->GetY() + CGame::GetInstance()->GetScreenHeight()) / tileHeight;
+
+		int startCulledCol = ((int)CGame::GetInstance()->GetCamera()->GetX()) / tileWidth;
+		int endCulledCol = ((int)CGame::GetInstance()->GetCamera()->GetX() + CGame::GetInstance()->GetScreenWidth()) / tileWidth;
+
+		endCulledRow = min(endCulledRow * (tileHeight / 16) + 1, WorldHeight());
+		endCulledCol = min(endCulledCol * (tileWidth / 16) + 1, WorldWidth());
+
+		for (int i = startCulledCol; i < endCulledCol; i++)
 		{
-			for (int j = 0; j < m_nWorldHeight; j++)
+			for (int j = startCulledRow; j < endCulledRow; j++)
 			{
 				Tile tempTile = m_World[l][i][j];
-				RECT cameraRect = CGame::GetInstance()->GetCamera()->GetCollisionRect();
-				if (tempTile.m_nLeft + tempTile.m_nWidth >= cameraRect.left && tempTile.m_nLeft <= cameraRect.right
-					&& tempTile.m_nTop + tempTile.m_nHeight >= cameraRect.top && tempTile.m_nTop <= cameraRect.bottom)
+				if (tempTile.m_nTileNumber != -1)
 				{
-					if (tempTile.m_nTileNumber != -1)
-					{
-						RECT src = {tempTile.m_nTileNumber % (m_nTilesetWidth) * tempTile.m_nWidth,
-							tempTile.m_nTileNumber / (m_nTilesetWidth) * tempTile.m_nHeight,
-							0, 0};
-						src.left += tempTile.m_nTileNumber % (m_nTilesetWidth);
-						src.top += tempTile.m_nTileNumber / (m_nTilesetWidth);
-						src.bottom = src.top + tempTile.m_nHeight;
-						src.right = src.left + tempTile.m_nWidth;
-						CSGD_TextureManager::GetInstance()->Draw(m_nTilesetImageID, tempTile.m_nLeft - (int)CGame::GetInstance()->GetCamera()->GetX(), tempTile.m_nTop - (int)CGame::GetInstance()->GetCamera()->GetY(), 1.0f, 1.0f, &src, 0.0f, 0.0f, 0.0f);
-					}
+					RECT src = {tempTile.m_nTileNumber % (m_nTilesetWidth) * tempTile.m_nWidth,
+						tempTile.m_nTileNumber / (m_nTilesetWidth) * tempTile.m_nHeight,
+						0, 0};
+					src.left += tempTile.m_nTileNumber % (m_nTilesetWidth);
+					src.top += tempTile.m_nTileNumber / (m_nTilesetWidth);
+					src.bottom = src.top + tempTile.m_nHeight;
+					src.right = src.left + tempTile.m_nWidth;
+					CSGD_TextureManager::GetInstance()->Draw(m_nTilesetImageID, tempTile.m_nLeft - (int)CGame::GetInstance()->GetCamera()->GetX(), tempTile.m_nTop - (int)CGame::GetInstance()->GetCamera()->GetY(), 1.0f, 1.0f, &src);
 				}
 			}
 		}

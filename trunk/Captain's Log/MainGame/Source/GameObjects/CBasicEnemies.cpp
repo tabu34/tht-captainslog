@@ -5,6 +5,7 @@
 #include "CMedic.h"
 #include "CScout.h"
 #include "CHeavy.h"
+#include "../States/CGamePlayState.h"
 
 CBasicEnemy::CBasicEnemy()
 {
@@ -289,12 +290,17 @@ void CBasicEnemy::Render7()
 			CAnimationManager::GetInstance()->GetAnimation((*Animations())[6])->anAnimation.CurFrame(1);
 			break;
 		}
+			// Selection Cirle
+		if(Selected())
+			CSGD_TextureManager::GetInstance()->Draw(CGamePlayState::GetInstance()->GetSelectionCircleID(), (PosX()) / 2 - 32, PosY() - 16, 1.0f, 1.0f,0,0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 0, 0));
 		CAnimationManager::GetInstance()->GetAnimation((*Animations())[6])->anAnimation.Render((int)PosX() - (int)CGame::GetInstance()->GetCamera()->GetX(), (int)PosY() - (int)CGame::GetInstance()->GetCamera()->GetY(), flipped, 2.0f, dwColor);
 	}
 }
 
 void CBasicEnemy::Render16()
 {
+	if(Selected() || State() == 3)
+		CSGD_TextureManager::GetInstance()->Draw(CGamePlayState::GetInstance()->GetSelectionCircleID(), (PosX()) - 32 - CGame::GetInstance()->GetCamera()->GetX(), PosY() + (Height()) - 16 - CGame::GetInstance()->GetCamera()->GetY(), 1.0f, 1.0f,0,0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 0, 0));
 	if (State() == 0)
 	{
 		CAnimationManager::GetInstance()->GetAnimation((*Animations())[CurDirection()])->anAnimation.CurFrame(0);

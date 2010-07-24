@@ -408,6 +408,15 @@ bool CPathManager::CheckPath(float fX1, float fY1, float fX2, float fY2)
 	return bRet;
 }
 
+//tAStarNode* reconstructPath(tAStarNode* curNode)
+//{
+//	if(curNode->pCameFrom != NULL) {
+//		tAStarNode * p = reconstructPath(curNode->pCameFrom); tVector2D pVec, curNodeVec; pVec.fX = p->pNode->fX; pVec.fY = p->pNode->fY; curNodeVec.fX = curNode->pNode->fX; curNodeVec.fY = curNode->pNode->fY;
+//		return (p + curNode); }
+//	else
+//		return curNode;
+//}
+
 vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 {
 	//THIS is A*
@@ -590,36 +599,49 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 				curNode.x = adj.pNeighbors[i]->fX;
 				curNode.y = adj.pNeighbors[i]->fY;
 
-				if(x.pNode->fX == adj.pNeighbors[i]->fX && x.pNode->fY == adj.pNeighbors[i]->fY)
-					continue;
+				//if(x.pNode->fX == adj.pNeighbors[i]->fX && x.pNode->fY == adj.pNeighbors[i]->fY)
+				//	continue;
 
 				if(closeSet.find(adj.pNeighbors[i]) == closeSet.end())
 				{
 					POINT cur, prev;
 					cur.x = adj.pNeighbors[i]->fX;
 					cur.y = adj.pNeighbors[i]->fY;
-					prev.x = vNodePool.back().pNode->fX;
-					prev.y = vNodePool.back().pNode->fY;
+					prev.x = x.pNode->fX;
+					prev.y = x.pNode->fY;
 
-					float f = x.fG + ManhattanDistance(*adj.pNeighbors[i], *x.pNode);
+					float g = x.fG + PointDistance(cur, prev);
+
+					bool tentativeIsBetter;
 					if(openSet.find(adj.pNeighbors[i]) == openSet.end())
 					{
+						// If not in openset
 						tAStarNode n;
 						n.pNode = adj.pNeighbors[i];
-						n.pCameFrom = &vNodePool.back();
+						n.pCameFrom = &x;
 						n.nIndexParent = vNodePool.size()-1;
-						n.fG = PointDistance(cur,prev);
+						n.fG = g;
 						n.fH = ManhattanDistance(*adj.pNeighbors[i], *goal.pNode);
+						n.fF = g + ManhattanDistance(*adj.pNeighbors[i], *goal.pNode);
 						openSet[n.pNode] = n;
 						pQueue.push(n);
+						tentativeIsBetter = true;
 					}
-					else if(f < openSet[adj.pNeighbors[i]].fG)
+					else if(g < openSet[adj.pNeighbors[i]].fG)
 					{
-						openSet[adj.pNeighbors[i]].pCameFrom = &vNodePool.back();
-						openSet[adj.pNeighbors[i]].nIndexParent = vNodePool.size()-1;
-						openSet[adj.pNeighbors[i]].fG = PointDistance(cur,prev);
-						openSet[adj.pNeighbors[i]].fH = ManhattanDistance(*adj.pNeighbors[i], *goal.pNode);
+						tentativeIsBetter = true;
+					} else {
+						tentativeIsBetter = false;
 					}
+
+					if(tentativeIsBetter)
+					{
+						openSet[adj.pNeighbors[i]].pCameFrom = &x;
+						openSet[adj.pNeighbors[i]].fG = g;
+						openSet[adj.pNeighbors[i]].fH = ManhattanDistance(*adj.pNeighbors[i], *goal.pNode);
+						openSet[adj.pNeighbors[i]].fF = g + ManhattanDistance(*adj.pNeighbors[i], *goal.pNode);
+					}
+								
 				}
 			}
 		}
