@@ -44,6 +44,8 @@ void CObjectManager::RemoveAllObjects()
 	}
 
 	m_vObjectList.clear();
+
+	CCollisionManager::GetInstance()->RemoveAllObjects();
 }
 
 void CObjectManager::RemoveObject( CBase* pObject )
