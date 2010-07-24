@@ -46,6 +46,7 @@ void CMainMenuState::Enter(void)
 	m_nMenuMusic = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("SGD_BGM.wav").c_str(), FMOD_LOOP_NORMAL);
 
 	CSGD_FModManager::GetInstance()->PlaySound(m_nMenuMusic);
+	CSGD_FModManager::GetInstance()->SetVolume(m_nMenuMusic, (float)CGame::GetInstance()->MusicVolume() / 100.0f);
 
 	m_sCurrentChoice = 0;
 }
@@ -110,7 +111,7 @@ bool CMainMenuState::Input(void)
 
 void CMainMenuState::Update(float fElapsedTime)
 {
-	CSGD_FModManager::GetInstance()->SetVolume(m_nMenuMusic, CGame::GetInstance()->MusicVolume());
+	CSGD_FModManager::GetInstance()->SetVolume(m_nMenuMusic, (float)CGame::GetInstance()->MusicVolume() / 100.0f);
 
 	if(m_nMouseX < 0)
 		CSGD_DirectInput::GetInstance()->MouseSetPosX(0);
