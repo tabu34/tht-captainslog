@@ -17,10 +17,7 @@ COptionsMenuState::COptionsMenuState()
 	m_nVoiceVolume =	0;
 	m_nCurIndex =		-1;
 
-	m_fKeyRepeatTimer		= 0.0f;
-	m_fKeyRepeatRate		= 0.15f;
-	m_fFirstKeyRepeatTimer	= 0.0f;
-	m_fFirstKeyRepeatRate	= 0.5f;
+	ktLeftRightTimer.m_fKeyRepeatRate = 0.05f;
 }
 
 COptionsMenuState::~COptionsMenuState()
@@ -161,6 +158,58 @@ bool COptionsMenuState::Input()
 		}
 	}
 
+	if(CSGD_DirectInput::GetInstance()->KeyDown(DIK_RIGHT))
+	{
+		if(m_pCurrentControl)
+		{
+			if (!ktLeftRightTimer.m_bKeyRepeat)
+			{
+				ktLeftRightTimer.m_fFirstKeyRepeatTimer += CGame::GetInstance()->ElapsedTime();
+			}
+
+			if (ktLeftRightTimer.m_fFirstKeyRepeatTimer > ktLeftRightTimer.m_fFirstKeyRepeatRate)
+			{
+				ktLeftRightTimer.m_fFirstKeyRepeatTimer = 0.0f;
+				ktLeftRightTimer.m_bKeyRepeat = true;
+			}
+
+			if (ktLeftRightTimer.m_bKeyRepeat)
+			{
+				ktLeftRightTimer.m_fKeyRepeatTimer += CGame::GetInstance()->ElapsedTime();
+
+				if (ktLeftRightTimer.m_fKeyRepeatTimer > ktLeftRightTimer.m_fKeyRepeatRate)
+				{
+					ktLeftRightTimer.m_fKeyRepeatTimer -= ktLeftRightTimer.m_fKeyRepeatRate;
+
+					if(m_pCurrentControl->szIdentifier == "fullscreen")
+					{
+						m_pCurrentControl = &m_vControls[4];
+						m_nCurIndex = 4;
+						m_nBindIndex=-1;
+					}
+					else if(m_pCurrentControl->szIdentifier == "sfxvolume")
+					{
+						m_nSFXVolume = (m_nSFXVolume >= 100) ? 100 : m_nSFXVolume+1;
+					}
+					else if(m_pCurrentControl->szIdentifier == "voiceovervolume")
+					{
+						m_nVoiceVolume = (m_nVoiceVolume >= 100) ? 100 : m_nVoiceVolume+1;
+					}
+					else if(m_pCurrentControl->szIdentifier == "musicvolume")
+					{
+						m_nMusicVolume = (m_nMusicVolume >= 100) ? 100 : m_nMusicVolume+1;
+					}
+				}
+			}
+
+		}
+	}
+
+	if(CSGD_DirectInput::GetInstance()->KeyReleased(DIK_RIGHT))
+	{
+		ktLeftRightTimer.m_bKeyRepeat = false;
+	}
+
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LEFT))
 	{
 		if(m_pCurrentControl)
@@ -185,6 +234,56 @@ bool COptionsMenuState::Input()
 			}
 		}
 	}
+	if(CSGD_DirectInput::GetInstance()->KeyDown(DIK_LEFT))
+	{
+		if(m_pCurrentControl)
+		{
+			if (!ktLeftRightTimer.m_bKeyRepeat)
+			{
+				ktLeftRightTimer.m_fFirstKeyRepeatTimer += CGame::GetInstance()->ElapsedTime();
+			}
+
+			if (ktLeftRightTimer.m_fFirstKeyRepeatTimer > ktLeftRightTimer.m_fFirstKeyRepeatRate)
+			{
+				ktLeftRightTimer.m_fFirstKeyRepeatTimer = 0.0f;
+				ktLeftRightTimer.m_bKeyRepeat = true;
+			}
+
+			if (ktLeftRightTimer.m_bKeyRepeat)
+			{
+				ktLeftRightTimer.m_fKeyRepeatTimer += CGame::GetInstance()->ElapsedTime();
+
+				if (ktLeftRightTimer.m_fKeyRepeatTimer > ktLeftRightTimer.m_fKeyRepeatRate)
+				{
+					ktLeftRightTimer.m_fKeyRepeatTimer -= ktLeftRightTimer.m_fKeyRepeatRate;
+
+					if(m_pCurrentControl->szIdentifier == "layout")
+					{
+						m_pCurrentControl = &m_vControls[0];
+						m_nCurIndex = 0;
+						m_nBindIndex=-5;
+					}
+					else if(m_pCurrentControl->szIdentifier == "sfxvolume")
+					{
+						m_nSFXVolume = (m_nSFXVolume <=0) ? 0 : m_nSFXVolume-1;
+					}
+					else if(m_pCurrentControl->szIdentifier == "voiceovervolume")
+					{
+						m_nVoiceVolume = (m_nVoiceVolume <=0) ? 0 : m_nVoiceVolume-1;
+					}
+					else if(m_pCurrentControl->szIdentifier == "musicvolume")
+					{
+						m_nMusicVolume = (m_nMusicVolume <=0) ? 0 : m_nMusicVolume-1;
+					}
+				}
+			}
+		}
+	}
+
+	if (CSGD_DirectInput::GetInstance()->KeyReleased(DIK_LEFT))
+	{
+		ktLeftRightTimer.m_bKeyRepeat = false;
+	}
 
 	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP))
 	{
@@ -198,24 +297,24 @@ bool COptionsMenuState::Input()
 
 	if (CSGD_DirectInput::GetInstance()->KeyDown(DIK_DOWN) || CSGD_DirectInput::GetInstance()->KeyDown(DIK_UP))
 	{
-		if (!m_bKeyRepeat)
+		if (!ktUpDownTimer.m_bKeyRepeat)
 		{
-			m_fFirstKeyRepeatTimer += CGame::GetInstance()->ElapsedTime();
+			ktUpDownTimer.m_fFirstKeyRepeatTimer += CGame::GetInstance()->ElapsedTime();
 		}
 
-		if (m_fFirstKeyRepeatTimer > m_fFirstKeyRepeatRate)
+		if (ktUpDownTimer.m_fFirstKeyRepeatTimer > ktUpDownTimer.m_fFirstKeyRepeatRate)
 		{
-			m_fFirstKeyRepeatTimer = 0.0f;
-			m_bKeyRepeat = true;
+			ktUpDownTimer.m_fFirstKeyRepeatTimer = 0.0f;
+			ktUpDownTimer.m_bKeyRepeat = true;
 		}
 		
-		if (m_bKeyRepeat)
+		if (ktUpDownTimer.m_bKeyRepeat)
 		{
-			m_fKeyRepeatTimer += CGame::GetInstance()->ElapsedTime();
+			ktUpDownTimer.m_fKeyRepeatTimer += CGame::GetInstance()->ElapsedTime();
 
-			if (m_fKeyRepeatTimer > m_fKeyRepeatRate)
+			if (ktUpDownTimer.m_fKeyRepeatTimer > ktUpDownTimer.m_fKeyRepeatRate)
 			{
-				m_fKeyRepeatTimer -= m_fKeyRepeatRate;
+				ktUpDownTimer.m_fKeyRepeatTimer -= ktUpDownTimer.m_fKeyRepeatRate;
 
 				m_nCurIndex = (CSGD_DirectInput::GetInstance()->KeyDown(DIK_DOWN))?
 					((m_nCurIndex + 1 < (int)m_vControls.size()) ? m_nCurIndex + 1 : 0):
@@ -230,7 +329,7 @@ bool COptionsMenuState::Input()
 
 	if (CSGD_DirectInput::GetInstance()->KeyReleased(DIK_DOWN) || CSGD_DirectInput::GetInstance()->KeyReleased(DIK_UP))
 	{
-		m_bKeyRepeat = false;
+		ktUpDownTimer.m_bKeyRepeat = false;
 	}
 
 	if((m_nMouseX!=m_nMousePrevX || m_nMouseY!=m_nMousePrevY) && !CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
