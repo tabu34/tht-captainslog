@@ -784,6 +784,9 @@ void CGamePlayState::RenderHUD(void)
 	{
 		m_ftTextSmallShadow.RenderText((char*)m_szTooltipText.c_str(), CMovementControl::GetInstance()->MousePosX(), CMovementControl::GetInstance()->MousePosY() - 25 - m_nToolTipOffsetY);
 	}
+
+	//DEBUG
+	RenderSmallShadowText((char *)(CurrentCommand().c_str()), 700, 100);
 }
 
 void CGamePlayState::Render(void)
@@ -1044,17 +1047,11 @@ void ActivateAbilityOne()
 	{
 		(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Activate();
 	}
-	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Type() == 1)
+	else
 	{
-		CGamePlayState::GetInstance()->SetCommand("Ability1");
+		CGamePlayState::GetInstance()->SetCommand("Ability");
 		CMovementControl::GetInstance()->SetUnit((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]));
 		CMovementControl::GetInstance()->SetPosition(0);
-	}
-	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Type() == 2)
-	{
-		CGamePlayState::GetInstance()->SetCommand("Ability2");
-		CMovementControl::GetInstance()->SetUnit((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]));
-		CMovementControl::GetInstance()->SetPosition(1);
 	}
 }
 
@@ -1068,15 +1065,9 @@ void ActivateAbilityTwo()
 	{
 		(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Activate();
 	}
-	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Type() == 1)
+	else
 	{
-		CGamePlayState::GetInstance()->SetCommand("Ability2");
-		CMovementControl::GetInstance()->SetUnit((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]));
-		CMovementControl::GetInstance()->SetPosition(1);
-	}
-	else if ((*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Type() == 2)
-	{
-		CGamePlayState::GetInstance()->SetCommand("Ability2");
+		CGamePlayState::GetInstance()->SetCommand("Ability");
 		CMovementControl::GetInstance()->SetUnit((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]));
 		CMovementControl::GetInstance()->SetPosition(1);
 	}

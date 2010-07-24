@@ -174,7 +174,7 @@ void CAbility_ArmorLockdown::Update(float fElapsedTime)
 
 void CAbility_StunGrenade::Activate()
 {
-	if (TimePassed() > Cooldown())
+	if (TimePassed() >= Cooldown())
 	{
 		for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
 		{
