@@ -544,6 +544,7 @@ void CGamePlayState::Update(float fElapsedTime)
 		if (i == CObjectManager::GetInstance()->GetObjectList()->size() - 1 && (*CObjectManager::GetInstance()->GetObjectList())[i]->Type() != CBase::OBJ_PLAYER)
 		{
 			CGame::GetInstance()->ChangeState(CGameOverState::GetInstance());
+			return;
 		}
 	}
 

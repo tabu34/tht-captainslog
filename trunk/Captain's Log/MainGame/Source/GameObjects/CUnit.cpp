@@ -135,6 +135,15 @@ void CUnit::Update(float fElapsedTime)
 		return;
 	}
 
+	if (m_fAttackTimer < m_fAttackSpeed)
+	{
+		m_fAttackTimer += fElapsedTime;
+	}
+	else if (m_fAttackTimer > m_fAttackSpeed)
+	{
+		m_fAttackTimer = m_fAttackSpeed;
+	}
+
 	if (m_nState == UNIT_IDLE)
 	{
 		VelX(0.0f);
@@ -269,7 +278,6 @@ void CUnit::Attack(float fElapsedTime)
 		{
 			m_nState = UNIT_ATTACK;
 		}
-		m_fAttackTimer += fElapsedTime;
 		if (m_fAttackTimer >= m_fAttackSpeed)
 		{
 			if (m_pTarget->Invulnerable() == false && (!CGamePlayState::GetInstance()->GodMode() || m_pTarget->Type() == OBJ_ENEMY))
