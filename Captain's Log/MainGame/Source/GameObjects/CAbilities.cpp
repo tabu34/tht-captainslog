@@ -1,6 +1,10 @@
 #include "precompiled_header.h"
 #include "CAbilities.h"
 #include "CUnit.h"
+#include "CScout.h"
+#include "CMarine.h"
+#include "CHeavy.h"
+#include "CMedic.h"
 
 void CAbility_DefensiveMatrix::Activate()
 {
@@ -8,9 +12,12 @@ void CAbility_DefensiveMatrix::Activate()
 	{
 		if (Target()->Type() == CUnit::OBJ_PLAYER)
 		{
-			TimePassed(0);
-			IsActive(true);
-			Target()->Invulnerable(true);
+			if ((fabs(Target()->PosX() - CMovementControl::GetInstance()->Medic()->PosX()) + fabs(Target()->PosY() - CMovementControl::GetInstance()->Medic()->PosY())) == (CMovementControl::GetInstance()->Medic()->SightRange() * CMovementControl::GetInstance()->Medic()->SightRange()))
+			{
+				TimePassed(0);
+				IsActive(true);
+				Target()->Invulnerable(true);
+			}
 		}
 	}
 }
@@ -45,10 +52,13 @@ void CAbility_PinningShot::Activate()
 	{
 		if (Target()->Type() == CUnit::OBJ_ENEMY)
 		{
-			TimePassed(0);
-			IsActive(true);
-			m_fMovementSpeed = Target()->MovementSpeed();
-			Target()->MovementSpeed(0);
+			if ((fabs(Target()->PosX() - CMovementControl::GetInstance()->Scout()->PosX()) + fabs(Target()->PosY() - CMovementControl::GetInstance()->Scout()->PosY())) == (CMovementControl::GetInstance()->Scout()->SightRange() * CMovementControl::GetInstance()->Scout()->SightRange()))
+			{
+				TimePassed(0);
+				IsActive(true);
+				m_fMovementSpeed = Target()->MovementSpeed();
+				Target()->MovementSpeed(0);
+			}
 		}
 	}
 }
@@ -96,8 +106,11 @@ void CAbility_Refresh::Activate()
 	{
 		if (Target()->Type() == CUnit::OBJ_PLAYER)
 		{
-			Target()->CurHealth(Target()->CurHealth() + 20);
-			TimePassed(0);
+			if ((fabs(Target()->PosX() - CMovementControl::GetInstance()->Medic()->PosX()) + fabs(Target()->PosY() - CMovementControl::GetInstance()->Medic()->PosY())) == (CMovementControl::GetInstance()->Medic()->SightRange() * CMovementControl::GetInstance()->Medic()->SightRange()))
+			{
+				Target()->CurHealth(Target()->CurHealth() + 20);
+				TimePassed(0);
+			}
 		}
 	}
 }
@@ -185,19 +198,22 @@ void CAbility_StunGrenade::Activate()
 {
 	if (TimePassed() >= Cooldown())
 	{
-		for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
+		if ((fabs(Target()->PosX() - CMovementControl::GetInstance()->Marine()->PosX()) + fabs(Target()->PosY() - CMovementControl::GetInstance()->Marine()->PosY())) == (CMovementControl::GetInstance()->Marine()->SightRange() * CMovementControl::GetInstance()->Marine()->SightRange()))
 		{
-			if ((*CObjectManager::GetInstance()->GetObjectList())[i]->Type() != CUnit::OBJ_PLAYER)
+			for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
 			{
-				if(((*CObjectManager::GetInstance()->GetObjectList())[i]->PosX() - Location().x) * ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosX() - Location().x) + ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosY() - Location().y) * ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosY() - Location().y) < (Range() * Range()))
+				if ((*CObjectManager::GetInstance()->GetObjectList())[i]->Type() != CUnit::OBJ_PLAYER)
 				{
-					((CUnit*)(*CObjectManager::GetInstance()->GetObjectList())[i])->Stunned(true);
-					((CUnit*)(*CObjectManager::GetInstance()->GetObjectList())[i])->StunnedEndTime(5);
-					((CUnit*)(*CObjectManager::GetInstance()->GetObjectList())[i])->StunnedCurrTime(0);
+					if(((*CObjectManager::GetInstance()->GetObjectList())[i]->PosX() - Location().x) * ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosX() - Location().x) + ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosY() - Location().y) * ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosY() - Location().y) < (Range() * Range()))
+					{
+						((CUnit*)(*CObjectManager::GetInstance()->GetObjectList())[i])->Stunned(true);
+						((CUnit*)(*CObjectManager::GetInstance()->GetObjectList())[i])->StunnedEndTime(5);
+						((CUnit*)(*CObjectManager::GetInstance()->GetObjectList())[i])->StunnedCurrTime(0);
+					}
 				}
 			}
+			TimePassed(0);
 		}
-		TimePassed(0);
 	}
 }
 
@@ -217,17 +233,20 @@ void CAbility_RocketBarrage::Activate()
 {
 	if (TimePassed() >= Cooldown())
 	{
-		for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
+		if ((fabs(Target()->PosX() - CMovementControl::GetInstance()->Heavy()->PosX()) + fabs(Target()->PosY() - CMovementControl::GetInstance()->Heavy()->PosY())) == (CMovementControl::GetInstance()->Heavy()->SightRange() * CMovementControl::GetInstance()->Heavy()->SightRange()))
 		{
-			if ((*CObjectManager::GetInstance()->GetObjectList())[i]->Type() != CUnit::OBJ_PLAYER)
+			for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
 			{
-				if(((*CObjectManager::GetInstance()->GetObjectList())[i]->PosX() - Location().x) * ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosX() - Location().x) + ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosY() - Location().y) * ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosY() - Location().y) < (Range() * Range()))
+				if ((*CObjectManager::GetInstance()->GetObjectList())[i]->Type() != CUnit::OBJ_PLAYER)
 				{
-					((CUnit*)(*CObjectManager::GetInstance()->GetObjectList())[i])->CurHealth(((CUnit*)(*CObjectManager::GetInstance()->GetObjectList())[i])->CurHealth() - 50);
+					if(((*CObjectManager::GetInstance()->GetObjectList())[i]->PosX() - Location().x) * ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosX() - Location().x) + ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosY() - Location().y) * ((*CObjectManager::GetInstance()->GetObjectList())[i]->PosY() - Location().y) < (Range() * Range()))
+					{
+						((CUnit*)(*CObjectManager::GetInstance()->GetObjectList())[i])->CurHealth(((CUnit*)(*CObjectManager::GetInstance()->GetObjectList())[i])->CurHealth() - 50);
+					}
 				}
 			}
+			TimePassed(0);
 		}
-		TimePassed(0);
 	}
 }
 
