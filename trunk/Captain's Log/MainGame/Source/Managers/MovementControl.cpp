@@ -78,10 +78,12 @@ void CMovementControl::Input()
 					nTarget = j;
 				}
 			}
-			if (nTarget != -1 && ((*m_vObjectList)[nTarget]->Type() == CBase::OBJ_ENEMY ||
-								(*m_vObjectList)[nTarget]->Type() == CBase::OBJ_PLAYER))
+			if (nTarget != -1 && ((*m_vObjectList)[nTarget]->Type() == CBase::OBJ_ENEMY || (*m_vObjectList)[nTarget]->Type() == CBase::OBJ_PLAYER))
 			{
-				((CUnit*)(*m_vSelected)[i])->OrderAttack((CUnit*)(*m_vObjectList)[nTarget]);
+				if (((*m_vObjectList)[nTarget]->Type() == CBase::OBJ_ENEMY || ((*m_vObjectList)[nTarget]->Type() == CBase::OBJ_PLAYER && ((CPlayerUnit*)(*m_vSelected)[0])->SubType() == CUnit::PLAYER_MEDIC)))
+				{
+					((CUnit*)(*m_vSelected)[i])->OrderAttack((CUnit*)(*m_vObjectList)[nTarget]);
+				}
 			}
 			else if (nTarget != -1 && (*m_vObjectList)[nTarget]->Type() == CBase::OBJ_ITEM && 
 				((*m_vObjectList)[nTarget]->PosX() - (*m_vSelected)[i]->PosX()) * 
@@ -215,7 +217,7 @@ void CMovementControl::Input()
 		{
 			for(size_t i = 0; i<m_vSelected->size(); i++)
 			{
-				((CUnit*)(*m_vSelected)[i])->OrderMove(MousePosX() + CGame::GetInstance()->GetCamera()->GetX(), MousePosY() + CGame::GetInstance()->GetCamera()->GetY());
+				((CUnit*)(*m_vSelected)[i])->OrderMove(MousePosX() + (int)CGame::GetInstance()->GetCamera()->GetX(), MousePosY() + (int)CGame::GetInstance()->GetCamera()->GetY());
 			}
 			CGamePlayState::GetInstance()->ClearCommand();
 			return;
@@ -253,7 +255,7 @@ void CMovementControl::Input()
 		}
 		else if (CGamePlayState::GetInstance()->CurrentCommand() == "Ability")
 		{
-			if (m_pUnitAbilitySelection->CurHealth() <= 0)
+			if (m_pUnitAbilitySelection == NULL || m_pUnitAbilitySelection->CurHealth() <= 0)
 			{
 				return;
 			}
@@ -315,16 +317,19 @@ void CMovementControl::Input()
 			mouseRect.right = mouseRect.left + 1;
 			mouseRect.bottom = mouseRect.top + 1;
 
+			bool bSelectedOne = false;
+
 			for(unsigned int i = 0; i < m_vObjectList->size(); i++)
 			{
 				RECT collide;
 				RECT collisionRect = (*m_vObjectList)[i]->GetCollisionRect();
-				if(IntersectRect(&collide, &mouseRect, &collisionRect))
+				if(bSelectedOne == false && IntersectRect(&collide, &mouseRect, &collisionRect))
 				{
 					if(!((CUnit*)(*m_vObjectList)[i])->Selected())	// If not selected
 					{
 						((CUnit*)(*m_vObjectList)[i])->Selected(true);
 						(*m_vSelected).push_back( (*m_vObjectList)[i] );
+						bSelectedOne = true;
 					}
 				} 
 				else
