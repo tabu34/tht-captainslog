@@ -198,7 +198,7 @@ void CAbility_StunGrenade::Activate()
 {
 	if (TimePassed() >= Cooldown())
 	{
-		if ((fabs(Target()->PosX() - CMovementControl::GetInstance()->Marine()->PosX()) + fabs(Target()->PosY() - CMovementControl::GetInstance()->Marine()->PosY())) == (CMovementControl::GetInstance()->Marine()->SightRange() * CMovementControl::GetInstance()->Marine()->SightRange()))
+		if ((fabs(Location().x - CMovementControl::GetInstance()->Marine()->PosX()) + fabs(Location().y - CMovementControl::GetInstance()->Marine()->PosY())) == (CMovementControl::GetInstance()->Marine()->SightRange() * CMovementControl::GetInstance()->Marine()->SightRange()))
 		{
 			for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
 			{
@@ -233,7 +233,7 @@ void CAbility_RocketBarrage::Activate()
 {
 	if (TimePassed() >= Cooldown())
 	{
-		if ((fabs(Target()->PosX() - CMovementControl::GetInstance()->Heavy()->PosX()) + fabs(Target()->PosY() - CMovementControl::GetInstance()->Heavy()->PosY())) == (CMovementControl::GetInstance()->Heavy()->SightRange() * CMovementControl::GetInstance()->Heavy()->SightRange()))
+		if ((fabs(Location().x - CMovementControl::GetInstance()->Heavy()->PosX()) + fabs(Location().y - CMovementControl::GetInstance()->Heavy()->PosY())) == (CMovementControl::GetInstance()->Heavy()->SightRange() * CMovementControl::GetInstance()->Heavy()->SightRange()))
 		{
 			for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
 			{
