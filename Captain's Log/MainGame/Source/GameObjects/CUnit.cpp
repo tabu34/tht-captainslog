@@ -19,6 +19,7 @@ CUnit::CUnit()
 	Height(64);
 	MovementSpeed(100);
 	Target(0);
+	Stuck(false);
 
 	Cloaked(false);
 	Invulnerable(false);
@@ -99,8 +100,6 @@ void CUnit::OrderAttack(CUnit* pTarget)
 
 void CUnit::Update(float fElapsedTime)
 {
-
-
 	CBase::Update(fElapsedTime);
 
 	//DEBUG
@@ -152,15 +151,31 @@ void CUnit::Update(float fElapsedTime)
 	}
 	else if(m_nState == UNIT_MOVING)
 	{
-		if(PosX() < m_pDestinationMove.x)
-			VelX(MovementSpeed());
-		else
-			VelX(-MovementSpeed());
 
-		if(PosY() < m_pDestinationMove.y)
-			VelY(MovementSpeed());
-		else
-			VelY(-MovementSpeed());
+		if(!Stuck())
+		{
+			if(PosX() < m_pDestinationMove.x)
+				VelX(MovementSpeed());
+			else
+				VelX(-MovementSpeed());
+
+			if(PosY() < m_pDestinationMove.y)
+				VelY(MovementSpeed());
+			else
+				VelY(-MovementSpeed());
+		}
+		
+		if(Stuck() && fabs(PosX() - m_pDestinationMove.x) < 100.0f)
+		{
+			Stuck(false);
+			VelX(0.0f);
+		}
+
+		if(Stuck() && fabs(PosY() - m_pDestinationMove.y) < 100.0f)
+		{
+			Stuck(false);
+			VelY(0.0f);
+		}
 
 		if(fabs(PosX() - m_pDestinationMove.x) < 3.0f)
 		{
@@ -172,7 +187,7 @@ void CUnit::Update(float fElapsedTime)
 			VelY(0.0f);
 		}
 
-		if(VelX() == 0.0f && VelY() == 0.0f)
+		if(VelX() == 0.0f && VelY() == 0.0f && !Stuck())
 		{
 			if(m_vDirections.size()>0)
 			{
@@ -216,15 +231,19 @@ void CUnit::Update(float fElapsedTime)
 		}
 		else
 		{
-			if(PosX() < m_pTarget->PosX())
-				VelX(MovementSpeed());
-			else
-				VelX(-MovementSpeed());
+			if(!Stuck())
+			{
+				if(PosX() < m_pTarget->PosX())
+					VelX(MovementSpeed());
+				else
+					VelX(-MovementSpeed());
 
-			if(PosY() < m_pTarget->PosY())
-				VelY(MovementSpeed());
-			else
-				VelY(-MovementSpeed());
+				if(PosY() < m_pTarget->PosY())
+					VelY(MovementSpeed());
+				else
+					VelY(-MovementSpeed());
+			}
+			
 		}
 		if(fabs(PosX() - m_pTarget->PosX()) < 1.0f)
 		{

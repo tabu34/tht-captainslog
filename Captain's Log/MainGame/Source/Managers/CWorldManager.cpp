@@ -140,8 +140,8 @@ void CWorldManager::Render()
 	for (int l = 0; l < m_nWorldDepth; l++)
 	{
 		int tileHeight, tileWidth;
-		tileHeight = m_World[l][0][0].m_nHeight;
-		tileWidth = m_World[l][0][0].m_nWidth;
+		tileHeight = 16;//m_World[l][0][0].m_nHeight;
+		tileWidth = 16;//m_World[l][0][0].m_nWidth;
 
 		int startCulledRow = ((int)CGame::GetInstance()->GetCamera()->GetY()) / tileHeight;
 		int endCulledRow = ((int)CGame::GetInstance()->GetCamera()->GetY() + CGame::GetInstance()->GetScreenHeight()) / tileHeight;
@@ -149,8 +149,8 @@ void CWorldManager::Render()
 		int startCulledCol = ((int)CGame::GetInstance()->GetCamera()->GetX()) / tileWidth;
 		int endCulledCol = ((int)CGame::GetInstance()->GetCamera()->GetX() + CGame::GetInstance()->GetScreenWidth()) / tileWidth;
 
-		endCulledRow = min(endCulledRow * (tileHeight / 16) + 1, WorldHeight());
-		endCulledCol = min(endCulledCol * (tileWidth / 16) + 1, WorldWidth());
+		endCulledRow = min(endCulledRow * (tileHeight / 16) + 1, (WorldHeight()/16));
+		endCulledCol = min(endCulledCol * (tileWidth / 16) + 1, (WorldWidth()/16));
 
 		for (int i = startCulledCol; i < endCulledCol; i++)
 		{
