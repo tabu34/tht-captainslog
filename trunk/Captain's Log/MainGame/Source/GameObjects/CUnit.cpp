@@ -301,7 +301,25 @@ void CUnit::Attack(float fElapsedTime)
 		{
 			if (m_pTarget->Invulnerable() == false && (!CGamePlayState::GetInstance()->GodMode() || m_pTarget->Type() == OBJ_ENEMY))
 			{
-				CSGD_FModManager::GetInstance()->PlaySound(CGamePlayState::GetInstance()->GunshotSoundID(0));
+				if (Type() == OBJ_ENEMY)
+				{
+					CSGD_FModManager::GetInstance()->PlaySound(CGamePlayState::GetInstance()->GunshotSoundID(0));
+				}
+				else if (Type() == OBJ_PLAYER)
+				{
+					switch (SubType())
+					{
+					case PLAYER_MARINE:
+						CSGD_FModManager::GetInstance()->PlaySound(CGamePlayState::GetInstance()->GunshotSoundID(0));
+						break;
+					case PLAYER_HEAVY:
+						CSGD_FModManager::GetInstance()->PlaySound(CGamePlayState::GetInstance()->GunshotSoundID(1));
+						break;
+					case PLAYER_SCOUT:
+						CSGD_FModManager::GetInstance()->PlaySound(CGamePlayState::GetInstance()->GunshotSoundID(2));
+						break;
+					}
+				}
 				m_pTarget->CurHealth(m_pTarget->CurHealth() - (int)(m_fAttackDamage - (m_fAttackDamage * m_pTarget->Armor() * 0.01f)));
 			}
 			m_fAttackTimer = 0;

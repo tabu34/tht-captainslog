@@ -208,7 +208,7 @@ void CGamePlayState::Enter(void)
 	// Assets
 	m_nGunshotSound[0] = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("\\THT_Marine_Fire.wav").c_str(), FMOD_LOOP_OFF);
 	m_nGunshotSound[1] = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("\\THT_Heavy_Fire.wav").c_str(), FMOD_LOOP_OFF);
-	m_nGunshotSound[2] = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("\\THT_Scout_Fire.wav").c_str(), FMOD_LOOP_OFF);
+	m_nGunshotSound[2] = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("\\THT_Ghost_Fire.wav").c_str(), FMOD_LOOP_OFF);
 	m_nGunshotSound[3] = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("\\THT_Medic_Heal.wav").c_str(), FMOD_LOOP_OFF);
 	m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap_lvl1.png").c_str());
 	m_nSelectionCircle = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("selectionCircle.png").c_str());
