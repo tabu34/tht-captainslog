@@ -207,7 +207,7 @@ void CGamePlayState::Enter(void)
 
 	// Assets
 	m_nGunshotSound = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("\\THT_gunshoot.wav").c_str(), FMOD_LOOP_OFF);
-	m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap.png").c_str());
+	m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap_lvl1.png").c_str());
 
 	//LoadNextLevel();
 
