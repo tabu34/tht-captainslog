@@ -38,6 +38,7 @@ void COptionsMenuState::Enter()
 	m_nSliderImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\optionsMenuSlider.png").c_str());
 	m_pCurrentControl = NULL;
 
+
 	m_bfFont.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.7f, 0.7f, 2, 0xFF000000, 0xFF00CC00);
 	m_bfFont.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
 
@@ -468,6 +469,7 @@ void COptionsMenuState::Update(float fElapsedTime)
 	//////////////////////////////////////////////////////////////////////////
 	CSGD_FModManager::GetInstance()->SetVolume(0, (float)CGame::GetInstance()->MusicVolume() / 100.0f);
 	//////////////////////////////////////////////////////////////////////////
+
 
 	if(m_bError)
 	{

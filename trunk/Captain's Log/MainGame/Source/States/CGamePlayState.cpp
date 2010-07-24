@@ -210,6 +210,7 @@ void CGamePlayState::Enter(void)
 	m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap_lvl1.png").c_str());
 	m_nSelectionCircle = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("selectionCircle.png").c_str());
 	//LoadNextLevel();
+	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound, (float)CGame::GetInstance()->SFXVolume() / 100.0f);
 
 	CObjectManager::GetInstance()->AddObject(CMovementControl::GetInstance()->Marine());
 	CObjectManager::GetInstance()->AddObject(CMovementControl::GetInstance()->Heavy());
@@ -542,7 +543,7 @@ void CGamePlayState::CheckCheats()
 }
 void CGamePlayState::Update(float fElapsedTime)
 {
-	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound, CGame::GetInstance()->SFXVolume());
+	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound, (float)CGame::GetInstance()->SFXVolume() / 100.0f);
 
 	for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
 	{
