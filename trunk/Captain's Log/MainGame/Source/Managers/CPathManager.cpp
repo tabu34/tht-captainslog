@@ -420,6 +420,15 @@ bool CPathManager::CheckPath(float fX1, float fY1, float fX2, float fY2)
 vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 {
 	//THIS is A*
+	POINT startPt;
+	startPt.x = (LONG)fX1;
+	startPt.y = (LONG)fY1;
+
+	POINT endPt;
+	endPt.x = (LONG)fX2;
+	endPt.y = (LONG)fY2;
+	if(InsideBlocker(endPt))
+		return vector<tNode*>();
 
 	vector<tNode*> vRet;
 	vector<tAStarNode> vNodePool;
@@ -467,9 +476,7 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 		int tilePosX = int(fX1 / GRID_SCALE);
 		int tilePosY = int(fY1 / GRID_SCALE);
 
-		POINT startPt;
-		startPt.x = (LONG)fX1;
-		startPt.y = (LONG)fY1;
+
 
 		POINT tileEdges[4];
 		// Top left
@@ -524,9 +531,7 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 		int tilePosX = int(fX2 / GRID_SCALE);
 		int tilePosY = int(fY2 / GRID_SCALE);
 
-		POINT endPt;
-		endPt.x = (LONG)fX2;
-		endPt.y = (LONG)fY2;
+
 
 		POINT tileEdges[4];
 		// Top left
