@@ -16,6 +16,11 @@ COptionsMenuState::COptionsMenuState()
 	m_nSFXVolume =		0;
 	m_nVoiceVolume =	0;
 	m_nCurIndex =		-1;
+
+	m_fKeyRepeatTimer		= 0.0f;
+	m_fKeyRepeatRate		= 0.15f;
+	m_fFirstKeyRepeatTimer	= 0.0f;
+	m_fFirstKeyRepeatRate	= 0.5f;
 }
 
 COptionsMenuState::~COptionsMenuState()
@@ -189,6 +194,43 @@ bool COptionsMenuState::Input()
 
 		m_pCurrentControl = &m_vControls[m_nCurIndex];
 		m_nBindIndex = m_nCurIndex - 5;
+	}
+
+	if (CSGD_DirectInput::GetInstance()->KeyDown(DIK_DOWN) || CSGD_DirectInput::GetInstance()->KeyDown(DIK_UP))
+	{
+		if (!m_bKeyRepeat)
+		{
+			m_fFirstKeyRepeatTimer += CGame::GetInstance()->ElapsedTime();
+		}
+
+		if (m_fFirstKeyRepeatTimer > m_fFirstKeyRepeatRate)
+		{
+			m_fFirstKeyRepeatTimer = 0.0f;
+			m_bKeyRepeat = true;
+		}
+		
+		if (m_bKeyRepeat)
+		{
+			m_fKeyRepeatTimer += CGame::GetInstance()->ElapsedTime();
+
+			if (m_fKeyRepeatTimer > m_fKeyRepeatRate)
+			{
+				m_fKeyRepeatTimer -= m_fKeyRepeatRate;
+
+				m_nCurIndex = (CSGD_DirectInput::GetInstance()->KeyDown(DIK_DOWN))?
+					((m_nCurIndex + 1 < (int)m_vControls.size()) ? m_nCurIndex + 1 : 0):
+					((m_nCurIndex - 1 < 0) ? m_vControls.size() - 1 : m_nCurIndex - 1);
+
+				m_pCurrentControl = &m_vControls[m_nCurIndex];
+				m_nBindIndex = m_nCurIndex - 5;
+			}
+		}
+		
+	}
+
+	if (CSGD_DirectInput::GetInstance()->KeyReleased(DIK_DOWN) || CSGD_DirectInput::GetInstance()->KeyReleased(DIK_UP))
+	{
+		m_bKeyRepeat = false;
 	}
 
 	if((m_nMouseX!=m_nMousePrevX || m_nMouseY!=m_nMousePrevY) && !CSGD_DirectInput::GetInstance()->MouseButtonDown(0))

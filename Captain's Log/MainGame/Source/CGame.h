@@ -61,6 +61,7 @@ class CGame
 
 public:
 
+	float ElapsedTime() const { return m_fElapsedTime; }
 
 	void			ToggleFullScreen();
 

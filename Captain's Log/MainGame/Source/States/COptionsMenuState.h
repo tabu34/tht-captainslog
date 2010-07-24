@@ -47,6 +47,13 @@ class COptionsMenuState : public IGameState
 	int m_nBindIndex;
 	int m_nCurIndex;
 
+	float m_fKeyRepeatTimer;
+	float m_fKeyRepeatRate;
+
+	bool m_bKeyRepeat;
+	float m_fFirstKeyRepeatTimer;
+	float m_fFirstKeyRepeatRate;
+
 	bool m_bError;
 	float m_fErrorTimer;
 
