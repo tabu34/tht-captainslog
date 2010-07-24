@@ -152,7 +152,7 @@ void CUnit::Update(float fElapsedTime)
 	else if(m_nState == UNIT_MOVING)
 	{
 
-		if(!Stuck())
+		//if(!Stuck())
 		{
 			if(PosX() < m_pDestinationMove.x)
 				VelX(MovementSpeed());
@@ -231,7 +231,7 @@ void CUnit::Update(float fElapsedTime)
 		}
 		else
 		{
-			if(!Stuck())
+			//if(!Stuck())
 			{
 				if(PosX() < m_pTarget->PosX())
 					VelX(MovementSpeed());

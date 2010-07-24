@@ -300,6 +300,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Source\States\CGameWinState.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\States\CGameWinState.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\States\CHelpState.cpp"
 				>
 			</File>
