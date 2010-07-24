@@ -118,7 +118,7 @@ void CUnit::Update(float fElapsedTime)
 
 	if (m_nCurHealth > m_nMaxHealth)
 	{
-		m_nCurHealth--;
+		m_nCurHealth = m_nMaxHealth;
 	}
 
 	if (m_fStunnedCurrTime > m_fStunnedEndTime)

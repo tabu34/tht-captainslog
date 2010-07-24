@@ -251,64 +251,20 @@ void CMovementControl::Input()
 			}
 			return;
 		}
-		else if (CGamePlayState::GetInstance()->CurrentCommand() == "Ability1")
+		else if (CGamePlayState::GetInstance()->CurrentCommand() == "Ability")
 		{
-			if((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition] == NULL)
+			if (m_pUnitAbilitySelection->CurHealth() <= 0)
+			{
+				return;
+			}
+			if ((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition] == NULL)
 			{
 				return;
 			}
 
-			if((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]->Type() == 0)
+			if ((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]->Type() == 0)
 			{
-				(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Activate();
-			}
-			else if ((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]->Type() == 1)
-			{
-				RECT mouseRect = {0, 0, 0, 0};
-				mouseRect.left = LONG((float)CSGD_DirectInput::GetInstance()->MouseGetPosX() + CGame::GetInstance()->GetCamera()->GetX());
-				mouseRect.top = LONG((float)CSGD_DirectInput::GetInstance()->MouseGetPosY() + CGame::GetInstance()->GetCamera()->GetY());
-				mouseRect.right = mouseRect.left + 1;
-				mouseRect.bottom = mouseRect.top + 1;
-
-				RECT resultRect;
-
-				int nTarget = -1;
-
-				for (unsigned int i = 0; i < m_vObjectList->size(); i++)
-				{
-					if (IntersectRect(&resultRect, &mouseRect, &((*m_vObjectList)[i]->GetCollisionRect())))
-					{
-						nTarget = i;
-						break;
-					}
-				}
-
-				if (nTarget == -1)
-				{
-					return;
-				}
-
-				((CTargetAbility*)((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]))->Target((CUnit*)((*m_vObjectList)[nTarget])); // <-----THIS
-				(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Activate();
-				CGamePlayState::GetInstance()->ClearCommand();
-			}
-			else if ((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]->Type() == 2)
-			{
-				((CLocationAbility*)((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]))->Location(MousePosX() + (int)CGame::GetInstance()->GetCamera()->GetX(), MousePosY() + (int)CGame::GetInstance()->GetCamera()->GetY());
-				(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[0]->Activate();
-				CGamePlayState::GetInstance()->ClearCommand();
-			}
-		}
-		else if (CGamePlayState::GetInstance()->CurrentCommand() == "Ability2")
-		{
-			if((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition] == NULL)
-			{
-				return;
-			}
-
-			if((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]->Type() == 0)
-			{
-				(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Activate();
+				(*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]->Activate();
 			}
 			else if ((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]->Type() == 1)
 			{
@@ -337,13 +293,13 @@ void CMovementControl::Input()
 				}
 
 				((CTargetAbility*)((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]))->Target((CUnit*)((*m_vObjectList)[nTarget]));
-				(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Activate();
+				(*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]->Activate();
 				CGamePlayState::GetInstance()->ClearCommand();
 			}
 			else if ((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]->Type() == 2)
 			{
 				((CLocationAbility*)((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]))->Location(MousePosX() + (int)CGame::GetInstance()->GetCamera()->GetX(), MousePosY() + (int)CGame::GetInstance()->GetCamera()->GetY());
-				(*((CUnit*)((*CMovementControl::GetInstance()->GetSelectedUnits())[0]))->Abilities())[1]->Activate();
+				(*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]->Activate();
 				CGamePlayState::GetInstance()->ClearCommand();
 			}
 		}
@@ -418,6 +374,7 @@ void CMovementControl::Input()
 				{
 					((CUnit*)(*m_vObjectList)[i])->Selected(true);
 					(*m_vSelected).push_back((*m_vObjectList)[i]);
+					CGamePlayState::GetInstance()->ClearCommand();
 				}
 			}
 			else if(((CUnit*)(*m_vObjectList)[i])->Selected())
@@ -439,6 +396,7 @@ void CMovementControl::Input()
 				{
 					((CUnit*)(*m_vObjectList)[i])->Selected(true);
 					(*m_vSelected).push_back((*m_vObjectList)[i]);
+					CGamePlayState::GetInstance()->ClearCommand();
 				}
 			}
 			else if(((CUnit*)(*m_vObjectList)[i])->Selected())
@@ -459,6 +417,7 @@ void CMovementControl::Input()
 				{
 					((CUnit*)(*m_vObjectList)[i])->Selected(true);
 					(*m_vSelected).push_back((*m_vObjectList)[i]);
+					CGamePlayState::GetInstance()->ClearCommand();
 				}
 			}
 			else if(((CUnit*)(*m_vObjectList)[i])->Selected())
@@ -479,6 +438,7 @@ void CMovementControl::Input()
 				{
 					((CUnit*)(*m_vObjectList)[i])->Selected(true);
 					(*m_vSelected).push_back((*m_vObjectList)[i]);
+					CGamePlayState::GetInstance()->ClearCommand();
 				}
 			}
 			else if(((CUnit*)(*m_vObjectList)[i])->Selected())
@@ -499,6 +459,7 @@ void CMovementControl::Input()
 				{
 					((CUnit*)(*m_vObjectList)[i])->Selected(true);
 					(*m_vSelected).push_back((*m_vObjectList)[i]);
+					CGamePlayState::GetInstance()->ClearCommand();
 				}
 			}
 			else if(((CUnit*)(*m_vObjectList)[i])->Selected())
