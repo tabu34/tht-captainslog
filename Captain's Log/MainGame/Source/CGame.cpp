@@ -209,10 +209,11 @@ void CGame::Initialize( HWND hWnd, HINSTANCE hInstance, int nScreenWidth, int nS
 	m_pD3D->DeviceEnd();
 	m_pD3D->Present();
 
+	SettingsChanged();
+
 	ChangeState(CMainMenuState::GetInstance());
 	PushState(CSplashState::GetInstance());
 
-	SettingsChanged();
 }
 
 bool CGame::Main()
