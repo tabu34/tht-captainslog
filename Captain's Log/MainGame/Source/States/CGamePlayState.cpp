@@ -542,6 +542,8 @@ void CGamePlayState::CheckCheats()
 }
 void CGamePlayState::Update(float fElapsedTime)
 {
+	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound, CGame::GetInstance()->SFXVolume());
+
 	for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
 	{
 		if ((*CObjectManager::GetInstance()->GetObjectList())[i]->Type() == CBase::OBJ_PLAYER)
