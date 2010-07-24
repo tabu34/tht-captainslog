@@ -4,7 +4,7 @@
 #include "CScout.h"
 #include "CMarine.h"
 #include "CHeavy.h"
-#include "CMedic.h"
+#include "CScout.h"
 
 void CAbility_DefensiveMatrix::Activate()
 {
@@ -12,7 +12,7 @@ void CAbility_DefensiveMatrix::Activate()
 	{
 		if (Target()->Type() == CUnit::OBJ_PLAYER)
 		{
-			if ((fabs(Target()->PosX() - CMovementControl::GetInstance()->Medic()->PosX()) + fabs(Target()->PosY() - CMovementControl::GetInstance()->Medic()->PosY())) == (CMovementControl::GetInstance()->Medic()->SightRange() * CMovementControl::GetInstance()->Medic()->SightRange()))
+			if ((((Target()->PosX() - CMovementControl::GetInstance()->Scout()->PosX()) * (Target()->PosX() - CMovementControl::GetInstance()->Scout()->PosX())) + ((Target()->PosY() - CMovementControl::GetInstance()->Scout()->PosY()) * (Target()->PosY() - CMovementControl::GetInstance()->Scout()->PosY()))) <= (CMovementControl::GetInstance()->Scout()->SightRange() * CMovementControl::GetInstance()->Scout()->SightRange())) 
 			{
 				TimePassed(0);
 				IsActive(true);
@@ -52,7 +52,7 @@ void CAbility_PinningShot::Activate()
 	{
 		if (Target()->Type() == CUnit::OBJ_ENEMY)
 		{
-			if ((fabs(Target()->PosX() - CMovementControl::GetInstance()->Scout()->PosX()) + fabs(Target()->PosY() - CMovementControl::GetInstance()->Scout()->PosY())) == (CMovementControl::GetInstance()->Scout()->SightRange() * CMovementControl::GetInstance()->Scout()->SightRange()))
+			if ((((Target()->PosX() - CMovementControl::GetInstance()->Scout()->PosX()) * (Target()->PosX() - CMovementControl::GetInstance()->Scout()->PosX())) + ((Target()->PosY() - CMovementControl::GetInstance()->Scout()->PosY()) * (Target()->PosY() - CMovementControl::GetInstance()->Scout()->PosY()))) <= (CMovementControl::GetInstance()->Scout()->SightRange() * CMovementControl::GetInstance()->Scout()->SightRange())) 
 			{
 				TimePassed(0);
 				IsActive(true);
@@ -106,7 +106,7 @@ void CAbility_Refresh::Activate()
 	{
 		if (Target()->Type() == CUnit::OBJ_PLAYER)
 		{
-			if ((fabs(Target()->PosX() - CMovementControl::GetInstance()->Medic()->PosX()) + fabs(Target()->PosY() - CMovementControl::GetInstance()->Medic()->PosY())) == (CMovementControl::GetInstance()->Medic()->SightRange() * CMovementControl::GetInstance()->Medic()->SightRange()))
+			if ((((Target()->PosX() - CMovementControl::GetInstance()->Scout()->PosX()) * (Target()->PosX() - CMovementControl::GetInstance()->Scout()->PosX())) + ((Target()->PosY() - CMovementControl::GetInstance()->Scout()->PosY()) * (Target()->PosY() - CMovementControl::GetInstance()->Scout()->PosY()))) <= (CMovementControl::GetInstance()->Scout()->SightRange() * CMovementControl::GetInstance()->Scout()->SightRange())) 
 			{
 				Target()->CurHealth(Target()->CurHealth() + 20);
 				TimePassed(0);
@@ -198,7 +198,7 @@ void CAbility_StunGrenade::Activate()
 {
 	if (TimePassed() >= Cooldown())
 	{
-		if ((fabs(Location().x - CMovementControl::GetInstance()->Marine()->PosX()) + fabs(Location().y - CMovementControl::GetInstance()->Marine()->PosY())) == (CMovementControl::GetInstance()->Marine()->SightRange() * CMovementControl::GetInstance()->Marine()->SightRange()))
+		if ((((Location().x - CMovementControl::GetInstance()->Marine()->PosX()) * (Location().x - CMovementControl::GetInstance()->Marine()->PosX())) + ((Location().y - CMovementControl::GetInstance()->Marine()->PosY()) * (Location().y - CMovementControl::GetInstance()->Marine()->PosY()))) <= (CMovementControl::GetInstance()->Marine()->SightRange() * CMovementControl::GetInstance()->Marine()->SightRange())) 
 		{
 			for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
 			{
@@ -233,7 +233,7 @@ void CAbility_RocketBarrage::Activate()
 {
 	if (TimePassed() >= Cooldown())
 	{
-		if ((fabs(Location().x - CMovementControl::GetInstance()->Heavy()->PosX()) + fabs(Location().y - CMovementControl::GetInstance()->Heavy()->PosY())) == (CMovementControl::GetInstance()->Heavy()->SightRange() * CMovementControl::GetInstance()->Heavy()->SightRange()))
+		if ((((Location().x - CMovementControl::GetInstance()->Heavy()->PosX()) * (Location().x - CMovementControl::GetInstance()->Heavy()->PosX())) + ((Location().y - CMovementControl::GetInstance()->Heavy()->PosY()) * (Location().y - CMovementControl::GetInstance()->Heavy()->PosY()))) <= (CMovementControl::GetInstance()->Heavy()->SightRange() * CMovementControl::GetInstance()->Heavy()->SightRange())) 
 		{
 			for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
 			{
