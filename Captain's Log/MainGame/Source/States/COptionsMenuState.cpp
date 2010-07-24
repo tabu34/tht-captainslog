@@ -138,6 +138,7 @@ bool COptionsMenuState::Input()
 			if(m_pCurrentControl->szIdentifier == "fullscreen")
 			{
 				m_pCurrentControl = &m_vControls[4];
+				m_nCurIndex = 4;
 				m_nBindIndex=-1;
 			}
 			else if(m_pCurrentControl->szIdentifier == "sfxvolume")
@@ -162,6 +163,7 @@ bool COptionsMenuState::Input()
 			if(m_pCurrentControl->szIdentifier == "layout")
 			{
 				m_pCurrentControl = &m_vControls[0];
+				m_nCurIndex = 0;
 				m_nBindIndex=-5;
 			}
 			else if(m_pCurrentControl->szIdentifier == "sfxvolume")
@@ -179,34 +181,10 @@ bool COptionsMenuState::Input()
 		}
 	}
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_TAB))
-	{
-		//find index we're at
-		unsigned int nCurIndex=-1;
-		if(m_pCurrentControl == NULL)
-			nCurIndex = -1;
-		else
-		{
-			for(size_t i=0; i<m_vControls.size(); i++)
-			{
-				if(m_pCurrentControl == &m_vControls[i])
-				{
-					nCurIndex = i;
-					break;
-				}
-			}
-		}
-
-		nCurIndex = (nCurIndex+1<m_vControls.size()) ? nCurIndex+1 : 0;
-
-		m_pCurrentControl = &m_vControls[nCurIndex];
-		m_nBindIndex = nCurIndex-5;
-	}
-
 	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP))
 	{
 		m_nCurIndex = (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN))?
-			((m_nCurIndex + 1 < m_vControls.size()) ? m_nCurIndex + 1 : 0):
+			((m_nCurIndex + 1 < (int)m_vControls.size()) ? m_nCurIndex + 1 : 0):
 			((m_nCurIndex - 1 < 0) ? m_vControls.size() - 1 : m_nCurIndex - 1);
 
 		m_pCurrentControl = &m_vControls[m_nCurIndex];
