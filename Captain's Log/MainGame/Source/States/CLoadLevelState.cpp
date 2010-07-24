@@ -208,7 +208,7 @@ void CLoadLevelState::Render(void)
 	
 	CSGD_TextureManager::GetInstance()->Draw(m_nLoadBar, 399, 671, 1.0f, 1.0f, &loadRect);
 
-	CMovementControl::GetInstance()->RenderCursor();
+//	CMovementControl::GetInstance()->RenderCursor();
 	char* buffer = new char[50];
 	char* loadBuffer = new char[50];
 	char load1[] = "Initializing Maps";
