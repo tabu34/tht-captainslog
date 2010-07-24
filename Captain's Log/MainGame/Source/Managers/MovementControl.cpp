@@ -475,6 +475,42 @@ void CMovementControl::Input()
 		}
 	}
 
+	//Ability Keybinds
+	if (m_DI->KeyPressed(CGame::GetInstance()->KeyBinds(CGame::KEY_ABILITY1)))
+	{
+		if ((*GetSelectedUnits()).size() < 1 || ((CUnit*)(*GetSelectedUnits())[0])->Type() != CUnit::OBJ_PLAYER)
+		{
+			return;
+		}
+		if((*((CUnit*)((*GetSelectedUnits())[0]))->Abilities())[0]->Type() == 0)
+		{
+			(*((CUnit*)((*GetSelectedUnits())[0]))->Abilities())[0]->Activate();
+		}
+		else
+		{
+			CGamePlayState::GetInstance()->SetCommand("Ability");
+			SetUnit((CUnit*)((*GetSelectedUnits())[0]));
+			SetPosition(0);
+		}
+	}
+	if (m_DI->KeyPressed(CGame::GetInstance()->KeyBinds(CGame::KEY_ABILITY2)))
+	{
+		if ((*GetSelectedUnits()).size() < 1 || ((CUnit*)(*GetSelectedUnits())[0])->Type() != CUnit::OBJ_PLAYER)
+		{
+			return;
+		}
+		if((*((CUnit*)((*GetSelectedUnits())[0]))->Abilities())[1]->Type() == 0)
+		{
+			(*((CUnit*)((*GetSelectedUnits())[0]))->Abilities())[1]->Activate();
+		}
+		else
+		{
+			CGamePlayState::GetInstance()->SetCommand("Ability");
+			SetUnit((CUnit*)((*GetSelectedUnits())[0]));
+			SetPosition(1);
+		}
+	}
+
 	float fSpeed = 1000;
 	//CAMERA CONTROL (KEYBOARD)
 	if(m_DI->KeyDown(CGame::GetInstance()->KeyBinds(CGame::KEY_LEFT)))
