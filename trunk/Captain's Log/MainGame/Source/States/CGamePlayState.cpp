@@ -243,6 +243,8 @@ void CGamePlayState::Enter(void)
 
 	m_fTotalGameTime = 0.0f;
 
+	m_nBGMusic = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("Breakout.mp3").c_str(), FMOD_LOOP_NORMAL);
+	CSGD_FModManager::GetInstance()->PlaySound(m_nBGMusic);
 }
 
 void CGamePlayState::Exit(void)
@@ -260,6 +262,7 @@ void CGamePlayState::Exit(void)
 	CAnimationManager::GetInstance()->Shutdown();
 	CObjectManager::GetInstance()->RemoveAllObjects();
 	CSGD_FModManager::GetInstance()->StopSound(m_nGunshotSound);
+	CSGD_FModManager::GetInstance()->StopSound(m_nBGMusic);
 }
 
 bool CGamePlayState::Input(void)
@@ -544,7 +547,8 @@ void CGamePlayState::CheckCheats()
 void CGamePlayState::Update(float fElapsedTime)
 {
 	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound, (float)CGame::GetInstance()->SFXVolume() / 100.0f);
-
+	CSGD_FModManager::GetInstance()->SetVolume(m_nBGMusic, (float)CGame::GetInstance()->MusicVolume() / 100.0f);
+	
 	for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
 	{
 		if ((*CObjectManager::GetInstance()->GetObjectList())[i]->Type() == CBase::OBJ_PLAYER)
