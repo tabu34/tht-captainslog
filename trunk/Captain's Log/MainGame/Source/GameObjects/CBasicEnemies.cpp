@@ -11,6 +11,7 @@ CBasicEnemy::CBasicEnemy()
 {
 	SubType(ENEMY_BASIC);
 	SetMirrored(true);
+	Stuck(false);
 }
 
 void CBasicEnemy::Update( float fElapsedTime )

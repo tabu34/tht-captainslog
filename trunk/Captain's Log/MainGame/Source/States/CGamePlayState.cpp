@@ -216,6 +216,12 @@ void CGamePlayState::Enter(void)
 	CObjectManager::GetInstance()->AddObject(CMovementControl::GetInstance()->Scout());
 	CObjectManager::GetInstance()->AddObject(CMovementControl::GetInstance()->Medic());
 
+	m_pPlayerArray[0] = CMovementControl::GetInstance()->Marine();
+	m_pPlayerArray[1] = CMovementControl::GetInstance()->Heavy();
+	m_pPlayerArray[2] = CMovementControl::GetInstance()->Scout();
+	m_pPlayerArray[3] = CMovementControl::GetInstance()->Medic();
+
+
 
 	// Test Speech
 	m_nCurCount = 0;
@@ -594,8 +600,79 @@ void CGamePlayState::Update(float fElapsedTime)
 
 	m_fTotalGameTime+=fElapsedTime;
 
-	//Check for level clear
+	// Check for player unit to player unit collisions
 
+	vector<CBase*>* m_vObjectList = CObjectManager::GetInstance()->GetObjectList();
+	for(unsigned i =0; i < m_vObjectList->size(); i++)
+		(*m_vObjectList)[i]->Stuck(false);
+
+
+	for (unsigned int i = 0; i < m_vObjectList->size(); i++)
+		for(unsigned j = 0; j < m_vObjectList->size(); j++)
+		{
+			if(i != j)
+			{
+				float newX = (*m_vObjectList)[i]->PosX() + (*m_vObjectList)[i]->VelX() * fElapsedTime;
+				if(fabs( 
+					(newX - (*m_vObjectList)[j]->PosX()) * 
+					(newX - (*m_vObjectList)[j]->PosX()) + 
+					((*m_vObjectList)[i]->PosY() - (*m_vObjectList)[j]->PosY()) 
+					* ((*m_vObjectList)[i]->PosY() - (*m_vObjectList)[j]->PosY())) < 525.0f)
+				{
+					(*m_vObjectList)[i]->Stuck(true);
+					(*m_vObjectList)[i]->PosX( (*m_vObjectList)[i]->PosX() - (*m_vObjectList)[i]->VelX() *fElapsedTime);
+					(*m_vObjectList)[i]->VelX(0.0f);
+				}
+
+				float newY = (*m_vObjectList)[i]->PosY() + (*m_vObjectList)[i]->VelY() * fElapsedTime;
+				if(fabs( 
+					((*m_vObjectList)[i]->PosX() - (*m_vObjectList)[j]->PosX()) * 
+					((*m_vObjectList)[i]->PosX() - (*m_vObjectList)[j]->PosX()) + 
+					(newY - (*m_vObjectList)[j]->PosY()) * 
+					(newY - (*m_vObjectList)[j]->PosY())) < 525.0f)
+				{
+					(*m_vObjectList)[i]->Stuck(true);
+					(*m_vObjectList)[i]->PosY( (*m_vObjectList)[i]->PosY() - (*m_vObjectList)[i]->VelY() *fElapsedTime);
+					(*m_vObjectList)[i]->VelY(0.0f);
+				}
+			}
+
+
+			//bool hitX = false, hitY = false;
+			//if(i != j)
+			//{
+			//	RECT result;
+			//	RECT collide1X = m_pPlayerArray[i]->GetCollisionRect();
+			//	collide1X.left += m_pPlayerArray[i]->VelX() * fElapsedTime;
+			//	RECT collide1Y = m_pPlayerArray[i]->GetCollisionRect();
+			//	collide1Y.top += m_pPlayerArray[i]->VelY() * fElapsedTime;
+			//	RECT collide2 = m_pPlayerArray[j]->GetCollisionRect();
+			//	if(IntersectRect(&result, &collide1X, &collide2))
+			//	{
+			//		// i is about to hit j in the x
+			//		m_pPlayerArray[i]->Stuck(true);
+			//		m_pPlayerArray[i]->PosX( m_pPlayerArray[i]->PosX() - m_pPlayerArray[i]->VelX() *fElapsedTime);
+			//		m_pPlayerArray[i]->VelX(0.0f);
+			//		hitX = true;
+			//	}
+			//	
+			//	if(IntersectRect(&result, &collide1Y, &collide2)) {
+			//		// i is about to hit j in the y
+			//		m_pPlayerArray[i]->Stuck(true);
+			//		m_pPlayerArray[i]->PosY( m_pPlayerArray[i]->PosY() - m_pPlayerArray[i]->VelY() *fElapsedTime);
+			//		m_pPlayerArray[i]->VelY(0.0f);
+			//		hitY = true;
+			//	}
+			//	
+			//	if(hitX == false && hitY == false) {
+			//		m_pPlayerArray[i]->Stuck(false);
+			//	}
+			//}
+			
+		}
+	
+
+	//Check for level clear
 	for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
 	{
 		if ((*CObjectManager::GetInstance()->GetObjectList())[i]->Type() == CBase::OBJ_ENEMY)
@@ -794,9 +871,7 @@ void CGamePlayState::RenderHUD(void)
 void CGamePlayState::Render(void)
 {
 	CWorldManager::GetInstance()->Render();
-	CSGD_Direct3D::GetInstance()->SpriteEnd();
-	CSGD_Direct3D::GetInstance()->SpriteBegin();
-
+	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 	CObjectManager::GetInstance()->RenderObjects();
 	CMovementControl::GetInstance()->RenderDragRect();
 	m_peEmitter.Render();
