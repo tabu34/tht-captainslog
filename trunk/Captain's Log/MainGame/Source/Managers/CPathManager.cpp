@@ -244,8 +244,8 @@ void CPathManager::GenerateMap()
 		for(int x = 0; x < m_nNumGridLinesX; x++)
 		{
 			tNode node;
-			node.fX = x * GRID_SCALE;
- 			node.fY = y * GRID_SCALE;
+			node.fX = float(x * GRID_SCALE);
+ 			node.fY = float(y * GRID_SCALE);
  			m_lstNodeList.push_back(node);
 
 			//adj.pNeighbors.push_back(new tNode);
@@ -360,17 +360,17 @@ void CPathManager::GenerateMap()
 			for(int j = 0; j < CWorldManager::GetInstance()->GetBlockers()[i].m_nNumPoints - 1; j++)
 			{
 				tLine newLine;
-				newLine.start.fX = CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j].x;
-				newLine.start.fY = CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j].y;
-				newLine.end.fX = CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j+1].x;
-				newLine.end.fY = CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j+1].y;
+				newLine.start.fX = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j].x;
+				newLine.start.fY = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j].y;
+				newLine.end.fX = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j+1].x;
+				newLine.end.fY = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j+1].y;
 				m_vLines.push_back(newLine);
 			}
 			tLine newLine;
-			newLine.start.fX = CWorldManager::GetInstance()->GetBlockers()[i].m_Points[CWorldManager::GetInstance()->GetBlockers()[i].m_nNumPoints - 1].x;
-			newLine.start.fY = CWorldManager::GetInstance()->GetBlockers()[i].m_Points[CWorldManager::GetInstance()->GetBlockers()[i].m_nNumPoints - 1].y;
-			newLine.end.fX = CWorldManager::GetInstance()->GetBlockers()[i].m_Points[0].x;
-			newLine.end.fY = CWorldManager::GetInstance()->GetBlockers()[i].m_Points[0].y;
+			newLine.start.fX = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[CWorldManager::GetInstance()->GetBlockers()[i].m_nNumPoints - 1].x;
+			newLine.start.fY = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[CWorldManager::GetInstance()->GetBlockers()[i].m_nNumPoints - 1].y;
+			newLine.end.fX = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[0].x;
+			newLine.end.fY = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[0].y;
 			m_vLines.push_back(newLine);
 		}
 
@@ -464,12 +464,12 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 		
 		int closestDistance = 10000;
 		int closestNode;
-		int tilePosX = (fX1 / GRID_SCALE);
-		int tilePosY = (fY1 / GRID_SCALE);
+		int tilePosX = int(fX1 / GRID_SCALE);
+		int tilePosY = int(fY1 / GRID_SCALE);
 
 		POINT startPt;
-		startPt.x = fX1;
-		startPt.y = fY1;
+		startPt.x = (LONG)fX1;
+		startPt.y = (LONG)fY1;
 
 		POINT tileEdges[4];
 		// Top left
@@ -494,7 +494,7 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 			}
 		}
 		
-		for(int i = 0; i < m_lstNodeList.size(); i++)
+		for(unsigned int i = 0; i < m_lstNodeList.size(); i++)
 			if(m_lstNodeList[i].fX == tileEdges[closestNode].x && m_lstNodeList[i].fY == tileEdges[closestNode].y)
 			{
 				start.pNode = &m_lstNodeList[i];
@@ -521,12 +521,12 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 
 		int closestDistance = 10000;
 		int closestNode;
-		int tilePosX = (fX2 / GRID_SCALE);
-		int tilePosY = (fY2 / GRID_SCALE);
+		int tilePosX = int(fX2 / GRID_SCALE);
+		int tilePosY = int(fY2 / GRID_SCALE);
 
 		POINT endPt;
-		endPt.x = fX2;
-		endPt.y = fY2;
+		endPt.x = (LONG)fX2;
+		endPt.y = (LONG)fY2;
 
 		POINT tileEdges[4];
 		// Top left
@@ -551,7 +551,7 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 			}
 		}
 
-		for(int i = 0; i < m_lstNodeList.size(); i++)
+		for(unsigned int i = 0; i < m_lstNodeList.size(); i++)
 			if(m_lstNodeList[i].fX == tileEdges[closestNode].x && m_lstNodeList[i].fY == tileEdges[closestNode].y)
 			{
 				goal.pNode = &m_lstNodeList[i];
@@ -596,8 +596,8 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 			for(size_t i=0; i<adj.pNeighbors.size(); i++)
 			{
 				POINT curNode;
-				curNode.x = adj.pNeighbors[i]->fX;
-				curNode.y = adj.pNeighbors[i]->fY;
+				curNode.x = (LONG)adj.pNeighbors[i]->fX;
+				curNode.y = (LONG)adj.pNeighbors[i]->fY;
 
 				//if(x.pNode->fX == adj.pNeighbors[i]->fX && x.pNode->fY == adj.pNeighbors[i]->fY)
 				//	continue;
@@ -605,10 +605,10 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 				if(closeSet.find(adj.pNeighbors[i]) == closeSet.end())
 				{
 					POINT cur, prev;
-					cur.x = adj.pNeighbors[i]->fX;
-					cur.y = adj.pNeighbors[i]->fY;
-					prev.x = x.pNode->fX;
-					prev.y = x.pNode->fY;
+					cur.x = (LONG)adj.pNeighbors[i]->fX;
+					cur.y = (LONG)adj.pNeighbors[i]->fY;
+					prev.x = (LONG)x.pNode->fX;
+					prev.y = (LONG)x.pNode->fY;
 
 					float g = x.fG + PointDistance(cur, prev);
 

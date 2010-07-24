@@ -320,17 +320,17 @@ void CUnit::Render()
 
 	// Selection Cirle
 	if(m_bSelected && Type() == OBJ_PLAYER)
-		CSGD_TextureManager::GetInstance()->Draw(CGamePlayState::GetInstance()->GetSelectionCircleID(), (PosX()) - 24 - CGame::GetInstance()->GetCamera()->GetX(), PosY() + (Height() / 3) - 12 - CGame::GetInstance()->GetCamera()->GetY(), 0.75f, 0.75f);
+		CSGD_TextureManager::GetInstance()->Draw(CGamePlayState::GetInstance()->GetSelectionCircleID(), int((PosX()) - 24 - CGame::GetInstance()->GetCamera()->GetX()), int(PosY() + (Height() / 3) - 12 - CGame::GetInstance()->GetCamera()->GetY()), 0.75f, 0.75f);
 
 	// Healthbars
 	RECT hpBar;
-	hpBar.left = PosX() - 20 - CGame::GetInstance()->GetCamera()->GetX();
-	hpBar.top = PosY() - (Height() / 2) - 15 - CGame::GetInstance()->GetCamera()->GetY();
+	hpBar.left = LONG(PosX() - 20 - CGame::GetInstance()->GetCamera()->GetX());
+	hpBar.top = LONG(PosY() - (Height() / 2) - 15 - CGame::GetInstance()->GetCamera()->GetY());
 	hpBar.right = hpBar.left + 40;
 	hpBar.bottom = hpBar.top + 5;
 
 	CSGD_Direct3D::GetInstance()->DrawRect(hpBar, 255, 0, 0);
-	hpBar.right = hpBar.left + 40.0f * ((float)CurHealth() / MaxHealth());
+	hpBar.right = hpBar.left + LONG(40.0f * ((float)CurHealth() / MaxHealth()));
 	CSGD_Direct3D::GetInstance()->DrawRect(hpBar, 0, 255, 0);
 	//DEBUG
 	if (m_fFireLineTime > 0 && Target())
@@ -340,7 +340,7 @@ void CUnit::Render()
 	//END
 
 	// DRAW DIRECTIONS
-	for(int i = 0; i < m_vDirections.size(); i++)
+	for(unsigned int i = 0; i < m_vDirections.size(); i++)
 	{
 		if(i+1 < m_vDirections.size())
 			CSGD_Direct3D::GetInstance()->DrawLine(int(m_vDirections[i]->fX - CGame::GetInstance()->GetCamera()->GetX()), int(m_vDirections[i]->fY - CGame::GetInstance()->GetCamera()->GetY()), int(m_vDirections[i+1]->fX - CGame::GetInstance()->GetCamera()->GetX()), int(m_vDirections[i+1]->fY - CGame::GetInstance()->GetCamera()->GetY()), 255, 255, 255);
