@@ -6,9 +6,12 @@ void CAbility_DefensiveMatrix::Activate()
 {
 	if (TimePassed() >= Cooldown())
 	{
-		TimePassed(0);
-		IsActive(true);
-		Target()->Invulnerable(true);
+		if (Target()->Type() == CUnit::OBJ_PLAYER)
+		{
+			TimePassed(0);
+			IsActive(true);
+			Target()->Invulnerable(true);
+		}
 	}
 }
 
@@ -40,10 +43,13 @@ void CAbility_PinningShot::Activate()
 {
 	if (TimePassed() >= Cooldown())
 	{
-		TimePassed(0);
-		IsActive(true);
-		m_fMovementSpeed = Target()->MovementSpeed();
-		Target()->MovementSpeed(0);
+		if (Target()->Type() == CUnit::OBJ_ENEMY)
+		{
+			TimePassed(0);
+			IsActive(true);
+			m_fMovementSpeed = Target()->MovementSpeed();
+			Target()->MovementSpeed(0);
+		}
 	}
 }
 
@@ -88,8 +94,11 @@ void CAbility_Refresh::Activate()
 {
 	if (TimePassed() >= Cooldown())
 	{
-		Target()->CurHealth(Target()->CurHealth() + 20);
-		TimePassed(0);
+		if (Target()->Type() == CUnit::OBJ_PLAYER)
+		{
+			Target()->CurHealth(Target()->CurHealth() + 20);
+			TimePassed(0);
+		}
 	}
 }
 

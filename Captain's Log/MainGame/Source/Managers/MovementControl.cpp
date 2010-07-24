@@ -215,7 +215,7 @@ void CMovementControl::Input()
 		{
 			for(size_t i = 0; i<m_vSelected->size(); i++)
 			{
-				((CUnit*)(*m_vSelected)[i])->OrderMove(MousePosX(), MousePosY());
+				((CUnit*)(*m_vSelected)[i])->OrderMove(MousePosX() + CGame::GetInstance()->GetCamera()->GetX(), MousePosY() + CGame::GetInstance()->GetCamera()->GetY());
 			}
 			CGamePlayState::GetInstance()->ClearCommand();
 			return;
