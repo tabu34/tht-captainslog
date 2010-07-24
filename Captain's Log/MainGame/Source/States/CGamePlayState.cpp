@@ -596,7 +596,7 @@ void CGamePlayState::RenderMiniMap()
 	CSGD_TextureManager::GetInstance()->Draw(m_nMiniMap, 5, 690);
 	CSGD_Direct3D::GetInstance()->SpriteEnd();
 	int tempX, tempY, maxX, maxY;
-	int OffsetX = 5, OffsetY = 690, CX = 255, CY = 206;
+	int OffsetX = 5, OffsetY = 690, CX = 255, CY = 204;
 	unsigned char ucRed, ucBlue, ucGreen;
 	RECT rObj;
 	vector<CBase*>* pOM = CObjectManager::GetInstance()->GetObjectList();
