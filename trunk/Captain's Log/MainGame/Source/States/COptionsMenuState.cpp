@@ -92,7 +92,11 @@ bool COptionsMenuState::Input()
 	if(m_bBinding)
 	{
 		UCHAR dikCode = CSGD_DirectInput::GetInstance()->GetDIKCode();
-		if(dikCode!=0 && dikCode!=DIK_ESCAPE)
+		if(dikCode!=0 && dikCode!=DIK_ESCAPE
+			&& dikCode != DIK_LWIN
+			&& dikCode != DIK_RETURN
+			&& dikCode != DIK_RWIN
+			)
 		{
 			bool bUnique=true;
 			for(int i=0; i<18; i++)
@@ -208,7 +212,7 @@ bool COptionsMenuState::Input()
 		}
 	}
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
+	if(CSGD_DirectInput::GetInstance()->KeyReleased(DIK_RETURN) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
 	{
 		if(m_pCurrentControl)
 		{
