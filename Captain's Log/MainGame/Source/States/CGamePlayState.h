@@ -86,6 +86,7 @@ class CGamePlayState : public IGameState
 	int					m_nGunshotSound;
 	int					m_nSelectionCircle;
 	int					m_nToolTipOffsetY;
+	int					m_nBGMusic;
 	
 	// Interface Elements
 	CBMPFont			m_ftTextSmall;
