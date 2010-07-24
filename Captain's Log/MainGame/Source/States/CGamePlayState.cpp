@@ -679,6 +679,22 @@ void CGamePlayState::RenderHUD(void)
 		if(m_vButtonInstances[i].Visible())
 		{
 			CSGD_TextureManager::GetInstance()->Draw(m_vButtonInstances[i].TextureID(), m_vButtonInstances[i].Point().x, m_vButtonInstances[i].Point().y, 1.0f, 1.0f);
+			
+			if ( (*CMovementControl::GetInstance()->GetSelectedUnits()).size() > 0 && (*CMovementControl::GetInstance()->GetSelectedUnits())[0] != NULL)
+			{
+				if (i == FindButton("Marine 1") || i == FindButton("Heavy 1") || i == FindButton("Medic 1") || i == FindButton("Scout 1"))
+				{
+					char buff[128];
+					sprintf_s(buff, 128, "%.0f", (*((CUnit*)(*CMovementControl::GetInstance()->GetSelectedUnits())[0])->Abilities())[0]->Cooldown() - (*((CUnit*)(*CMovementControl::GetInstance()->GetSelectedUnits())[0])->Abilities())[0]->TimePassed());
+					RenderLargeShadowText(buff, 1129, 768);
+				}
+				else if (i == FindButton("Marine 2") || i == FindButton("Heavy 2") || i == FindButton("Medic 2") || i == FindButton("Scout 2"))
+				{
+					char buff[128];
+					sprintf_s(buff, 128, "%.0f", (*((CUnit*)(*CMovementControl::GetInstance()->GetSelectedUnits())[0])->Abilities())[1]->Cooldown() - (*((CUnit*)(*CMovementControl::GetInstance()->GetSelectedUnits())[0])->Abilities())[1]->TimePassed());
+					RenderLargeShadowText(buff, 1193, 768);
+				}
+			}
 		}
 	}
 
@@ -715,31 +731,15 @@ void CGamePlayState::RenderHUD(void)
 				{
 				case CUnit::PLAYER_MARINE:
 					RenderLargeShadowText("  Marine", 284, 852);
-					sprintf_s(buff, 128, "%.0f", (*pUnit->Abilities())[0]->Cooldown() - (*pUnit->Abilities())[0]->TimePassed());
-					RenderLargeShadowText(buff, 1129, 768);
-					sprintf_s(buff, 128, "%.0f", (*pUnit->Abilities())[1]->Cooldown() - (*pUnit->Abilities())[1]->TimePassed());
-					RenderLargeShadowText(buff, 1193, 768);
 					break;
 				case CUnit::PLAYER_HEAVY:
 					RenderLargeShadowText("  Heavy", 284, 852);
-					sprintf_s(buff, 128, "%.0f", (*pUnit->Abilities())[0]->Cooldown() - (*pUnit->Abilities())[0]->TimePassed());
-					RenderLargeShadowText(buff, 1129, 768);
-					sprintf_s(buff, 128, "%.0f", (*pUnit->Abilities())[1]->Cooldown() - (*pUnit->Abilities())[1]->TimePassed());
-					RenderLargeShadowText(buff, 1193, 768);
 					break;
 				case CUnit::PLAYER_MEDIC:
 					RenderLargeShadowText("  Medic", 284, 852);
-					sprintf_s(buff, 128, "%.0f", (*pUnit->Abilities())[0]->Cooldown() - (*pUnit->Abilities())[0]->TimePassed());
-					RenderLargeShadowText(buff, 1129, 768);
-					sprintf_s(buff, 128, "%.0f", (*pUnit->Abilities())[1]->Cooldown() - (*pUnit->Abilities())[1]->TimePassed());
-					RenderLargeShadowText(buff, 1193, 768);
 					break;
 				case CUnit::PLAYER_SCOUT:
 					RenderLargeShadowText("  Scout", 284, 852);
-					sprintf_s(buff, 128, "%.0f", (*pUnit->Abilities())[0]->Cooldown() - (*pUnit->Abilities())[0]->TimePassed());
-					RenderLargeShadowText(buff, 1129, 768);
-					sprintf_s(buff, 128, "%.0f", (*pUnit->Abilities())[1]->Cooldown() - (*pUnit->Abilities())[1]->TimePassed());
-					RenderLargeShadowText(buff, 1193, 768);
 					break;
 				}
 			}
