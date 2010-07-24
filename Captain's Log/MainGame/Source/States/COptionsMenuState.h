@@ -47,12 +47,27 @@ class COptionsMenuState : public IGameState
 	int m_nBindIndex;
 	int m_nCurIndex;
 
-	float m_fKeyRepeatTimer;
-	float m_fKeyRepeatRate;
+	struct tKeyTimer 
+	{
+		float m_fKeyRepeatTimer;
+		float m_fKeyRepeatRate;
 
-	bool m_bKeyRepeat;
-	float m_fFirstKeyRepeatTimer;
-	float m_fFirstKeyRepeatRate;
+		bool m_bKeyRepeat;
+		float m_fFirstKeyRepeatTimer;
+		float m_fFirstKeyRepeatRate;
+
+		tKeyTimer()
+		{
+			m_fKeyRepeatTimer		= 0.0f;
+			m_fKeyRepeatRate		= 0.15f;
+			m_bKeyRepeat			= false;
+			m_fFirstKeyRepeatTimer	= 0.0f;
+			m_fFirstKeyRepeatRate	= 0.5f;
+		}
+	};
+
+	tKeyTimer ktUpDownTimer;
+	tKeyTimer ktLeftRightTimer;
 
 	bool m_bError;
 	float m_fErrorTimer;
