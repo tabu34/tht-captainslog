@@ -613,26 +613,43 @@ void CGamePlayState::Update(float fElapsedTime)
 			if(i != j)
 			{
 				float newX = (*m_vObjectList)[i]->PosX() + (*m_vObjectList)[i]->VelX() * fElapsedTime;
-				if(fabs( 
+				float newY = (*m_vObjectList)[i]->PosY() + (*m_vObjectList)[i]->VelY() * fElapsedTime;
+				float velXOffset;
+				float velYOffset;
+
+				float disAwayX = fabs( 
 					(newX - (*m_vObjectList)[j]->PosX()) * 
 					(newX - (*m_vObjectList)[j]->PosX()) + 
 					((*m_vObjectList)[i]->PosY() - (*m_vObjectList)[j]->PosY()) 
-					* ((*m_vObjectList)[i]->PosY() - (*m_vObjectList)[j]->PosY())) < 525.0f)
-				{
-					(*m_vObjectList)[i]->Stuck(true);
-					(*m_vObjectList)[i]->PosX( (*m_vObjectList)[i]->PosX() - (*m_vObjectList)[i]->VelX() *fElapsedTime);
-					(*m_vObjectList)[i]->VelX(0.0f);
-				}
+					* ((*m_vObjectList)[i]->PosY() - (*m_vObjectList)[j]->PosY()));
 
-				float newY = (*m_vObjectList)[i]->PosY() + (*m_vObjectList)[i]->VelY() * fElapsedTime;
-				if(fabs( 
+				float disAwayY = fabs( 
 					((*m_vObjectList)[i]->PosX() - (*m_vObjectList)[j]->PosX()) * 
 					((*m_vObjectList)[i]->PosX() - (*m_vObjectList)[j]->PosX()) + 
 					(newY - (*m_vObjectList)[j]->PosY()) * 
-					(newY - (*m_vObjectList)[j]->PosY())) < 525.0f)
+					(newY - (*m_vObjectList)[j]->PosY()));
+
+				if((*m_vObjectList)[i]->VelX() > 0.0f)
+					velXOffset = 1.0f;
+				else
+					velXOffset = -1.0f;
+
+				if((*m_vObjectList)[i]->VelY() > 0.0f)
+					velYOffset = 1.0f;
+				else
+					velYOffset = -1.0f;
+
+				if(disAwayX < 525.0f)
 				{
 					(*m_vObjectList)[i]->Stuck(true);
-					(*m_vObjectList)[i]->PosY( (*m_vObjectList)[i]->PosY() - (*m_vObjectList)[i]->VelY() *fElapsedTime);
+					(*m_vObjectList)[i]->PosX( (*m_vObjectList)[i]->PosX() - ((*m_vObjectList)[i]->VelX() *fElapsedTime * 2.0f) - velXOffset);
+					(*m_vObjectList)[i]->VelX(0.0f);
+				}
+
+				if(disAwayY < 525.0f)
+				{
+					(*m_vObjectList)[i]->Stuck(true);
+					(*m_vObjectList)[i]->PosY( (*m_vObjectList)[i]->PosY() - ((*m_vObjectList)[i]->VelY() *fElapsedTime * 2.0f) - velYOffset);
 					(*m_vObjectList)[i]->VelY(0.0f);
 				}
 			}
