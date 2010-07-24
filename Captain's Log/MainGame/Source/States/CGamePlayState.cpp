@@ -231,6 +231,9 @@ void CGamePlayState::Enter(void)
 	m_bGodMode			= false;
 	m_bNoCooldown		= false;
 
+	// Tooltip Offset
+	m_nToolTipOffsetY = 0;
+
 	m_fTotalGameTime = 0.0f;
 
 }
@@ -320,6 +323,7 @@ bool CGamePlayState::CheckButtonInput()
 	{
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
 		m_szTooltipText = "  Move To Position";
+		m_nToolTipOffsetY = 0;
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
@@ -331,6 +335,7 @@ bool CGamePlayState::CheckButtonInput()
 	{
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
 		m_szTooltipText = " Attack Target";
+		m_nToolTipOffsetY = 0;
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
@@ -342,6 +347,7 @@ bool CGamePlayState::CheckButtonInput()
 	{
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
 		m_szTooltipText = " Hold";
+		m_nToolTipOffsetY = 0;
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
@@ -353,18 +359,27 @@ bool CGamePlayState::CheckButtonInput()
 	{
 		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
 		m_szTooltipText = " Cancel";
+		m_nToolTipOffsetY = 0;
 		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
 			m_szSelectedCommand = "";
 			return true;
 		}
+	} else {
+		m_szTooltipText = "";
+		if(!m_bEnteringCheat)
+		{
+			m_vButtonInstances[FindButton("ToolTipBG")].Visible(false);
+		}
 	}
-	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Marine 1")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Marine 1")].Visible())
+	
+	if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Marine 1")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Marine 1")].Visible())
 	{
-		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
-		m_szTooltipText = " Overdrive\n 50% Attack Speed for 7 Seconds\n     30sec Cooldown";
-		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
+		m_szTooltipText = " Overdrive\n 50% Attack Speed for \n  7 Seconds\n     30sec Cooldown";
+		m_nToolTipOffsetY = 32;
+		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
 			m_vButtons[FindButton("Marine 1")].Activate();
@@ -373,9 +388,10 @@ bool CGamePlayState::CheckButtonInput()
 	}
 	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Marine 2")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Marine 2")].Visible())
 	{
-		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
+		m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
 		m_szTooltipText = " Stun Grenade\n 5sec area effect stun\n     30sec Cooldown";
-		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		m_nToolTipOffsetY = 32;
+		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
 			m_vButtons[FindButton("Marine 2")].Activate();
@@ -384,9 +400,10 @@ bool CGamePlayState::CheckButtonInput()
 	}
 	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Heavy 1")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Heavy 1")].Visible())
 	{
-		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
-		m_szTooltipText = " Armor Lockdown\n Increases armor by 50 for 12sec\n     60sec Cooldown";
-		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
+		m_szTooltipText = " Armor Lockdown\n Increases armor by 50 \n  for 12sec\n     60sec Cooldown";
+		m_nToolTipOffsetY = 32;
+		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
 			m_vButtons[FindButton("Heavy 1")].Activate();
@@ -395,9 +412,10 @@ bool CGamePlayState::CheckButtonInput()
 	}
 	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Heavy 2")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Heavy 2")].Visible())
 	{
-		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
-		m_szTooltipText = " Missile Barrage\n Deals 50 damage to enemies in range\n     30sec Cooldown";
-		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
+		m_szTooltipText = " Missile Barrage\n Deals 50 damage tonenemies in range\n     30sec Cooldown";
+		m_nToolTipOffsetY = 32;
+		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
 			m_vButtons[FindButton("Heavy 2")].Activate();
@@ -406,9 +424,10 @@ bool CGamePlayState::CheckButtonInput()
 	}
 	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Medic 1")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Medic 1")].Visible())
 	{
-		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
-		m_szTooltipText = " Defensive Matrix\n Makes target invulnerable for 8sec\n     50sec Cooldown";
-		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
+		m_szTooltipText = " Defensive Matrix\n Makes target invulnerable for \n  8sec\n     50sec Cooldown";
+		m_nToolTipOffsetY = 32;
+		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
 			m_vButtons[FindButton("Medic 1")].Activate();
@@ -417,9 +436,10 @@ bool CGamePlayState::CheckButtonInput()
 	}
 	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Medic 2")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Medic 2")].Visible())
 	{
-		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
+		m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
 		m_szTooltipText = " Refresh\n Heal target for 20hp\n     12sec Cooldown";
-		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		m_nToolTipOffsetY = 32;
+		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
 			m_vButtons[FindButton("Medic 2")].Activate();
@@ -428,9 +448,10 @@ bool CGamePlayState::CheckButtonInput()
 	}
 	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Scout 1")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Scout 1")].Visible())
 	{
-		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
+		m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
 		m_szTooltipText = " Cloak\n Become invisible/visible\n     No Cooldown";
-		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		m_nToolTipOffsetY = 32;
+		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
 			m_vButtons[FindButton("Scout 1")].Activate();
@@ -439,14 +460,17 @@ bool CGamePlayState::CheckButtonInput()
 	}
 	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Scout 2")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Scout 2")].Visible())
 	{
-		m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
+		m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
 		m_szTooltipText = " Pinning Shot\n Immobilize a unit for 6sec\n     20sec Cooldown";
-		m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
+		m_nToolTipOffsetY = 32;
+		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
 			m_vButtons[FindButton("Scout 2")].Activate();
 			return true;
 		}
+	} else {
+			m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(false);
 	}
 	//else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Item1")].GetCollisionRect()), &mousePos))
 	//{
@@ -459,14 +483,7 @@ bool CGamePlayState::CheckButtonInput()
 	//		return true;
 	//	}
 	//}
-	else 
-	{
-		m_szTooltipText = "";
-		if(!m_bEnteringCheat)
-		{
-			m_vButtonInstances[FindButton("ToolTipBG")].Visible(false);
-		}
-	}
+
 	return false;
 }
 
@@ -765,7 +782,7 @@ void CGamePlayState::RenderHUD(void)
 	// Render ToolTip Text
 	if(m_szTooltipText != "")
 	{
-		m_ftTextSmallShadow.RenderText((char*)m_szTooltipText.c_str(), CMovementControl::GetInstance()->MousePosX(), CMovementControl::GetInstance()->MousePosY() - 25);
+		m_ftTextSmallShadow.RenderText((char*)m_szTooltipText.c_str(), CMovementControl::GetInstance()->MousePosX(), CMovementControl::GetInstance()->MousePosY() - 25 - m_nToolTipOffsetY);
 	}
 }
 
@@ -1002,10 +1019,9 @@ void CGamePlayState::InitHud()
 	//////////////////////////////////////////////////////////////////////////
 
 	m_vButtons.push_back(CHUDButton(0, 0, 256, 64, "ToolTipBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/20.png").c_str()), false));
-
 	m_vButtons.push_back(CHUDButton(0, 0, 512, 32, "ObjectivesLargeBG-NoCheck", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/18.png").c_str()), false));
 	m_vButtons.push_back(CHUDButton(0, 0, 512, 32, "ObjectivesLargeBG-Check", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/19.png").c_str()), false));
-
+	m_vButtons.push_back(CHUDButton(0, 0, 512, 128, "ToolTipLargeBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/21.png").c_str()), false));
 	m_vButtonInstances = m_vButtons;
 
 	m_ftTextSmall.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.5f, 0.5f, 2, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(255, 255, 255));
