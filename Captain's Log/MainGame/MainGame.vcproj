@@ -48,6 +48,7 @@
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderThrough="precompiled_header.h"
 				WarningLevel="3"
+				WarnAsError="false"
 				DebugInformationFormat="4"
 			/>
 			<Tool

@@ -78,7 +78,7 @@ public:
 	{
 		for(size_t i=0; i<m_lstNodeList.size(); i++)
 		{
-			CSGD_Direct3D::GetInstance()->DrawLine(m_lstNodeList[i].fX, m_lstNodeList[i].fY, m_lstNodeList[i].fX + 1, m_lstNodeList[i].fY +1, 255, 255, 255);
+			CSGD_Direct3D::GetInstance()->DrawLine((int)m_lstNodeList[i].fX, (int)m_lstNodeList[i].fY, (int)m_lstNodeList[i].fX + 1, (int)m_lstNodeList[i].fY +1, 255, 255, 255);
 		}
 	}
 
