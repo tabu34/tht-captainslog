@@ -38,6 +38,7 @@ void COptionsMenuState::Enter()
 	m_nBGImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\optionsMenu.png").c_str());
 	m_nSliderImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\optionsMenuSlider.png").c_str());
 	m_nSoundChangedID = CSGD_FModManager::GetInstance()->LoadSound(CGame::GetInstance()->SoundPath("THT_SoundChange.wav").c_str());
+
 	m_pCurrentControl = NULL;
 
 
@@ -839,7 +840,7 @@ void COptionsMenuState::LoadSettings()
 		fin.read((char*)&m_nVoiceVolume, sizeof(int));
 		fin.read((char*)&m_nMusicVolume, sizeof(int));
 
-		for(int i=0; i<18; i++)
+		for(int i=0; i<15; i++)
 		{
 			fin.read((char*)&m_arrKeybinds[i], sizeof(unsigned char));
 		}
