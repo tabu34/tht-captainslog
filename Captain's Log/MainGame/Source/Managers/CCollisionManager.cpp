@@ -130,3 +130,34 @@ void CCollisionManager::RemoveObject( CBase* pObject )
 		break;
 	}
 }
+
+void CCollisionManager::RemoveAllObjects()
+{
+	for (unsigned int i = 0; i < m_vPlayers.size(); i++)
+	{
+		m_vPlayers[i]->Release();
+	}
+
+	m_vPlayers.clear();
+
+	for (unsigned int i = 0; i < m_vEnemies.size(); i++)
+	{
+		m_vEnemies[i]->Release();
+	}
+
+	m_vEnemies.clear();
+
+	for (unsigned int i = 0; i < m_vObstacles.size(); i++)
+	{
+		m_vObstacles[i]->Release();
+	}
+
+	m_vObstacles.clear();
+
+	for (unsigned int i = 0; i < m_vProjectiles.size(); i++)
+	{
+		m_vProjectiles[i]->Release();
+	}
+
+	m_vProjectiles.clear();
+}

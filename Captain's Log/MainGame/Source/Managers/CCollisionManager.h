@@ -31,5 +31,6 @@ public:
 	void	AddObject(CBase* pBase);
 	void	CheckCollision();
 	void	RemoveObject( CBase* pObject );
+	void	RemoveAllObjects();
 };
 #endif // CCollisionManager_h__
