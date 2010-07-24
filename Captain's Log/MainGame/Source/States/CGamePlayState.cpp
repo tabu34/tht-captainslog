@@ -642,14 +642,14 @@ void CGamePlayState::Update(float fElapsedTime)
 				if(disAwayX < 525.0f)
 				{
 					(*m_vObjectList)[i]->Stuck(true);
-					(*m_vObjectList)[i]->PosX( (*m_vObjectList)[i]->PosX() - ((*m_vObjectList)[i]->VelX() *fElapsedTime * 2.0f) - velXOffset);
+					(*m_vObjectList)[i]->PosX( (*m_vObjectList)[i]->PosX() - ((*m_vObjectList)[i]->VelX() *fElapsedTime * 5.0f) - velXOffset);
 					(*m_vObjectList)[i]->VelX(0.0f);
 				}
 
 				if(disAwayY < 525.0f)
 				{
 					(*m_vObjectList)[i]->Stuck(true);
-					(*m_vObjectList)[i]->PosY( (*m_vObjectList)[i]->PosY() - ((*m_vObjectList)[i]->VelY() *fElapsedTime * 2.0f) - velYOffset);
+					(*m_vObjectList)[i]->PosY( (*m_vObjectList)[i]->PosY() - ((*m_vObjectList)[i]->VelY() *fElapsedTime * 5.0f) - velYOffset);
 					(*m_vObjectList)[i]->VelY(0.0f);
 				}
 			}
@@ -698,8 +698,8 @@ void CGamePlayState::Update(float fElapsedTime)
 		}
 	}
 
-	CLoadLevelState::GetInstance()->SetLoadLevel( CGamePlayState::GetInstance()->NextLevel() );
-	CGame::GetInstance()->ChangeState( CLoadLevelState::GetInstance() );
+	//CLoadLevelState::GetInstance()->SetLoadLevel( CGamePlayState::GetInstance()->NextLevel() );
+	CGame::GetInstance()->ChangeState( CDebriefState::GetInstance() );
 }
 
 void CGamePlayState::RenderMiniMap()

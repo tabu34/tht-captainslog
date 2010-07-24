@@ -5,6 +5,8 @@
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
 #include "..\Managers\MovementControl.h"
 #include "..\Managers\CObjectManager.h"
+#include "CGamePlayState.h"
+#include "CLoadLevelState.h"
 
 CDebriefState::CDebriefState()
 {
@@ -38,7 +40,8 @@ bool CDebriefState::Input()
 {
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN))
 	{
-		CGame::GetInstance()->PopState();
+		CLoadLevelState::GetInstance()->SetLoadLevel( CGamePlayState::GetInstance()->NextLevel() );
+		CGame::GetInstance()->ChangeState( CLoadLevelState::GetInstance() );
 	}
 	return true;
 }
@@ -54,19 +57,27 @@ void CDebriefState::Render()
 
 	//figure out who's alive
 	bool bMarine = false, bHeavy=false, bMedic=false, bScout=false;
-	for(size_t i=0; i<CObjectManager::GetInstance()->GetObjectList()->size(); i++)
-	{
-		CUnit* pUnit = ((CUnit*)(*CObjectManager::GetInstance()->GetInstance()->GetObjectList())[i]);
-		if((CUnit*)CMovementControl::GetInstance()->Marine() == pUnit)
-			bMarine=true;
-		else if((CUnit*)CMovementControl::GetInstance()->Heavy() == pUnit)
-			bHeavy=true;
-		else if((CUnit*)CMovementControl::GetInstance()->Medic() == pUnit)
-			bMedic=true;
-		else if((CUnit*)CMovementControl::GetInstance()->Scout() == pUnit)
-			bScout=true;
-	}
+	//for(size_t i=0; i<CObjectManager::GetInstance()->GetObjectList()->size(); i++)
+	//{
+	//	CUnit* pUnit = ((CUnit*)(*CObjectManager::GetInstance()->GetInstance()->GetObjectList())[i]);
+	//	if((CUnit*)CMovementControl::GetInstance()->Marine() == pUnit)
+	//		bMarine=true;
+	//	else if((CUnit*)CMovementControl::GetInstance()->Heavy() == pUnit)
+	//		bHeavy=true;
+	//	else if((CUnit*)CMovementControl::GetInstance()->Medic() == pUnit)
+	//		bMedic=true;
+	//	else if((CUnit*)CMovementControl::GetInstance()->Scout() == pUnit)
+	//		bScout=true;
+	//}
 
+	if(((CUnit*)CMovementControl::GetInstance()->Marine())->CurHealth() > 0)
+		bMarine = true;
+	if(((CUnit*)CMovementControl::GetInstance()->Heavy())->CurHealth() > 0)
+		bHeavy = true;
+	if(((CUnit*)CMovementControl::GetInstance()->Medic())->CurHealth() > 0)
+		bMedic = true;
+	if(((CUnit*)CMovementControl::GetInstance()->Scout())->CurHealth() > 0)
+		bScout = true;
 	m_bfFont.RenderText("Unit Status", CGame::GetInstance()->GetScreenWidth()/3+100, 200);
 
 	m_bfFont.RenderText(((bMarine) ? "Marine: Okay" : "Marine: Down"), CGame::GetInstance()->GetScreenWidth()/3+100, 230);

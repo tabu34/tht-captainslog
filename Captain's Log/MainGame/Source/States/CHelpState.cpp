@@ -3,6 +3,7 @@
 #include "..\CGame.h"
 #include "..\SGD Wrappers\CSGD_TextureManager.h"
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
+#include "..\Managers\\MovementControl.h"
 
 CHelpState::CHelpState()
 {
@@ -36,6 +37,7 @@ bool CHelpState::Input()
 	{
 		CGame::GetInstance()->PopState();
 	}
+	CMovementControl::GetInstance()->Input();
 	return true;
 }
 
@@ -47,4 +49,5 @@ void CHelpState::Update(float fElapsedTime)
 void CHelpState::Render()
 {
 	CSGD_TextureManager::GetInstance()->Draw(m_nBGImage, 0, 0);
+	CMovementControl::GetInstance()->RenderCursor();
 }

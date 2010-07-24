@@ -17,7 +17,7 @@
 #include "..\Managers\CUnitFactory.h"
 #include "..\GameObjects\CBMPFont.h"
 #include "..\SGD Wrappers\CSGD_Direct3D.h"
-
+#include "CGameWinState.h"
 CLoadLevelState::CLoadLevelState(void)
 {
 	m_nLevelNum = 1;
@@ -162,34 +162,18 @@ void CLoadLevelState::Load()
 		FElemental->PosX(1560);
 		FElemental->PosY(930);
 		CObjectManager::GetInstance()->AddObject(FElemental);
+
+		CGame::GetInstance()->ChangeState( CGamePlayState::GetInstance() );
 	}
 
 	if(m_nLevelNum == 2)
 	{
-		CWorldManager::GetInstance()->Load("Resource//Graphics//Level 2.mfl");
-
-		CMarine* alliedMarine = CMovementControl::GetInstance()->Marine();
-		CHeavy*  alliedHeavy  = CMovementControl::GetInstance()->Heavy();
-		CMedic*  alliedMedic  = CMovementControl::GetInstance()->Medic();
-		CScout*  alliedScout  = CMovementControl::GetInstance()->Scout();
-
-		alliedMarine->PosX(50);
-		alliedMarine->PosY(50);
-		alliedHeavy->PosX(150);
-		alliedHeavy->PosY(50);
-		alliedScout->PosX(150);
-		alliedScout->PosY(150);
-		alliedMedic->PosX(50);
-		alliedMedic->PosY(150);
-
-		CBasicEnemy* badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
-		badGuy->Type(CBase::OBJ_ENEMY);
-		badGuy->PosX(1600);
-		badGuy->PosY(230);
-		CObjectManager::GetInstance()->AddObject(badGuy);
+		//CGame::GetInstance()->
+		// Game win screen
+		CGame::GetInstance()->ChangeState( CGameWinState::GetInstance() );
 	}
 	
-	CGame::GetInstance()->ChangeState( CGamePlayState::GetInstance() );
+	
 }
 
 void CLoadLevelState::Render(void)
