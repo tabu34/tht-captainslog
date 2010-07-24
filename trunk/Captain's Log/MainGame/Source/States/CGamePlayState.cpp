@@ -300,7 +300,8 @@ bool CGamePlayState::Input(void)
 		return true;
 	}
 
-	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) /*|| ((CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LALT) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_TAB)))*/)
+	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_ESCAPE) || 
+		((CSGD_DirectInput::GetInstance()->KeyPressed(DIK_LALT) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_TAB))))
 	{
 		CGame::GetInstance()->PushState(CPauseMenuState::GetInstance());
 	}
