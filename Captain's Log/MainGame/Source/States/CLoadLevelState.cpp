@@ -67,7 +67,7 @@ void CLoadLevelState::Load()
 	// Do all our loading
 	if(m_nLevelNum == 1)
 	{
-		CWorldManager::GetInstance()->Load("Resource//Graphics//lvl1-2.mfl");
+		CWorldManager::GetInstance()->Load("Resource//Graphics//lvl1.mfl");
 
 		CMarine* alliedMarine = new CMarine();
 		CHeavy*  alliedHeavy  = new CHeavy();
@@ -80,13 +80,13 @@ void CLoadLevelState::Load()
 		CMovementControl::GetInstance()->SetPlayerUnits(alliedMarine, alliedHeavy, alliedScout, alliedMedic);
 
 		alliedMarine->PosX(50);
-		alliedMarine->PosY(50);
+		alliedMarine->PosY(250);
 		alliedHeavy->PosX(150);
-		alliedHeavy->PosY(50);
+		alliedHeavy->PosY(250);
 		alliedScout->PosX(150);
-		alliedScout->PosY(150);
+		alliedScout->PosY(350);
 		alliedMedic->PosX(50);
-		alliedMedic->PosY(150);
+		alliedMedic->PosY(350);
 
 		CBasicEnemy* badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
 		badGuy->Type(CBase::OBJ_ENEMY);
