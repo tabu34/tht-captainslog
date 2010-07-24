@@ -15,6 +15,7 @@
 #include "..\SGD Wrappers\CSGD_FModManager.h"
 #include "..\CGame.h"
 #include "CLoadLevelState.h"
+#include "CCreditsState.h"
 
 CMainMenuState::CMainMenuState(void)
 {
@@ -83,7 +84,7 @@ bool CMainMenuState::Input(void)
 		if(m_sCurrentChoice == 3)
 			CGame::GetInstance()->PushState(CHelpState::GetInstance());
 		if(m_sCurrentChoice == 4)
-			return true;
+			CGame::GetInstance()->PushState(CCreditsState::GetInstance());
 		if(m_sCurrentChoice == 5)
 			return false;
 	}
