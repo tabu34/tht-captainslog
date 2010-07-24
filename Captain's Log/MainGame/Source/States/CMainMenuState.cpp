@@ -41,6 +41,7 @@ void CMainMenuState::Enter(void)
 	m_nMenuCur[3] = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\mm3.png").c_str()); 
 	m_nMenuCur[4] = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\mm4.png").c_str());
 	m_nMenuCur[5] = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\mm5.png").c_str());
+	m_nMenuCur[6] = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\mm6.png").c_str());
 
 	m_nMenuMusic = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("SGD_BGM.wav").c_str(), FMOD_LOOP_NORMAL);
 
@@ -61,7 +62,7 @@ bool CMainMenuState::Input(void)
 
 	if(m_sCurrentChoice < 0)
 		m_sCurrentChoice = 5;
-	if(m_sCurrentChoice > 5)
+	if(m_sCurrentChoice > 5 && m_sCurrentChoice != 9001)
 		m_sCurrentChoice = 0;
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
@@ -87,14 +88,19 @@ bool CMainMenuState::Input(void)
 	}
 
 	int nItemHeight=20;
-	if((m_nMouseX!=m_nMousePrevX || m_nMouseY!=m_nMousePrevY) && m_nMouseX > 480 && m_nMouseX < 950)
+	if((m_nMouseX!=m_nMousePrevX || m_nMouseY!=m_nMousePrevY))
 	{
 		m_sCurrentChoice = (m_nMouseY-(short)(574 * 0.75f))/20 - 2;
 
-		if(m_sCurrentChoice < 0)
-			m_sCurrentChoice = 0;
-		if(m_sCurrentChoice > 5)
-			m_sCurrentChoice = 5;
+		if(m_nMouseY > 470 && m_nMouseY < 618 && m_nMouseX > 480 && m_nMouseX < 950)
+		{
+			if(m_sCurrentChoice < 0)
+				m_sCurrentChoice = 0;
+			if(m_sCurrentChoice > 5)
+				m_sCurrentChoice = 5;
+		} else {
+			m_sCurrentChoice = 9001;
+		}
 	}
 
 	m_nMousePrevX = m_nMouseX;
@@ -122,7 +128,10 @@ void CMainMenuState::Update(float fElapsedTime)
 void CMainMenuState::Render(void)
 {
 	CSGD_TextureManager::GetInstance()->Draw(m_nMenuBG, 0, 0, 0.75f, 0.75f);
-	CSGD_TextureManager::GetInstance()->Draw(m_nMenuCur[m_sCurrentChoice], (int)(632 * 0.75f), (int)(574 * 0.75f), 0.75f, 0.75f);
+	if(m_sCurrentChoice != 9001)
+		CSGD_TextureManager::GetInstance()->Draw(m_nMenuCur[m_sCurrentChoice], (int)(632 * 0.75f), (int)(574 * 0.75f), 0.75f, 0.75f);
+	else
+		CSGD_TextureManager::GetInstance()->Draw(m_nMenuCur[6], (int)(632 * 0.75f), (int)(574 * 0.75f), 0.75f, 0.75f);
 	CMovementControl::GetInstance()->RenderCursor();
 }
 

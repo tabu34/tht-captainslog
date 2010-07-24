@@ -19,7 +19,7 @@ class CMainMenuState : public IGameState
 	short		m_sCurrentChoice;
 
 	int m_nMenuBG;
-	int	m_nMenuCur[6];
+	int	m_nMenuCur[7];
 
 	int m_nMouseX;
 	int m_nMouseY;
