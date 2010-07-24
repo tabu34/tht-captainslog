@@ -206,11 +206,17 @@ void CGamePlayState::Enter(void)
 	InitHud();
 
 	// Assets
-	m_nGunshotSound = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("\\THT_gunshoot.wav").c_str(), FMOD_LOOP_OFF);
+	m_nGunshotSound[0] = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("\\THT_Marine_Fire.wav").c_str(), FMOD_LOOP_OFF);
+	m_nGunshotSound[1] = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("\\THT_Heavy_Fire.wav").c_str(), FMOD_LOOP_OFF);
+	m_nGunshotSound[2] = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("\\THT_Scout_Fire.wav").c_str(), FMOD_LOOP_OFF);
+	m_nGunshotSound[3] = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("\\THT_Medic_Heal.wav").c_str(), FMOD_LOOP_OFF);
 	m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap_lvl1.png").c_str());
 	m_nSelectionCircle = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("selectionCircle.png").c_str());
 	//LoadNextLevel();
-	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound, (float)CGame::GetInstance()->SFXVolume() / 100.0f);
+	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound[0], (float)CGame::GetInstance()->SFXVolume() / 100.0f);
+	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound[1], (float)CGame::GetInstance()->SFXVolume() / 100.0f);
+	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound[2], (float)CGame::GetInstance()->SFXVolume() / 100.0f);
+	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound[3], (float)CGame::GetInstance()->SFXVolume() / 100.0f);
 
 	CObjectManager::GetInstance()->AddObject(CMovementControl::GetInstance()->Marine());
 	CObjectManager::GetInstance()->AddObject(CMovementControl::GetInstance()->Heavy());
@@ -261,7 +267,10 @@ void CGamePlayState::Exit(void)
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nSelectionCircle);
 	CAnimationManager::GetInstance()->Shutdown();
 	CObjectManager::GetInstance()->RemoveAllObjects();
-	CSGD_FModManager::GetInstance()->StopSound(m_nGunshotSound);
+	CSGD_FModManager::GetInstance()->StopSound(m_nGunshotSound[0]);
+	CSGD_FModManager::GetInstance()->StopSound(m_nGunshotSound[1]);
+	CSGD_FModManager::GetInstance()->StopSound(m_nGunshotSound[2]);
+	CSGD_FModManager::GetInstance()->StopSound(m_nGunshotSound[3]);
 	CSGD_FModManager::GetInstance()->StopSound(m_nBGMusic);
 }
 
@@ -463,7 +472,7 @@ bool CGamePlayState::CheckButtonInput()
 		m_szTooltipText = " Cloak\n Become invisible/visible\n     No Cooldown";
 		m_nToolTipOffsetY = 32;
 		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
-		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
+		if(CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
 		{
 			m_vButtons[FindButton("Scout 1")].Activate();
 			return true;
@@ -546,7 +555,10 @@ void CGamePlayState::CheckCheats()
 }
 void CGamePlayState::Update(float fElapsedTime)
 {
-	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound, (float)CGame::GetInstance()->SFXVolume() / 100.0f);
+	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound[0], (float)CGame::GetInstance()->SFXVolume() / 100.0f);
+	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound[1], (float)CGame::GetInstance()->SFXVolume() / 100.0f);
+	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound[2], (float)CGame::GetInstance()->SFXVolume() / 100.0f);
+	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound[3], (float)CGame::GetInstance()->SFXVolume() / 100.0f);
 	CSGD_FModManager::GetInstance()->SetVolume(m_nBGMusic, (float)CGame::GetInstance()->MusicVolume() / 100.0f);
 	
 	for (unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)

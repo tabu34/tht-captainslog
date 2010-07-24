@@ -25,6 +25,11 @@ void CBasicEnemy::Update( float fElapsedTime )
 
 	for (unsigned int i = 0; i < CCollisionManager::GetInstance()->Players()->size(); i++)
 	{
+		if (((CUnit*)(*CCollisionManager::GetInstance()->Players())[i])->Cloaked())
+		{
+			continue;
+		}
+
 		currentObjDistance = DistanceSquared(int((*CCollisionManager::GetInstance()->Players())[i]->PosX()), int((*CCollisionManager::GetInstance()->Players())[i]->PosY()));
 
 		if (currentObjDistance < sightRangeSqrd)

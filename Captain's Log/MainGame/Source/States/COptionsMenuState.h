@@ -42,6 +42,7 @@ class COptionsMenuState : public IGameState
 	bool m_bWindowed;
 	bool m_bPrevWindowed;
 
+	int m_nSoundChangedID;
 
 	bool m_bBinding;
 	int m_nBindIndex;
