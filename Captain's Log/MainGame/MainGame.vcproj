@@ -276,6 +276,14 @@
 			Name="States"
 			>
 			<File
+				RelativePath=".\Source\States\CCreditsState.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Source\States\CCreditsState.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Source\States\CDebriefState.cpp"
 				>
 			</File>
