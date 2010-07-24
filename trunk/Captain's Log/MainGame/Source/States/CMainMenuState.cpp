@@ -104,6 +104,8 @@ bool CMainMenuState::Input(void)
 
 void CMainMenuState::Update(float fElapsedTime)
 {
+	CSGD_FModManager::GetInstance()->SetVolume(m_nMenuMusic, CGame::GetInstance()->MusicVolume());
+
 	if(m_nMouseX < 0)
 		CSGD_DirectInput::GetInstance()->MouseSetPosX(0);
 

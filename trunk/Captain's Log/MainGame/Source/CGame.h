@@ -61,6 +61,16 @@ class CGame
 
 public:
 
+
+	int SFXVolume() { return m_nSFXVolume; }
+	int MusicVolume() { return m_nMusicVolume; }
+	int VoiceVolume() { return m_nVoiceVolume; }
+
+	void SFXVolume(int val) { m_nSFXVolume = val; }
+	void MusicVolume(int val) { m_nMusicVolume = val; }
+	void VoiceVolume(int val) { m_nVoiceVolume = val; }
+
+
 	float ElapsedTime() const { return m_fElapsedTime; }
 
 	void			ToggleFullScreen();

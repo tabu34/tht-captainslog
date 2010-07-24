@@ -6,6 +6,7 @@
 #include "../Managers/MovementControl.h"
 #include "../SGD Wrappers/CSGD_Direct3D.h"
 #include <fstream>
+#include "../SGD Wrappers/CSGD_FModManager.h"
 using std::ifstream;
 using std::ofstream;
 using std::ios_base;
@@ -285,6 +286,10 @@ bool COptionsMenuState::Input()
 		ktLeftRightTimer.m_bKeyRepeat = false;
 	}
 
+	CGame::GetInstance()->SFXVolume(m_nSFXVolume);
+	CGame::GetInstance()->VoiceVolume(m_nVoiceVolume);
+	CGame::GetInstance()->MusicVolume(m_nMusicVolume);
+
 	if (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN) || CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP))
 	{
 		m_nCurIndex = (CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN))?
@@ -460,6 +465,10 @@ bool COptionsMenuState::Input()
 
 void COptionsMenuState::Update(float fElapsedTime)
 {
+	//////////////////////////////////////////////////////////////////////////
+	CSGD_FModManager::GetInstance()->SetVolume(0, (float)CGame::GetInstance()->MusicVolume() / 100.0f);
+	//////////////////////////////////////////////////////////////////////////
+
 	if(m_bError)
 	{
 		m_fErrorTimer-=fElapsedTime;
