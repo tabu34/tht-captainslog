@@ -84,6 +84,7 @@ class CGamePlayState : public IGameState
 	int					m_nScore;
 	int					m_nBG;
 	int					m_nMiniMap;
+	int					m_nItemOverworld;
 	int					m_nGunshotSound[4];
 	int					m_nSelectionCircle;
 	int					m_nToolTipOffsetY;
@@ -125,6 +126,8 @@ class CGamePlayState : public IGameState
 	CGamePlayState& operator=(const CGamePlayState&);
 	~CGamePlayState(void);
 public:
+	int ItemOverworld() const { return m_nItemOverworld; }
+	void ItemOverworld(int val) { m_nItemOverworld = val; }
 	static CGamePlayState* GetInstance();
 
 	static void MessageProc(CBaseMessage* pMSG);

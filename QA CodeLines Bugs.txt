@@ -9,3 +9,10 @@ known bugs:
 	mouse cannot right click to move on minimap
 	mouse clicks behind hud if not selecting a button
 	options full screen does not drop down
+
+Bug 19 is intended functionality
+Bug 29 we could not reproduce
+Bug 31 we could not reproduce
+Bug 36 is a Windows glitch, we're not sure if we can fix it
+Bug 37 is intended functionality
+Bug 39 is the same as 36
