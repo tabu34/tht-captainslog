@@ -338,7 +338,7 @@ void CUnit::Render()
 
 	// Selection Cirle
 	if(m_bSelected && Type() == OBJ_PLAYER)
-		CSGD_TextureManager::GetInstance()->Draw(CGamePlayState::GetInstance()->GetSelectionCircleID(), int((PosX()) - 24 - CGame::GetInstance()->GetCamera()->GetX()), int(PosY() + (Height() / 3) - 12 - CGame::GetInstance()->GetCamera()->GetY()), 0.75f, 0.75f);
+		CSGD_TextureManager::GetInstance()->Draw(CGamePlayState::GetInstance()->GetSelectionCircleID(), int((PosX()) - 24 - CGame::GetInstance()->GetCamera()->GetX()), int(PosY() - 12 - CGame::GetInstance()->GetCamera()->GetY()), 0.75f, 0.75f);
 
 	// Healthbars
 	RECT hpBar;
