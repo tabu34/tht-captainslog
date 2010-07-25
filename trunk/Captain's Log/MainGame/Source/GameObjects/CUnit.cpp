@@ -343,7 +343,7 @@ void CUnit::Render()
 	// Healthbars
 	RECT hpBar;
 	hpBar.left = LONG(PosX() - 20 - CGame::GetInstance()->GetCamera()->GetX());
-	hpBar.top = LONG(PosY() - (Height() / 2) - 15 - CGame::GetInstance()->GetCamera()->GetY());
+	hpBar.top = LONG(PosY() - (Height()) - 15 - CGame::GetInstance()->GetCamera()->GetY());
 	hpBar.right = hpBar.left + 40;
 	hpBar.bottom = hpBar.top + 5;
 
