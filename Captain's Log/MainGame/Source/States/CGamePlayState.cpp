@@ -545,6 +545,8 @@ void CGamePlayState::CheckCheats()
 			m_szCheatBuffer = "                             ";
 			m_bEnteringCheat = false;
 			//TODO: skip level
+			CLoadLevelState::GetInstance()->SetLoadLevel( CGamePlayState::GetInstance()->NextLevel() );
+			CGame::GetInstance()->ChangeState( CLoadLevelState::GetInstance() );
 		}
 	}
 
