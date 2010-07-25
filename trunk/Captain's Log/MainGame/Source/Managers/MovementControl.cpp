@@ -89,7 +89,7 @@ void CMovementControl::Input()
 				((*m_vObjectList)[nTarget]->PosX() - (*m_vSelected)[i]->PosX()) * 
 				((*m_vObjectList)[nTarget]->PosX() - (*m_vSelected)[i]->PosX()) + 
 				((*m_vObjectList)[nTarget]->PosY() - (*m_vSelected)[i]->PosY()) * 
-				((*m_vObjectList)[nTarget]->PosY() - (*m_vSelected)[i]->PosY()) < ITEM_RANGE
+				((*m_vObjectList)[nTarget]->PosY() - (*m_vSelected)[i]->PosY()) < ITEM_RANGE * ITEM_RANGE
 				)
 			{
 				if (((CItem*)(*m_vObjectList)[nTarget])->Collect((CUnit*)(*m_vSelected)[i]))

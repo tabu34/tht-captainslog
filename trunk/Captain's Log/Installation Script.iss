@@ -7,7 +7,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{583F32E0-0B6B-4029-A078-D12971B61C2F}
 AppName=Captain's Log
-AppVersion=1.0
+AppVersion=1.1
 ;AppVerName=Captain's Log 1.0
 AppPublisher=Homeless Titans
 DefaultDirName={pf}\Captain's Log

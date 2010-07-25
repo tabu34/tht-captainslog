@@ -12,6 +12,8 @@ class CCollisionManager
 	vector<CBase*>		m_vPlayers;
 	vector<CBase*>		m_vEnemies;
 	vector<CBase*>		m_vObstacles;
+	vector<CBase*>		m_vItems;
+
 
 	~CCollisionManager();
 	CCollisionManager();
@@ -26,6 +28,7 @@ public:
 
 	vector<CBase*>* Enemies() { return &m_vEnemies; }
 	vector<CBase*>* Players() { return &m_vPlayers; }
+	vector<CBase*>* Items() { return &m_vItems; }
 
 	void	RunCollisions();
 	void	AddObject(CBase* pBase);

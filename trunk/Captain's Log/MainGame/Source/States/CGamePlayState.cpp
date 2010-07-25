@@ -212,6 +212,7 @@ void CGamePlayState::Enter(void)
 	m_nGunshotSound[3] = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("\\THT_Medic_Heal.wav").c_str(), FMOD_LOOP_OFF);
 	m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap_lvl1.png").c_str());
 	m_nSelectionCircle = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("selectionCircle.png").c_str());
+	m_nItemOverworld = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("treasureChestItem.png").c_str());
 	//LoadNextLevel();
 	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound[0], (float)CGame::GetInstance()->SFXVolume() / 100.0f);
 	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound[1], (float)CGame::GetInstance()->SFXVolume() / 100.0f);
@@ -223,10 +224,22 @@ void CGamePlayState::Enter(void)
 	CObjectManager::GetInstance()->AddObject(CMovementControl::GetInstance()->Scout());
 	CObjectManager::GetInstance()->AddObject(CMovementControl::GetInstance()->Medic());
 
+
 	m_pPlayerArray[0] = CMovementControl::GetInstance()->Marine();
 	m_pPlayerArray[1] = CMovementControl::GetInstance()->Heavy();
 	m_pPlayerArray[2] = CMovementControl::GetInstance()->Scout();
 	m_pPlayerArray[3] = CMovementControl::GetInstance()->Medic();
+
+	//////////////////////////////////////////////////////////////////////////
+	
+	CItem* testItem = CItemFactory::GetInstance()->CreateItem("Book of Haste");
+	testItem->PosX(500);
+	testItem->PosY(500);
+	testItem->Width(64);
+	testItem->Height(64);
+	CObjectManager::GetInstance()->AddObject(testItem);
+
+	//////////////////////////////////////////////////////////////////////////
 
 
 
@@ -252,8 +265,8 @@ void CGamePlayState::Enter(void)
 	m_nBGMusic = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("Breakout.mp3").c_str(), FMOD_LOOP_NORMAL);
 	CSGD_FModManager::GetInstance()->PlaySound(m_nBGMusic);
 
-	m_nParticleImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("blood.png").c_str());
-	m_peEngine.CreateEmitterFromFile(m_nParticleImageID, CGame::GetInstance()->GraphicsPath("blood.par").c_str(), 500, 500);
+	//m_nParticleImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("blood.png").c_str());
+	//m_peEngine.CreateEmitterFromFile(m_nParticleImageID, CGame::GetInstance()->GraphicsPath("blood.par").c_str(), 500, 500);
 }
 
 void CGamePlayState::Exit(void)

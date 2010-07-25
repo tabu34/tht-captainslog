@@ -5,6 +5,7 @@
 #include "..\CGame.h"
 #include "..\SGD Wrappers\CSGD_DirectInput.h"
 #include "..\GameObjects\CUnit.h"
+#include "..\States\CGamePlayState.h"
 
 CObjectManager::~CObjectManager()
 {
@@ -80,7 +81,17 @@ void CObjectManager::RenderObjects()
 	{
 		RECT rCollisionRect;
 		if (IntersectRect(&rCollisionRect, &rScreen, &m_vObjectList[i]->GetCollisionRect()))
-			m_vObjectList[i]->Render();
+		{
+			if (m_vObjectList[i]->Type() == CBase::OBJ_ITEM)
+				CSGD_TextureManager::GetInstance()->Draw(CGamePlayState::GetInstance()->ItemOverworld(), 
+				m_vObjectList[i]->GetCollisionRect().left - CGame::GetInstance()->GetCamera()->GetX(), 
+				m_vObjectList[i]->GetCollisionRect().top - CGame::GetInstance()->GetCamera()->GetY());
+			else
+				m_vObjectList[i]->Render();
+			//////////////////////////////////////////////////////////////////////////
+			CSGD_Direct3D::GetInstance()->DrawRect(m_vObjectList[i]->GetCollisionRect(), 255, 0, 0);
+			//////////////////////////////////////////////////////////////////////////
+		}
 	}
 }
 
