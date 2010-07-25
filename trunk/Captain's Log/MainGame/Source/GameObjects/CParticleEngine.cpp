@@ -82,7 +82,7 @@ bool CParticleEngine::CreateEmitterFromFile(int nImageID, string sFileName, floa
 		in.close();
 
 		emitter.Initialize(nImageID,EmitterWidth,EmitterHeight,(int)fPosX,(int)fPosY,nParticles,MinLife,MaxLife,AlphaValue,initialForceX,initialForceY,BlendModeSource,BlendModeDest,
-			minPartWidth,minPartHeight,maxPartWidth,maxPartHeight,nGravity,GravitySourceX,GravitySourceY,RandomSpread,red,green,blue);
+			minPartWidth,minPartHeight,maxPartWidth,maxPartHeight,nGravity,GravitySourceX,GravitySourceY,RandomSpread,255,255,255/*red,green,blue*/);
 
 		m_vEmitters.push_back(emitter);
 

@@ -17,6 +17,7 @@
 #include "..\GameObjects\CItem.h"
 #include <vector>
 #include <string>
+#include "..\GameObjects\CParticleEngine.h"
 using namespace std;
 
 class CHUDButton
@@ -116,7 +117,7 @@ class CGamePlayState : public IGameState
 	bool				m_bEnteringCheat;
 
 	// Particles
-	CParticleEmitter	m_peEmitter;
+	CParticleEngine		m_peEngine;
 	int					m_nParticleImageID;
 
 	CGamePlayState(void);

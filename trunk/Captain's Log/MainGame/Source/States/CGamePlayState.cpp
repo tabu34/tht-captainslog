@@ -251,6 +251,9 @@ void CGamePlayState::Enter(void)
 
 	m_nBGMusic = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("Breakout.mp3").c_str(), FMOD_LOOP_NORMAL);
 	CSGD_FModManager::GetInstance()->PlaySound(m_nBGMusic);
+
+	m_nParticleImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("blood.png").c_str());
+	m_peEngine.CreateEmitterFromFile(m_nParticleImageID, CGame::GetInstance()->GraphicsPath("blood.par").c_str(), 500, 500);
 }
 
 void CGamePlayState::Exit(void)
@@ -557,6 +560,8 @@ void CGamePlayState::CheckCheats()
 }
 void CGamePlayState::Update(float fElapsedTime)
 {
+	m_peEngine.Update(fElapsedTime);
+
 	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound[0], (float)CGame::GetInstance()->SFXVolume() / 100.0f);
 	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound[1], (float)CGame::GetInstance()->SFXVolume() / 100.0f);
 	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound[2], (float)CGame::GetInstance()->SFXVolume() / 100.0f);
@@ -617,7 +622,6 @@ void CGamePlayState::Update(float fElapsedTime)
 	CMovementControl::GetInstance()->UpdateCamera(fElapsedTime);
 	CObjectManager::GetInstance()->UpdateObjects(fElapsedTime);
 	CMessageSystem::GetInstance()->ProcessMessages();
-	m_peEmitter.Update(fElapsedTime);
 
 	m_fTotalGameTime+=fElapsedTime;
 
@@ -912,10 +916,10 @@ void CGamePlayState::Render(void)
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 	CObjectManager::GetInstance()->RenderObjects();
 	CMovementControl::GetInstance()->RenderDragRect();
-	m_peEmitter.Render();
 	RenderHUD();
 	//CPathManager::GetInstance()->RenderLines();
 	CMovementControl::GetInstance()->RenderCursor();
+	m_peEngine.Render();
 }
 
 int  CGamePlayState::FindButton(string _name)
