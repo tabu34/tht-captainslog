@@ -235,8 +235,6 @@ void CGamePlayState::Enter(void)
 	CItem* testItem = CItemFactory::GetInstance()->CreateItem("Book of Haste");
 	testItem->PosX(500);
 	testItem->PosY(500);
-	testItem->Width(64);
-	testItem->Height(64);
 	CObjectManager::GetInstance()->AddObject(testItem);
 
 	//////////////////////////////////////////////////////////////////////////
