@@ -153,6 +153,9 @@ CItem* CItemFactory::CreateItem(string id)
 		break;
 	}
 
+	returnItem->Height(67);
+	returnItem->Width(70);
+
 	return returnItem;
 }
 
