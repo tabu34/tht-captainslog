@@ -57,11 +57,11 @@ void COptionsMenuState::Enter()
 	mcInit.szIdentifier = "sfxvolume";
 	m_vControls.push_back(mcInit);
 	SetRect(&mcInit.rArea, 415, 474, 600, 490);
-	mcInit.szIdentifier = "voiceovervolume";
-	m_vControls.push_back(mcInit);
-	SetRect(&mcInit.rArea, 415, 550, 600, 567);
 	mcInit.szIdentifier = "musicvolume";
 	m_vControls.push_back(mcInit);
+	//SetRect(&mcInit.rArea, 415, 550, 600, 567);
+	//mcInit.szIdentifier = "musicvolume";
+	//m_vControls.push_back(mcInit);
 	SetRect(&mcInit.rArea, 865, 237, 1045, 260);
 	mcInit.szIdentifier = "layout";
 	m_vControls.push_back(mcInit);
@@ -708,8 +708,8 @@ void COptionsMenuState::Render()
 		DrawHollowRect(&m_pCurrentControl->rArea);
 
 	CSGD_TextureManager::GetInstance()->Draw(m_nSliderImageID, (int)(415.0f + ((float)m_nSFXVolume/100.0f)*185.0f)-3, 396, 0.75f, 0.75f);
-	CSGD_TextureManager::GetInstance()->Draw(m_nSliderImageID, (int)(415.0f + ((float)m_nVoiceVolume/100.0f)*185.0f)-3, 474, 0.75f, 0.75f);
-	CSGD_TextureManager::GetInstance()->Draw(m_nSliderImageID, (int)(415.0f + ((float)m_nMusicVolume/100.0f)*185.0f)-3, 550, 0.75f, 0.75f);
+	CSGD_TextureManager::GetInstance()->Draw(m_nSliderImageID, (int)(415.0f + ((float)m_nMusicVolume/100.0f)*185.0f)-3, 474, 0.75f, 0.75f);
+	//CSGD_TextureManager::GetInstance()->Draw(m_nSliderImageID, (int)(415.0f + ((float)m_nVoiceVolume/100.0f)*185.0f)-3, 550, 0.75f, 0.75f);
 	
 	int j=0;
 	for(size_t i=0; i<m_vControls.size()-2; i++)
