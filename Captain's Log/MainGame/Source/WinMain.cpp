@@ -26,12 +26,14 @@ const char* g_szWINDOW_CLASS_NAME	= "SGDWindowClass";			//	Window Class Name.
 const char* g_szWINDOW_TITLE		= "Captain's Log";			//	Window Title.
 const int	g_nWINDOW_WIDTH			= 1440;						//	Window Width.
 const int	g_nWINDOW_HEIGHT		= 900;						//	Window Height.
+//const int	g_nWINDOW_WIDTH			= 1800;						//	Window Width.
+//const int	g_nWINDOW_HEIGHT		= 1125;						//	Window Height.
 
 //	Windowed or Full screen depending on project setting
 #ifdef _DEBUG
 	const BOOL	g_bIS_WINDOWED			= TRUE;						
 #else
-	const BOOL	g_bIS_WINDOWED			= FALSE;
+	const BOOL	g_bIS_WINDOWED			= TRUE;
 #endif
 
 LRESULT CALLBACK WindowProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
