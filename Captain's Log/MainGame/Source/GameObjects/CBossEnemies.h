@@ -5,9 +5,18 @@
 
 class CBossEnemy : public CUnit
 {
+	bool m_bMirrored;
+
 public:
 	CBossEnemy();
-//	void Update(float fElapsedTime);
+	void Update(float fElapsedTime);
+	void Update7(float fElapsedTime);
+	void Update16(float fElapsedTime);
+	void Render();
+	void Render7();
+	void Render16();
+
+	void SetMirrored(bool val) { m_bMirrored = val; }
 };
 
 //////////////////////////////////////////////////////////////////////////
