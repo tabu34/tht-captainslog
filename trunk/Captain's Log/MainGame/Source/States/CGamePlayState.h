@@ -97,6 +97,8 @@ class CGamePlayState : public IGameState
 	CBMPFont			m_ftTextLargeShadow;
 	vector<CHUDButton>	m_vButtons;
 	vector<CHUDButton>	m_vButtonInstances;
+	vector<CHUDButton>	m_vItems;
+	vector<CHUDButton>	m_vItemInstances;
 
 	// Timed Speech
 	float				m_nCurCount;

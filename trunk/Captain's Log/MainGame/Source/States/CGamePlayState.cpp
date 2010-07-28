@@ -830,6 +830,14 @@ void CGamePlayState::RenderHUD(void)
 		}
 	}
 
+	for (unsigned int i = 0; i < m_vItemInstances.size(); i++)
+	{
+		if (m_vItemInstances[i].Visible())
+		{
+			CSGD_TextureManager::GetInstance()->Draw(m_vItemInstances[i].TextureID(), m_vItemInstances[i].Point().x, m_vItemInstances[i].Point().y, 1.0f, 1.0f);
+		}
+	}
+
 	// Render Names
 	RenderSmallShadowText("Speaker", 42, 575);
 
@@ -1111,6 +1119,11 @@ void CGamePlayState::LoadNextLevel()
 
 void CGamePlayState::InitHud()
 {
+	// Setup Items
+	m_vItems.push_back(CHUDButton(586, 761, 43, 43, "BookofHaste", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/items/bookOfHaste.png").c_str())));
+
+	m_vItemInstances = m_vItems;
+
 	// Setup GUI
 	m_vButtons.push_back(CHUDButton(-76, 645, 2048, 512, "BottomHUD", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/0.png").c_str())));
 	m_vButtons.push_back(CHUDButton(270, 706, 256, 256, "UnitPortrait", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/1.png").c_str())));
