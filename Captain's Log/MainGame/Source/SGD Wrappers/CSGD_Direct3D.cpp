@@ -388,7 +388,7 @@ void CSGD_Direct3D::ChangeDisplayParam(int nWidth, int nHeight, bool bWindowed)
 		int windowWidth		= rWindow.right - rWindow.left;
 		int windowHeight	= rWindow.bottom - rWindow.top;
 
-		SetWindowPos(m_hWnd, HWND_TOP,	(GetSystemMetrics(SM_CXSCREEN)>>1) - (windowWidth>>1),
+		SetWindowPos(m_hWnd, HWND_NOTOPMOST,	(GetSystemMetrics(SM_CXSCREEN)>>1) - (windowWidth>>1),
 										(GetSystemMetrics(SM_CYSCREEN)>>1) - (windowHeight>>1),
 										windowWidth, windowHeight, SWP_SHOWWINDOW);
 	}
