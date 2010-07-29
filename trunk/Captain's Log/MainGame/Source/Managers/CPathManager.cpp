@@ -6,16 +6,62 @@
 #include "../States/CLoadLevelState.h"
 
 // Grid squares are x by x (ex. 50 by 50) pixels
-#define GRID_SCALE 25
+#define GRID_SCALE 50
 
 CPathManager::CPathManager()
 {
-
+	openBH =		NULL;
+	lstIndex =		NULL;
+	cameFrom =		NULL;
+	fCost =			NULL;
+	gCost =			NULL;
+	hCost =			NULL;
+	xPos =			NULL;
+	yPos =			NULL;
 }
 
 CPathManager::~CPathManager()
 {
-
+	if(openBH)
+	{
+		delete[] openBH;
+		openBH = NULL;
+	}
+	if(lstIndex)
+	{
+		delete lstIndex;
+		lstIndex = NULL;
+	}
+	if(cameFrom)
+	{
+		delete[] cameFrom;
+		cameFrom = NULL;
+	}
+	if(fCost)
+	{
+		delete[] fCost;
+		fCost = NULL;
+	}
+	if(gCost)
+	{
+		delete[] gCost;
+		gCost = NULL;
+	}
+	if(hCost)
+	{
+		delete[] hCost;
+		hCost = NULL;
+	}
+	if(xPos)
+	{
+		delete[] xPos;
+		xPos = NULL;
+	}
+	if(yPos)
+	{
+		delete[] yPos;
+		yPos = NULL;
+	}
 }
 
 // int Check_Tri_Dir(tVector2D P1, tVector2D P2, tVector2D P3)
@@ -185,59 +231,62 @@ void CPathManager::GenerateMap()
 	m_mpAdjacencies.clear();
 	//step 1:  create all the nodes
 	tNode node, lastNode;
-	//for(int i=0; i<CWorldManager::GetInstance()->GetNumBlockers(); i++)
-	//{
-	//	vector<tNode> vNodesInShape;
-	//	vNodesInShape.clear();
-	//	lastNode.fX = -1.0f;
-	//	node.fX = -1.0f;
-	//	for(int j=0; j<CWorldManager::GetInstance()->GetBlockers()[i].m_nNumPoints; j++)
-	//	{
-	//		if(node.fX!=-1.0f)
-	//		{
-	//			lastNode = node;
-	//		}
-	//		node.fX = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j].x;
-	//		node.fY = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j].y;
-	//		m_lstNodeList.push_back(node);
-	//		vNodesInShape.push_back(node);
-
-	//		// 			if(lastNode.fX!=-1.0f)
-	//		// 			{
-	//		// 				tLine line;
-	//		// 				line.start.fX = lastNode.fX;
-	//		// 				line.start.fY = lastNode.fY;
-	//		// 				line.end.fX = node.fX;
-	//		// 				line.end.fY = node.fY;
-	//		// 				vLines.push_back(line);
-	//		// 				char buff[128];
-	//		// 				sprintf_s(buff, 128, "X1: %.2f, Y1: %.2f, X2: %.2f, Y2: %.2f \n", line.start.fX, line.start.fY, line.end.fX, line.end.fY);
-	//		// 				OutputDebugString(buff);
-	//		// 			}
-	//	}
-	//	for(size_t k=0; k<vNodesInShape.size(); k++) {
-	//		for(size_t j=0; j<vNodesInShape.size(); j++)
-	//		{
-	//			tLine line;
-	//			line.start.fX = vNodesInShape[k].fX;
-	//			line.start.fY = vNodesInShape[k].fY;
-	//			line.end.fX = vNodesInShape[j].fX;
-	//			line.end.fY = vNodesInShape[j].fY;
-	//			vLines.push_back(line);
-	//		} }
-
-	//	CLoadLevelState::GetInstance()->SetPercentage(5.0f + (((float)i / (CWorldManager::GetInstance()->GetNumBlockers())) * 25.0f));
-	//	CLoadLevelState::GetInstance()->Render();
-	//}
-	//CLoadLevelState::GetInstance()->SetPercentage(30.0f);
-	//CLoadLevelState::GetInstance()->Render();
-	
-	
-	//add helper nodes
 
 	// calculate number of grid lines
 	int m_nNumGridLinesX = CWorldManager::GetInstance()->WorldWidth() / GRID_SCALE;
 	int m_nNumGridLinesY = CWorldManager::GetInstance()->WorldHeight() / GRID_SCALE;
+
+	if(openBH)
+	{
+		delete[] openBH;
+		openBH = NULL;
+	}
+	if(lstIndex)
+	{
+		delete lstIndex;
+		lstIndex = NULL;
+	}
+	if(cameFrom)
+	{
+		delete[] cameFrom;
+		cameFrom = NULL;
+	}
+	if(fCost)
+	{
+		delete[] fCost;
+		fCost = NULL;
+	}
+	if(gCost)
+	{
+		delete[] gCost;
+		gCost = NULL;
+	}
+	if(hCost)
+	{
+		delete[] hCost;
+		hCost = NULL;
+	}
+	if(xPos)
+	{
+		delete[] xPos;
+		xPos = NULL;
+	}
+	if(yPos)
+	{
+		delete[] yPos;
+		yPos = NULL;
+	}
+
+	// Setup the arrays
+	openBH =	new int[m_nNumGridLinesX * m_nNumGridLinesY];
+	lstIndex =	new int[m_nNumGridLinesX * m_nNumGridLinesY];
+	cameFrom =	new int[m_nNumGridLinesX * m_nNumGridLinesY];
+	fCost =		new float[m_nNumGridLinesX * m_nNumGridLinesY];		
+	gCost =		new float[m_nNumGridLinesX * m_nNumGridLinesY];		
+	hCost =		new float[m_nNumGridLinesX * m_nNumGridLinesY];		
+	xPos =		new float[m_nNumGridLinesX * m_nNumGridLinesY];		
+	yPos =		new float[m_nNumGridLinesX * m_nNumGridLinesY];
+
 
 	for(int y = 0; y < m_nNumGridLinesY; y++)
 	{
@@ -246,41 +295,8 @@ void CPathManager::GenerateMap()
 			tNode node;
 			node.fX = float(x * GRID_SCALE);
  			node.fY = float(y * GRID_SCALE);
+			node.checked = false;
  			m_lstNodeList.push_back(node);
-
-			//adj.pNeighbors.push_back(new tNode);
-			//adj.pNeighbors.push_back(new tNode);
-			//adj.pNeighbors.push_back(new tNode);
-			//adj.pNeighbors.push_back(new tNode);
-			//adj.pNeighbors.push_back(new tNode);
-			//adj.pNeighbors.push_back(new tNode);
-			//adj.pNeighbors.push_back(new tNode);
-			//adj.pNeighbors.push_back(new tNode);
-
-			//// Node above
-			//adj.pNeighbors[0]->fX = x.pNode->fX;
-			//adj.pNeighbors[0]->fY = x.pNode->fY - GRID_SCALE;
-			//// Node right
-			//adj.pNeighbors[1]->fX = x.pNode->fX + GRID_SCALE;
-			//adj.pNeighbors[1]->fY = x.pNode->fY;
-			//// Node below
-			//adj.pNeighbors[2]->fX = x.pNode->fX;
-			//adj.pNeighbors[2]->fY = x.pNode->fY + GRID_SCALE;
-			//// Node left
-			//adj.pNeighbors[3]->fX = x.pNode->fX - GRID_SCALE;
-			//adj.pNeighbors[3]->fY = x.pNode->fY;
-			//// Node left above
-			//adj.pNeighbors[4]->fX = x.pNode->fX - GRID_SCALE;
-			//adj.pNeighbors[4]->fY = x.pNode->fY - GRID_SCALE;
-			//// Node right above
-			//adj.pNeighbors[5]->fX = x.pNode->fX + GRID_SCALE;
-			//adj.pNeighbors[5]->fY = x.pNode->fY - GRID_SCALE;
-			//// Node below right
-			//adj.pNeighbors[6]->fX = x.pNode->fX + GRID_SCALE;
-			//adj.pNeighbors[6]->fY = x.pNode->fY + GRID_SCALE;
-			//// Node left below
-			//adj.pNeighbors[7]->fX = x.pNode->fX - GRID_SCALE;
-			//adj.pNeighbors[7]->fY = x.pNode->fY + GRID_SCALE;
  		}
 		CLoadLevelState::GetInstance()->SetPercentage(5.0f + (((float)y/ (m_nNumGridLinesY)) * 45.0f));
 		CLoadLevelState::GetInstance()->Render();
@@ -313,66 +329,34 @@ void CPathManager::GenerateMap()
 
 			m_mpAdjacencies[adj.pNode] = adj;
 		}
-		CLoadLevelState::GetInstance()->SetPercentage(50.0f + (((float)x/ (m_nNumGridLinesX)) * 50.0f));
+		CLoadLevelState::GetInstance()->SetPercentage(50.0f + (((float)x/ (m_nNumGridLinesX)) * 35.0f));
 		CLoadLevelState::GetInstance()->Render();
 	}
 
+		// Sort the node list
+	sort(m_lstNodeList.begin(), m_lstNodeList.end());
 
-	////step 2: set up adjacencies and edges
-	//for(size_t i=0; i<m_lstNodeList.size(); i++)
-	//{
-	//	tAdjacency adjacency;
-	//	adjacency.pNode = &m_lstNodeList[i];
-	//	for(size_t j=0; j<m_lstNodeList.size(); j++)
-	//	{
-	//		if(j!=i)
-	//		{
-	//			//we have two different nodes, create a line between them and check for intersection
-	//			tLine nodePath;
-	//			nodePath.start.fX = m_lstNodeList[i].fX;
-	//			nodePath.start.fY = m_lstNodeList[i].fY;
-	//			nodePath.end.fX = m_lstNodeList[j].fX;
-	//			nodePath.end.fY = m_lstNodeList[j].fY;
-
-	//			//now, check this line against all others
-	//			bool bIntersect=false;
-	//			for(size_t k=0; k<vLines.size(); k++)
-	//			{
-	//				if(IntersectLine(nodePath.start, nodePath.end, vLines[k].start, vLines[k].end))
-	//				{
-	//					bIntersect=true;
-	//					break;
-	//				}
-	//			}
-
-	//			if(!bIntersect)
-	//			{
-	//				adjacency.pNeighbors.push_back(&m_lstNodeList[j]);
-	//			}
-	//		}
-	//	}
-	//	m_mpAdjacencies[adjacency.pNode] = adjacency;
-		//CLoadLevelState::GetInstance()->SetPercentage(30.0f + (((float)i / (m_lstNodeList.size())) * 70.0f));
-		//CLoadLevelState::GetInstance()->Render();
-
-		for(int i = 0; i < CWorldManager::GetInstance()->GetNumBlockers(); i++)
+	for(int i = 0; i < CWorldManager::GetInstance()->GetNumBlockers(); i++)
+	{
+		for(int j = 0; j < CWorldManager::GetInstance()->GetBlockers()[i].m_nNumPoints - 1; j++)
 		{
-			for(int j = 0; j < CWorldManager::GetInstance()->GetBlockers()[i].m_nNumPoints - 1; j++)
-			{
-				tLine newLine;
-				newLine.start.fX = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j].x;
-				newLine.start.fY = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j].y;
-				newLine.end.fX = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j+1].x;
-				newLine.end.fY = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j+1].y;
-				m_vLines.push_back(newLine);
-			}
 			tLine newLine;
-			newLine.start.fX = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[CWorldManager::GetInstance()->GetBlockers()[i].m_nNumPoints - 1].x;
-			newLine.start.fY = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[CWorldManager::GetInstance()->GetBlockers()[i].m_nNumPoints - 1].y;
-			newLine.end.fX = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[0].x;
-			newLine.end.fY = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[0].y;
+			newLine.start.fX = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j].x;
+			newLine.start.fY = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j].y;
+			newLine.end.fX = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j+1].x;
+			newLine.end.fY = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j+1].y;
 			m_vLines.push_back(newLine);
 		}
+		tLine newLine;
+		newLine.start.fX = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[CWorldManager::GetInstance()->GetBlockers()[i].m_nNumPoints - 1].x;
+		newLine.start.fY = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[CWorldManager::GetInstance()->GetBlockers()[i].m_nNumPoints - 1].y;
+		newLine.end.fX = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[0].x;
+		newLine.end.fY = (float)CWorldManager::GetInstance()->GetBlockers()[i].m_Points[0].y;
+		m_vLines.push_back(newLine);
+		
+		CLoadLevelState::GetInstance()->SetPercentage(85.0f + (((float)i/ (CWorldManager::GetInstance()->GetNumBlockers())) * 15.0f));
+		CLoadLevelState::GetInstance()->Render();
+	}
 
 
 	
@@ -380,14 +364,14 @@ void CPathManager::GenerateMap()
 	CLoadLevelState::GetInstance()->Render();
 }
 
-inline float ManhattanDistance(tNode& source, tNode& target)
+inline float ManhattanDistance(tNode* source, tNode* target)
 {
-	return fabs(source.fX - target.fX) + fabs(source.fY - target.fY);
+	return fabs(source->fX - target->fX) + fabs(source->fY - target->fY);
 }
 
 inline int PointDistance(POINT p1, POINT p2)
 {
-	return (int)sqrt(static_cast<double>((p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y)));
+	return (int)((p1.x-p2.x)*(p1.x-p2.x) + (p1.y-p2.y)*(p1.y-p2.y));
 }
 
 bool CPathManager::CheckPath(float fX1, float fY1, float fX2, float fY2)
@@ -417,9 +401,100 @@ bool CPathManager::CheckPath(float fX1, float fY1, float fX2, float fY2)
 //		return curNode;
 //}
 
+//bool CPathManager::NodeChecked(tNode * _node)
+//{
+//	// binary search and find the index of the start
+//	int begin = 0, end = _vec->size()-1, mid = -1;
+//
+//	while (begin <= end) {
+//		mid = (begin + end) / 2;
+//		if (_node->fY * 9001 + _node->fX > yPos[(*_vec)[mid]] * 9001 + xPos[(*_vec)[mid]]) 
+//			begin = mid + 1;
+//		else if (_node->fY * 9001 + _node->fX < yPos[(*_vec)[mid]] * 9001 + xPos[(*_vec)[mid]]) 
+//			end = mid - 1;
+//		else
+//			return true;
+//	}
+//
+//	return false;
+//}
+
+bool CPathManager::NodeInBH(int _num, int* _arr, tNode * _node)
+{
+	// check if the _node is in the _vec
+	for(unsigned int i = 1; i <= _num; i++)
+	{
+		if(xPos[(_arr)[i]] == _node->fX && yPos[(_arr)[i]] == _node->fY)
+			return true;
+	}
+	return false;
+}
+
+tNode * GetNodeInVec(vector<tNode>* _vec, tNode * _node)
+{
+	for(unsigned int i = 0; i < _vec->size(); i++)
+	{
+		if(&(*_vec)[i] == _node)
+			return &(*_vec)[i];
+	}
+	return NULL;
+}
+
+int CPathManager::GetNodeIndexInVec(vector<tNode>* _vec, tNode * _node)
+{
+	// binary search and find the index of the start
+	int begin = 0, end = _vec->size()-1, mid = -1;
+
+	while (begin <= end) {
+		mid = (begin + end) / 2;
+		if ((*_node) > (*_vec)[mid]) 
+			begin = mid + 1;
+		else if ((*_node) < (*_vec)[mid]) 
+			end = mid - 1;
+		else
+			return mid;
+	}
+	return -1;
+}
+
+void AddNodeToSortedList( vector<int>* _vec, int _newVal )
+{
+	for(int i = _vec->size()-1; i >= 0; i--)
+	{
+		if((*_vec)[i] < _newVal)
+		{
+			_vec->insert(_vec->begin() + ++i, _newVal);
+			return;
+		}
+	}
+
+	_vec->insert(_vec->begin(), _newVal);
+}
+
+
 vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 {
 	//THIS is A*
+
+	for(int i = 0; i < m_lstNodeList.size(); i++)
+	{
+		m_lstNodeList[i].checked = false;
+	}
+
+	//vector<int> closedList;			// Closed cells
+	int start;						// Start node
+	int goal;						// Goal node
+	bool foundGoal = false;
+	int curNodeIndex;					
+	int squaresChecked = 0;
+	int numberOfOpenListItems = 0;
+
+	// calculate number of grid lines
+	int m_nNumGridLinesX = CWorldManager::GetInstance()->WorldWidth() / GRID_SCALE;
+	int m_nNumGridLinesY = CWorldManager::GetInstance()->WorldHeight() / GRID_SCALE;
+
+	// Figure out our starting and ending cells
+
 	POINT startPt;
 	startPt.x = (LONG)fX1;
 	startPt.y = (LONG)fY1;
@@ -430,250 +505,546 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 	if(InsideBlocker(endPt))
 		return vector<tNode*>();
 
-	vector<tNode*> vRet;
-	vector<tAStarNode> vNodePool;
-
-	map<tNode*, tAStarNode> openSet;
-	queue<tAStarNode> pQueue;
-	map<tNode*, tAStarNode> closeSet;
-
-	tAStarNode start;
-	tAStarNode goal;
-	start.pNode=NULL;
-	goal.pNode=NULL;
-
 	//calculate nearest node to start and goal
 	{
-		//tVector2D pos = {fX1, fY1};
-		//tVector2D dst;
-		//float minDist = 10000.0f;
-		//float fTemp;
-		//for(int i = 0; i < m_lstNodeList.size(); i++)
-		//{
-		//	dst.fX = m_lstNodeList[i].fX;
-		//	dst.fY = m_lstNodeList[i].fY;
-		//	fTemp = Vector2DLength(dst - pos);
-
-		//	bool bRet=false;
-		//	for(size_t j=0; j<m_vLines.size(); j++)
-		//	{
-		//		if(IntersectLine(pos, dst, m_vLines[j].start, m_vLines[j].end))
-		//		{
-		//			bRet = true;
-		//			break;
-		//		}
-		//	}
-
-		//	if(!bRet && fTemp < minDist)
-		//	{
-		//		minDist = fTemp;
-		//		start.pNode = &m_lstNodeList[i];
-		//	}
-		//}
-		
 		int closestDistance = 10000;
 		int closestNode;
 		int tilePosX = int(fX1 / GRID_SCALE);
 		int tilePosY = int(fY1 / GRID_SCALE);
 
-
-
-		POINT tileEdges[4];
+		tNode tileEdges[4];
 		// Top left
-		tileEdges[0].x = tilePosX * GRID_SCALE;
-		tileEdges[0].y = tilePosY * GRID_SCALE;
+		tileEdges[0].fX = tilePosX * GRID_SCALE;
+		tileEdges[0].fY = tilePosY * GRID_SCALE;
 		// Top right
-		tileEdges[1].x = tilePosX * GRID_SCALE + GRID_SCALE;
-		tileEdges[1].y = tilePosY * GRID_SCALE;
+		tileEdges[1].fX = tilePosX * GRID_SCALE + GRID_SCALE;
+		tileEdges[1].fY = tilePosY * GRID_SCALE;
 		// Bottom left
-		tileEdges[2].x = tilePosX * GRID_SCALE;
-		tileEdges[2].y = tilePosY * GRID_SCALE + GRID_SCALE;
+		tileEdges[2].fX = tilePosX * GRID_SCALE;
+		tileEdges[2].fY = tilePosY * GRID_SCALE + GRID_SCALE;
 		// Bottom right
-		tileEdges[3].x = tilePosX * GRID_SCALE + GRID_SCALE;
-		tileEdges[3].y = tilePosY * GRID_SCALE + GRID_SCALE;
+		tileEdges[3].fX = tilePosX * GRID_SCALE + GRID_SCALE;
+		tileEdges[3].fY = tilePosY * GRID_SCALE + GRID_SCALE;
 
 		for(int i = 0; i < 4; i++)
 		{
-			if(PointDistance(startPt, tileEdges[i]) < closestDistance)
+			POINT pt;
+			pt.x = tileEdges[i].fX;
+			pt.y = tileEdges[i].fY;
+			if(PointDistance(startPt, pt) < closestDistance)
 			{
-				closestDistance = PointDistance(startPt, tileEdges[i]);
+				closestDistance = PointDistance(startPt, pt);
 				closestNode = i;
 			}
 		}
 		
-		for(unsigned int i = 0; i < m_lstNodeList.size(); i++)
-			if(m_lstNodeList[i].fX == tileEdges[closestNode].x && m_lstNodeList[i].fY == tileEdges[closestNode].y)
-			{
-				start.pNode = &m_lstNodeList[i];
-				break;
-			}
-		
-	}
-	{
-		//tVector2D pos = {fX2, fY2};
-		//tVector2D dst;
-		//float minDist = 1000.0f;
-		//float fTemp;
-		//for(size_t i=0; i<m_lstNodeList.size(); i++)
-		//{
-		//	dst.fX = m_lstNodeList[i].fX;
-		//	dst.fY = m_lstNodeList[i].fY;
-		//	fTemp = Vector2DLength(dst - pos);
-		//	if(fTemp < minDist)
-		//	{
-		//		minDist = fTemp;
-		//		goal.pNode = &m_lstNodeList[i];
-		//	}
-		//}
+		// binary search and find the index of the start
+		int begin = 0, end = m_lstNodeList.size(), mid = -1;
 
+		while (begin <= end) {
+		   mid = (begin + end) / 2;
+		   if (tileEdges[closestNode] > m_lstNodeList[mid]) 
+			   begin = mid + 1;
+		   else if (tileEdges[closestNode] < m_lstNodeList[mid]) 
+			   end = mid - 1;
+		   else
+			   break;
+		}
+
+		start = mid;
+	}
+
+	
+	{
 		int closestDistance = 10000;
 		int closestNode;
 		int tilePosX = int(fX2 / GRID_SCALE);
 		int tilePosY = int(fY2 / GRID_SCALE);
 
-
-
-		POINT tileEdges[4];
+		tNode tileEdges[4];
 		// Top left
-		tileEdges[0].x = tilePosX * GRID_SCALE;
-		tileEdges[0].y = tilePosY * GRID_SCALE;
+		tileEdges[0].fX = tilePosX * GRID_SCALE;
+		tileEdges[0].fY = tilePosY * GRID_SCALE;
 		// Top right
-		tileEdges[1].x = tilePosX * GRID_SCALE + GRID_SCALE;
-		tileEdges[1].y = tilePosY * GRID_SCALE;
+		tileEdges[1].fX = tilePosX * GRID_SCALE + GRID_SCALE;
+		tileEdges[1].fY = tilePosY * GRID_SCALE;
 		// Bottom left
-		tileEdges[2].x = tilePosX * GRID_SCALE;
-		tileEdges[2].y = tilePosY * GRID_SCALE + GRID_SCALE;
+		tileEdges[2].fX = tilePosX * GRID_SCALE;
+		tileEdges[2].fY = tilePosY * GRID_SCALE + GRID_SCALE;
 		// Bottom right
-		tileEdges[3].x = tilePosX * GRID_SCALE + GRID_SCALE;
-		tileEdges[3].y = tilePosY * GRID_SCALE + GRID_SCALE;
+		tileEdges[3].fX = tilePosX * GRID_SCALE + GRID_SCALE;
+		tileEdges[3].fY = tilePosY * GRID_SCALE + GRID_SCALE;
 
 		for(int i = 0; i < 4; i++)
 		{
-			if(PointDistance(endPt, tileEdges[i]) < closestDistance)
+			POINT pt;
+			pt.x = tileEdges[i].fX;
+			pt.y = tileEdges[i].fY;
+			if(PointDistance(endPt, pt) < closestDistance)
 			{
-				closestDistance = PointDistance(endPt, tileEdges[i]);
+				closestDistance = PointDistance(endPt, pt);
 				closestNode = i;
 			}
 		}
 
-		for(unsigned int i = 0; i < m_lstNodeList.size(); i++)
-			if(m_lstNodeList[i].fX == tileEdges[closestNode].x && m_lstNodeList[i].fY == tileEdges[closestNode].y)
-			{
-				goal.pNode = &m_lstNodeList[i];
-				break;
-			}
+		// binary search and find the index of the start
+		int begin = 0, end = m_lstNodeList.size(), mid = -1;
+
+		while (begin <= end) {
+		   mid = (begin + end) / 2;
+		   if (tileEdges[closestNode] > m_lstNodeList[mid]) 
+			   begin = mid + 1;
+		   else if (tileEdges[closestNode] < m_lstNodeList[mid]) 
+			   end = mid - 1;
+		   else
+			   break;
+		}
+
+	   goal = mid;
 	}
+	// END Figure out our starting and ending cells
 
-	if(!start.pNode)
-		return vector<tNode*>();
 
-	if(goal.pNode == start.pNode)
-		return vector<tNode*>();
+	// Add the starting node to the open list
+	fCost[1] = 0.0f;
+	gCost[1] = 0.0f;
+	hCost[1] = ManhattanDistance(&m_lstNodeList[start], &m_lstNodeList[goal]);
+	xPos[1] = m_lstNodeList[start].fX;
+	yPos[1] = m_lstNodeList[start].fY;
+	cameFrom[1] = 0;
+	lstIndex[1] = start;
+	squaresChecked = 1;
+	numberOfOpenListItems = 1;
+	openBH[squaresChecked] = squaresChecked;
+	m_lstNodeList[start].checked = true;
 
-	start.pCameFrom = NULL;
-	start.nIndexParent = -1;
-	start.fG = 0.0f;
-	start.fH = ManhattanDistance(*start.pNode, *goal.pNode);
-
-	openSet[start.pNode] = start;
-	pQueue.push(start);
-
-	bool bFoundGoal = false;
-	while(openSet.size() > 0)
+	// Repeat while there are tiles to consider
+	while( numberOfOpenListItems > 0 )
 	{
-		tAStarNode x = pQueue.front();
-		vNodePool.push_back(x);
-		pQueue.pop();
-		openSet.erase(x.pNode);
-		if(x.pNode == goal.pNode)
+		// curNodeIndex will equal the cell#ID with the lowest F cost in the openBH
+		curNodeIndex = openBH[1];
+
+		// remove it from the openBH and add it to the closed list
 		{
-			//path exists
-			goal = x;
-			bFoundGoal = true;
+			//AddNodeToSortedList(&closedList, openBH[1] );
+			m_lstNodeList[lstIndex[openBH[1]]].checked = true;
+			openBH[1] = openBH[numberOfOpenListItems];	// move the last item in the list to the front
+			numberOfOpenListItems = numberOfOpenListItems - 1;
+			
+			int v = 1;
+			int u;
+
+			while(true)
+			{
+				u = v;
+				if(2*u+1 <= numberOfOpenListItems) // if both children exist
+				{
+					if(fCost[openBH[u]] >= fCost[openBH[2*u]]) { v = 2 * u; }
+					if(fCost[openBH[v]] >= fCost[openBH[2*u+1]]) { v = 2 * u + 1;}
+				}
+				else if (2*u <= numberOfOpenListItems)
+				{
+					if (fCost[openBH[u]] >= fCost[openBH[2*u]]) { v = 2 * u; }
+				}
+
+				if (u != v)
+				{
+					//int temp = openList[u];
+					//openList[u] = openList[v];
+					//openList[v] = temp;
+					swap(openBH[u], openBH[v]);
+				}
+				else
+					break;
+			}
+			 
+		}
+		// END remove it from the openBH and move it to the closed list
+
+		// if this square is the goal we have found the path
+		if(lstIndex[curNodeIndex] == goal)
+		{
+			//goal = curNode;
+			foundGoal = true;
 			break;
 		}
-		else
+
+		// POINT structure representing the current square's pt
+		POINT curNodePt;
+		curNodePt.x = (LONG)xPos[curNodeIndex];
+		curNodePt.y = (LONG)yPos[curNodeIndex];
+
+		
+
+		vector<tNode*>* adjNeighbors = &m_mpAdjacencies[&m_lstNodeList[lstIndex[curNodeIndex]]].pNeighbors;
+		// loop through each of this cell's adgancies
+		for(unsigned int adj = 0; adj < adjNeighbors->size(); adj++)
 		{
-			closeSet[x.pNode] = x;
-			tAdjacency adj;
-			adj = m_mpAdjacencies[x.pNode];
+			POINT adjPt;
+			adjPt.x = (LONG)(*adjNeighbors)[adj]->fX;
+			adjPt.y = (LONG)(*adjNeighbors)[adj]->fY;
 
-			for(size_t i=0; i<adj.pNeighbors.size(); i++)
+			if((*adjNeighbors)[adj]->checked == true)
+				continue;
+
+			// if it's not in the open list add it
+			if(!NodeInBH(numberOfOpenListItems, openBH, (*adjNeighbors)[adj]))
 			{
-				POINT curNode;
-				curNode.x = (LONG)adj.pNeighbors[i]->fX;
-				curNode.y = (LONG)adj.pNeighbors[i]->fY;
+				squaresChecked++;
+				numberOfOpenListItems++;
+				openBH[numberOfOpenListItems] = squaresChecked;
 
-				//if(x.pNode->fX == adj.pNeighbors[i]->fX && x.pNode->fY == adj.pNeighbors[i]->fY)
-				//	continue;
-
-				if(closeSet.find(adj.pNeighbors[i]) == closeSet.end())
+				cameFrom[squaresChecked] = curNodeIndex;
+				gCost[squaresChecked] = gCost[curNodeIndex] + PointDistance(adjPt, curNodePt);
+				hCost[squaresChecked] = ManhattanDistance((*adjNeighbors)[adj], &m_lstNodeList[goal]);
+				fCost[squaresChecked] = gCost[squaresChecked] + hCost[squaresChecked];
+				xPos[squaresChecked] = (*adjNeighbors)[adj]->fX;
+				yPos[squaresChecked] = (*adjNeighbors)[adj]->fY;
+				lstIndex[squaresChecked] = GetNodeIndexInVec(&m_lstNodeList, (*adjNeighbors)[adj]);
+				
+				//put it in the right place
 				{
-					POINT cur, prev;
-					cur.x = (LONG)adj.pNeighbors[i]->fX;
-					cur.y = (LONG)adj.pNeighbors[i]->fY;
-					prev.x = (LONG)x.pNode->fX;
-					prev.y = (LONG)x.pNode->fY;
-
-					float g = x.fG + PointDistance(cur, prev);
-
-					bool tentativeIsBetter;
-					if(openSet.find(adj.pNeighbors[i]) == openSet.end())
+					int m = numberOfOpenListItems;
+					while(m != 1)
 					{
-						// If not in openset
-						tAStarNode n;
-						n.pNode = adj.pNeighbors[i];
-						n.pCameFrom = &x;
-						n.nIndexParent = vNodePool.size()-1;
-						n.fG = g;
-						n.fH = ManhattanDistance(*adj.pNeighbors[i], *goal.pNode);
-						n.fF = g + ManhattanDistance(*adj.pNeighbors[i], *goal.pNode);
-						openSet[n.pNode] = n;
-						pQueue.push(n);
-						tentativeIsBetter = true;
-					}
-					else if(g < openSet[adj.pNeighbors[i]].fG)
-					{
-						tentativeIsBetter = true;
-					} else {
-						tentativeIsBetter = false;
-					}
+						if(fCost[openBH[m]] <= fCost[openBH[m/2]])
+						{
+							swap(openBH[m], openBH[m/2]);
+							m = m / 2;
+						} else
+							break;
 
-					if(tentativeIsBetter)
-					{
-						openSet[adj.pNeighbors[i]].pCameFrom = &x;
-						openSet[adj.pNeighbors[i]].fG = g;
-						openSet[adj.pNeighbors[i]].fH = ManhattanDistance(*adj.pNeighbors[i], *goal.pNode);
-						openSet[adj.pNeighbors[i]].fF = g + ManhattanDistance(*adj.pNeighbors[i], *goal.pNode);
 					}
-								
+				}
+			} else {
+				// we are in the open list, we are checking to see if this path is better
+				int adjNode = GetNodeIndexInVec(&m_lstNodeList, (*adjNeighbors)[adj] );
+				
+				int i = 0;
+				for(; i < numberOfOpenListItems; i++)
+				{
+					if(xPos[i] == xPos[adjNode] && yPos[i] == yPos[adjNode])
+						break;
+				}
+
+				if(gCost[i] > (gCost[curNodeIndex] + PointDistance(adjPt, curNodePt)))
+				{
+					// This node is a better path
+					gCost[i]= gCost[curNodeIndex] + PointDistance(adjPt, curNodePt);
+					fCost[i] = gCost[i] + hCost[i];
+					cameFrom[i] = curNodeIndex;
+
+					//put it in the right place
+					{
+						int m = i;
+						while(m != 1)
+						{
+							if(fCost[openBH[m]] <= fCost[openBH[m/2]])
+							{
+								swap(openBH[m], openBH[m/2]);
+								m = m/2;
+							} else
+								break;
+						}
+					}
 				}
 			}
 		}
 	}
 
-	if(bFoundGoal)
+	if(foundGoal)
 	{
-		stack<tNode*> stk;
-		stk.push(goal.pNode);
-		tAStarNode pParent = vNodePool[goal.nIndexParent];
-		while(pParent.nIndexParent < vNodePool.size())
-		{
-			stk.push(pParent.pNode);
-			pParent = vNodePool[pParent.nIndexParent];
-			if(pParent.pCameFrom == NULL)
-			{
-				stk.push(pParent.pNode);
-				break;
-			}
-		}
+		// we have found the goal!
+		vector<tNode*> vReturn;
+		int indexNode;
+		indexNode = curNodeIndex;
 
-		while(stk.size() > 0)
+		while(cameFrom[indexNode] != NULL)
 		{
-			vRet.push_back(stk.top());
-			stk.pop();
+
+			vReturn.insert( vReturn.begin(), &m_lstNodeList[lstIndex[indexNode]] );
+			indexNode = cameFrom[indexNode];
 		}
-		return vRet;
+		
+		return vReturn;
+	} else {
+		// goal not reachable! there is no path!
+		return vector<tNode*>();
 	}
-	return vector<tNode*>();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//POINT startPt;
+	//startPt.x = (LONG)fX1;
+	//startPt.y = (LONG)fY1;
+
+	//POINT endPt;
+	//endPt.x = (LONG)fX2;
+	//endPt.y = (LONG)fY2;
+	//if(InsideBlocker(endPt))
+	//	return vector<tNode*>();
+
+	//vector<tNode*> vRet;
+	//vector<tAStarNode> vNodePool;
+
+	//map<tNode*, tAStarNode> openSet;
+	//queue<tAStarNode> pQueue;
+	//map<tNode*, tAStarNode> closeSet;
+
+	//tAStarNode start;
+	//tAStarNode goal;
+	//start.pNode=NULL;
+	//goal.pNode=NULL;
+
+	////calculate nearest node to start and goal
+	//{
+	//	//tVector2D pos = {fX1, fY1};
+	//	//tVector2D dst;
+	//	//float minDist = 10000.0f;
+	//	//float fTemp;
+	//	//for(int i = 0; i < m_lstNodeList.size(); i++)
+	//	//{
+	//	//	dst.fX = m_lstNodeList[i].fX;
+	//	//	dst.fY = m_lstNodeList[i].fY;
+	//	//	fTemp = Vector2DLength(dst - pos);
+
+	//	//	bool bRet=false;
+	//	//	for(size_t j=0; j<m_vLines.size(); j++)
+	//	//	{
+	//	//		if(IntersectLine(pos, dst, m_vLines[j].start, m_vLines[j].end))
+	//	//		{
+	//	//			bRet = true;
+	//	//			break;
+	//	//		}
+	//	//	}
+
+	//	//	if(!bRet && fTemp < minDist)
+	//	//	{
+	//	//		minDist = fTemp;
+	//	//		start.pNode = &m_lstNodeList[i];
+	//	//	}
+	//	//}
+	//	
+	//	int closestDistance = 10000;
+	//	int closestNode;
+	//	int tilePosX = int(fX1 / GRID_SCALE);
+	//	int tilePosY = int(fY1 / GRID_SCALE);
+
+
+
+	//	POINT tileEdges[4];
+	//	// Top left
+	//	tileEdges[0].x = tilePosX * GRID_SCALE;
+	//	tileEdges[0].y = tilePosY * GRID_SCALE;
+	//	// Top right
+	//	tileEdges[1].x = tilePosX * GRID_SCALE + GRID_SCALE;
+	//	tileEdges[1].y = tilePosY * GRID_SCALE;
+	//	// Bottom left
+	//	tileEdges[2].x = tilePosX * GRID_SCALE;
+	//	tileEdges[2].y = tilePosY * GRID_SCALE + GRID_SCALE;
+	//	// Bottom right
+	//	tileEdges[3].x = tilePosX * GRID_SCALE + GRID_SCALE;
+	//	tileEdges[3].y = tilePosY * GRID_SCALE + GRID_SCALE;
+
+	//	for(int i = 0; i < 4; i++)
+	//	{
+	//		if(PointDistance(startPt, tileEdges[i]) < closestDistance)
+	//		{
+	//			closestDistance = PointDistance(startPt, tileEdges[i]);
+	//			closestNode = i;
+	//		}
+	//	}
+	//	
+	//	for(unsigned int i = 0; i < m_lstNodeList.size(); i++)
+	//		if(m_lstNodeList[i].fX == tileEdges[closestNode].x && m_lstNodeList[i].fY == tileEdges[closestNode].y)
+	//		{
+	//			start.pNode = &m_lstNodeList[i];
+	//			break;
+	//		}
+	//	
+	//}
+	//{
+	//	//tVector2D pos = {fX2, fY2};
+	//	//tVector2D dst;
+	//	//float minDist = 1000.0f;
+	//	//float fTemp;
+	//	//for(size_t i=0; i<m_lstNodeList.size(); i++)
+	//	//{
+	//	//	dst.fX = m_lstNodeList[i].fX;
+	//	//	dst.fY = m_lstNodeList[i].fY;
+	//	//	fTemp = Vector2DLength(dst - pos);
+	//	//	if(fTemp < minDist)
+	//	//	{
+	//	//		minDist = fTemp;
+	//	//		goal.pNode = &m_lstNodeList[i];
+	//	//	}
+	//	//}
+
+	//	int closestDistance = 10000;
+	//	int closestNode;
+	//	int tilePosX = int(fX2 / GRID_SCALE);
+	//	int tilePosY = int(fY2 / GRID_SCALE);
+
+
+
+	//	POINT tileEdges[4];
+	//	// Top left
+	//	tileEdges[0].x = tilePosX * GRID_SCALE;
+	//	tileEdges[0].y = tilePosY * GRID_SCALE;
+	//	// Top right
+	//	tileEdges[1].x = tilePosX * GRID_SCALE + GRID_SCALE;
+	//	tileEdges[1].y = tilePosY * GRID_SCALE;
+	//	// Bottom left
+	//	tileEdges[2].x = tilePosX * GRID_SCALE;
+	//	tileEdges[2].y = tilePosY * GRID_SCALE + GRID_SCALE;
+	//	// Bottom right
+	//	tileEdges[3].x = tilePosX * GRID_SCALE + GRID_SCALE;
+	//	tileEdges[3].y = tilePosY * GRID_SCALE + GRID_SCALE;
+
+	//	for(int i = 0; i < 4; i++)
+	//	{
+	//		if(PointDistance(endPt, tileEdges[i]) < closestDistance)
+	//		{
+	//			closestDistance = PointDistance(endPt, tileEdges[i]);
+	//			closestNode = i;
+	//		}
+	//	}
+
+	//	for(unsigned int i = 0; i < m_lstNodeList.size(); i++)
+	//		if(m_lstNodeList[i].fX == tileEdges[closestNode].x && m_lstNodeList[i].fY == tileEdges[closestNode].y)
+	//		{
+	//			goal.pNode = &m_lstNodeList[i];
+	//			break;
+	//		}
+	//}
+
+	//if(!start.pNode)
+	//	return vector<tNode*>();
+
+	//if(goal.pNode == start.pNode)
+	//	return vector<tNode*>();
+
+	//start.pCameFrom = NULL;
+	//start.nIndexParent = -1;
+	//start.fG = 0.0f;
+	//start.fH = ManhattanDistance(*start.pNode, *goal.pNode);
+
+	//openSet[start.pNode] = start;
+	//pQueue.push(start);
+
+	//bool bFoundGoal = false;
+	//while(openSet.size() > 0)
+	//{
+	//	tAStarNode x = pQueue.front();
+	//	vNodePool.push_back(x);
+	//	pQueue.pop();
+	//	openSet.erase(x.pNode);
+	//	if(x.pNode == goal.pNode)
+	//	{
+	//		//path exists
+	//		goal = x;
+	//		bFoundGoal = true;
+	//		break;
+	//	}
+	//	else
+	//	{
+	//		closeSet[x.pNode] = x;
+	//		tAdjacency adj;
+	//		adj = m_mpAdjacencies[x.pNode];
+
+	//		for(size_t i=0; i<adj.pNeighbors.size(); i++)
+	//		{
+	//			POINT curNode;
+	//			curNode.x = (LONG)adj.pNeighbors[i]->fX;
+	//			curNode.y = (LONG)adj.pNeighbors[i]->fY;
+
+	//			//if(x.pNode->fX == adj.pNeighbors[i]->fX && x.pNode->fY == adj.pNeighbors[i]->fY)
+	//			//	continue;
+
+	//			if(closeSet.find(adj.pNeighbors[i]) == closeSet.end())
+	//			{
+	//				POINT cur, prev;
+	//				cur.x = (LONG)adj.pNeighbors[i]->fX;
+	//				cur.y = (LONG)adj.pNeighbors[i]->fY;
+	//				prev.x = (LONG)x.pNode->fX;
+	//				prev.y = (LONG)x.pNode->fY;
+
+	//				float g = x.fG + PointDistance(cur, prev);
+
+	//				bool tentativeIsBetter;
+	//				if(openSet.find(adj.pNeighbors[i]) == openSet.end())
+	//				{
+	//					// If not in openset
+	//					tAStarNode n;
+	//					n.pNode = adj.pNeighbors[i];
+	//					n.pCameFrom = &x;
+	//					n.nIndexParent = vNodePool.size()-1;
+	//					n.fG = g;
+	//					n.fH = ManhattanDistance(*adj.pNeighbors[i], *goal.pNode);
+	//					n.fF = g + ManhattanDistance(*adj.pNeighbors[i], *goal.pNode);
+	//					openSet[n.pNode] = n;
+	//					pQueue.push(n);
+	//					tentativeIsBetter = true;
+	//				}
+	//				else if(g < openSet[adj.pNeighbors[i]].fG)
+	//				{
+	//					tentativeIsBetter = true;
+	//				} else {
+	//					tentativeIsBetter = false;
+	//				}
+
+	//				if(tentativeIsBetter)
+	//				{
+	//					openSet[adj.pNeighbors[i]].pCameFrom = &x;
+	//					openSet[adj.pNeighbors[i]].fG = g;
+	//					openSet[adj.pNeighbors[i]].fH = ManhattanDistance(*adj.pNeighbors[i], *goal.pNode);
+	//					openSet[adj.pNeighbors[i]].fF = g + ManhattanDistance(*adj.pNeighbors[i], *goal.pNode);
+	//				}
+	//							
+	//			}
+	//		}
+	//	}
+	//}
+
+	//if(bFoundGoal)
+	//{
+	//	stack<tNode*> stk;
+	//	stk.push(goal.pNode);
+	//	tAStarNode pParent = vNodePool[goal.nIndexParent];
+	//	while(pParent.nIndexParent < vNodePool.size())
+	//	{
+	//		stk.push(pParent.pNode);
+	//		pParent = vNodePool[pParent.nIndexParent];
+	//		if(pParent.pCameFrom == NULL)
+	//		{
+	//			stk.push(pParent.pNode);
+	//			break;
+	//		}
+	//	}
+
+	//	while(stk.size() > 0)
+	//	{
+	//		vRet.push_back(stk.top());
+	//		stk.pop();
+	//	}
+	//	return vRet;
+	//}
+	//return vector<tNode*>();
+//}

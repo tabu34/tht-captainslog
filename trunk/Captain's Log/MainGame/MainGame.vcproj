@@ -743,6 +743,74 @@
 				RelativePath=".\My Amplifier Results\r007hs\r007hs.ampl"
 				>
 			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r008hs\r008hs.ampl"
+				>
+			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r009hs\r009hs.ampl"
+				>
+			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r010hs\r010hs.ampl"
+				>
+			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r011hs\r011hs.ampl"
+				>
+			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r012hs\r012hs.ampl"
+				>
+			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r013hs\r013hs.ampl"
+				>
+			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r014hs\r014hs.ampl"
+				>
+			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r015hs\r015hs.ampl"
+				>
+			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r016hs\r016hs.ampl"
+				>
+			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r017hs\r017hs.ampl"
+				>
+			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r018hs\r018hs.ampl"
+				>
+			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r019hs\r019hs.ampl"
+				>
+			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r020hs\r020hs.ampl"
+				>
+			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r021hs\r021hs.ampl"
+				>
+			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r022hs\r022hs.ampl"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="My Inspector Results"
+			>
+			<File
+				RelativePath=".\My Inspector Results\r001mi1\r001mi1.insp"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath="..\..\..\..\..\..\..\..\..\Program Files (x86)\FMOD SoundSystem\FMOD Programmers API Win32\api\fmodex.dll"

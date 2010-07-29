@@ -202,14 +202,52 @@ void CLoadLevelState::Load()
 		Colossus->PosY(400);
 		CObjectManager::GetInstance()->AddObject(Colossus);
 
-
 		CGame::GetInstance()->ChangeState( CGamePlayState::GetInstance() );
+		
 	}
-
+	
 	if(m_nLevelNum == 3)
 	{
+
+		CWorldManager::GetInstance()->Load("Resource//Graphics//lvl3.mfl");
+
+		CMarine * alliedMarine = CMovementControl::GetInstance()->Marine();
+		CHeavy* alliedHeavy = CMovementControl::GetInstance()->Heavy();
+		CMedic* alliedMedic = CMovementControl::GetInstance()->Medic();
+		CScout* alliedScout = CMovementControl::GetInstance()->Scout();
+
+		alliedMarine->CurHealth(alliedMarine->MaxHealth());
+		alliedHeavy->CurHealth(alliedHeavy->MaxHealth());
+		alliedScout->CurHealth(alliedScout->MaxHealth());
+		alliedMedic->CurHealth(alliedMedic->MaxHealth());
+
+		alliedMarine->PosX(250);
+		alliedMarine->PosY(150);
+		alliedHeavy->PosX(250);
+		alliedHeavy->PosY(250);
+		alliedScout->PosX(350);
+		alliedScout->PosY(150);
+		alliedMedic->PosX(350);
+		alliedMedic->PosY(250);
+
+		CBasicEnemy* Cyclops = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
+		Cyclops->Type(CBase::OBJ_ENEMY);
+		Cyclops->PosX(700);
+		Cyclops->PosY(200);
+		CObjectManager::GetInstance()->AddObject(Cyclops);
+
+		CBasicEnemy* Colossus = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Colossus");
+		Colossus->Type(CBase::OBJ_ENEMY);
+		Colossus->PosX(650);
+		Colossus->PosY(400);
+		CObjectManager::GetInstance()->AddObject(Colossus);
 		//CGame::GetInstance()->
-		// Game win screen
+		
+		CGame::GetInstance()->ChangeState( CGamePlayState::GetInstance() );
+	}
+	
+	if(m_nLevelNum == 4)
+	{
 		CGame::GetInstance()->ChangeState( CGameWinState::GetInstance() );
 	}
 	
