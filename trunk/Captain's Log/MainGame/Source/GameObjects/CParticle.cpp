@@ -73,8 +73,8 @@ void CParticle::Update( float fElapsedTime, int GravityPointX, int GravityPointY
     m_fSpeedX = m_fSpeedX + (m_nForceX + gravityX + m_nSpreadx*nSpread) * fElapsedTime;
     m_fSpeedY = m_fSpeedY + (m_nForceY + gravityY + m_nSpready*nSpread) * fElapsedTime;
 
-    m_fPosX = m_fPosX + m_fSpeedX * fElapsedTime;
-    m_fPosY = m_fPosY + m_fSpeedY * fElapsedTime;
+    m_fPosX = m_fPosX + m_fSpeedX * fElapsedTime * 100;
+    m_fPosY = m_fPosY + m_fSpeedY * fElapsedTime * 100;
 
     if (m_bInitialForceOn)
     {

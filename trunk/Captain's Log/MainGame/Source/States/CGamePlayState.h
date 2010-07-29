@@ -133,6 +133,9 @@ class CGamePlayState : public IGameState
 public:
 	int ItemOverworld() const { return m_nItemOverworld; }
 	void ItemOverworld(int val) { m_nItemOverworld = val; }
+	POINT* ItemPositions() const { return (POINT*)m_ptItemPositions; }
+	CParticleEngine* Engine() { return &m_peEngine; }
+
 	static CGamePlayState* GetInstance();
 
 	static void MessageProc(CBaseMessage* pMSG);

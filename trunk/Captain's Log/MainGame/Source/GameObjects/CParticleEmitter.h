@@ -12,8 +12,8 @@ class CParticleEmitter : public CBase
 	int m_nImageID;
     int m_nNumParticles;
     float m_fPosX;
-    float m_fPosY;
-    CParticle* m_cParticleArray;
+	float m_fPosY;
+	CParticle* m_cParticleArray;
 
     int MaxParticleLife;
     int MinParticleLife;
@@ -50,6 +50,11 @@ class CParticleEmitter : public CBase
 	
 
 public:
+	float PosX() const { return m_fPosX; }
+	void PosX(float val) { m_fPosX = val; }
+	float PosY() const { return m_fPosY; }
+	void PosY(float val) { m_fPosY = val; }
+
 	void	Initialize(int nImageID, int nWidth, int nHeight, int fPosX, int fPosY, int nNumParticles = 500, int nMinPartLife = 200, int nMaxPartLife = 500,
 		int AlphaValue = 0, int initialForceX = 0, int initialForceY = 0, int BlendModeSource = 0, int BlendModeDest = 0,
 		int minPartWidth = 100, int minPartHeight = 100, int maxPartWidth = 100, int maxPartHeight = 100, int nGravity = 0,

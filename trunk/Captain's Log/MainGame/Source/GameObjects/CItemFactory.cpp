@@ -171,6 +171,7 @@ void CItemFactory::RegisterItems()
 		BookOfHaste->ItemName(CItem::ITEM_BOOKOFHASTE);
 		BookOfHaste->AmountType(CItem::VALUETYPE_PERCENTAGE);
 		BookOfHaste->AmountCategory(CItem::VALUECATEGORY_ATTACKSPEED);
+		BookOfHaste->ItemType(CItem::ITEMTYPE_APPLIED);
 		BookOfHaste->Amount(3);
 		BookOfHaste->Type(CBase::OBJ_ITEM);
 
@@ -188,6 +189,7 @@ void CItemFactory::RegisterItems()
 		BookOfSwiftness->ItemName(CItem::ITEM_BOOKOFSWIFTNESS);
 		BookOfSwiftness->AmountType(CItem::VALUETYPE_PERCENTAGE);
 		BookOfSwiftness->AmountCategory(CItem::VALUECATEGORY_MOVEMENTSPEED);
+		BookOfSwiftness->ItemType(CItem::ITEMTYPE_APPLIED);
 		BookOfSwiftness->Amount(3);
 		BookOfSwiftness->Type(CBase::OBJ_ITEM);
 
@@ -205,6 +207,7 @@ void CItemFactory::RegisterItems()
 		BookOfProtection->ItemName(CItem::ITEM_BOOKOFPROTECTION);
 		BookOfProtection->AmountType(CItem::VALUETYPE_PERCENTAGE);
 		BookOfProtection->AmountCategory(CItem::VALUECATEGORY_ARMOR);
+		BookOfProtection->ItemType(CItem::ITEMTYPE_APPLIED);
 		BookOfProtection->Amount(3);
 		BookOfProtection->Type(CBase::OBJ_ITEM);
 
@@ -222,6 +225,7 @@ void CItemFactory::RegisterItems()
 		BookOfStrength->ItemName(CItem::ITEM_BOOKOFSTRENGTH);
 		BookOfStrength->AmountType(CItem::VALUETYPE_PERCENTAGE);
 		BookOfStrength->AmountCategory(CItem::VALUECATEGORY_ATTACKDAMAGE);
+		BookOfStrength->ItemType(CItem::ITEMTYPE_APPLIED);
 		BookOfStrength->Amount(3);
 		BookOfStrength->Type(CBase::OBJ_ITEM);
 
@@ -239,6 +243,7 @@ void CItemFactory::RegisterItems()
 		BookOfVitality->ItemName(CItem::ITEM_BOOKOFVITALITY);
 		BookOfVitality->AmountType(CItem::VALUETYPE_INTEGER);
 		BookOfVitality->AmountCategory(CItem::VALUECATEGORY_HP);
+		BookOfVitality->ItemType(CItem::ITEMTYPE_APPLIED);
 		BookOfVitality->Amount(3);
 		BookOfVitality->Type(CBase::OBJ_ITEM);
 
@@ -258,6 +263,7 @@ void CItemFactory::RegisterItems()
 		GlovesOfHaste->ItemName(CItem::ITEM_GLOVESOFHASTE);
 		GlovesOfHaste->AmountType(CItem::VALUETYPE_PERCENTAGE);
 		GlovesOfHaste->AmountCategory(CItem::VALUECATEGORY_ATTACKSPEED);
+		GlovesOfHaste->ItemType(CItem::ITEMTYPE_PASSIVE);
 		GlovesOfHaste->Amount(10);
 		GlovesOfHaste->Type(CBase::OBJ_ITEM);
 
@@ -275,6 +281,7 @@ void CItemFactory::RegisterItems()
 		BootsOfSwiftness->ItemName(CItem::ITEM_BOOTSOFSWIFTNESS);
 		BootsOfSwiftness->AmountType(CItem::VALUETYPE_PERCENTAGE);
 		BootsOfSwiftness->AmountCategory(CItem::VALUECATEGORY_MOVEMENTSPEED);
+		BootsOfSwiftness->ItemType(CItem::ITEMTYPE_PASSIVE);
 		BootsOfSwiftness->Amount(10);
 		BootsOfSwiftness->Type(CBase::OBJ_ITEM);
 
@@ -292,6 +299,7 @@ void CItemFactory::RegisterItems()
 		ShieldOfAngels->ItemName(CItem::ITEM_SHIELDOFANGELS);
 		ShieldOfAngels->AmountType(CItem::VALUETYPE_PERCENTAGE);
 		ShieldOfAngels->AmountCategory(CItem::VALUECATEGORY_ARMOR);
+		ShieldOfAngels->ItemType(CItem::ITEMTYPE_PASSIVE);
 		ShieldOfAngels->Amount(10);
 		ShieldOfAngels->Type(CBase::OBJ_ITEM);
 
@@ -309,6 +317,7 @@ void CItemFactory::RegisterItems()
 		SwordOfTitans->ItemName(CItem::ITEM_SWORDOFTITANS);
 		SwordOfTitans->AmountType(CItem::VALUETYPE_PERCENTAGE);
 		SwordOfTitans->AmountCategory(CItem::VALUECATEGORY_ATTACKDAMAGE);
+		SwordOfTitans->ItemType(CItem::ITEMTYPE_PASSIVE);
 		SwordOfTitans->Amount(10);
 		SwordOfTitans->Type(CBase::OBJ_ITEM);
 
@@ -326,6 +335,7 @@ void CItemFactory::RegisterItems()
 		ResurrectionStone->ItemName(CItem::ITEM_RESURRECTIONSTONE);
 		ResurrectionStone->AmountType(CItem::VALUETYPE_PERCENTAGE);
 		ResurrectionStone->AmountCategory(CItem::VALUECATEGORY_HP);
+		ResurrectionStone->ItemType(CItem::ITEMTYPE_PASSIVE);
 		ResurrectionStone->Amount(30);
 		ResurrectionStone->Type(CBase::OBJ_ITEM);
 
@@ -343,6 +353,7 @@ void CItemFactory::RegisterItems()
 		GemOfLife->ItemName(CItem::ITEM_GEMOFLIFE);
 		GemOfLife->AmountType(CItem::VALUETYPE_INTEGER);
 		GemOfLife->AmountCategory(CItem::VALUECATEGORY_HP);
+		GemOfLife->ItemType(CItem::ITEMTYPE_PASSIVE);
 		GemOfLife->Amount(1);
 		GemOfLife->Type(CBase::OBJ_ITEM);
 

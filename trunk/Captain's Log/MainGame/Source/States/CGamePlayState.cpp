@@ -236,9 +236,14 @@ void CGamePlayState::Enter(void)
 	m_pPlayerArray[3] = CMovementControl::GetInstance()->Medic();
 
 	//////////////////////////////////////////////////////////////////////////
-	
+
 	CItem* testItem = CItemFactory::GetInstance()->CreateItem("Book of Haste");
 	testItem->PosX(500);
+	testItem->PosY(500);
+	CObjectManager::GetInstance()->AddObject(testItem);
+
+	testItem = CItemFactory::GetInstance()->CreateItem("Gloves of Haste");
+	testItem->PosX(550);
 	testItem->PosY(500);
 	CObjectManager::GetInstance()->AddObject(testItem);
 
@@ -277,8 +282,8 @@ void CGamePlayState::Enter(void)
 	m_nBGMusic = CGame::GetInstance()->GameBGMusic();
 	CSGD_FModManager::GetInstance()->PlaySound(m_nBGMusic);
 
-	//m_nParticleImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("blood.png").c_str());
-	//m_peEngine.CreateEmitterFromFile(m_nParticleImageID, CGame::GetInstance()->GraphicsPath("blood.par").c_str(), 500, 500);
+	m_nParticleImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("blood.png").c_str());
+	m_peEngine.CreateEmitterFromFile(m_nParticleImageID, CGame::GetInstance()->GraphicsPath("blood.par").c_str(), 500, 500);
 }
 
 void CGamePlayState::Exit(void)
@@ -853,7 +858,26 @@ void CGamePlayState::RenderHUD(void)
 		case CUnit::PLAYER_MARINE:
 			for (unsigned int i = 0; i < CMovementControl::GetInstance()->Marine()->Inventory()->size(); i++)
 			{
+				int hello = CMovementControl::GetInstance()->Marine()->Inventory()->operator [](i)->ItemName();
 				CSGD_TextureManager::GetInstance()->Draw(m_vItemInstances[CMovementControl::GetInstance()->Marine()->Inventory()->operator [](i)->ItemName()-1].TextureID(), m_ptItemPositions[i].x, m_ptItemPositions[i].y, 1.0f, 1.0f);
+			}
+			break;
+		case CUnit::PLAYER_MEDIC:
+			for (unsigned int i = 0; i < CMovementControl::GetInstance()->Medic()->Inventory()->size(); i++)
+			{
+				CSGD_TextureManager::GetInstance()->Draw(m_vItemInstances[CMovementControl::GetInstance()->Medic()->Inventory()->operator [](i)->ItemName()-1].TextureID(), m_ptItemPositions[i].x, m_ptItemPositions[i].y, 1.0f, 1.0f);
+			}
+			break;
+		case CUnit::PLAYER_HEAVY:
+			for (unsigned int i = 0; i < CMovementControl::GetInstance()->Heavy()->Inventory()->size(); i++)
+			{
+				CSGD_TextureManager::GetInstance()->Draw(m_vItemInstances[CMovementControl::GetInstance()->Heavy()->Inventory()->operator [](i)->ItemName()-1].TextureID(), m_ptItemPositions[i].x, m_ptItemPositions[i].y, 1.0f, 1.0f);
+			}
+			break;
+		case CUnit::PLAYER_SCOUT:
+			for (unsigned int i = 0; i < CMovementControl::GetInstance()->Scout()->Inventory()->size(); i++)
+			{
+				CSGD_TextureManager::GetInstance()->Draw(m_vItemInstances[CMovementControl::GetInstance()->Scout()->Inventory()->operator [](i)->ItemName()-1].TextureID(), m_ptItemPositions[i].x, m_ptItemPositions[i].y, 1.0f, 1.0f);
 			}
 			break;
 		}
@@ -1142,6 +1166,13 @@ void CGamePlayState::InitHud()
 {
 	// Setup Items
 	m_vItems.push_back(CHUDButton(586, 761, 43, 43, "BookofHaste", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/items/bookOfHaste.png").c_str())));
+	m_vItems.push_back(CHUDButton(586, 761, 43, 43, "BookofProtection", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/items/bookOfProtection.png").c_str())));
+	m_vItems.push_back(CHUDButton(586, 761, 43, 43, "BookofStrength", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/items/bookOfStrength.png").c_str())));
+	m_vItems.push_back(CHUDButton(586, 761, 43, 43, "BookofSwiftness", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/items/bookOfSwiftness.png").c_str())));
+	m_vItems.push_back(CHUDButton(586, 761, 43, 43, "BookofVitality", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/items/bookOfVitality.png").c_str())));
+	m_vItems.push_back(CHUDButton(586, 761, 43, 43, "BootsofSwiftness", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/items/bootsOfSwiftness.png").c_str())));
+	m_vItems.push_back(CHUDButton(586, 761, 43, 43, "GlovesofHaste", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/items/glovesOfHaste.png").c_str())));
+	m_vItems.push_back(CHUDButton(586, 761, 43, 43, "ShieldofAngels", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/items/shieldOfAngels.png").c_str())));
 
 	m_vItemInstances = m_vItems;
 
