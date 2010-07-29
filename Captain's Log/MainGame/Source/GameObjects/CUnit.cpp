@@ -111,6 +111,8 @@ void CUnit::Update(float fElapsedTime)
 
 	if (m_nCurHealth <= 0)
 	{
+		if (Type() == OBJ_PLAYER)
+			CGamePlayState::GetInstance()->ClearCommand();
 		CMessageSystem::GetInstance()->SendMessage(new CUnitDeathMessage(this));
 		return;
 	}

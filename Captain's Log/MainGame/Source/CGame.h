@@ -23,6 +23,7 @@ class CGame
 	float					m_fGameTime;
 	int						m_nWindowHeight;
 	int						m_nWindowWidth;
+	int						m_nGameBGMusic;
 	vector<IGameState*>		m_vStateStack;
 	CSGD_Direct3D*			m_pD3D;
 	CSGD_DirectInput*		m_pDI;
@@ -61,6 +62,7 @@ class CGame
 
 public:
 
+	int GameBGMusic() const { return m_nGameBGMusic; }
 
 	int SFXVolume() { return m_nSFXVolume; }
 	int MusicVolume() { return m_nMusicVolume; }

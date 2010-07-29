@@ -491,6 +491,8 @@ void COptionsMenuState::Update(float fElapsedTime)
 {
 	CSGD_FModManager::GetInstance()->SetVolume(m_nSoundChangedID, (float)CGame::GetInstance()->SFXVolume() / 100.0f);
 	CSGD_FModManager::GetInstance()->SetVolume(CMainMenuState::GetInstance()->MenuMusic(), (float)CGame::GetInstance()->MusicVolume() / 100.0f);
+	CSGD_FModManager::GetInstance()->SetVolume(CGame::GetInstance()->GameBGMusic(), (float)CGame::GetInstance()->MusicVolume() / 100.0f);
+
 
 	if(m_bError)
 	{

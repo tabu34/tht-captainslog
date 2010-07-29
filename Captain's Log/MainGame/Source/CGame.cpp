@@ -211,6 +211,8 @@ void CGame::Initialize( HWND hWnd, HINSTANCE hInstance, int nScreenWidth, int nS
 
 	SettingsChanged();
 
+	m_nGameBGMusic = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("Breakout.mp3").c_str(), FMOD_LOOP_NORMAL);
+
 	ChangeState(CMainMenuState::GetInstance());
 	PushState(CSplashState::GetInstance());
 
