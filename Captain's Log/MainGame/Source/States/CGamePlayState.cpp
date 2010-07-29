@@ -1190,20 +1190,6 @@ void CGamePlayState::InitHud()
 	m_vButtons.push_back(CHUDButton(0, 0, 512, 32, "ObjectivesLargeBG-Check", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/19.png").c_str()), false));
 	m_vButtons.push_back(CHUDButton(0, 0, 512, 128, "ToolTipLargeBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/21.png").c_str()), false));
 	m_vButtonInstances = m_vButtons;
-	/*m_vButtons.push_back(CHUDButton(1113, 688, 64, 64, "ArmorLockdown", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/abilities/armorLockdown.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1113, 688, 64, 64, "Cloak", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/abilities/cloak.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1113, 688, 64, 64, "CommandingPresence", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/abilities/commandingPresence.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1113, 688, 64, 64, "DefenseMatrix", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/abilities/defenseMatrix.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1113, 688, 64, 64, "FlameThrower", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/abilities/flamethrower.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1113, 688, 64, 64, "HealBeam", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/abilities/healBeam.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1113, 688, 64, 64, "Overdrive", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/abilities/overdrive.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1113, 688, 64, 64, "PinningShot", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/abilities/pinningShot.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1113, 688, 64, 64, "Refresh", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/abilities/refresh.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1113, 688, 64, 64, "RocketBarrage", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/abilities/rocketBarrage.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1113, 688, 64, 64, "StunGrenade", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/abilities/stunGrenade.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1113, 688, 64, 64, "TacticalDrone", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/abilities/tacticalDrone.png").c_str())));*/
-
-
 
 	m_ftTextSmall.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.5f, 0.5f, 2, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(255, 255, 255));
 	m_ftTextSmall.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
