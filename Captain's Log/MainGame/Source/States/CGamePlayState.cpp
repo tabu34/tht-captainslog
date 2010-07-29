@@ -274,8 +274,8 @@ void CGamePlayState::Enter(void)
 	m_nBGMusic = CGame::GetInstance()->GameBGMusic();
 	CSGD_FModManager::GetInstance()->PlaySound(m_nBGMusic);
 
-	m_nParticleImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("blood.png").c_str());
-	m_peEngine.CreateEmitterFromFile(m_nParticleImageID, CGame::GetInstance()->GraphicsPath("blood.par").c_str(), 500, 500);
+	//m_nParticleImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("blood.png").c_str());
+	//m_peEngine.CreateEmitterFromFile(m_nParticleImageID, CGame::GetInstance()->GraphicsPath("blood.par").c_str(), 500, 500);
 }
 
 void CGamePlayState::Exit(void)

@@ -2,6 +2,7 @@
 #include "CUnitFactory.h"
 #include "..\GameObjects\CBasicEnemies.h"
 #include "..\GameObjects\CBossEnemies.h"
+#include "..\GameObjects\CAbilities.h"
 
 CUnitFactory::CUnitFactory()
 {
@@ -97,6 +98,7 @@ CUnit* CUnitFactory::CreateUnit(string id)
 				returnUnit = m_vBossEnemies[i]->pUnit;
 				*returnUnit = *(iter->second);
 				returnUnit->AddRef();
+				((CTargetAbility*)(returnUnit->Abilities()->operator [](0)))->Target(returnUnit);
 				found = true;
 				break;
 			}
@@ -109,6 +111,7 @@ CUnit* CUnitFactory::CreateUnit(string id)
 			*(newFactoryUnit->pUnit) = *(iter->second);
 			returnUnit = newFactoryUnit->pUnit;
 			returnUnit->AddRef();
+			((CTargetAbility*)(returnUnit->Abilities()->operator [](0)))->Target(returnUnit);
 			m_vBossEnemies.push_back(newFactoryUnit);
 		}
 		break;
@@ -403,6 +406,10 @@ void CUnitFactory::RegisterItems()
 		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Attack-SW"));
 		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Attack-W"));
 		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Attack-NW"));
+
+		Medusa->Abilities()->push_back(new CAbility_Overdrive(Medusa));
+		Medusa->Abilities()->operator [](0)->Cooldown(20);
+		Medusa->Abilities()->operator [](0)->Duration(5);
 
 		objDef.first = "Medusa";
 		objDef.second = Medusa;
