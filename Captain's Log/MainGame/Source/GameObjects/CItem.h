@@ -15,7 +15,6 @@ class CItem : public CBase
 	CUnit*	m_pTarget;
 
 protected:
-	void ItemType (int val) { m_nItemType = val; }
 
 public:
 
@@ -30,6 +29,7 @@ public:
 	void AmountType(int val) { m_nAmountType = val; }
 	void AmountCategory(int val) { m_nAmountCategory = val; }
 	void Amount(float val) { m_fAmount = val; }
+	void ItemType (int val) { m_nItemType = val; }
 
 	enum {ITEM_NULL, 
 	ITEM_BOOKOFHASTE, ITEM_BOOKOFSWIFTNESS, ITEM_BOOKOFPROTECTION,

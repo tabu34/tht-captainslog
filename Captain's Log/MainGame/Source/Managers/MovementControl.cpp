@@ -10,6 +10,11 @@
 #include "..\GameObjects\CUnit.h"
 #include "..\States\CGamePlayState.h"
 #include "..\GameObjects\CAbilities.h"
+#include "..\GameObjects\CMarine.h"
+#include "..\GameObjects\CMedic.h"
+#include "..\GameObjects\CScout.h"
+#include "..\GameObjects\CHeavy.h"
+
 
 CMovementControl* CMovementControl::GetInstance()
 {
@@ -309,7 +314,7 @@ void CMovementControl::Input()
 		}
 	}
 
-	if(m_DI->MouseButtonReleased(MOUSE_LEFT) && CGamePlayState::GetInstance()->CurrentCommand() == "" && !m_bCommand)
+	if(m_DI->MouseButtonPressed(MOUSE_LEFT) && CGamePlayState::GetInstance()->CurrentCommand() == "" && !m_bCommand)
 	{
 		if (m_ptStart.x	== CSGD_DirectInput::GetInstance()->MouseGetPosX() && m_ptStart.y == CSGD_DirectInput::GetInstance()->MouseGetPosY())
 		{
@@ -318,6 +323,51 @@ void CMovementControl::Input()
 			mouseRect.top = LONG((float)CSGD_DirectInput::GetInstance()->MouseGetPosY() + CGame::GetInstance()->GetCamera()->GetY());
 			mouseRect.right = mouseRect.left + 1;
 			mouseRect.bottom = mouseRect.top + 1;
+
+
+			RECT collideInventory;
+			RECT collisionRect = {572, 735, 814, 867};
+			POINT itemPoint;
+			size_t hello = CMovementControl::GetInstance()->GetSelectedUnits()->size();
+			if (IntersectRect(&collideInventory, &mouseRect, &collisionRect) && CMovementControl::GetInstance()->GetSelectedUnits()->size())
+			{
+				switch (((CUnit*)(CMovementControl::GetInstance()->GetSelectedUnits()->operator [](0)))->SubType())
+				{
+				case CUnit::PLAYER_MARINE:
+					for (unsigned int i = 0; i < CMovementControl::GetInstance()->Marine()->Inventory()->size(); i++)
+					{
+						itemPoint = CGamePlayState::GetInstance()->ItemPositions()[i];
+						SetRect(&collisionRect, itemPoint.x, itemPoint.y, itemPoint.x + 43, itemPoint.y + 43);
+						if (IntersectRect(&collideInventory, &mouseRect, &collisionRect))
+						{
+							CMovementControl::GetInstance()->Marine()->Inventory()->operator [](i)->AddEffect();
+						}
+						//CSGD_TextureManager::GetInstance()->Draw(m_vItemInstances[CMovementControl::GetInstance()->Marine()->Inventory()->operator [](i)->ItemName()-1].TextureID(), m_ptItemPositions[i].x, m_ptItemPositions[i].y, 1.0f, 1.0f);
+					}
+					break;
+				case CUnit::PLAYER_MEDIC:
+					for (unsigned int i = 0; i < CMovementControl::GetInstance()->Medic()->Inventory()->size(); i++)
+					{
+						//CSGD_TextureManager::GetInstance()->Draw(m_vItemInstances[CMovementControl::GetInstance()->Medic()->Inventory()->operator [](i)->ItemName()-1].TextureID(), m_ptItemPositions[i].x, m_ptItemPositions[i].y, 1.0f, 1.0f);
+					}
+					break;
+				case CUnit::PLAYER_HEAVY:
+					for (unsigned int i = 0; i < CMovementControl::GetInstance()->Heavy()->Inventory()->size(); i++)
+					{
+						//CSGD_TextureManager::GetInstance()->Draw(m_vItemInstances[CMovementControl::GetInstance()->Heavy()->Inventory()->operator [](i)->ItemName()-1].TextureID(), m_ptItemPositions[i].x, m_ptItemPositions[i].y, 1.0f, 1.0f);
+					}
+					break;
+				case CUnit::PLAYER_SCOUT:
+					for (unsigned int i = 0; i < CMovementControl::GetInstance()->Scout()->Inventory()->size(); i++)
+					{
+						//CSGD_TextureManager::GetInstance()->Draw(m_vItemInstances[CMovementControl::GetInstance()->Scout()->Inventory()->operator [](i)->ItemName()-1].TextureID(), m_ptItemPositions[i].x, m_ptItemPositions[i].y, 1.0f, 1.0f);
+					}
+					break;
+				}
+				return;
+			}
+
+
 
 			bool bSelectedOne = false;
 
@@ -343,6 +393,9 @@ void CMovementControl::Input()
 					}
 				}
 			}
+
+
+
 		}
 	}
 

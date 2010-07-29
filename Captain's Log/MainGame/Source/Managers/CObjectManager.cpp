@@ -85,7 +85,7 @@ void CObjectManager::RenderObjects()
 			if (m_vObjectList[i]->Type() == CBase::OBJ_ITEM)
 				CSGD_TextureManager::GetInstance()->Draw(CGamePlayState::GetInstance()->ItemOverworld(), 
 				int(m_vObjectList[i]->GetCollisionRect().left - CGame::GetInstance()->GetCamera()->GetX()), 
-				int(m_vObjectList[i]->GetCollisionRect().top - CGame::GetInstance()->GetCamera()->GetY()));
+				int(m_vObjectList[i]->GetCollisionRect().top - CGame::GetInstance()->GetCamera()->GetY()), 0.5, 0.5);
 			else
 				m_vObjectList[i]->Render();
 			//////////////////////////////////////////////////////////////////////////
