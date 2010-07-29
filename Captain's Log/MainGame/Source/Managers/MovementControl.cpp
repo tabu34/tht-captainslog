@@ -90,7 +90,7 @@ void CMovementControl::Input()
 				((*m_vObjectList)[nTarget]->PosX() - (*m_vSelected)[i]->PosX()) + 
 				((*m_vObjectList)[nTarget]->PosY() - (*m_vSelected)[i]->PosY()) * 
 				((*m_vObjectList)[nTarget]->PosY() - (*m_vSelected)[i]->PosY()) < ITEM_RANGE * ITEM_RANGE
-				)
+				) 
 			{
 				if (((CItem*)(*m_vObjectList)[nTarget])->Collect((CUnit*)(*m_vSelected)[i]))
 				{
@@ -100,6 +100,8 @@ void CMovementControl::Input()
 			}
 			else
 			{
+				((CUnit*)(*m_vSelected)[i])->VelX(0.0f);
+				((CUnit*)(*m_vSelected)[i])->VelY(0.0f);
 				((CUnit*)(*m_vSelected)[i])->OrderMove(mouseRect.left, mouseRect.top);
 			}
 		}

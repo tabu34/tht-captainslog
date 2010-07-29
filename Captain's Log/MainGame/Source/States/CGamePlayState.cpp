@@ -210,7 +210,12 @@ void CGamePlayState::Enter(void)
 	m_nGunshotSound[1] = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("\\THT_Heavy_Fire.wav").c_str(), FMOD_LOOP_OFF);
 	m_nGunshotSound[2] = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("\\THT_Ghost_Fire.wav").c_str(), FMOD_LOOP_OFF);
 	m_nGunshotSound[3] = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("\\THT_Medic_Heal.wav").c_str(), FMOD_LOOP_OFF);
-	m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap_lvl1.png").c_str());
+	
+	if(m_nLevel == 1)
+		m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap_lvl1.png").c_str());
+	else if(m_nLevel == 2)
+		m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap_lvl2.png").c_str());
+
 	m_nSelectionCircle = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("selectionCircle.png").c_str());
 	m_nItemOverworld = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("treasureChestItem.png").c_str());
 	//LoadNextLevel();

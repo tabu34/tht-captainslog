@@ -89,7 +89,7 @@ void CObjectManager::RenderObjects()
 			else
 				m_vObjectList[i]->Render();
 			//////////////////////////////////////////////////////////////////////////
-			CSGD_Direct3D::GetInstance()->DrawRect(m_vObjectList[i]->GetCollisionRect(), 255, 0, 0);
+			//CSGD_Direct3D::GetInstance()->DrawRect(m_vObjectList[i]->GetCollisionRect(), 255, 0, 0);
 			//////////////////////////////////////////////////////////////////////////
 		}
 	}

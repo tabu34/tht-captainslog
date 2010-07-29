@@ -384,7 +384,7 @@ bool COptionsMenuState::Input()
 			}
 			else if(m_pCurrentControl->szIdentifier == "exit")
 			{
-				if (m_bWindowed != m_bPrevWindowed)
+				if (m_bWindowed == !m_bPrevWindowed)
 				{
 					CGame::GetInstance()->ToggleFullScreen();
 				}

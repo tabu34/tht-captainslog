@@ -6,6 +6,7 @@
 #include <stack>
 #include "..\SGD Wrappers\SGD_Math.h"
 #include "..\SGD Wrappers\CSGD_Direct3D.h"
+#include "BST.h"
 
 using std::stack;
 using std::queue;
@@ -13,11 +14,17 @@ using std::map;
 using std::pair;
 using std::multimap;
 using std::vector;
-typedef struct
+struct tNode
 {
 	float fX;
 	float fY;
-} tNode;
+	bool checked;
+
+	// give it a predicate
+	bool operator<(tNode rhx) { return fY * 9001 + fX < rhx.fY * 9001 + rhx.fX; }
+	bool operator>(tNode rhx) { return fY * 9001 + fX > rhx.fY * 9001 + rhx.fX; }
+};
+
 typedef struct  
 {
 	tNode* pFrom;
@@ -46,6 +53,9 @@ struct tAStarNode
 
 	// F SCORE
 	float fF;
+
+	// give it a predicate
+	bool operator<(tAStarNode rhs) { return fF < rhs.fF; }
 };
 
 
@@ -55,6 +65,9 @@ struct tLine
 	tVector2D end;
 };
 
+
+
+
 class CPathManager
 {
 public:
@@ -62,11 +75,24 @@ public:
 
 	map<tNode*, tAdjacency> m_mpAdjacencies;
 	vector<tLine> m_vLines;
+
+	int*	openBH;		// The binary search tree (storing the cell#ID)
+	int*	lstIndex;	// The cell's index in the m_lstNodeList
+	int*	cameFrom;	// The cell#ID that this came from
+	float*	fCost;		// The fCost
+	float*	gCost;		// The gCost
+	float*	hCost;		// The hCost
+	float*	xPos;		// The xPos
+	float*	yPos;		// The yPos
 private:
 	CPathManager();
 	~CPathManager();
 	CPathManager(const CPathManager&);
 	CPathManager& operator=(const CPathManager&);
+	bool NodeChecked(vector<int>* _vec, tNode * _node);
+	bool NodeInBH(int _num, int* _arr, tNode * _node);
+	void AddToSortedList(vector<int>* _vec, int _newVal);
+	int GetNodeIndexInVec(vector<tNode>* _vec, tNode * _node);
 public:
 	static CPathManager* GetInstance();
 
