@@ -295,7 +295,7 @@ void CGamePlayState::Exit(void)
 
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nMiniMap);
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nSelectionCircle);
-	CAnimationManager::GetInstance()->Shutdown();
+	
 	CObjectManager::GetInstance()->RemoveAllObjects();
 	CSGD_FModManager::GetInstance()->StopSound(m_nGunshotSound[0]);
 	CSGD_FModManager::GetInstance()->StopSound(m_nGunshotSound[1]);

@@ -48,19 +48,25 @@ void CMainMenuState::Enter(void)
 
 	CSGD_FModManager::GetInstance()->PlaySound(m_nMenuMusic);
 	CSGD_FModManager::GetInstance()->SetVolume(m_nMenuMusic, (float)CGame::GetInstance()->MusicVolume() / 100.0f);
-
+	
 	m_sCurrentChoice = 0;
 }
 
 bool CMainMenuState::Input(void)
 {
+	int prevMenuChoice = m_sCurrentChoice;
+
 	m_nMouseX = CMovementControl::GetInstance()->MousePosX();
 	m_nMouseY = CMovementControl::GetInstance()->MousePosY();
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_UP))
+	{
 		m_sCurrentChoice--;
+	}
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_DOWN))
+	{
 		m_sCurrentChoice++;
+	}
 
 	if(m_sCurrentChoice < 0)
 		m_sCurrentChoice = 5;
@@ -69,6 +75,7 @@ bool CMainMenuState::Input(void)
 
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN) || CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
 	{
+		CGame::GetInstance()->PlayMenuChoiceSFX();
 		if(m_sCurrentChoice == 0)
 		{
 			CLoadLevelState::GetInstance()->SetLoadLevel(1);
@@ -107,6 +114,9 @@ bool CMainMenuState::Input(void)
 
 	m_nMousePrevX = m_nMouseX;
 	m_nMousePrevY = m_nMouseY;
+
+	if(prevMenuChoice != m_sCurrentChoice)
+		CGame::GetInstance()->PlayMenuChoiceSFX();
 	return true;
 }
 
