@@ -69,7 +69,7 @@ void COptionsMenuState::Enter()
 
 	//ALL THE FRIGGIN KEYBINDS
 	char buffer[128];
-	for(int i=0; i<15; i++)
+	for(int i=0; i<16; i++)
 	{
 		sprintf_s(buffer, 128, "key%i", i);
 		SetRect(&mcInit.rArea, 779, 272+(i*25)+(int)(i*1.5f), 1041, 298+(i*25)+(int)(i*1.5f));
@@ -380,7 +380,6 @@ bool COptionsMenuState::Input()
 			{
 				//save options
 				SaveSettings();
-				CGame::GetInstance()->SettingsChanged();
 				CGame::GetInstance()->PopState();
 			}
 			else if(m_pCurrentControl->szIdentifier == "exit")
@@ -389,6 +388,12 @@ bool COptionsMenuState::Input()
 				{
 					CGame::GetInstance()->ToggleFullScreen();
 				}
+				CSGD_FModManager::GetInstance()->SetVolume(m_nSoundChangedID, (float)CGame::GetInstance()->SFXVolume() / 100.0f);
+				CSGD_FModManager::GetInstance()->SetVolume(CMainMenuState::GetInstance()->MenuMusic(), (float)CGame::GetInstance()->MusicVolume() / 100.0f);
+				CSGD_FModManager::GetInstance()->SetVolume(CGame::GetInstance()->GameBGMusic(), (float)CGame::GetInstance()->MusicVolume() / 100.0f);
+
+				CGame::GetInstance()->SettingsChanged();
+
 				CGame::GetInstance()->PopState();
 			}
 
@@ -717,7 +722,8 @@ void COptionsMenuState::Render()
 	//CSGD_TextureManager::GetInstance()->Draw(m_nSliderImageID, (int)(415.0f + ((float)m_nVoiceVolume/100.0f)*185.0f)-3, 550, 0.75f, 0.75f);
 	
 	int j=0;
-	for(size_t i=0; i<m_vControls.size()-2; i++)
+	size_t hello = m_vControls.size();
+	for(size_t i=0; i<m_vControls.size()-3; i++)
 	{
 		if(m_vControls[i].szIdentifier.substr(0, 3) == "key")
 		{
