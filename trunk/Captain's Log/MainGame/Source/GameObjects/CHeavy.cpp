@@ -12,8 +12,8 @@ CHeavy::CHeavy()
 	PosY(0);
 	VelX(0);
 	VelY(0);
-	Width(64);
-	Height(64);
+	Width(32);
+	Height(32);
 	CurHealth(150);
 	MaxHealth(150);
 	AttackSpeed(2);
