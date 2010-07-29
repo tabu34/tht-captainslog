@@ -70,8 +70,18 @@ void CObjectManager::RemoveObject( CBase* pObject )
 	CCollisionManager::GetInstance()->RemoveObject(pObject);
 }
 
+class Predicate
+{
+public:
+bool operator() (const CBase* lhs, const CBase* rhs) {
+	return lhs->PosY() < rhs->PosY();
+}
+};
+
 void CObjectManager::RenderObjects()
 {
+	sort(m_vObjectList.begin(), m_vObjectList.end(),Predicate());
+
 	RECT rScreen;
 	rScreen.left = (LONG)CGame::GetInstance()->GetCamera()->GetX();
 	rScreen.top = (LONG)CGame::GetInstance()->GetCamera()->GetY();
@@ -88,15 +98,13 @@ void CObjectManager::RenderObjects()
 				int(m_vObjectList[i]->GetCollisionRect().top - CGame::GetInstance()->GetCamera()->GetY()), 0.5, 0.5);
 			else
 				m_vObjectList[i]->Render();
-			//////////////////////////////////////////////////////////////////////////
-			//CSGD_Direct3D::GetInstance()->DrawRect(m_vObjectList[i]->GetCollisionRect(), 255, 0, 0);
-			//////////////////////////////////////////////////////////////////////////
 		}
 	}
 }
 
 void CObjectManager::UpdateObjects( float fElapsedTime )
 {
+
 	vector<CBase*>::iterator iter = m_vObjectList.begin();
 
 	while(iter != m_vObjectList.end())
