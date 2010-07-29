@@ -722,8 +722,7 @@ void COptionsMenuState::Render()
 	//CSGD_TextureManager::GetInstance()->Draw(m_nSliderImageID, (int)(415.0f + ((float)m_nVoiceVolume/100.0f)*185.0f)-3, 550, 0.75f, 0.75f);
 	
 	int j=0;
-	size_t hello = m_vControls.size();
-	for(size_t i=0; i<m_vControls.size()-3; i++)
+	for(size_t i=0; i<m_vControls.size() - 4; i++)
 	{
 		if(m_vControls[i].szIdentifier.substr(0, 3) == "key")
 		{
