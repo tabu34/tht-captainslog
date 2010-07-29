@@ -36,8 +36,6 @@ CLoadLevelState* CLoadLevelState::GetInstance()
 
 void CLoadLevelState::Enter(void)
 {
-	m_nMenuBG = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\cptLogLoadingScreen.png").c_str());
-	m_nLoadBar = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\cptLogLoadingBar.png").c_str());
 	m_fPercentage = 0.0f;
 	m_ftText.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 1.0f, 1.0f, 2, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(0, 255, 0));
  	m_ftText.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
@@ -56,14 +54,6 @@ void CLoadLevelState::Update(float fElapsedTime)
 
 void CLoadLevelState::Load()
 {
-	// Load animations
-	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\marine\\marine.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
-	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\firebat\\firebat.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
-	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\medic\\medic.bin").c_str(), D3DCOLOR_XRGB(0, 255, 255));
-	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\ghost\\ghost.bin").c_str(), D3DCOLOR_XRGB(0, 255, 255));
-	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\cyclops\\cyclops.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
-	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\colossus\\colossus.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
-
 	// Do all our loading
 	if(m_nLevelNum == 1)
 	{
@@ -260,7 +250,7 @@ void CLoadLevelState::Render(void)
 	CSGD_Direct3D::GetInstance()->DeviceBegin();
 	CSGD_Direct3D::GetInstance()->SpriteBegin();
 
-	CSGD_TextureManager::GetInstance()->Draw(m_nMenuBG, 0, 0, 1.0f, 1.0f);
+	CSGD_TextureManager::GetInstance()->Draw(CGame::GetInstance()->GetLoadBG(), 0, 0, 1.0f, 1.0f);
 	// Loading Bar
 	RECT loadRect;
 	loadRect.left = 0;
@@ -268,7 +258,7 @@ void CLoadLevelState::Render(void)
 	loadRect.right = (LONG) ((m_fPercentage / 100.0f) * 642.0f);
 	loadRect.bottom = 64;
 	
-	CSGD_TextureManager::GetInstance()->Draw(m_nLoadBar, 399, 671, 1.0f, 1.0f, &loadRect);
+	CSGD_TextureManager::GetInstance()->Draw(CGame::GetInstance()->GetLoadBar(), 399, 671, 1.0f, 1.0f, &loadRect);
 
 //	CMovementControl::GetInstance()->RenderCursor();
 	char* buffer = new char[50];
@@ -299,6 +289,4 @@ void CLoadLevelState::Render(void)
 void CLoadLevelState::Exit(void)
 {
 	CGamePlayState::GetInstance()->SetLevel( m_nLevelNum );
-	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nMenuBG);
-	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nLoadBar);
 }

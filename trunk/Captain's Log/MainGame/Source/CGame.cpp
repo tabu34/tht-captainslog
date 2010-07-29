@@ -79,6 +79,9 @@ void CGame::Render()
 
 void CGame::Update()
 {
+
+	CSGD_FModManager::GetInstance()->SetVolume(m_nMenuChoiceSFX, (float)SFXVolume() / 100.0f);
+
 	m_fGameTime += m_fElapsedTime;
 
 	if (m_vStateStack[m_vStateStack.size() - 1])
@@ -182,6 +185,8 @@ void CGame::Initialize( HWND hWnd, HINSTANCE hInstance, int nScreenWidth, int nS
 
 	CSGD_FModManager::GetInstance()->InitFModManager(hWnd);
 
+	
+
 	//	Store initial program variables
 	m_nWindowHeight=nScreenHeight;
 	m_nWindowWidth=nScreenWidth;
@@ -192,7 +197,9 @@ void CGame::Initialize( HWND hWnd, HINSTANCE hInstance, int nScreenWidth, int nS
 	m_strSoundPath		= ResourcePath() + "Sound/";
 	m_strFontPath		= ResourcePath() + "Fonts/";
 
-
+	m_nMenuChoiceSFX = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("THT_SoundChange.wav").c_str(), FMOD_DEFAULT);
+	m_nLoadMenuBG = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\cptLogLoadingScreen.png").c_str());
+	m_nLoadBar = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD\\cptLogLoadingBar.png").c_str());
 	CGamePlayState::GetInstance();
 
 	m_pD3D->Clear(0,0,0);
@@ -212,6 +219,14 @@ void CGame::Initialize( HWND hWnd, HINSTANCE hInstance, int nScreenWidth, int nS
 	SettingsChanged();
 
 	m_nGameBGMusic = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("Breakout.mp3").c_str(), FMOD_LOOP_NORMAL);
+
+	// Load animations
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\marine\\marine.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\firebat\\firebat.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\medic\\medic.bin").c_str(), D3DCOLOR_XRGB(0, 255, 255));
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\ghost\\ghost.bin").c_str(), D3DCOLOR_XRGB(0, 255, 255));
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\cyclops\\cyclops.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\colossus\\colossus.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
 
 	ChangeState(CMainMenuState::GetInstance());
 	PushState(CSplashState::GetInstance());
@@ -256,6 +271,9 @@ void CGame::Shutdown()
 {
 	ChangeState(NULL);
 
+	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nLoadMenuBG);
+	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nLoadBar);
+	CAnimationManager::GetInstance()->Shutdown();
 	if (m_pCM)
 	{
 		m_pCM = NULL;
@@ -288,6 +306,7 @@ void CGame::Shutdown()
 	m_pTM				= NULL;
 	m_pOM				= NULL;
 	m_pCM				= NULL;
-
+	
+	CSGD_FModManager::GetInstance()->UnloadSound(m_nMenuChoiceSFX);
 	CCodeProfiler::GetInstance()->Output("codeprofiler test --");
 }

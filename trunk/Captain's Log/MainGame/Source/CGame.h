@@ -12,6 +12,7 @@
 #include "SGD Wrappers\CSGD_DirectInput.h"
 #include "SGD Wrappers\CSGD_TextureManager.h"
 #include "States\IGameState.h"
+#include "SGD Wrappers\CSGD_FModManager.h"
 using namespace std;
 
 class CGame
@@ -24,6 +25,9 @@ class CGame
 	int						m_nWindowHeight;
 	int						m_nWindowWidth;
 	int						m_nGameBGMusic;
+	int						m_nMenuChoiceSFX;
+	int						m_nLoadMenuBG;
+	int						m_nLoadBar;
 	vector<IGameState*>		m_vStateStack;
 	CSGD_Direct3D*			m_pD3D;
 	CSGD_DirectInput*		m_pDI;
@@ -71,6 +75,11 @@ public:
 	void SFXVolume(int val) { m_nSFXVolume = val; }
 	void MusicVolume(int val) { m_nMusicVolume = val; }
 	void VoiceVolume(int val) { m_nVoiceVolume = val; }
+
+	int GetLoadBG() { return m_nLoadMenuBG; }
+	int GetLoadBar() { return m_nLoadBar; }
+
+	void PlayMenuChoiceSFX() { CSGD_FModManager::GetInstance()->PlaySound(m_nMenuChoiceSFX); }
 
 
 	float ElapsedTime() const { return m_fElapsedTime; }

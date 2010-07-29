@@ -34,6 +34,9 @@ CWorldManager* CWorldManager::GetInstance()
 
 void CWorldManager::Load(string sFileName)
 {
+	CLoadLevelState::GetInstance()->SetPercentage(0.0f);
+	CLoadLevelState::GetInstance()->Render();
+
 	ifstream fin(sFileName.c_str(), ios::in | ios::binary);
 
 	fin.read((char*)&m_fVersionNumber, sizeof(float));
@@ -46,7 +49,7 @@ void CWorldManager::Load(string sFileName)
 	m_szFileName[nFileNameSize] = '\0';
 
 	m_nTilesetImageID = CSGD_TextureManager::GetInstance()->LoadTexture(m_szFileName);
-
+	
 	fin.read((char*)&m_nTilesetHeight, sizeof(int));
 	fin.read((char*)&m_nTilesetWidth, sizeof(int));
 
@@ -76,7 +79,7 @@ void CWorldManager::Load(string sFileName)
 
 			}
 		}
-		CLoadLevelState::GetInstance()->SetPercentage((l / (m_nWorldDepth)) * 5.0f);
+		CLoadLevelState::GetInstance()->SetPercentage(2.5f + (l / (m_nWorldDepth)) * 2.5f);
 		CLoadLevelState::GetInstance()->Render();
 	}
 	CLoadLevelState::GetInstance()->SetPercentage(5.0f);
