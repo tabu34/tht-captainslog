@@ -361,16 +361,16 @@ void CUnit::Render()
 	//DEBUG
 	if (m_fFireLineTime > 0 && Target())
 	{
-		CSGD_Direct3D::GetInstance()->DrawLine(int(PosX() - CGame::GetInstance()->GetCamera()->GetX()), int(PosY() - CGame::GetInstance()->GetCamera()->GetY()), int(m_pTarget->PosX() - CGame::GetInstance()->GetCamera()->GetX()), int(m_pTarget->PosY() - CGame::GetInstance()->GetCamera()->GetY()), 255, 255, 255);
+		//CSGD_Direct3D::GetInstance()->DrawLine(int(PosX() - CGame::GetInstance()->GetCamera()->GetX()), int(PosY() - CGame::GetInstance()->GetCamera()->GetY()), int(m_pTarget->PosX() - CGame::GetInstance()->GetCamera()->GetX()), int(m_pTarget->PosY() - CGame::GetInstance()->GetCamera()->GetY()), 255, 255, 255);
 	}
 	//END
 
 	// DRAW DIRECTIONS
-	for(unsigned int i = 0; i < m_vDirections.size(); i++)
-	{
-		if(i+1 < m_vDirections.size())
-			CSGD_Direct3D::GetInstance()->DrawLine(int(m_vDirections[i]->fX - CGame::GetInstance()->GetCamera()->GetX()), int(m_vDirections[i]->fY - CGame::GetInstance()->GetCamera()->GetY()), int(m_vDirections[i+1]->fX - CGame::GetInstance()->GetCamera()->GetX()), int(m_vDirections[i+1]->fY - CGame::GetInstance()->GetCamera()->GetY()), 255, 255, 255);
-	}
+	//for(unsigned int i = 0; i < m_vDirections.size(); i++)
+	//{
+	//	if(i+1 < m_vDirections.size())
+	//		CSGD_Direct3D::GetInstance()->DrawLine(int(m_vDirections[i]->fX - CGame::GetInstance()->GetCamera()->GetX()), int(m_vDirections[i]->fY - CGame::GetInstance()->GetCamera()->GetY()), int(m_vDirections[i+1]->fX - CGame::GetInstance()->GetCamera()->GetX()), int(m_vDirections[i+1]->fY - CGame::GetInstance()->GetCamera()->GetY()), 255, 255, 255);
+	//}
 }
 
 int CUnit::DistanceSquared(int nOtherPosX, int nOtherPosY)

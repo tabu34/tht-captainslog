@@ -215,6 +215,8 @@ void CGamePlayState::Enter(void)
 		m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap_lvl1.png").c_str());
 	else if(m_nLevel == 2)
 		m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap_lvl2.png").c_str());
+	else if(m_nLevel == 3)
+		m_nMiniMap = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("minimap_lvl3.png").c_str());
 
 	m_nSelectionCircle = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("selectionCircle.png").c_str());
 	m_nItemOverworld = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("treasureChestItem.png").c_str());
@@ -236,16 +238,6 @@ void CGamePlayState::Enter(void)
 	m_pPlayerArray[3] = CMovementControl::GetInstance()->Medic();
 
 	//////////////////////////////////////////////////////////////////////////
-
-	CItem* testItem = CItemFactory::GetInstance()->CreateItem("Book of Haste");
-	testItem->PosX(500);
-	testItem->PosY(500);
-	CObjectManager::GetInstance()->AddObject(testItem);
-
-	testItem = CItemFactory::GetInstance()->CreateItem("Gloves of Haste");
-	testItem->PosX(550);
-	testItem->PosY(500);
-	CObjectManager::GetInstance()->AddObject(testItem);
 
 	//////////////////////////////////////////////////////////////////////////
 
