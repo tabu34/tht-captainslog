@@ -6,6 +6,8 @@
 #include "CScout.h"
 #include "CHeavy.h"
 #include "../States/CGamePlayState.h"
+#include "CAbility.h"
+#include "CAbilities.h"
 
 CBossEnemy::CBossEnemy()
 {
@@ -63,6 +65,11 @@ void CBossEnemy::Update( float fElapsedTime )
 	else
 	{
 		Update16(fElapsedTime);
+	}
+
+	if (Abilities()->operator [](0))
+	{
+		Abilities()->operator [](0)->Activate();
 	}
 }
 

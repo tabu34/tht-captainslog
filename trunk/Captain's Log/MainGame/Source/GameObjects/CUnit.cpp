@@ -283,8 +283,8 @@ void CUnit::Attack(float fElapsedTime)
 		return;
 	}
 
-	CGamePlayState::GetInstance()->Engine()->Emitters()->operator [](0).PosX(-500);
-	CGamePlayState::GetInstance()->Engine()->Emitters()->operator [](0).PosY(-500);
+	//CGamePlayState::GetInstance()->Engine()->Emitters()->operator [](0).PosX(-500);
+	//CGamePlayState::GetInstance()->Engine()->Emitters()->operator [](0).PosY(-500);
 	if (m_pTarget && m_pTarget->CurHealth() <= 0)
 	{
 		m_nState = UNIT_IDLE;
@@ -327,8 +327,8 @@ void CUnit::Attack(float fElapsedTime)
 					}
 				}
 				m_pTarget->CurHealth(m_pTarget->CurHealth() - (int)(m_fAttackDamage - (m_fAttackDamage * m_pTarget->Armor() * 0.01f)));
-				CGamePlayState::GetInstance()->Engine()->Emitters()->operator [](0).PosX(m_pTarget->PosX());
-				CGamePlayState::GetInstance()->Engine()->Emitters()->operator [](0).PosY(m_pTarget->PosY());
+				//CGamePlayState::GetInstance()->Engine()->Emitters()->operator [](0).PosX(m_pTarget->PosX());
+				//CGamePlayState::GetInstance()->Engine()->Emitters()->operator [](0).PosY(m_pTarget->PosY());
 			}
 			m_fAttackTimer = 0;
 			m_fFireLineTime = 0.2f;

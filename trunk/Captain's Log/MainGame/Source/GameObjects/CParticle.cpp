@@ -113,7 +113,7 @@ void CParticle::Render(int ImageID, int red, int green, int blue)
 	//CSGD_Direct3D::GetInstance()->GetSprite()->Draw(
 	//D3DCOLOR_ARGB(Alpha,255,255,255);
 	
-	CSGD_TextureManager::GetInstance()->Draw(ImageID, (int)m_fPosX, (int)m_fPosY, m_fScaleX, m_fScaleY, &m_rPaintRect, 0.0f,0.0f,0.0f,D3DCOLOR_ARGB(Alpha,red,green,blue));//,m_nColor);
+	CSGD_TextureManager::GetInstance()->Draw(ImageID, (int)m_fPosX - CGame::GetInstance()->GetCamera()->GetX(), (int)m_fPosY - CGame::GetInstance()->GetCamera()->GetY(), m_fScaleX, m_fScaleY, &m_rPaintRect, 0.0f,0.0f,0.0f,D3DCOLOR_ARGB(Alpha,red,green,blue));//,m_nColor);
 
 }
 

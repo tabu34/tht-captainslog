@@ -20,6 +20,7 @@
 #include "..\GameObjects\CPassive.h"
 #include "..\GameObjects\CItemFactory.h"
 #include "CGameWinState.h"
+#include "..\GameObjects\CBossEnemies.h"
 CLoadLevelState::CLoadLevelState(void)
 {
 	m_nLevelNum = 1;
@@ -216,6 +217,15 @@ void CLoadLevelState::Load()
 		Colossus->PosY(950);
 		CObjectManager::GetInstance()->AddObject(Colossus);
 
+
+
+
+		//CBossEnemy* Medusa = (CBossEnemy*)CUnitFactory::GetInstance()->CreateUnit("Medusa");
+		//Medusa->Type(CBase::OBJ_ENEMY);
+		//Medusa->PosX(2830);
+		//Medusa->PosY(2860);
+		//CObjectManager::GetInstance()->AddObject(Medusa);
+
 		//////////////////////////////////////////////////////////////////////////
 		CGame::GetInstance()->ChangeState( CGamePlayState::GetInstance() );
 	}
@@ -387,17 +397,24 @@ void CLoadLevelState::Load()
 		alliedMedic->PosX(350);
 		alliedMedic->PosY(250);
 
-		CBasicEnemy* Cyclops = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
-		Cyclops->Type(CBase::OBJ_ENEMY);
-		Cyclops->PosX(700);
-		Cyclops->PosY(200);
-		CObjectManager::GetInstance()->AddObject(Cyclops);
+		//CBasicEnemy* Cyclops = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
+		//Cyclops->Type(CBase::OBJ_ENEMY);
+		//Cyclops->PosX(700);
+		//Cyclops->PosY(200);
+		//CObjectManager::GetInstance()->AddObject(Cyclops);
 
-		CBasicEnemy* Colossus = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Colossus");
-		Colossus->Type(CBase::OBJ_ENEMY);
-		Colossus->PosX(650);
-		Colossus->PosY(400);
-		CObjectManager::GetInstance()->AddObject(Colossus);
+		//CBasicEnemy* Colossus = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Colossus");
+		//Colossus->Type(CBase::OBJ_ENEMY);
+		//Colossus->PosX(650);
+		//Colossus->PosY(400);
+		//CObjectManager::GetInstance()->AddObject(Colossus);
+
+
+		CBossEnemy* Medusa = (CBossEnemy*)CUnitFactory::GetInstance()->CreateUnit("Medusa");
+		Medusa->Type(CBase::OBJ_ENEMY);
+		Medusa->PosX(900);
+		Medusa->PosY(400);
+		CObjectManager::GetInstance()->AddObject(Medusa);
 		//CGame::GetInstance()->
 		
 		CGame::GetInstance()->ChangeState( CGamePlayState::GetInstance() );
