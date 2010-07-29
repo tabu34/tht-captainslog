@@ -519,17 +519,6 @@ bool CGamePlayState::CheckButtonInput()
 	} else {
 			m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(false);
 	}
-	//else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Item1")].GetCollisionRect()), &mousePos))
-	//{
-	//	m_vButtonInstances[FindButton("ToolTipBG")].Point(mousePos.left - 4, mousePos.top - 32);
-	//	m_szTooltipText = " Book of Haste";
-	//	m_vButtonInstances[FindButton("ToolTipBG")].Visible(true);
-	//	if(CSGD_DirectInput::GetInstance()->MouseButtonReleased(0))
-	//	{
-	//		(*(CMovementControl::GetInstance()->Marine()->Inventory()))[0]->AddEffect();
-	//		return true;
-	//	}
-	//}
 
 	return false;
 }
@@ -845,6 +834,13 @@ void CGamePlayState::RenderHUD(void)
 
 	if (CMovementControl::GetInstance()->GetSelectedUnits()->size())
 	{
+
+		RECT mousePos, collide, itemRect;
+		mousePos.left = CMovementControl::GetInstance()->MousePosX();
+		mousePos.top = CMovementControl::GetInstance()->MousePosY();
+		mousePos.right = mousePos.left + 1;
+		mousePos.bottom = mousePos.top + 1;
+
 		switch (((CUnit*)(CMovementControl::GetInstance()->GetSelectedUnits()->operator [](0)))->SubType())
 		{
 		case CUnit::PLAYER_MARINE:
@@ -852,6 +848,21 @@ void CGamePlayState::RenderHUD(void)
 			{
 				int hello = CMovementControl::GetInstance()->Marine()->Inventory()->operator [](i)->ItemName();
 				CSGD_TextureManager::GetInstance()->Draw(m_vItemInstances[CMovementControl::GetInstance()->Marine()->Inventory()->operator [](i)->ItemName()-1].TextureID(), m_ptItemPositions[i].x, m_ptItemPositions[i].y, 1.0f, 1.0f);
+				
+				itemRect.top = m_ptItemPositions[i].y;
+				itemRect.left = m_ptItemPositions[i].x;
+				itemRect.right = itemRect.left + 43;
+				itemRect.bottom = itemRect.top + 43;
+
+				//Tooltip
+				if (IntersectRect(&collide, &itemRect, &mousePos))
+				{
+					m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
+					m_szTooltipText = " Pinning Shot\n Immobilize a unit for 6sec\n     20sec Cooldown";
+					m_nToolTipOffsetY = 32;
+					m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
+				}
+
 			}
 			break;
 		case CUnit::PLAYER_MEDIC:
