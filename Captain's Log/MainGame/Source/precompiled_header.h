@@ -14,7 +14,7 @@
 #define START_PROFILING CCodeProfiler::GetInstance()->StartFunction(__FUNCTION__);
 #define END_PROFILING CCodeProfiler::GetInstance()->EndFunction(__FUNCTION__);
 
-#define MAX_INVENTORY 8
+#define MAX_INVENTORY 4
 #define ITEM_RANGE 250
 
 

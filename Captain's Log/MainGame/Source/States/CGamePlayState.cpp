@@ -258,6 +258,15 @@ void CGamePlayState::Enter(void)
 	// Tooltip Offset
 	m_nToolTipOffsetY = 0;
 
+	m_ptItemPositions[0].x = 586;
+	m_ptItemPositions[0].y = 761;
+	m_ptItemPositions[1].x = 643;
+	m_ptItemPositions[1].y = 761;
+	m_ptItemPositions[2].x = 700;
+	m_ptItemPositions[2].y = 761;
+	m_ptItemPositions[3].x = 756;
+	m_ptItemPositions[3].y = 761;
+
 	m_fTotalGameTime = 0.0f;
 
 	m_nBGMusic = CGame::GetInstance()->GameBGMusic();
@@ -832,11 +841,16 @@ void CGamePlayState::RenderHUD(void)
 		}
 	}
 
-	for (unsigned int i = 0; i < m_vItemInstances.size(); i++)
+	if (CMovementControl::GetInstance()->GetSelectedUnits()->size())
 	{
-		if (m_vItemInstances[i].Visible())
+		switch (((CUnit*)(CMovementControl::GetInstance()->GetSelectedUnits()->operator [](0)))->SubType())
 		{
-			CSGD_TextureManager::GetInstance()->Draw(m_vItemInstances[i].TextureID(), m_vItemInstances[i].Point().x, m_vItemInstances[i].Point().y, 1.0f, 1.0f);
+		case CUnit::PLAYER_MARINE:
+			for (unsigned int i = 0; i < CMovementControl::GetInstance()->Marine()->Inventory()->size(); i++)
+			{
+				CSGD_TextureManager::GetInstance()->Draw(m_vItemInstances[CMovementControl::GetInstance()->Marine()->Inventory()->operator [](i)->ItemName()-1].TextureID(), m_ptItemPositions[i].x, m_ptItemPositions[i].y, 1.0f, 1.0f);
+			}
+			break;
 		}
 	}
 

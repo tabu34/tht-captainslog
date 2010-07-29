@@ -110,6 +110,9 @@ class CGamePlayState : public IGameState
 	// Tooltip
 	string				m_szTooltipText;
 
+	// Items
+	POINT				m_ptItemPositions[4];
+
 	// Communication between HUD and movement control
 	string				m_szSelectedCommand;
 
