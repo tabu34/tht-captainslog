@@ -36,7 +36,7 @@ bool CCreditsState::Input()
 {
 	if(CSGD_DirectInput::GetInstance()->KeyPressed(DIK_RETURN))
 	{
-		CGame::GetInstance()->ChangeState( CMainMenuState::GetInstance() );
+		CGame::GetInstance()->PopState();
 	}
 	CMovementControl::GetInstance()->Input();
 	return true;

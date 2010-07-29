@@ -260,7 +260,7 @@ void CGamePlayState::Enter(void)
 
 	m_fTotalGameTime = 0.0f;
 
-	m_nBGMusic = CSGD_FModManager::GetInstance()->LoadSound((char*)CGame::GetInstance()->SoundPath("Breakout.mp3").c_str(), FMOD_LOOP_NORMAL);
+	m_nBGMusic = CGame::GetInstance()->GameBGMusic();
 	CSGD_FModManager::GetInstance()->PlaySound(m_nBGMusic);
 
 	//m_nParticleImageID = CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("blood.png").c_str());
@@ -269,6 +269,8 @@ void CGamePlayState::Enter(void)
 
 void CGamePlayState::Exit(void)
 {
+
+	CGamePlayState::GetInstance()->ClearCommand();
 
 	for(unsigned int i = 0; i < m_vButtons.size(); i++)
 	{
