@@ -7,7 +7,8 @@
 
 class CHelpState : public IGameState
 {
-	int m_nBGImage;
+	int curPage;
+	int m_nBGImage[2];
 
 	CHelpState();
 	CHelpState(const CHelpState&);
