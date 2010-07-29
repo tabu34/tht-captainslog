@@ -38,7 +38,7 @@ class COptionsMenuState : public IGameState
 	int m_nMusicVolume;
 	int m_nSFXVolume;
 	int m_nVoiceVolume;
-	unsigned char m_arrKeybinds[14];
+	unsigned char m_arrKeybinds[18];
 	bool m_bWindowed;
 	bool m_bPrevWindowed;
 
