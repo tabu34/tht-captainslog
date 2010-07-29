@@ -17,6 +17,8 @@
 #include "..\Managers\CUnitFactory.h"
 #include "..\GameObjects\CBMPFont.h"
 #include "..\SGD Wrappers\CSGD_Direct3D.h"
+#include "..\GameObjects\CPassive.h"
+#include "..\GameObjects\CItemFactory.h"
 #include "CGameWinState.h"
 CLoadLevelState::CLoadLevelState(void)
 {
@@ -78,86 +80,155 @@ void CLoadLevelState::Load()
 		alliedMedic->PosX(50);
 		alliedMedic->PosY(350);
 
+		CItem* testItem = CItemFactory::GetInstance()->CreateItem("Book of Haste");
+		testItem->PosX(500);
+		testItem->PosY(500);
+		CObjectManager::GetInstance()->AddObject(testItem);
+
+		testItem = CItemFactory::GetInstance()->CreateItem("Gloves of Haste");
+		testItem->PosX(550);
+		testItem->PosY(500);
+		CObjectManager::GetInstance()->AddObject(testItem);
+
+
 		CBasicEnemy* badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
 		badGuy->Type(CBase::OBJ_ENEMY);
-		badGuy->PosX(1700);
-		badGuy->PosY(200);
+		badGuy->PosX(1300);
+		badGuy->PosY(1550);
 		CObjectManager::GetInstance()->AddObject(badGuy);
 
 		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
 		badGuy->Type(CBase::OBJ_ENEMY);
-		badGuy->PosX(1600);
-		badGuy->PosY(230);
+		badGuy->PosX(1407);
+		badGuy->PosY(1650);
+		CObjectManager::GetInstance()->AddObject(badGuy);
+
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy->Type(CBase::OBJ_ENEMY);
+		badGuy->PosX(1402);
+		badGuy->PosY(1550);
+		CObjectManager::GetInstance()->AddObject(badGuy);
+
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy->Type(CBase::OBJ_ENEMY);
+		badGuy->PosX(1300);
+		badGuy->PosY(1650);
+		CObjectManager::GetInstance()->AddObject(badGuy);
+
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy->Type(CBase::OBJ_ENEMY);
+		badGuy->PosX(2850);
+		badGuy->PosY(450);
+		CObjectManager::GetInstance()->AddObject(badGuy);
+
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy->Type(CBase::OBJ_ENEMY);
+		badGuy->PosX(2950);
+		badGuy->PosY(430);
+
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy->Type(CBase::OBJ_ENEMY);
+		badGuy->PosX(2830);
+		badGuy->PosY(570);
+		CObjectManager::GetInstance()->AddObject(badGuy);
+
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy->Type(CBase::OBJ_ENEMY);
+		badGuy->PosX(2950);
+		badGuy->PosY(580);
 		CObjectManager::GetInstance()->AddObject(badGuy);
 
 		CBasicEnemy* Cyclops = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
 		Cyclops->Type(CBase::OBJ_ENEMY);
-		Cyclops->PosX(700);
-		Cyclops->PosY(200);
+		Cyclops->PosX(1200);
+		Cyclops->PosY(250);
+		CObjectManager::GetInstance()->AddObject(Cyclops);
+
+		Cyclops = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
+		Cyclops->Type(CBase::OBJ_ENEMY);
+		Cyclops->PosX(1350);
+		Cyclops->PosY(306);
+		CObjectManager::GetInstance()->AddObject(Cyclops);
+
+		Cyclops = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
+		Cyclops->Type(CBase::OBJ_ENEMY);
+		Cyclops->PosX(1240);
+		Cyclops->PosY(400);
+		CObjectManager::GetInstance()->AddObject(Cyclops);
+
+		Cyclops = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
+		Cyclops->Type(CBase::OBJ_ENEMY);
+		Cyclops->PosX(1300);
+		Cyclops->PosY(450);
+		CObjectManager::GetInstance()->AddObject(Cyclops);
+
+		Cyclops = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
+		Cyclops->Type(CBase::OBJ_ENEMY);
+		Cyclops->PosX(1150);
+		Cyclops->PosY(2800);
+		CObjectManager::GetInstance()->AddObject(Cyclops);
+
+		Cyclops = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
+		Cyclops->Type(CBase::OBJ_ENEMY);
+		Cyclops->PosX(1276);
+		Cyclops->PosY(2760);
+		CObjectManager::GetInstance()->AddObject(Cyclops);
+
+		Cyclops = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
+		Cyclops->Type(CBase::OBJ_ENEMY);
+		Cyclops->PosX(1380);
+		Cyclops->PosY(2790);
+		CObjectManager::GetInstance()->AddObject(Cyclops);
+
+		Cyclops = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
+		Cyclops->Type(CBase::OBJ_ENEMY);
+		Cyclops->PosX(1120);
+		Cyclops->PosY(2890);
+		CObjectManager::GetInstance()->AddObject(Cyclops);
+
+		Cyclops = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
+		Cyclops->Type(CBase::OBJ_ENEMY);
+		Cyclops->PosX(1250);
+		Cyclops->PosY(2920);
+		CObjectManager::GetInstance()->AddObject(Cyclops);
+
+		Cyclops = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
+		Cyclops->Type(CBase::OBJ_ENEMY);
+		Cyclops->PosX(1380);
+		Cyclops->PosY(2860);
 		CObjectManager::GetInstance()->AddObject(Cyclops);
 
 		CBasicEnemy* Colossus = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Colossus");
 		Colossus->Type(CBase::OBJ_ENEMY);
-		Colossus->PosX(900);
-		Colossus->PosY(200);
+		Colossus->PosX(2200);
+		Colossus->PosY(1000);
 		CObjectManager::GetInstance()->AddObject(Colossus);
 
+		Colossus = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Colossus");
+		Colossus->Type(CBase::OBJ_ENEMY);
+		Colossus->PosX(2100);
+		Colossus->PosY(950);
+		CObjectManager::GetInstance()->AddObject(Colossus);
 
-		CBasicEnemy* FElemental = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Fire Elemental");
-		FElemental->Type(CBase::OBJ_ENEMY);
-		FElemental->PosX(1800);
-		FElemental->PosY(200);
-		CObjectManager::GetInstance()->AddObject(FElemental);
-
-		FElemental = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Fire Elemental");
-		FElemental->Type(CBase::OBJ_ENEMY);
-		FElemental->PosX(1800);
-		FElemental->PosY(260);
-		CObjectManager::GetInstance()->AddObject(FElemental);
-
-		FElemental = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Fire Elemental");
-		FElemental->Type(CBase::OBJ_ENEMY);
-		FElemental->PosX(1860);
-		FElemental->PosY(230);
-		CObjectManager::GetInstance()->AddObject(FElemental);
+		Colossus = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Colossus");
+		Colossus->Type(CBase::OBJ_ENEMY);
+		Colossus->PosX(2300);
+		Colossus->PosY(950);
+		CObjectManager::GetInstance()->AddObject(Colossus);
 
 		//////////////////////////////////////////////////////////////////////////
-
-		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
-		badGuy->Type(CBase::OBJ_ENEMY);
-		badGuy->PosX(1600);
-		badGuy->PosY(900);
-		CObjectManager::GetInstance()->AddObject(badGuy);
-
-		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
-		badGuy->Type(CBase::OBJ_ENEMY);
-		badGuy->PosX(1700);
-		badGuy->PosY(930);
-		CObjectManager::GetInstance()->AddObject(badGuy);
-
-		FElemental = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Fire Elemental");
-		FElemental->Type(CBase::OBJ_ENEMY);
-		FElemental->PosX(1500);
-		FElemental->PosY(900);
-		CObjectManager::GetInstance()->AddObject(FElemental);
-
-		FElemental = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Fire Elemental");
-		FElemental->Type(CBase::OBJ_ENEMY);
-		FElemental->PosX(1500);
-		FElemental->PosY(960);
-		CObjectManager::GetInstance()->AddObject(FElemental);
-
-		FElemental = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Fire Elemental");
-		FElemental->Type(CBase::OBJ_ENEMY);
-		FElemental->PosX(1560);
-		FElemental->PosY(930);
-		CObjectManager::GetInstance()->AddObject(FElemental);
-
 		CGame::GetInstance()->ChangeState( CGamePlayState::GetInstance() );
 	}
 
 	if(m_nLevelNum == 2)
 	{
+		//for(unsigned int i = 0; i < CObjectManager::GetInstance()->GetObjectList()->size(); i++)
+		//{
+		//	if((*CObjectManager::GetInstance()->GetObjectList())[i]->Type() != CBase::OBJ_PLAYER)
+		//		CObjectManager::GetInstance()->GetObjectList()->erase( CObjectManager::GetInstance()->GetObjectList()->begin() + i-- );
+		//}
+
+		CObjectManager::GetInstance()->RemoveAllObjects();
 
 		CWorldManager::GetInstance()->Load("Resource//Graphics//lvl2.mfl");
 
@@ -180,16 +251,112 @@ void CLoadLevelState::Load()
 		alliedMedic->PosX(350);
 		alliedMedic->PosY(150);
 
+		CBasicEnemy* badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy->Type(CBase::OBJ_ENEMY);
+		badGuy->PosX(500);
+		badGuy->PosY(700);
+		CObjectManager::GetInstance()->AddObject(badGuy);
+
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy->Type(CBase::OBJ_ENEMY);
+		badGuy->PosX(600);
+		badGuy->PosY(900);
+		CObjectManager::GetInstance()->AddObject(badGuy);
+
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy->Type(CBase::OBJ_ENEMY);
+		badGuy->PosX(580);
+		badGuy->PosY(1060);
+		CObjectManager::GetInstance()->AddObject(badGuy);
+
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy->Type(CBase::OBJ_ENEMY);
+		badGuy->PosX(690);
+		badGuy->PosY(1250);
+		CObjectManager::GetInstance()->AddObject(badGuy);
+
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy->Type(CBase::OBJ_ENEMY);
+		badGuy->PosX(1300);
+		badGuy->PosY(2100);
+		CObjectManager::GetInstance()->AddObject(badGuy);
+
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy->Type(CBase::OBJ_ENEMY);
+		badGuy->PosX(1450);
+		badGuy->PosY(2000);
+		CObjectManager::GetInstance()->AddObject(badGuy);
+
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy->Type(CBase::OBJ_ENEMY);
+		badGuy->PosX(1390);
+		badGuy->PosY(1800);
+		CObjectManager::GetInstance()->AddObject(badGuy);
+
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy->Type(CBase::OBJ_ENEMY);
+		badGuy->PosX(1350);
+		badGuy->PosY(1700);
+		CObjectManager::GetInstance()->AddObject(badGuy);
+
 		CBasicEnemy* Cyclops = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
 		Cyclops->Type(CBase::OBJ_ENEMY);
 		Cyclops->PosX(700);
 		Cyclops->PosY(200);
 		CObjectManager::GetInstance()->AddObject(Cyclops);
 
+		Cyclops = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
+		Cyclops->Type(CBase::OBJ_ENEMY);
+		Cyclops->PosX(700);
+		Cyclops->PosY(1800);
+		CObjectManager::GetInstance()->AddObject(Cyclops);
+
+		Cyclops = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
+		Cyclops->Type(CBase::OBJ_ENEMY);
+		Cyclops->PosX(750);
+		Cyclops->PosY(2000);
+		CObjectManager::GetInstance()->AddObject(Cyclops);
+
+		Cyclops = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
+		Cyclops->Type(CBase::OBJ_ENEMY);
+		Cyclops->PosX(850);
+		Cyclops->PosY(2100);
+		CObjectManager::GetInstance()->AddObject(Cyclops);
+
 		CBasicEnemy* Colossus = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Colossus");
 		Colossus->Type(CBase::OBJ_ENEMY);
 		Colossus->PosX(650);
 		Colossus->PosY(400);
+		CObjectManager::GetInstance()->AddObject(Colossus);
+
+		Colossus = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Colossus");
+		Colossus->Type(CBase::OBJ_ENEMY);
+		Colossus->PosX(1350);
+		Colossus->PosY(1200);
+		CObjectManager::GetInstance()->AddObject(Colossus);
+
+		Colossus = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Colossus");
+		Colossus->Type(CBase::OBJ_ENEMY);
+		Colossus->PosX(1400);
+		Colossus->PosY(1100);
+		CObjectManager::GetInstance()->AddObject(Colossus);
+
+		Colossus = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Colossus");
+		Colossus->Type(CBase::OBJ_ENEMY);
+		Colossus->PosX(1800);
+		Colossus->PosY(500);
+		CObjectManager::GetInstance()->AddObject(Colossus);
+
+		Colossus = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Colossus");
+		Colossus->Type(CBase::OBJ_ENEMY);
+		Colossus->PosX(1750);
+		Colossus->PosY(420);
+		CObjectManager::GetInstance()->AddObject(Colossus);
+
+		Colossus = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Colossus");
+		Colossus->Type(CBase::OBJ_ENEMY);
+		Colossus->PosX(1950);
+		Colossus->PosY(500);
 		CObjectManager::GetInstance()->AddObject(Colossus);
 
 		CGame::GetInstance()->ChangeState( CGamePlayState::GetInstance() );
