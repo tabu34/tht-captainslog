@@ -140,6 +140,8 @@ void CUnitFactory::RegisterItems()
 		pair<string, CUnit*> objDef;
 
 		CUnit* Footman = new CBasicEnemy();
+		Footman->Width(32);
+		Footman->Height(32);
 		Footman->Armor(15);
 		Footman->AttackDamage(4);
 		Footman->AttackRange(50);
@@ -177,6 +179,8 @@ void CUnitFactory::RegisterItems()
 		pair<string, CUnit*> objDef;
 
 		CUnit* FireElemental = new CBasicEnemy();
+		FireElemental->Width(32);
+		FireElemental->Height(32);
 		FireElemental->Armor(25);
 		FireElemental->AttackDamage(10);
 		FireElemental->AttackRange(200);
@@ -213,6 +217,8 @@ void CUnitFactory::RegisterItems()
 		pair<string, CUnit*> objDef;
 
 		CUnit* Cyclops = new CBasicEnemy();
+		Cyclops->Width(65);
+		Cyclops->Height(115);
 		Cyclops->Armor(35);
 		Cyclops->AttackDamage(15);
 		Cyclops->AttackRange(50);
@@ -260,6 +266,8 @@ void CUnitFactory::RegisterItems()
 		pair<string, CUnit*> objDef;
 
 		CUnit* Colossus = new CBasicEnemy();
+		Colossus->Width(70);
+		Colossus->Height(140);
 		Colossus->Armor(35);
 		Colossus->AttackDamage(15);
 		Colossus->AttackRange(50);
@@ -298,6 +306,156 @@ void CUnitFactory::RegisterItems()
 
 		objDef.first = "Colossus";
 		objDef.second = Colossus;
+
+		m_UnitTemplates.insert(objDef);
+	}
+
+	// Shade
+	{
+		pair<string, CUnit*> objDef;
+
+		CUnit* Shade = new CBasicEnemy();
+		Shade->Width(50);
+		Shade->Height(100);
+		Shade->Scale(0.5f);
+		Shade->Armor(35);
+		Shade->AttackDamage(15);
+		Shade->AttackRange(50);
+		Shade->AttackSpeed(2);
+		Shade->Burned(false);
+		Shade->Cloaked(false);
+		Shade->MaxHealth(200);
+		Shade->CurHealth(Shade->MaxHealth());
+		Shade->Invulnerable(false);
+		Shade->MovementSpeed(75);
+		Shade->Ranged(false);
+		Shade->Selected(false);
+		Shade->SightRange(300);
+		Shade->Stunned(false);
+		Shade->CurDirection();
+		Shade->State(CUnit::UNIT_IDLE);
+		((CBasicEnemy*)Shade)->SetMirrored(false);
+
+		Shade->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Shade-Walk-N"));
+		Shade->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Shade-Walk-NE"));
+		Shade->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Shade-Walk-E"));
+		Shade->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Shade-Walk-SE"));
+		Shade->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Shade-Walk-S"));
+		Shade->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Shade-Walk-SW"));
+		Shade->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Shade-Walk-W"));
+		Shade->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Shade-Walk-NW"));
+
+		Shade->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Shade-Attack-N"));
+		Shade->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Shade-Attack-NE"));
+		Shade->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Shade-Attack-E"));
+		Shade->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Shade-Attack-SE"));
+		Shade->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Shade-Attack-S"));
+		Shade->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Shade-Attack-SW"));
+		Shade->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Shade-Attack-W"));
+		Shade->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Shade-Attack-NW"));
+
+		objDef.first = "Shade";
+		objDef.second = Shade;
+
+		m_UnitTemplates.insert(objDef);
+	}
+
+	// Medusa
+	{
+		pair<string, CUnit*> objDef;
+
+		CUnit* Medusa = new CBossEnemy();
+		Medusa->Width(72);
+		Medusa->Height(72);
+		Medusa->Scale(0.75f);
+		Medusa->Armor(35);
+		Medusa->AttackDamage(15);
+		Medusa->AttackRange(50);
+		Medusa->AttackSpeed(2);
+		Medusa->Burned(false);
+		Medusa->Cloaked(false);
+		Medusa->MaxHealth(200);
+		Medusa->CurHealth(Medusa->MaxHealth());
+		Medusa->Invulnerable(false);
+		Medusa->MovementSpeed(75);
+		Medusa->Ranged(false);
+		Medusa->Selected(false);
+		Medusa->SightRange(300);
+		Medusa->Stunned(false);
+		Medusa->CurDirection();
+		Medusa->State(CUnit::UNIT_IDLE);
+		((CBasicEnemy*)Medusa)->SetMirrored(false);
+
+		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Walk-N"));
+		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Walk-NE"));
+		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Walk-E"));
+		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Walk-SE"));
+		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Walk-S"));
+		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Walk-SW"));
+		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Walk-W"));
+		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Walk-NW"));
+
+		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Attack-N"));
+		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Attack-NE"));
+		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Attack-E"));
+		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Attack-SE"));
+		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Attack-S"));
+		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Attack-SW"));
+		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Attack-W"));
+		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Attack-NW"));
+
+		objDef.first = "Medusa";
+		objDef.second = Medusa;
+
+		m_UnitTemplates.insert(objDef);
+	}
+
+	// Mage
+	{
+		pair<string, CUnit*> objDef;
+
+		CUnit* Mage = new CBasicEnemy();
+		Mage->Width(30);
+		Mage->Height(82);
+		Mage->Scale(0.5f);
+		Mage->Armor(35);
+		Mage->AttackDamage(15);
+		Mage->AttackRange(50);
+		Mage->AttackSpeed(2);
+		Mage->Burned(false);
+		Mage->Cloaked(false);
+		Mage->MaxHealth(200);
+		Mage->CurHealth(Mage->MaxHealth());
+		Mage->Invulnerable(false);
+		Mage->MovementSpeed(75);
+		Mage->Ranged(false);
+		Mage->Selected(false);
+		Mage->SightRange(300);
+		Mage->Stunned(false);
+		Mage->CurDirection();
+		Mage->State(CUnit::UNIT_IDLE);
+		((CBasicEnemy*)Mage)->SetMirrored(false);
+
+		Mage->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Mage-Walk-N"));
+		Mage->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Mage-Walk-NE"));
+		Mage->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Mage-Walk-E"));
+		Mage->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Mage-Walk-SE"));
+		Mage->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Mage-Walk-S"));
+		Mage->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Mage-Walk-SW"));
+		Mage->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Mage-Walk-W"));
+		Mage->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Mage-Walk-NW"));
+
+		Mage->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Mage-Attack-N"));
+		Mage->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Mage-Attack-NE"));
+		Mage->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Mage-Attack-E"));
+		Mage->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Mage-Attack-SE"));
+		Mage->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Mage-Attack-S"));
+		Mage->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Mage-Attack-SW"));
+		Mage->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Mage-Attack-W"));
+		Mage->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Mage-Attack-NW"));
+
+		objDef.first = "Mage";
+		objDef.second = Mage;
 
 		m_UnitTemplates.insert(objDef);
 	}

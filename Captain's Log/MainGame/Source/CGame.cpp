@@ -227,6 +227,9 @@ void CGame::Initialize( HWND hWnd, HINSTANCE hInstance, int nScreenWidth, int nS
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\ghost\\ghost.bin").c_str(), D3DCOLOR_XRGB(0, 255, 255));
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\cyclops\\cyclops.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
 	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\colossus\\colossus.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\shade\\shade.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\medusa\\medusa.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
+	CAnimationManager::GetInstance()->LoadAnimationsFromFile((char *)CGame::GetInstance()->GraphicsPath("units\\mage\\mage.bin").c_str(), D3DCOLOR_XRGB(255, 255, 255));
 
 	ChangeState(CMainMenuState::GetInstance());
 	PushState(CSplashState::GetInstance());
