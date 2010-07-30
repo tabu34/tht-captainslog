@@ -4,7 +4,7 @@
 #include "../SGD Wrappers/SGD_Math.h"
 #include <math.h>
 #include "../States/CLoadLevelState.h"
-
+#include "../GameObjects/CBase.h"
 // Grid squares are x by x (ex. 50 by 50) pixels
 #define GRID_SCALE 50
 
@@ -64,39 +64,9 @@ CPathManager::~CPathManager()
 	}
 }
 
-// int Check_Tri_Dir(tVector2D P1, tVector2D P2, tVector2D P3)
-// {
-// 	float test;
-// 	test = (((P2.fX - P1.fX)*(P3.fY - P1.fY)) - ((P3.fX-P1.fX)*(P2.fY - P1.fY)));
-// 	if(test > 0)
-// 		return 1;
-// 	if(test < 0)
-// 		return -1;
-// 	return 0;
-// }
-
 bool IntersectLine(tVector2D A1, tVector2D A2, tVector2D B1, tVector2D B2)
 {
-	// 	//if any of the endpoints are the same, the lines technically aren't intersecting
-	// 	if((A1.fX == B1.fX && A1.fY == B1.fY) ||
-	// 		(A1.fX == B2.fX && A1.fY == B2.fY) ||
-	// 		(A2.fX == B1.fX && A2.fY == B1.fY) ||
-	// 		(A2.fX == B2.fX && A2.fY == B2.fY))
-	// 		return false;
-	// 
-	// 	int test1, test2, test3, test4;
-	// 	test1 = Check_Tri_Dir(A1, A2, B1);
-	// 	test2 = Check_Tri_Dir(A1, A2, B2);
-	// 	if(test1 != test2)
-	// 	{
-	// 		test3 = Check_Tri_Dir(B1, B2, A1);
-	// 		test4 = Check_Tri_Dir(B1, B2, A2);
-	// 		if(test3 != test4)
-	// 			return true;
-	// 	}
-	// 	return false;
-
-	float d = (A2.fX - A1.fX)*(B2.fY - B1.fY) - (A2.fY - A1.fY)*(B2.fX - B1.fX);
+float d = (A2.fX - A1.fX)*(B2.fY - B1.fY) - (A2.fY - A1.fY)*(B2.fX - B1.fX);
 	if(fabs(d)<0.001) return false;
 	float AB = ((A1.fY - B1.fY)*(B2.fX - B1.fX)-(A1.fX - B1.fX)*(B2.fY-B1.fY))/d;
 
@@ -175,41 +145,25 @@ bool InsideBlocker(POINT p)
 			return true;
 	}
 	return false;
-// 	int counter=0;
-// 	float xInters;
-// 	Blocker::Point p1, p2;
-// 
-// 	for(int i=0; i<CWorldManager::GetInstance()->GetNumBlockers(); i++)
-// 	{
-// 		counter=0;
-// 		p1 = CWorldManager::GetInstance()->GetBlockers()[i].m_Points[0];
-// 
-// 		for(int j=1; j<=CWorldManager::GetInstance()->GetBlockers()[i].m_nNumPoints; j++)
-// 		{
-// 			p2 = CWorldManager::GetInstance()->GetBlockers()[i].m_Points[j%CWorldManager::GetInstance()->GetBlockers()[i].m_nNumPoints];
-// 			if(p.y > MIN(p1.y, p2.y))
-// 			{
-// 				if(p.y <= MAX(p1.y, p2.y))
-// 				{
-// 					if(p.x <= MAX(p1.x, p2.x))
-// 					{
-// 						if(p1.y!=p2.y)
-// 						{
-// 							xInters = float((p.y-p1.y)*(p2.x-p1.x)/(p2.y-p1.y)+p1.x);
-// 							if(p1.x == p2.x || p.x<=xInters)
-// 								counter++;
-// 						}
-// 					}
-// 				}
-// 			}
-// 			p1=p2;
-// 		}
-// 
-// 		if(counter!=0 && counter%2!=0)
-// 			return true;
-// 
-// 	}
-// 	return false;
+}
+
+bool CPathManager::InsideObject( tNode _node )
+{
+	vector<CBase*>* _objList = CObjectManager::GetInstance()->GetObjectList();
+	RECT nodeRect;
+	nodeRect.left = _node.fX - 20;
+	nodeRect.top = _node.fY - 20;
+	nodeRect.right = nodeRect.left + 40;
+	nodeRect.bottom = nodeRect.top + 40;
+	RECT objectRect, result;
+	for(int i = 0; i < _objList->size(); i++)
+	{
+		objectRect = (*_objList)[i]->GetCollisionRect();
+		if(IntersectRect(&result, &objectRect, &nodeRect))
+			return true;
+	}
+
+	return false;
 }
 
 bool CPathManager::IsPointInside(POINT p)
@@ -479,6 +433,10 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 	for(int i = 0; i < m_lstNodeList.size(); i++)
 	{
 		m_lstNodeList[i].checked = false;
+		if(InsideObject( m_lstNodeList[i] ))
+				m_lstNodeList[i].blocked = true;
+			else
+				m_lstNodeList[i].blocked = false;
 	}
 
 	//vector<int> closedList;			// Closed cells
@@ -684,7 +642,7 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 			adjPt.x = (LONG)(*adjNeighbors)[adj]->fX;
 			adjPt.y = (LONG)(*adjNeighbors)[adj]->fY;
 
-			if((*adjNeighbors)[adj]->checked == true)
+			if((*adjNeighbors)[adj]->checked == true || (*adjNeighbors)[adj]->blocked == true)
 				continue;
 
 			// if it's not in the open list add it
@@ -713,7 +671,6 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 							m = m / 2;
 						} else
 							break;
-
 					}
 				}
 			} else {
