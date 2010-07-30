@@ -901,11 +901,7 @@ void CGamePlayState::RenderHUD(void)
 					}
 					m_nToolTipOffsetY = 32;
 					m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
-					if(CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
-					{
-						CMovementControl::GetInstance()->Marine()->Inventory()->operator [](i)->AddEffect();
-					}
-					else if (CSGD_DirectInput::GetInstance()->MouseButtonPressed(1))
+					if (CSGD_DirectInput::GetInstance()->MouseButtonPressed(1))
 					{
 						CMovementControl::GetInstance()->Marine()->Inventory()->operator [](i)->Drop();
 					}
@@ -955,11 +951,7 @@ void CGamePlayState::RenderHUD(void)
 					}
 					m_nToolTipOffsetY = 32;
 					m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true); 
-					if(CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
-					{
-						CMovementControl::GetInstance()->Medic()->Inventory()->operator [](i)->AddEffect();
-					}
-					else if (CSGD_DirectInput::GetInstance()->MouseButtonPressed(1))
+					if (CSGD_DirectInput::GetInstance()->MouseButtonPressed(1))
 					{
 						CMovementControl::GetInstance()->Medic()->Inventory()->operator [](i)->Drop();
 					}
@@ -1009,11 +1001,7 @@ void CGamePlayState::RenderHUD(void)
 					}
 					m_nToolTipOffsetY = 32;
 					m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
-					if(CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
-					{
-						CMovementControl::GetInstance()->Heavy()->Inventory()->operator [](i)->AddEffect();
-					}
-					else if (CSGD_DirectInput::GetInstance()->MouseButtonPressed(1))
+					if (CSGD_DirectInput::GetInstance()->MouseButtonPressed(1))
 					{
 						CMovementControl::GetInstance()->Heavy()->Inventory()->operator [](i)->Drop();
 					}
@@ -1063,11 +1051,7 @@ void CGamePlayState::RenderHUD(void)
 					}
 					m_nToolTipOffsetY = 32;
 					m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
-					if(CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
-					{
-						CMovementControl::GetInstance()->Scout()->Inventory()->operator [](i)->AddEffect();
-					}
-					else if (CSGD_DirectInput::GetInstance()->MouseButtonPressed(1))
+					if (CSGD_DirectInput::GetInstance()->MouseButtonPressed(1))
 					{
 						CMovementControl::GetInstance()->Scout()->Inventory()->operator [](i)->Drop();
 					}

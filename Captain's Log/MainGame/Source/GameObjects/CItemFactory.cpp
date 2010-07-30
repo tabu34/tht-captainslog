@@ -179,6 +179,7 @@ void CItemFactory::RegisterItems()
 		objDef.second = BookOfHaste;
 
 		m_ItemTemplates.insert(objDef);
+		SAFE_DELETE(BookOfHaste);
 	}
 
 	// Book of Swiftness
@@ -197,6 +198,7 @@ void CItemFactory::RegisterItems()
 		objDef.second = BookOfSwiftness;
 
 		m_ItemTemplates.insert(objDef);
+		SAFE_DELETE(BookOfSwiftness);
 	}
 
 	// Book of Protection
@@ -215,6 +217,7 @@ void CItemFactory::RegisterItems()
 		objDef.second = BookOfProtection;
 
 		m_ItemTemplates.insert(objDef);
+		SAFE_DELETE(BookOfProtection);
 	}
 
 	// Book of Strength
@@ -233,6 +236,7 @@ void CItemFactory::RegisterItems()
 		objDef.second = BookOfStrength;
 
 		m_ItemTemplates.insert(objDef);
+		SAFE_DELETE(BookOfStrength);
 	}
 
 	// Book of Vitality
@@ -251,6 +255,7 @@ void CItemFactory::RegisterItems()
 		objDef.second = BookOfVitality;
 
 		m_ItemTemplates.insert(objDef);
+		SAFE_DELETE(BookOfVitality);
 	}
 
 	// Passive (Held)
@@ -271,6 +276,7 @@ void CItemFactory::RegisterItems()
 		objDef.second = GlovesOfHaste;
 
 		m_ItemTemplates.insert(objDef);
+		SAFE_DELETE(GlovesOfHaste);
 	}
 
 	// Boots of Swiftness
@@ -289,6 +295,7 @@ void CItemFactory::RegisterItems()
 		objDef.second = BootsOfSwiftness;
 
 		m_ItemTemplates.insert(objDef);
+		SAFE_DELETE(BootsOfSwiftness);
 	}
 
 	// Shield of Angels
@@ -307,6 +314,7 @@ void CItemFactory::RegisterItems()
 		objDef.second = ShieldOfAngels;
 
 		m_ItemTemplates.insert(objDef);
+		SAFE_DELETE(ShieldOfAngels);
 	}
 
 	// Sword of Titans
@@ -325,6 +333,7 @@ void CItemFactory::RegisterItems()
 		objDef.second = SwordOfTitans;
 
 		m_ItemTemplates.insert(objDef);
+		SAFE_DELETE(SwordOfTitans);
 	}
 
 	// Resurrection Stone
@@ -343,6 +352,7 @@ void CItemFactory::RegisterItems()
 		objDef.second = ResurrectionStone;
 
 		m_ItemTemplates.insert(objDef);
+		SAFE_DELETE(ResurrectionStone);
 	}
 
 	// Gem of Life
@@ -361,6 +371,7 @@ void CItemFactory::RegisterItems()
 		objDef.second = GemOfLife;
 
 		m_ItemTemplates.insert(objDef);
+		SAFE_DELETE(GemOfLife);
 	}
 
 	// Active (Held)
