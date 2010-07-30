@@ -20,7 +20,7 @@ void CBasicEnemy::Update( float fElapsedTime )
 	int currentObjDistance;
 	int sightRangeSqrd = SightRange() * SightRange();
 	bool found = false;
-
+	CUnit* oldTarget = Target();
 	Target(NULL);
 
 	for (unsigned int i = 0; i < CCollisionManager::GetInstance()->Players()->size(); i++)
@@ -41,6 +41,11 @@ void CBasicEnemy::Update( float fElapsedTime )
 				found = true;
 			}
 		}
+	}
+
+	if(found && Target() != oldTarget)
+	{
+		OrderAttack( Target() );
 	}
 
 	if (!found)
@@ -182,6 +187,7 @@ void CBasicEnemy::Render()
 	{
 		Render16();
 	}
+
 }
 
 void CBasicEnemy::Render7()

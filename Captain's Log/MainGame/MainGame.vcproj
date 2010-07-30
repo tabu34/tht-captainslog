@@ -807,12 +807,20 @@
 				RelativePath=".\My Amplifier Results\r023hs\r023hs.ampl"
 				>
 			</File>
+			<File
+				RelativePath=".\My Amplifier Results\r024hs\r024hs.ampl"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="My Inspector Results"
 			>
 			<File
 				RelativePath=".\My Inspector Results\r001mi1\r001mi1.insp"
+				>
+			</File>
+			<File
+				RelativePath=".\My Inspector Results\r002mi1\r002mi1.insp"
 				>
 			</File>
 		</Filter>

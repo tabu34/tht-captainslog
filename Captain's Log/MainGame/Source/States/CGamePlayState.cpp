@@ -173,7 +173,7 @@ void CGamePlayState::LoadProfile(int nOffsetInBytes)
 			switch (tempUnitInfo.nEnemyClass)
 			{
 			case CUnit::FOOTMAN:
-				newEnemy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+				newEnemy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 				break;
 			case CUnit::CYCLOPS:
 				newEnemy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
@@ -618,6 +618,11 @@ void CGamePlayState::Update(float fElapsedTime)
 {
 	m_peEngine.Update(fElapsedTime);
 
+	if((*CObjectManager::GetInstance()->GetSelectedList()).size() > 0 && (*CObjectManager::GetInstance()->GetSelectedList())[0]->Type() == CBase::OBJ_PLAYER)
+		m_vButtonInstances[FindButton("MiddleHUDInventory")].Visible(true);
+	else
+		m_vButtonInstances[FindButton("MiddleHUDInventory")].Visible(false);
+
 	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound[0], (float)CGame::GetInstance()->SFXVolume() / 100.0f);
 	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound[1], (float)CGame::GetInstance()->SFXVolume() / 100.0f);
 	CSGD_FModManager::GetInstance()->SetVolume(m_nGunshotSound[2], (float)CGame::GetInstance()->SFXVolume() / 100.0f);
@@ -683,91 +688,58 @@ void CGamePlayState::Update(float fElapsedTime)
 
 	// Check for player unit to player unit collisions
 
-	vector<CBase*>* m_vObjectList = CObjectManager::GetInstance()->GetObjectList();
-	for(unsigned i =0; i < m_vObjectList->size(); i++)
-		(*m_vObjectList)[i]->Stuck(false);
+	//vector<CBase*>* m_vObjectList = CObjectManager::GetInstance()->GetObjectList();
+	//for(unsigned i =0; i < m_vObjectList->size(); i++)
+	//	(*m_vObjectList)[i]->Stuck(false);
 
 
-	for (unsigned int i = 0; i < m_vObjectList->size(); i++)
-		for(unsigned j = 0; j < m_vObjectList->size(); j++)
-		{
-			if(i != j)
-			{
-				float newX = (*m_vObjectList)[i]->PosX() + (*m_vObjectList)[i]->VelX() * fElapsedTime;
-				float newY = (*m_vObjectList)[i]->PosY() + (*m_vObjectList)[i]->VelY() * fElapsedTime;
-				float velXOffset;
-				float velYOffset;
+	//for (unsigned int i = 0; i < m_vObjectList->size(); i++)
+	//	for(unsigned j = 0; j < m_vObjectList->size(); j++)
+	//	{
+	//		if(i != j)
+	//		{
+	//			float newX = (*m_vObjectList)[i]->PosX() + (*m_vObjectList)[i]->VelX() * fElapsedTime;
+	//			float newY = (*m_vObjectList)[i]->PosY() + (*m_vObjectList)[i]->VelY() * fElapsedTime;
+	//			float velXOffset;
+	//			float velYOffset;
 
-				float disAwayX = fabs( 
-					(newX - (*m_vObjectList)[j]->PosX()) * 
-					(newX - (*m_vObjectList)[j]->PosX()) + 
-					((*m_vObjectList)[i]->PosY() - (*m_vObjectList)[j]->PosY()) 
-					* ((*m_vObjectList)[i]->PosY() - (*m_vObjectList)[j]->PosY()));
+	//			float disAwayX = fabs( 
+	//				(newX - (*m_vObjectList)[j]->PosX()) * 
+	//				(newX - (*m_vObjectList)[j]->PosX()) + 
+	//				((*m_vObjectList)[i]->PosY() - (*m_vObjectList)[j]->PosY()) 
+	//				* ((*m_vObjectList)[i]->PosY() - (*m_vObjectList)[j]->PosY()));
 
-				float disAwayY = fabs( 
-					((*m_vObjectList)[i]->PosX() - (*m_vObjectList)[j]->PosX()) * 
-					((*m_vObjectList)[i]->PosX() - (*m_vObjectList)[j]->PosX()) + 
-					(newY - (*m_vObjectList)[j]->PosY()) * 
-					(newY - (*m_vObjectList)[j]->PosY()));
+	//			float disAwayY = fabs( 
+	//				((*m_vObjectList)[i]->PosX() - (*m_vObjectList)[j]->PosX()) * 
+	//				((*m_vObjectList)[i]->PosX() - (*m_vObjectList)[j]->PosX()) + 
+	//				(newY - (*m_vObjectList)[j]->PosY()) * 
+	//				(newY - (*m_vObjectList)[j]->PosY()));
 
-				if((*m_vObjectList)[i]->VelX() > 0.0f)
-					velXOffset = 1.0f;
-				else
-					velXOffset = -1.0f;
+	//			if((*m_vObjectList)[i]->VelX() > 0.0f)
+	//				velXOffset = 1.0f;
+	//			else
+	//				velXOffset = -1.0f;
 
-				if((*m_vObjectList)[i]->VelY() > 0.0f)
-					velYOffset = 1.0f;
-				else
-					velYOffset = -1.0f;
+	//			if((*m_vObjectList)[i]->VelY() > 0.0f)
+	//				velYOffset = 1.0f;
+	//			else
+	//				velYOffset = -1.0f;
 
-				if(disAwayX < 900.0f)
-				{
-					((CUnit*)(*m_vObjectList)[i])->OrderMove( ((CUnit*)(*m_vObjectList)[i])->Destination() );
-					(*m_vObjectList)[i]->PosX( (*m_vObjectList)[i]->PosX() - (*m_vObjectList)[i]->VelX() *fElapsedTime);
-					(*m_vObjectList)[i]->VelX(0.0f);
-				}
+	//			if(disAwayX < 900.0f)
+	//			{
+	//				((CUnit*)(*m_vObjectList)[i])->OrderMove( ((CUnit*)(*m_vObjectList)[i])->Destination() );
+	//				(*m_vObjectList)[i]->PosX( (*m_vObjectList)[i]->PosX() - (*m_vObjectList)[i]->VelX() *fElapsedTime);
+	//				(*m_vObjectList)[i]->VelX(0.0f);
+	//			}
 
-				if(disAwayY < 900.0f)
-				{
-					((CUnit*)(*m_vObjectList)[i])->OrderMove( ((CUnit*)(*m_vObjectList)[i])->Destination() );
-					(*m_vObjectList)[i]->PosY( (*m_vObjectList)[i]->PosY() - (*m_vObjectList)[i]->VelY() *fElapsedTime);
-					(*m_vObjectList)[i]->VelY(0.0f);
-				}
-			}
-
-
-			//bool hitX = false, hitY = false;
-			//if(i != j)
-			//{
-			//	RECT result;
-			//	RECT collide1X = m_pPlayerArray[i]->GetCollisionRect();
-			//	collide1X.left += m_pPlayerArray[i]->VelX() * fElapsedTime;
-			//	RECT collide1Y = m_pPlayerArray[i]->GetCollisionRect();
-			//	collide1Y.top += m_pPlayerArray[i]->VelY() * fElapsedTime;
-			//	RECT collide2 = m_pPlayerArray[j]->GetCollisionRect();
-			//	if(IntersectRect(&result, &collide1X, &collide2))
-			//	{
-			//		// i is about to hit j in the x
-			//		m_pPlayerArray[i]->Stuck(true);
-			//		m_pPlayerArray[i]->PosX( m_pPlayerArray[i]->PosX() - m_pPlayerArray[i]->VelX() *fElapsedTime);
-			//		m_pPlayerArray[i]->VelX(0.0f);
-			//		hitX = true;
-			//	}
-			//	
-			//	if(IntersectRect(&result, &collide1Y, &collide2)) {
-			//		// i is about to hit j in the y
-			//		m_pPlayerArray[i]->Stuck(true);
-			//		m_pPlayerArray[i]->PosY( m_pPlayerArray[i]->PosY() - m_pPlayerArray[i]->VelY() *fElapsedTime);
-			//		m_pPlayerArray[i]->VelY(0.0f);
-			//		hitY = true;
-			//	}
-			//	
-			//	if(hitX == false && hitY == false) {
-			//		m_pPlayerArray[i]->Stuck(false);
-			//	}
-			//}
-			
-		}
+	//			if(disAwayY < 900.0f)
+	//			{
+	//				((CUnit*)(*m_vObjectList)[i])->OrderMove( ((CUnit*)(*m_vObjectList)[i])->Destination() );
+	//				(*m_vObjectList)[i]->PosY( (*m_vObjectList)[i]->PosY() - (*m_vObjectList)[i]->VelY() *fElapsedTime);
+	//				(*m_vObjectList)[i]->VelY(0.0f);
+	//			}
+	//		}
+	//	}
 	
 
 	//Check for level clear
@@ -1204,6 +1176,24 @@ void CGamePlayState::Render(void)
 	CWorldManager::GetInstance()->Render();
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 	CObjectManager::GetInstance()->RenderObjects();
+	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
+	vector<CBase*>* _objList = CObjectManager::GetInstance()->GetObjectList();
+	for(int i = 0; i < _objList->size(); i++)
+	{
+		if((*_objList)[i]->Type() == CBase::OBJ_PLAYER || (*_objList)[i]->Type() == CBase::OBJ_ENEMY)
+		{
+			// Healthbars
+			RECT hpBar;
+			hpBar.left = LONG((*_objList)[i]->PosX() - 20 - CGame::GetInstance()->GetCamera()->GetX());
+			hpBar.top = LONG((*_objList)[i]->PosY() - ((*_objList)[i]->Height()) - 16 - CGame::GetInstance()->GetCamera()->GetY());
+			hpBar.right = hpBar.left + 40;
+			hpBar.bottom = hpBar.top + 5;
+
+			CSGD_Direct3D::GetInstance()->DrawRect(hpBar, 255, 0, 0);
+			hpBar.right = hpBar.left + LONG(40.0f * ((float(((CUnit*)(*_objList)[i])->CurHealth()))) / ((CUnit*)(*_objList)[i])->MaxHealth());
+			CSGD_Direct3D::GetInstance()->DrawRect(hpBar, 0, 255, 0);
+		}
+	}
 	CMovementControl::GetInstance()->RenderDragRect();
 	RenderHUD();
 	//CPathManager::GetInstance()->RenderLines();
@@ -1280,13 +1270,13 @@ void CGamePlayState::LoadNextLevel()
 			alliedMedic->PosX(50);
 			alliedMedic->PosY(150);
 
-			CBasicEnemy* badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+			CBasicEnemy* badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 			badGuy->Type(CBase::OBJ_ENEMY);
 			badGuy->PosX(1700);
 			badGuy->PosY(200);
 			CObjectManager::GetInstance()->AddObject(badGuy);
 
-			badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+			badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 			badGuy->Type(CBase::OBJ_ENEMY);
 			badGuy->PosX(1600);
 			badGuy->PosY(230);
@@ -1313,19 +1303,19 @@ void CGamePlayState::LoadNextLevel()
 
 			//////////////////////////////////////////////////////////////////////////
 
-			badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+			badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 			badGuy->Type(CBase::OBJ_ENEMY);
 			badGuy->PosX(400);
 			badGuy->PosY(200);
 			CObjectManager::GetInstance()->AddObject(badGuy);
 
-			badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+			badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 			badGuy->Type(CBase::OBJ_ENEMY);
 			badGuy->PosX(1600);
 			badGuy->PosY(900);
 			CObjectManager::GetInstance()->AddObject(badGuy);
 
-			badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+			badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 			badGuy->Type(CBase::OBJ_ENEMY);
 			badGuy->PosX(1700);
 			badGuy->PosY(930);
@@ -1372,7 +1362,7 @@ void CGamePlayState::LoadNextLevel()
 			alliedMedic->PosX(50);
 			alliedMedic->PosY(150);
 
-			CBasicEnemy* badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+			CBasicEnemy* badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 			badGuy->Type(CBase::OBJ_ENEMY);
 			badGuy->PosX(1600);
 			badGuy->PosY(230);
@@ -1406,11 +1396,12 @@ void CGamePlayState::InitHud()
 	m_vButtons.push_back(CHUDButton(270, 706, 256, 256, "UnitPortrait", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/1.png").c_str())));
 	m_vButtons.push_back(CHUDButton(274, 852, 256, 32, "PortraitNameLine", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/2.png").c_str())));
 	m_vButtons.push_back(CHUDButton(433, 728, 1024, 256, "MiddleHUDOutlines", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/3.png").c_str())));
+	m_vButtons.push_back(CHUDButton(433, 728, 1024, 256, "MiddleHUDInventory", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/22.png").c_str())));
 	m_vButtons.push_back(CHUDButton(1113, 688, 64, 64, "MoveOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/7.png").c_str())));
 	m_vButtons.push_back(CHUDButton(1177, 688, 64, 64, "AttackOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/8.png").c_str())));
 	m_vButtons.push_back(CHUDButton(1243, 688, 64, 64, "HoldOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/9.png").c_str())));
-	m_vButtons.push_back(CHUDButton(1357, 819, 64, 64, "CancelOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str())));
-	m_vButtons.push_back(CHUDButton(641, 0, 256, 64, "OverMenuButton", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/13.png").c_str())));
+	m_vButtons.push_back(CHUDButton(1243, 753, 64, 64, "CancelOrder", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/10.png").c_str())));
+	m_vButtons.push_back(CHUDButton(641, 670, 256, 64, "OverMenuButton", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/13.png").c_str())));
 	m_vButtons.push_back(CHUDButton(28, 480, 512, 256, "SpeechBG", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/14.png").c_str())));
 	m_vButtons.push_back(CHUDButton(32, 484, 128, 256, "SpeechSpeaker", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/15.png").c_str())));
 	m_vButtons.push_back(CHUDButton(37, 577, 128, 32, "SpeechSpeakerNameLine", NULL, CSGD_TextureManager::GetInstance()->LoadTexture(CGame::GetInstance()->GraphicsPath("HUD/16.png").c_str())));
@@ -1455,6 +1446,8 @@ void CGamePlayState::InitHud()
 	m_ftTextLarge.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
 	m_ftTextLargeShadow.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 0.80f, 0.80f, 2, D3DCOLOR_XRGB(0,0,0), D3DCOLOR_XRGB(0, 0, 0));
 	m_ftTextLargeShadow.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
+
+
 }
 
 void ActivateAbilityOne()
