@@ -45,10 +45,16 @@ public:
 	CAbility_Cloak(CUnit* tar)
 	{
 		Type(0);
+		Cooldown(30);
+		TimePassed(30);
+		Duration(15);
 		Target(tar);
 		IsActive(false);
 	}
 	void Activate();
+	void Deactivate();
+
+	void Update(float fElapsedTime);
 };
 
 class CAbility_Refresh : public CTargetAbility

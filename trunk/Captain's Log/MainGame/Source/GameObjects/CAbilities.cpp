@@ -88,15 +88,34 @@ void CAbility_PinningShot::Update(float fElapsedTime)
 
 void CAbility_Cloak::Activate()
 {
-	if (!IsActive())
+	if (TimePassed() >= Cooldown())
 	{
+		TimePassed(0);
 		IsActive(true);
 		Target()->Cloaked(true);
 	}
+}
+
+void CAbility_Cloak::Deactivate()
+{
+	Target()->Cloaked(false);
+	IsActive(false);
+}
+
+void CAbility_Cloak::Update(float fElapsedTime)
+{
+	if (TimePassed() < Cooldown())
+	{
+		TimePassed(TimePassed() + fElapsedTime);
+	}
 	else
 	{
-		Target()->Cloaked(false);
-		IsActive(false);
+		TimePassed(Cooldown());
+	}
+
+	if (IsActive() && TimePassed() > Duration())
+	{
+		Deactivate();
 	}
 }
 
