@@ -24,15 +24,16 @@ typedef struct
 	int					nMaxHealth;
 	int					nSightRange;
 	int					nSubType;
+	int					nEnemyClass;
 	float				fPosX;
 	float				fPosY;
 	int					nType;
 
-	int		nItemName[8];
-	int		nItemType[8];
-	int		nAmountType[8];
-	int		nAmountCategory[8];
-	float	fAmount[8];
+	int		nItemName[4];
+	int		nItemType[4];
+	int		nAmountType[4];
+	int		nAmountCategory[4];
+	float	fAmount[4];
 } tUnitSaveInfo;
 
 class CSaveState : public IGameState

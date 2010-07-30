@@ -18,6 +18,7 @@
 #include "..\GameObjects\CMedic.h"
 #include "..\GameObjects\CScout.h"
 #include "..\GameObjects\CBasicEnemies.h"
+#include "..\GameObjects\CBossEnemies.h"
 #include "..\GameObjects\CAbilities.h"
 #include "..\Managers\CUnitFactory.h"
 #include "..\SGD Wrappers\CSGD_FModManager.h"
@@ -65,11 +66,11 @@ void CGamePlayState::LoadProfile(int nOffsetInBytes)
 	CScout* pSco;
 
 	CObjectManager::GetInstance()->RemoveAllObjects();
-	for(int i=0; i<nNumUnits; i++)
+	for(int i = 0; i < nNumUnits; i++)
 	{
 		tUnitSaveInfo tempUnitInfo;
 		fin.read((char*)&tempUnitInfo, sizeof(tUnitSaveInfo));
-		if(i==0) //marine
+		if(i == 0) //marine
 		{
 			CMarine* pMarine = new CMarine();
 			pMarine->Armor(tempUnitInfo.nArmor);
@@ -93,7 +94,7 @@ void CGamePlayState::LoadProfile(int nOffsetInBytes)
 			CObjectManager::GetInstance()->AddObject(pMarine);
 			pMar = pMarine;
 		}
-		else if(i==1) //heavy
+		else if(i == 1) //heavy
 		{
 			CHeavy* pMarine = new CHeavy();
 			pMarine->Armor(tempUnitInfo.nArmor);
@@ -115,9 +116,9 @@ void CGamePlayState::LoadProfile(int nOffsetInBytes)
 			pMarine->Ranged(tempUnitInfo.bRanged);
 			pMarine->Stunned(tempUnitInfo.bStunned);
 			CObjectManager::GetInstance()->AddObject(pMarine);
-			pHeav=pMarine;
+			pHeav = pMarine;
 		}
-		else if(i==2)
+		else if(i == 2)
 		{
 			CMedic* pMarine = new CMedic();
 			pMarine->Armor(tempUnitInfo.nArmor);
@@ -141,7 +142,7 @@ void CGamePlayState::LoadProfile(int nOffsetInBytes)
 			CObjectManager::GetInstance()->AddObject(pMarine);
 			pMed = pMarine;
 		}
-		else if(i==3)
+		else if(i == 3)
 		{
 			CScout* pMarine = new CScout();
 			pMarine->Armor(tempUnitInfo.nArmor);
@@ -165,33 +166,73 @@ void CGamePlayState::LoadProfile(int nOffsetInBytes)
 			CObjectManager::GetInstance()->AddObject(pMarine);
 			pSco = pMarine;
 		}
+		else if (tempUnitInfo.nSubType == CUnit::ENEMY_BASIC)
+		{
+			CBasicEnemy* newEnemy;
+
+			switch (tempUnitInfo.nEnemyClass)
+			{
+			case CUnit::FOOTMAN:
+				newEnemy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+				break;
+			case CUnit::CYCLOPS:
+				newEnemy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Cyclops");
+				break;
+			case CUnit::COLOSSUS:
+				newEnemy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Colossus");
+				break;
+			case CUnit::SHADE:
+				newEnemy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
+				break;
+			case CUnit::MAGE:
+				newEnemy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Mage");
+				break;
+			}
+
+			newEnemy->Armor(tempUnitInfo.nArmor);
+			newEnemy->AttackDamage(tempUnitInfo.fAttackDamage);
+			newEnemy->AttackRange(tempUnitInfo.fAttackRange);
+			newEnemy->AttackSpeed(tempUnitInfo.fAttackSpeed);
+			newEnemy->HealthRegenRate(tempUnitInfo.nHealthRegenRate);
+			newEnemy->Burned(tempUnitInfo.bBurned);
+			newEnemy->Cloaked(tempUnitInfo.bCloaked);
+			newEnemy->CurHealth(tempUnitInfo.nCurHealth);
+			newEnemy->Invulnerable(tempUnitInfo.bInvulnerable);
+			newEnemy->MaxHealth(tempUnitInfo.nMaxHealth);
+			newEnemy->MovementSpeed(tempUnitInfo.fMovementSpeed);
+			newEnemy->PosX(tempUnitInfo.fPosX);
+			newEnemy->PosY(tempUnitInfo.fPosY);
+			newEnemy->SightRange(tempUnitInfo.nSightRange);
+			newEnemy->SubType(tempUnitInfo.nSubType);
+			newEnemy->EnemyClass(tempUnitInfo.nEnemyClass);
+			newEnemy->Type(tempUnitInfo.nType);
+			newEnemy->Ranged(tempUnitInfo.bRanged);
+			newEnemy->Stunned(tempUnitInfo.bStunned);
+			CObjectManager::GetInstance()->AddObject(newEnemy);
+		}
 		else
 		{
-			//
-			//
-			//NOTE: VERY HACKED
-			//TODO:  Make some way of reading in the type of enemy
-			//
-			CBasicEnemy* pMarine = (rand()%2==0) ? (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman") : (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Fire Elemental");
-			pMarine->Armor(tempUnitInfo.nArmor);
-			pMarine->AttackDamage(tempUnitInfo.fAttackDamage);
-			pMarine->AttackRange(tempUnitInfo.fAttackRange);
-			pMarine->AttackSpeed(tempUnitInfo.fAttackSpeed);
-			pMarine->HealthRegenRate(tempUnitInfo.nHealthRegenRate);
-			pMarine->Burned(tempUnitInfo.bBurned);
-			pMarine->Cloaked(tempUnitInfo.bCloaked);
-			pMarine->CurHealth(tempUnitInfo.nCurHealth);
-			pMarine->Invulnerable(tempUnitInfo.bInvulnerable);
-			pMarine->MaxHealth(tempUnitInfo.nMaxHealth);
-			pMarine->MovementSpeed(tempUnitInfo.fMovementSpeed);
-			pMarine->PosX(tempUnitInfo.fPosX);
-			pMarine->PosY(tempUnitInfo.fPosY);
-			pMarine->SightRange(tempUnitInfo.nSightRange);
-			pMarine->SubType(tempUnitInfo.nSubType);
-			pMarine->Type(tempUnitInfo.nType);
-			pMarine->Ranged(tempUnitInfo.bRanged);
-			pMarine->Stunned(tempUnitInfo.bStunned);
-			CObjectManager::GetInstance()->AddObject(pMarine);
+			CBossEnemy* newEnemy = (CBossEnemy*)CUnitFactory::GetInstance()->CreateUnit("Medusa");
+			newEnemy->Armor(tempUnitInfo.nArmor);
+			newEnemy->AttackDamage(tempUnitInfo.fAttackDamage);
+			newEnemy->AttackRange(tempUnitInfo.fAttackRange);
+			newEnemy->AttackSpeed(tempUnitInfo.fAttackSpeed);
+			newEnemy->HealthRegenRate(tempUnitInfo.nHealthRegenRate);
+			newEnemy->Burned(tempUnitInfo.bBurned);
+			newEnemy->Cloaked(tempUnitInfo.bCloaked);
+			newEnemy->CurHealth(tempUnitInfo.nCurHealth);
+			newEnemy->Invulnerable(tempUnitInfo.bInvulnerable);
+			newEnemy->MaxHealth(tempUnitInfo.nMaxHealth);
+			newEnemy->MovementSpeed(tempUnitInfo.fMovementSpeed);
+			newEnemy->PosX(tempUnitInfo.fPosX);
+			newEnemy->PosY(tempUnitInfo.fPosY);
+			newEnemy->SightRange(tempUnitInfo.nSightRange);
+			newEnemy->SubType(tempUnitInfo.nSubType);
+			newEnemy->EnemyClass(tempUnitInfo.nEnemyClass);
+			newEnemy->Type(tempUnitInfo.nType);
+			newEnemy->Ranged(tempUnitInfo.bRanged);
+			newEnemy->Stunned(tempUnitInfo.bStunned);
+			CObjectManager::GetInstance()->AddObject(newEnemy);
 		}
 
 	}
