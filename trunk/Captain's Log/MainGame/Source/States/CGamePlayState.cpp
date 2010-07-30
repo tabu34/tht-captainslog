@@ -335,10 +335,10 @@ void CGamePlayState::Exit(void)
 	CSGD_TextureManager::GetInstance()->UnloadTexture(m_nSelectionCircle);
 	
 	CObjectManager::GetInstance()->RemoveAllObjects();
-	CSGD_FModManager::GetInstance()->StopSound(m_nGunshotSound[0]);
-	CSGD_FModManager::GetInstance()->StopSound(m_nGunshotSound[1]);
-	CSGD_FModManager::GetInstance()->StopSound(m_nGunshotSound[2]);
-	CSGD_FModManager::GetInstance()->StopSound(m_nGunshotSound[3]);
+	CSGD_FModManager::GetInstance()->UnloadSound(m_nGunshotSound[0]);
+	CSGD_FModManager::GetInstance()->UnloadSound(m_nGunshotSound[1]);
+	CSGD_FModManager::GetInstance()->UnloadSound(m_nGunshotSound[2]);
+	CSGD_FModManager::GetInstance()->UnloadSound(m_nGunshotSound[3]);
 	CSGD_FModManager::GetInstance()->StopSound(m_nBGMusic);
 }
 
