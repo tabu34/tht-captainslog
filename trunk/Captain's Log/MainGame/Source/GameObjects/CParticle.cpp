@@ -3,10 +3,7 @@
 #include "../SGD Wrappers/CSGD_TextureManager.h"
 #include "../SGD Wrappers/CSGD_Direct3D.h"
 
-CParticle::CParticle() : CBase()
-{
 
-}
 
 void CParticle::Initialize(int nImageID,int nLife, float fScaleX, float fScaleY, float fPosX, float fPosY, int ncolor)
 {
