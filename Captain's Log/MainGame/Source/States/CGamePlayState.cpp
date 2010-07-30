@@ -846,7 +846,6 @@ void CGamePlayState::RenderHUD(void)
 		case CUnit::PLAYER_MARINE:
 			for (unsigned int i = 0; i < CMovementControl::GetInstance()->Marine()->Inventory()->size(); i++)
 			{
-				int hello = CMovementControl::GetInstance()->Marine()->Inventory()->operator [](i)->ItemName();
 				CSGD_TextureManager::GetInstance()->Draw(m_vItemInstances[CMovementControl::GetInstance()->Marine()->Inventory()->operator [](i)->ItemName()-1].TextureID(), m_ptItemPositions[i].x, m_ptItemPositions[i].y, 1.0f, 1.0f);
 				
 				itemRect.top = m_ptItemPositions[i].y;
@@ -858,32 +857,180 @@ void CGamePlayState::RenderHUD(void)
 				if (IntersectRect(&collide, &itemRect, &mousePos))
 				{
 					m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
-					m_szTooltipText = " Pinning Shot\n Immobilize a unit for 6sec\n     20sec Cooldown";
+					switch (CMovementControl::GetInstance()->Marine()->Inventory()->operator [](i)->ItemName())
+					{
+					case CItem::ITEM_BOOKOFHASTE:
+						m_szTooltipText = " Book of Haste\n Increases attack speed by 3%\n     Passive";
+						break;
+					case CItem::ITEM_BOOKOFSWIFTNESS:
+						m_szTooltipText = " Book of Swiftness\n Increases speed by 3%\n     Passive";
+						break;
+					case CItem::ITEM_BOOKOFPROTECTION:
+						m_szTooltipText = " Book of Protection\n Increases armor by 3%\n     Passive";
+						break;
+					case CItem::ITEM_BOOKOFSTRENGTH:
+						m_szTooltipText = " Book of Strength\n Increases attack damage by 3%\n     Passive";
+						break;
+					case CItem::ITEM_BOOKOFVITALITY:
+						m_szTooltipText = " Book of Vitality\n Increases maximum health by 5\n     Passive";
+						break;
+					case CItem::ITEM_GLOVESOFHASTE:
+						m_szTooltipText = " Gloves of Haste\n Increases attack speed by 10%\n     Passive";
+						break;
+					case CItem::ITEM_BOOTSOFSWIFTNESS:
+						m_szTooltipText = " Boots of Swiftness\n Increases movement speed by 10%\n     Passive";
+						break;
+					case CItem::ITEM_SHIELDOFANGELS:
+						m_szTooltipText = " Shield of Angels\n Increases armor by 10%\n     Passive";
+						break;
+					}
 					m_nToolTipOffsetY = 32;
 					m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
 				}
-
 			}
 			break;
 		case CUnit::PLAYER_MEDIC:
 			for (unsigned int i = 0; i < CMovementControl::GetInstance()->Medic()->Inventory()->size(); i++)
 			{
 				CSGD_TextureManager::GetInstance()->Draw(m_vItemInstances[CMovementControl::GetInstance()->Medic()->Inventory()->operator [](i)->ItemName()-1].TextureID(), m_ptItemPositions[i].x, m_ptItemPositions[i].y, 1.0f, 1.0f);
+
+				itemRect.top = m_ptItemPositions[i].y;
+				itemRect.left = m_ptItemPositions[i].x;
+				itemRect.right = itemRect.left + 43;
+				itemRect.bottom = itemRect.top + 43;
+
+				//Tooltip
+				if (IntersectRect(&collide, &itemRect, &mousePos))
+				{
+					m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
+					switch (CMovementControl::GetInstance()->Medic()->Inventory()->operator [](i)->ItemName())
+					{
+					case CItem::ITEM_BOOKOFHASTE:
+						m_szTooltipText = " Book of Haste\n Increases attack speed by 3%\n     Passive";
+						break;
+					case CItem::ITEM_BOOKOFSWIFTNESS:
+						m_szTooltipText = " Book of Swiftness\n Increases speed by 3%\n     Passive";
+						break;
+					case CItem::ITEM_BOOKOFPROTECTION:
+						m_szTooltipText = " Book of Protection\n Increases armor by 3%\n     Passive";
+						break;
+					case CItem::ITEM_BOOKOFSTRENGTH:
+						m_szTooltipText = " Book of Strength\n Increases attack damage by 3%\n     Passive";
+						break;
+					case CItem::ITEM_BOOKOFVITALITY:
+						m_szTooltipText = " Book of Vitality\n Increases maximum health by 5\n     Passive";
+						break;
+					case CItem::ITEM_GLOVESOFHASTE:
+						m_szTooltipText = " Gloves of Haste\n Increases attack speed by 10%\n     Passive";
+						break;
+					case CItem::ITEM_BOOTSOFSWIFTNESS:
+						m_szTooltipText = " Boots of Swiftness\n Increases movement speed by 10%\n     Passive";
+						break;
+					case CItem::ITEM_SHIELDOFANGELS:
+						m_szTooltipText = " Shield of Angels\n Increases armor by 10%\n     Passive";
+						break;
+					}
+					m_nToolTipOffsetY = 32;
+					m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
+				}
 			}
 			break;
 		case CUnit::PLAYER_HEAVY:
 			for (unsigned int i = 0; i < CMovementControl::GetInstance()->Heavy()->Inventory()->size(); i++)
 			{
 				CSGD_TextureManager::GetInstance()->Draw(m_vItemInstances[CMovementControl::GetInstance()->Heavy()->Inventory()->operator [](i)->ItemName()-1].TextureID(), m_ptItemPositions[i].x, m_ptItemPositions[i].y, 1.0f, 1.0f);
+
+				itemRect.top = m_ptItemPositions[i].y;
+				itemRect.left = m_ptItemPositions[i].x;
+				itemRect.right = itemRect.left + 43;
+				itemRect.bottom = itemRect.top + 43;
+
+				//Tooltip
+				if (IntersectRect(&collide, &itemRect, &mousePos))
+				{
+					m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
+					switch (CMovementControl::GetInstance()->Heavy()->Inventory()->operator [](i)->ItemName())
+					{
+					case CItem::ITEM_BOOKOFHASTE:
+						m_szTooltipText = " Book of Haste\n Increases attack speed by 3%\n     Passive";
+						break;
+					case CItem::ITEM_BOOKOFSWIFTNESS:
+						m_szTooltipText = " Book of Swiftness\n Increases speed by 3%\n     Passive";
+						break;
+					case CItem::ITEM_BOOKOFPROTECTION:
+						m_szTooltipText = " Book of Protection\n Increases armor by 3%\n     Passive";
+						break;
+					case CItem::ITEM_BOOKOFSTRENGTH:
+						m_szTooltipText = " Book of Strength\n Increases attack damage by 3%\n     Passive";
+						break;
+					case CItem::ITEM_BOOKOFVITALITY:
+						m_szTooltipText = " Book of Vitality\n Increases maximum health by 5\n     Passive";
+						break;
+					case CItem::ITEM_GLOVESOFHASTE:
+						m_szTooltipText = " Gloves of Haste\n Increases attack speed by 10%\n     Passive";
+						break;
+					case CItem::ITEM_BOOTSOFSWIFTNESS:
+						m_szTooltipText = " Boots of Swiftness\n Increases movement speed by 10%\n     Passive";
+						break;
+					case CItem::ITEM_SHIELDOFANGELS:
+						m_szTooltipText = " Shield of Angels\n Increases armor by 10%\n     Passive";
+						break;
+					}
+					m_nToolTipOffsetY = 32;
+					m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
+				}
 			}
 			break;
 		case CUnit::PLAYER_SCOUT:
 			for (unsigned int i = 0; i < CMovementControl::GetInstance()->Scout()->Inventory()->size(); i++)
 			{
 				CSGD_TextureManager::GetInstance()->Draw(m_vItemInstances[CMovementControl::GetInstance()->Scout()->Inventory()->operator [](i)->ItemName()-1].TextureID(), m_ptItemPositions[i].x, m_ptItemPositions[i].y, 1.0f, 1.0f);
+
+				itemRect.top = m_ptItemPositions[i].y;
+				itemRect.left = m_ptItemPositions[i].x;
+				itemRect.right = itemRect.left + 43;
+				itemRect.bottom = itemRect.top + 43;
+
+				//Tooltip
+				if (IntersectRect(&collide, &itemRect, &mousePos))
+				{
+					m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
+					switch (CMovementControl::GetInstance()->Scout()->Inventory()->operator [](i)->ItemName())
+					{
+					case CItem::ITEM_BOOKOFHASTE:
+						m_szTooltipText = " Book of Haste\n Increases attack speed by 3%\n     Passive";
+						break;
+					case CItem::ITEM_BOOKOFSWIFTNESS:
+						m_szTooltipText = " Book of Swiftness\n Increases speed by 3%\n     Passive";
+						break;
+					case CItem::ITEM_BOOKOFPROTECTION:
+						m_szTooltipText = " Book of Protection\n Increases armor by 3%\n     Passive";
+						break;
+					case CItem::ITEM_BOOKOFSTRENGTH:
+						m_szTooltipText = " Book of Strength\n Increases attack damage by 3%\n     Passive";
+						break;
+					case CItem::ITEM_BOOKOFVITALITY:
+						m_szTooltipText = " Book of Vitality\n Increases maximum health by 5\n     Passive";
+						break;
+					case CItem::ITEM_GLOVESOFHASTE:
+						m_szTooltipText = " Gloves of Haste\n Increases attack speed by 10%\n     Passive";
+						break;
+					case CItem::ITEM_BOOTSOFSWIFTNESS:
+						m_szTooltipText = " Boots of Swiftness\n Increases movement speed by 10%\n     Passive";
+						break;
+					case CItem::ITEM_SHIELDOFANGELS:
+						m_szTooltipText = " Shield of Angels\n Increases armor by 10%\n     Passive";
+						break;
+					}
+					m_nToolTipOffsetY = 32;
+					m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
+				}
 			}
 			break;
 		}
+		if (m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible())
+			CSGD_TextureManager::GetInstance()->Draw(m_vButtonInstances[FindButton("ToolTipLargeBG")].TextureID(), m_vButtonInstances[FindButton("ToolTipLargeBG")].Point().x, m_vButtonInstances[FindButton("ToolTipLargeBG")].Point().y, 1.0f, 1.0f);
+
 	}
 
 	// Render Names
