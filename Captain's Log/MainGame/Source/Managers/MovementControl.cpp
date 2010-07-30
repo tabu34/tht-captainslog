@@ -336,7 +336,6 @@ void CMovementControl::Input()
 			RECT collideInventory;
 			RECT collisionRect = {572, 735, 814, 867};
 			POINT itemPoint;
-			size_t hello = CMovementControl::GetInstance()->GetSelectedUnits()->size();
 			if (IntersectRect(&collideInventory, &mouseRect, &collisionRect) && CMovementControl::GetInstance()->GetSelectedUnits()->size())
 			{
 				switch (((CUnit*)(CMovementControl::GetInstance()->GetSelectedUnits()->operator [](0)))->SubType())
@@ -407,25 +406,36 @@ void CMovementControl::Input()
 		}
 	}
 
+	RECT mouseRect = {0, 0, 0, 0};
+	mouseRect.left = LONG((float)CSGD_DirectInput::GetInstance()->MouseGetPosX() + CGame::GetInstance()->GetCamera()->GetX());
+	mouseRect.top = LONG((float)CSGD_DirectInput::GetInstance()->MouseGetPosY() + CGame::GetInstance()->GetCamera()->GetY());
+	mouseRect.right = mouseRect.left + 1;
+	mouseRect.bottom = mouseRect.top +1;
 
-	if (CGamePlayState::GetInstance()->CurrentCommand()=="" && !m_bCommand)
+	RECT hudRect = CGamePlayState::GetInstance()->GetButtons()[CGamePlayState::GetInstance()->FindButton("BottomHUD")].GetCollisionRect();
+	RECT resultRect;
+
+	if (!IntersectRect(&resultRect, &mouseRect, &hudRect))
 	{
-		if(m_DI->MouseButtonDown(MOUSE_LEFT))
+		if (CGamePlayState::GetInstance()->CurrentCommand()=="" && !m_bCommand)
 		{
-			// Unit Selection ---------------
-			if(m_bDragging == false)
+			if(m_DI->MouseButtonDown(MOUSE_LEFT))
 			{
-				m_bDragging = true;
-				m_ptStart.x = CSGD_DirectInput::GetInstance()->MouseGetPosX();
-				m_ptStart.y = CSGD_DirectInput::GetInstance()->MouseGetPosY();
+				// Unit Selection ---------------
+				if(m_bDragging == false)
+				{
+					m_bDragging = true;
+					m_ptStart.x = CSGD_DirectInput::GetInstance()->MouseGetPosX();
+					m_ptStart.y = CSGD_DirectInput::GetInstance()->MouseGetPosY();
+				}
+				// END Unit Selection -----------
+	
+				//m_esEventSystem->SendEvent("RightMouseButtonPressed");
+			} 
+			else 
+			{
+				m_bDragging = false;
 			}
-			// END Unit Selection -----------
-
-			//m_esEventSystem->SendEvent("RightMouseButtonPressed");
-		} 
-		else 
-		{
-			m_bDragging = false;
 		}
 	}
 	
@@ -638,22 +648,25 @@ void CMovementControl::CheckDragRect()
 
 		for(unsigned int i = 0; i < m_vObjectList->size(); i++)
 		{
-			RECT collide;
-			RECT collisionRect = (*m_vObjectList)[i]->GetCollisionRect();
-			if(IntersectRect(&collide, &dragRect, &collisionRect))
+			if (m_vObjectList->operator [](i)->Type() != CBase::OBJ_ITEM)
 			{
-				if(!((CUnit*)(*m_vObjectList)[i])->Selected())	// If not selected
+				RECT collide;
+				RECT collisionRect = (*m_vObjectList)[i]->GetCollisionRect();
+				if(IntersectRect(&collide, &dragRect, &collisionRect))
 				{
-					((CUnit*)(*m_vObjectList)[i])->Selected(true);
-					(*m_vSelected).push_back( (*m_vObjectList)[i] );
-				}
-			} 
-			else
-			{
-				if( ((CUnit*)(*m_vObjectList)[i])->Selected() )	// If selected
+					if(!((CUnit*)(*m_vObjectList)[i])->Selected())	// If not selected
+					{
+						((CUnit*)(*m_vObjectList)[i])->Selected(true);
+						(*m_vSelected).push_back( (*m_vObjectList)[i] );
+					}
+				} 
+				else
 				{
-					((CUnit*)(*m_vObjectList)[i])->Selected(false);
-					CObjectManager::GetInstance()->FindAndRemove( (CUnit*)(*m_vObjectList)[i] );
+					if( ((CUnit*)(*m_vObjectList)[i])->Selected() )	// If selected
+					{
+						((CUnit*)(*m_vObjectList)[i])->Selected(false);
+						CObjectManager::GetInstance()->FindAndRemove( (CUnit*)(*m_vObjectList)[i] );
+					}
 				}
 			}
 		}
