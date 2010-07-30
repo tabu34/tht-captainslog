@@ -499,7 +499,7 @@ bool CGamePlayState::CheckButtonInput()
 		m_szTooltipText = " Cloak\n Become invisible for 15sec\n     30sec Cooldown";
 		m_nToolTipOffsetY = 32;
 		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
-		if(CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
+		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
 		{
 			m_vButtons[FindButton("Scout 1")].Activate();
 			return true;
