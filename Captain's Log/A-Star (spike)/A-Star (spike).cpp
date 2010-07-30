@@ -179,7 +179,7 @@ bool InsideBlocker(POINT p)
 					{
 						if(p1.y!=p2.y)
 						{
-							xInters = (p.y-p1.y)*(p2.x-p1.x)/(p2.y-p1.y)+p1.x;
+							xInters = float((p.y-p1.y)*(p2.x-p1.x)/(p2.y-p1.y)+p1.x);
 							if(p1.x == p2.x || p.x<=xInters)
 								counter++;
 						}

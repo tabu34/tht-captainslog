@@ -151,12 +151,12 @@ bool CPathManager::InsideObject( tNode _node )
 {
 	vector<CBase*>* _objList = CObjectManager::GetInstance()->GetObjectList();
 	RECT nodeRect;
-	nodeRect.left = _node.fX - 20;
-	nodeRect.top = _node.fY - 20;
-	nodeRect.right = nodeRect.left + 40;
-	nodeRect.bottom = nodeRect.top + 40;
+	nodeRect.left = LONG(_node.fX - 20);
+	nodeRect.top = LONG(_node.fY - 20);
+	nodeRect.right = LONG(nodeRect.left + 40);
+	nodeRect.bottom = LONG(nodeRect.top + 40);
 	RECT objectRect, result;
-	for(int i = 0; i < _objList->size(); i++)
+	for(unsigned int i = 0; i < _objList->size(); i++)
 	{
 		objectRect = (*_objList)[i]->GetCollisionRect();
 		if(IntersectRect(&result, &objectRect, &nodeRect))
@@ -376,7 +376,7 @@ bool CPathManager::CheckPath(float fX1, float fY1, float fX2, float fY2)
 bool CPathManager::NodeInBH(int _num, int* _arr, tNode * _node)
 {
 	// check if the _node is in the _vec
-	for(unsigned int i = 1; i <= _num; i++)
+	for(int i = 1; i <= _num; i++)
 	{
 		if(xPos[(_arr)[i]] == _node->fX && yPos[(_arr)[i]] == _node->fY)
 			return true;
@@ -430,7 +430,7 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 {
 	//THIS is A*
 
-	for(int i = 0; i < m_lstNodeList.size(); i++)
+	for(unsigned int i = 0; i < m_lstNodeList.size(); i++)
 	{
 		m_lstNodeList[i].checked = false;
 		//if(InsideObject( m_lstNodeList[i] ) && ((m_lstNodeList[i].fX != fX1 && m_lstNodeList[i].fY != fY1) && (m_lstNodeList[i].fX != fX2 && m_lstNodeList[i].fY != fY2)))
