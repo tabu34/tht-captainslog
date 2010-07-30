@@ -424,7 +424,7 @@ bool CGamePlayState::CheckButtonInput()
 	if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Marine 1")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Marine 1")].Visible())
 	{
 		m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
-		m_szTooltipText = " Overdrive\n 50% Attack Speed for \n  7 Seconds\n     30sec Cooldown";
+		m_szTooltipText = " Overdrive\n 50% Attack Speed for \n  5 Seconds\n     25sec Cooldown";
 		m_nToolTipOffsetY = 32;
 		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
@@ -436,7 +436,7 @@ bool CGamePlayState::CheckButtonInput()
 	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Marine 2")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Marine 2")].Visible())
 	{
 		m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
-		m_szTooltipText = " Stun Grenade\n 5sec area effect stun\n     30sec Cooldown";
+		m_szTooltipText = " Stun Grenade\n 5sec area effect stun\n     20sec Cooldown";
 		m_nToolTipOffsetY = 32;
 		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
@@ -448,7 +448,7 @@ bool CGamePlayState::CheckButtonInput()
 	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Heavy 1")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Heavy 1")].Visible())
 	{
 		m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
-		m_szTooltipText = " Armor Lockdown\n Increases armor by 50 \n  for 12sec\n     60sec Cooldown";
+		m_szTooltipText = " Armor Lockdown\n Increases armor by 50 \n  for 12sec\n     30sec Cooldown";
 		m_nToolTipOffsetY = 32;
 		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
@@ -460,7 +460,7 @@ bool CGamePlayState::CheckButtonInput()
 	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Heavy 2")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Heavy 2")].Visible())
 	{
 		m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
-		m_szTooltipText = " Missile Barrage\n Deals 50 damage tonenemies in range\n     30sec Cooldown";
+		m_szTooltipText = " Missile Barrage\n Deals 50 damage to enemies in range\n     20sec Cooldown";
 		m_nToolTipOffsetY = 32;
 		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
@@ -472,7 +472,7 @@ bool CGamePlayState::CheckButtonInput()
 	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Medic 1")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Medic 1")].Visible())
 	{
 		m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
-		m_szTooltipText = " Defensive Matrix\n Makes target invulnerable for \n  8sec\n     50sec Cooldown";
+		m_szTooltipText = " Defensive Matrix\n Makes target invulnerable for \n  4sec\n     20sec Cooldown";
 		m_nToolTipOffsetY = 32;
 		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
@@ -484,7 +484,7 @@ bool CGamePlayState::CheckButtonInput()
 	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Medic 2")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Medic 2")].Visible())
 	{
 		m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
-		m_szTooltipText = " Refresh\n Heal target for 20hp\n     12sec Cooldown";
+		m_szTooltipText = " Refresh\n Heal target for 20hp\n     10sec Cooldown";
 		m_nToolTipOffsetY = 32;
 		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
@@ -496,7 +496,7 @@ bool CGamePlayState::CheckButtonInput()
 	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Scout 1")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Scout 1")].Visible())
 	{
 		m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
-		m_szTooltipText = " Cloak\n Become invisible/visible\n     No Cooldown";
+		m_szTooltipText = " Cloak\n Become invisible for 15sec\n     30sec Cooldown";
 		m_nToolTipOffsetY = 32;
 		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonPressed(0))
@@ -508,7 +508,7 @@ bool CGamePlayState::CheckButtonInput()
 	else if (IntersectRect(&collide, &(collider = m_vButtons[FindButton("Scout 2")].GetCollisionRect()), &mousePos) && m_vButtonInstances[FindButton("Scout 2")].Visible())
 	{
 		m_vButtonInstances[FindButton("ToolTipLargeBG")].Point(mousePos.left - 4, mousePos.top - 64);
-		m_szTooltipText = " Pinning Shot\n Immobilize a unit for 6sec\n     20sec Cooldown";
+		m_szTooltipText = " Pinning Shot\n Immobilize a unit for 3sec\n     10sec Cooldown";
 		m_nToolTipOffsetY = 32;
 		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
 		if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
@@ -516,8 +516,10 @@ bool CGamePlayState::CheckButtonInput()
 			m_vButtons[FindButton("Scout 2")].Activate();
 			return true;
 		}
-	} else {
-			m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(false);
+	} 
+	else 
+	{
+		m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(false);
 	}
 
 	return false;

@@ -191,7 +191,7 @@ void CBasicEnemy::Render7()
 
 	// Selection Cirle
 	if(Selected())
-		CSGD_TextureManager::GetInstance()->Draw(CGamePlayState::GetInstance()->GetSelectionCircleID(), int((PosX()) / 2 - 32) - (int)CGame::GetInstance()->GetCamera()->GetX(), int(PosY() - 16) - (int)CGame::GetInstance()->GetCamera()->GetY(), 1.0f, 1.0f,0,0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 0, 0));
+		CSGD_TextureManager::GetInstance()->Draw(CGamePlayState::GetInstance()->GetSelectionCircleID(), (int(PosX()) / 2) - 32 - (int)CGame::GetInstance()->GetCamera()->GetX(), int(PosY()) - 16 - (int)CGame::GetInstance()->GetCamera()->GetY(), 1.0f, 1.0f,0,0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 0, 0));
 
 	if (State() == 0 || State() == 3)
 	{
@@ -307,7 +307,7 @@ void CBasicEnemy::Render7()
 void CBasicEnemy::Render16()
 {
 	if(Selected() || State() == 3)
-		CSGD_TextureManager::GetInstance()->Draw(CGamePlayState::GetInstance()->GetSelectionCircleID(), int((PosX()) - 32 - CGame::GetInstance()->GetCamera()->GetX()), int(PosY() - CGame::GetInstance()->GetCamera()->GetY()), 1.0f, 1.0f,0,0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 0, 0));
+		CSGD_TextureManager::GetInstance()->Draw(CGamePlayState::GetInstance()->GetSelectionCircleID(), int((PosX()) - 32 - CGame::GetInstance()->GetCamera()->GetX()), int(PosY() - 16 - CGame::GetInstance()->GetCamera()->GetY()), 1.0f, 1.0f,0,0.0f, 0.0f, 0.0f, D3DCOLOR_ARGB(255, 255, 0, 0));
 	if (State() == 0)
 	{
 		CAnimationManager::GetInstance()->GetAnimation((*Animations())[CurDirection()])->anAnimation.CurFrame(0);
