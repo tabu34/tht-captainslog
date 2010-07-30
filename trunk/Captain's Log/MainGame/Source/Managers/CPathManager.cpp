@@ -433,10 +433,10 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 	for(int i = 0; i < m_lstNodeList.size(); i++)
 	{
 		m_lstNodeList[i].checked = false;
-		if(InsideObject( m_lstNodeList[i] ))
-				m_lstNodeList[i].blocked = true;
-			else
-				m_lstNodeList[i].blocked = false;
+		//if(InsideObject( m_lstNodeList[i] ) && ((m_lstNodeList[i].fX != fX1 && m_lstNodeList[i].fY != fY1) && (m_lstNodeList[i].fX != fX2 && m_lstNodeList[i].fY != fY2)))
+		//		m_lstNodeList[i].blocked = true;
+		//	else
+		//		m_lstNodeList[i].blocked = false;
 	}
 
 	//vector<int> closedList;			// Closed cells
@@ -510,6 +510,7 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 		}
 
 		start = mid;
+		m_lstNodeList[start].blocked = false;
 	}
 
 	
@@ -559,6 +560,7 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 		}
 
 	   goal = mid;
+	   m_lstNodeList[goal].blocked = false;
 	}
 	// END Figure out our starting and ending cells
 

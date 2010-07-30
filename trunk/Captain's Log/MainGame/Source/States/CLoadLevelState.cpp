@@ -92,48 +92,48 @@ void CLoadLevelState::Load()
 		CObjectManager::GetInstance()->AddObject(testItem);
 
 
-		CBasicEnemy* badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		CBasicEnemy* badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 		badGuy->Type(CBase::OBJ_ENEMY);
 		badGuy->PosX(1300);
 		badGuy->PosY(1550);
 		CObjectManager::GetInstance()->AddObject(badGuy);
 
-		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 		badGuy->Type(CBase::OBJ_ENEMY);
 		badGuy->PosX(1407);
 		badGuy->PosY(1650);
 		CObjectManager::GetInstance()->AddObject(badGuy);
 
-		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 		badGuy->Type(CBase::OBJ_ENEMY);
 		badGuy->PosX(1402);
 		badGuy->PosY(1550);
 		CObjectManager::GetInstance()->AddObject(badGuy);
 
-		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 		badGuy->Type(CBase::OBJ_ENEMY);
 		badGuy->PosX(1300);
 		badGuy->PosY(1650);
 		CObjectManager::GetInstance()->AddObject(badGuy);
 
-		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 		badGuy->Type(CBase::OBJ_ENEMY);
 		badGuy->PosX(2850);
 		badGuy->PosY(450);
 		CObjectManager::GetInstance()->AddObject(badGuy);
 
-		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 		badGuy->Type(CBase::OBJ_ENEMY);
 		badGuy->PosX(2950);
 		badGuy->PosY(430);
 
-		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 		badGuy->Type(CBase::OBJ_ENEMY);
 		badGuy->PosX(2830);
 		badGuy->PosY(570);
 		CObjectManager::GetInstance()->AddObject(badGuy);
 
-		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 		badGuy->Type(CBase::OBJ_ENEMY);
 		badGuy->PosX(2950);
 		badGuy->PosY(580);
@@ -261,49 +261,49 @@ void CLoadLevelState::Load()
 		alliedMedic->PosX(350);
 		alliedMedic->PosY(150);
 
-		CBasicEnemy* badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		CBasicEnemy* badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 		badGuy->Type(CBase::OBJ_ENEMY);
 		badGuy->PosX(500);
 		badGuy->PosY(700);
 		CObjectManager::GetInstance()->AddObject(badGuy);
 
-		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 		badGuy->Type(CBase::OBJ_ENEMY);
 		badGuy->PosX(600);
 		badGuy->PosY(900);
 		CObjectManager::GetInstance()->AddObject(badGuy);
 
-		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 		badGuy->Type(CBase::OBJ_ENEMY);
 		badGuy->PosX(580);
 		badGuy->PosY(1060);
 		CObjectManager::GetInstance()->AddObject(badGuy);
 
-		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 		badGuy->Type(CBase::OBJ_ENEMY);
 		badGuy->PosX(690);
 		badGuy->PosY(1250);
 		CObjectManager::GetInstance()->AddObject(badGuy);
 
-		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 		badGuy->Type(CBase::OBJ_ENEMY);
 		badGuy->PosX(1300);
 		badGuy->PosY(2100);
 		CObjectManager::GetInstance()->AddObject(badGuy);
 
-		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 		badGuy->Type(CBase::OBJ_ENEMY);
 		badGuy->PosX(1450);
 		badGuy->PosY(2000);
 		CObjectManager::GetInstance()->AddObject(badGuy);
 
-		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 		badGuy->Type(CBase::OBJ_ENEMY);
 		badGuy->PosX(1390);
 		badGuy->PosY(1800);
 		CObjectManager::GetInstance()->AddObject(badGuy);
 
-		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Footman");
+		badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 		badGuy->Type(CBase::OBJ_ENEMY);
 		badGuy->PosX(1350);
 		badGuy->PosY(1700);
