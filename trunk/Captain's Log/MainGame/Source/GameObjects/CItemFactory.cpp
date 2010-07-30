@@ -31,21 +31,21 @@ CItemFactory::~CItemFactory()
 {
 	for (unsigned int i = 0; i < m_vActiveItems.size(); i++)
 	{
-		SAFE_RELEASE(m_vActiveItems[i]->pItem);
+		SAFE_DELETE(m_vActiveItems[i]->pItem);
 		SAFE_DELETE(m_vActiveItems[i]);
 	}
 	m_vActiveItems.clear();
 
 	for (unsigned int i = 0; i < m_vAppliedItems.size(); i++)
 	{
-		SAFE_RELEASE(m_vAppliedItems[i]->pItem);
+		SAFE_DELETE(m_vAppliedItems[i]->pItem);
 		SAFE_DELETE(m_vAppliedItems[i]);
 	}
 	m_vAppliedItems.clear();
 
 	for (unsigned int i = 0; i < m_vPassiveItems.size(); i++)
 	{
-		SAFE_RELEASE(m_vPassiveItems[i]->pItem);
+		SAFE_DELETE(m_vPassiveItems[i]->pItem);
 		SAFE_DELETE(m_vPassiveItems[i]);
 	}
 	m_vPassiveItems.clear();
@@ -53,7 +53,7 @@ CItemFactory::~CItemFactory()
 	while (!m_ItemTemplates.empty())
 	{
 		map<string, CItem*>::iterator iter = m_ItemTemplates.begin();
-		SAFE_RELEASE(iter->second);
+		SAFE_DELETE(iter->second);
 		m_ItemTemplates.erase(iter);
 	}
 }
@@ -167,11 +167,11 @@ void CItemFactory::RegisterItems()
 	{
 		pair<string, CItem*> objDef;
 
-		CItem* BookOfHaste = new CAppliedItem();
+		CItem* BookOfHaste = new CPassive();
 		BookOfHaste->ItemName(CItem::ITEM_BOOKOFHASTE);
 		BookOfHaste->AmountType(CItem::VALUETYPE_PERCENTAGE);
 		BookOfHaste->AmountCategory(CItem::VALUECATEGORY_ATTACKSPEED);
-		BookOfHaste->ItemType(CItem::ITEMTYPE_APPLIED);
+		BookOfHaste->ItemType(CItem::ITEMTYPE_PASSIVE);
 		BookOfHaste->Amount(3);
 		BookOfHaste->Type(CBase::OBJ_ITEM);
 
@@ -185,11 +185,11 @@ void CItemFactory::RegisterItems()
 	{
 		pair<string, CItem*> objDef;
 
-		CItem* BookOfSwiftness = new CAppliedItem();
+		CItem* BookOfSwiftness = new CPassive();
 		BookOfSwiftness->ItemName(CItem::ITEM_BOOKOFSWIFTNESS);
 		BookOfSwiftness->AmountType(CItem::VALUETYPE_PERCENTAGE);
 		BookOfSwiftness->AmountCategory(CItem::VALUECATEGORY_MOVEMENTSPEED);
-		BookOfSwiftness->ItemType(CItem::ITEMTYPE_APPLIED);
+		BookOfSwiftness->ItemType(CItem::ITEMTYPE_PASSIVE);
 		BookOfSwiftness->Amount(3);
 		BookOfSwiftness->Type(CBase::OBJ_ITEM);
 
@@ -203,11 +203,11 @@ void CItemFactory::RegisterItems()
 	{
 		pair<string, CItem*> objDef;
 
-		CItem* BookOfProtection = new CAppliedItem();
+		CItem* BookOfProtection = new CPassive();
 		BookOfProtection->ItemName(CItem::ITEM_BOOKOFPROTECTION);
 		BookOfProtection->AmountType(CItem::VALUETYPE_PERCENTAGE);
 		BookOfProtection->AmountCategory(CItem::VALUECATEGORY_ARMOR);
-		BookOfProtection->ItemType(CItem::ITEMTYPE_APPLIED);
+		BookOfProtection->ItemType(CItem::ITEMTYPE_PASSIVE);
 		BookOfProtection->Amount(3);
 		BookOfProtection->Type(CBase::OBJ_ITEM);
 
@@ -221,11 +221,11 @@ void CItemFactory::RegisterItems()
 	{
 		pair<string, CItem*> objDef;
 
-		CItem* BookOfStrength = new CAppliedItem();
+		CItem* BookOfStrength = new CPassive();
 		BookOfStrength->ItemName(CItem::ITEM_BOOKOFSTRENGTH);
 		BookOfStrength->AmountType(CItem::VALUETYPE_PERCENTAGE);
 		BookOfStrength->AmountCategory(CItem::VALUECATEGORY_ATTACKDAMAGE);
-		BookOfStrength->ItemType(CItem::ITEMTYPE_APPLIED);
+		BookOfStrength->ItemType(CItem::ITEMTYPE_PASSIVE);
 		BookOfStrength->Amount(3);
 		BookOfStrength->Type(CBase::OBJ_ITEM);
 
@@ -239,11 +239,11 @@ void CItemFactory::RegisterItems()
 	{
 		pair<string, CItem*> objDef;
 
-		CItem* BookOfVitality = new CAppliedItem();
+		CItem* BookOfVitality = new CPassive();
 		BookOfVitality->ItemName(CItem::ITEM_BOOKOFVITALITY);
 		BookOfVitality->AmountType(CItem::VALUETYPE_INTEGER);
 		BookOfVitality->AmountCategory(CItem::VALUECATEGORY_HP);
-		BookOfVitality->ItemType(CItem::ITEMTYPE_APPLIED);
+		BookOfVitality->ItemType(CItem::ITEMTYPE_PASSIVE);
 		BookOfVitality->Amount(3);
 		BookOfVitality->Type(CBase::OBJ_ITEM);
 
