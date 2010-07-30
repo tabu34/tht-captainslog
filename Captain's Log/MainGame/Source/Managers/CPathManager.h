@@ -19,7 +19,7 @@ struct tNode
 	float fX;
 	float fY;
 	bool checked;
-
+	bool blocked;
 	// give it a predicate
 	bool operator<(tNode rhx) { return fY * 9001 + fX < rhx.fY * 9001 + rhx.fX; }
 	bool operator>(tNode rhx) { return fY * 9001 + fX > rhx.fY * 9001 + rhx.fX; }
@@ -91,6 +91,7 @@ private:
 	CPathManager& operator=(const CPathManager&);
 	bool NodeChecked(vector<int>* _vec, tNode * _node);
 	bool NodeInBH(int _num, int* _arr, tNode * _node);
+	bool InsideObject( tNode _node );
 	void AddToSortedList(vector<int>* _vec, int _newVal);
 	int GetNodeIndexInVec(vector<tNode>* _vec, tNode * _node);
 public:

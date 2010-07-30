@@ -28,13 +28,10 @@ CUnit::CUnit()
 void CUnit::OrderMove( POINT _dest )
 {
 	m_nState = UNIT_MOVING;
-	if(CPathManager::GetInstance()->CheckPath(PosX(), PosY(), (float)_dest.x, (float)_dest.y) && !CPathManager::GetInstance()->IsPointInside(_dest))
+	if(!CPathManager::GetInstance()->IsPointInside(_dest))
 	{
+
 		m_vDirections.clear();
-		m_pDestinationMove = _dest;
-	}
-	else
-	{
 		m_vDirections = CPathManager::GetInstance()->GetPath(PosX(), PosY(), (float)_dest.x, (float)_dest.y);
 		if(m_vDirections.size()>0)
 		{
@@ -61,13 +58,7 @@ void CUnit::OrderMove( int _x, int _y)
 {
 	m_nState = UNIT_MOVING;
 	POINT pP = {_x, _y};
-	if(CPathManager::GetInstance()->CheckPath(PosX(), PosY(), (float)_x, (float)_y) && !CPathManager::GetInstance()->IsPointInside(pP))
-	{
-		m_vDirections.clear();
-		m_pDestinationMove.x = _x;
-		m_pDestinationMove.y = _y;
-	}
-	else
+	if(!CPathManager::GetInstance()->IsPointInside(pP))
 	{
 		m_vDirections = CPathManager::GetInstance()->GetPath(PosX(), PosY(), (float)_x, (float)_y);
 		if(m_vDirections.size()>0)
@@ -366,11 +357,13 @@ void CUnit::Render()
 	//END
 
 	// DRAW DIRECTIONS
-	//for(unsigned int i = 0; i < m_vDirections.size(); i++)
-	//{
-	//	if(i+1 < m_vDirections.size())
-	//		CSGD_Direct3D::GetInstance()->DrawLine(int(m_vDirections[i]->fX - CGame::GetInstance()->GetCamera()->GetX()), int(m_vDirections[i]->fY - CGame::GetInstance()->GetCamera()->GetY()), int(m_vDirections[i+1]->fX - CGame::GetInstance()->GetCamera()->GetX()), int(m_vDirections[i+1]->fY - CGame::GetInstance()->GetCamera()->GetY()), 255, 255, 255);
-	//}
+	for(unsigned int i = 0; i < m_vDirections.size(); i++)
+	{
+		if(i+1 < m_vDirections.size())
+			CSGD_Direct3D::GetInstance()->DrawLine(int(m_vDirections[i]->fX - CGame::GetInstance()->GetCamera()->GetX()), int(m_vDirections[i]->fY - CGame::GetInstance()->GetCamera()->GetY()), int(m_vDirections[i+1]->fX - CGame::GetInstance()->GetCamera()->GetX()), int(m_vDirections[i+1]->fY - CGame::GetInstance()->GetCamera()->GetY()), 255, 255, 255);
+	}
+
+	//CSGD_Direct3D::GetInstance()->DrawRect(GetCollisionRect(), 255, 255, 255);
 }
 
 int CUnit::DistanceSquared(int nOtherPosX, int nOtherPosY)

@@ -677,17 +677,17 @@ void CGamePlayState::Update(float fElapsedTime)
 				else
 					velYOffset = -1.0f;
 
-				if(disAwayX < 525.0f)
+				if(disAwayX < 900.0f)
 				{
-					(*m_vObjectList)[i]->Stuck(true);
-					(*m_vObjectList)[i]->PosX( (*m_vObjectList)[i]->PosX() - ((*m_vObjectList)[i]->VelX() *fElapsedTime * 5.0f) - velXOffset);
+					((CUnit*)(*m_vObjectList)[i])->OrderMove( ((CUnit*)(*m_vObjectList)[i])->Destination() );
+					(*m_vObjectList)[i]->PosX( (*m_vObjectList)[i]->PosX() - (*m_vObjectList)[i]->VelX() *fElapsedTime);
 					(*m_vObjectList)[i]->VelX(0.0f);
 				}
 
-				if(disAwayY < 525.0f)
+				if(disAwayY < 900.0f)
 				{
-					(*m_vObjectList)[i]->Stuck(true);
-					(*m_vObjectList)[i]->PosY( (*m_vObjectList)[i]->PosY() - ((*m_vObjectList)[i]->VelY() *fElapsedTime * 5.0f) - velYOffset);
+					((CUnit*)(*m_vObjectList)[i])->OrderMove( ((CUnit*)(*m_vObjectList)[i])->Destination() );
+					(*m_vObjectList)[i]->PosY( (*m_vObjectList)[i]->PosY() - (*m_vObjectList)[i]->VelY() *fElapsedTime);
 					(*m_vObjectList)[i]->VelY(0.0f);
 				}
 			}
