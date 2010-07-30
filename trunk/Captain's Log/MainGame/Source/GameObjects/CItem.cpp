@@ -6,7 +6,7 @@
 CItem::CItem()
 {
 	m_nItemName = 0;
-	m_nItemType = 0;
+	m_nItemType = 2;
 	m_nAmountType = 0;
 	m_nAmountCategory = 0;
 	m_fAmount = 0;
@@ -27,6 +27,7 @@ CItem& CItem::operator=( CItem& pItem )
 
 bool CItem::Collect( CUnit* pTarget )
 {
+	//ItemType(ITEMTYPE_APPLIED);
 	if (((CPlayerUnit*)pTarget)->Inventory()->size() >= MAX_INVENTORY)
 		return false;
 	m_pTarget = pTarget;
@@ -38,7 +39,7 @@ bool CItem::Collect( CUnit* pTarget )
 
 void CItem::AddEffect()
 {
-
+	//ItemType(ITEMTYPE_APPLIED);
 	switch (ItemType())
 	{
 	case ITEMTYPE_APPLIED:
