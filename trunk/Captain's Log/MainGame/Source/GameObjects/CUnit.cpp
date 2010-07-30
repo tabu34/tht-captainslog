@@ -104,8 +104,8 @@ void CUnit::Update(float fElapsedTime)
 	{
 		if (Type() == OBJ_PLAYER)
 			CGamePlayState::GetInstance()->ClearCommand();
-		CGamePlayState::GetInstance()->Engine()->Emitters()->operator [](0).PosX(-500);
-		CGamePlayState::GetInstance()->Engine()->Emitters()->operator [](0).PosY(-500);
+//		CGamePlayState::GetInstance()->Engine()->Emitters()->operator [](0).PosX(-500);
+//		CGamePlayState::GetInstance()->Engine()->Emitters()->operator [](0).PosY(-500);
 		CMessageSystem::GetInstance()->SendMessage(new CUnitDeathMessage(this));
 		return;
 	}

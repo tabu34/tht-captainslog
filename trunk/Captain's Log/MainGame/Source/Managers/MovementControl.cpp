@@ -74,7 +74,14 @@ void CMovementControl::Input()
 			mouseRect.right = mouseRect.left + 1;
 			mouseRect.bottom = mouseRect.top +1;
 
+			RECT hudRect = CGamePlayState::GetInstance()->GetButtons()[CGamePlayState::GetInstance()->FindButton("BottomHUD")].GetCollisionRect();
+
 			RECT resultRect;
+
+			if (IntersectRect(&resultRect, &mouseRect, &hudRect))
+			{
+				return;
+			}
 
 			for (unsigned int j = 0; j < m_vObjectList->size(); j++)
 			{
