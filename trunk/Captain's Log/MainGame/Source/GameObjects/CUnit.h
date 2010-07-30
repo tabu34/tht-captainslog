@@ -32,6 +32,7 @@ class CUnit : public CBase
 	int					m_nCurDirection;
 	int					m_nSightRange;
 	int					m_nSubType;
+	int					m_nEnemyClass;
 	vector<CAbility*>	m_vAbilities;
 	vector<int>			m_vAnimations;
 
@@ -56,6 +57,7 @@ public:
 		enum { UNIT_IDLE, UNIT_MOVING, UNIT_MOVING_ATTACK, UNIT_ATTACK, UNIT_FIRE };
 		enum { ENEMY_NULL, ENEMY_BASIC, ENEMY_BOSS, ENEMY_MAX };
 		enum { PLAYER_NULL, PLAYER_MARINE, PLAYER_HEAVY, PLAYER_MEDIC, PLAYER_SCOUT };
+		enum { NOTENEMY, FOOTMAN, CYCLOPS, COLOSSUS, SHADE, MAGE, MEDUSA };
 	CUnit();
 	virtual void Update(float fElapsedTime);
 	virtual void Render();
@@ -93,6 +95,7 @@ public:
 	int SightRange() const { return m_nSightRange; }
 	int State() const { return m_nState; }
 	int SubType() const { return m_nSubType; }
+	int EnemyClass() const { return m_nEnemyClass; }
 	POINT Destination() const { return m_pDestinationMove; }
 	CUnit* Target() { return m_pTarget; }
 	vector<CAbility*>* Abilities() { return &m_vAbilities; }
@@ -126,6 +129,7 @@ public:
 	void SightRange(int val) { m_nSightRange = val; }
 	void State(int val) { m_nState = val; }
 	void SubType(int val) { m_nSubType = val; }
+	void EnemyClass(int val) { m_nEnemyClass = val; }
 	void Target(CUnit* val) { m_pTarget = val; }
 	void Destination (LONG x, LONG y) { m_pDestinationMove.x = x; m_pDestinationMove.y = y; }
 	////////////////////////////////////////////////

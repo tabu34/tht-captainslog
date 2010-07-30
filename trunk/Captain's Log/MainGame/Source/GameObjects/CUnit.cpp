@@ -21,6 +21,8 @@ CUnit::CUnit()
 	Target(0);
 	Stuck(false);
 
+	EnemyClass(NOTENEMY);
+
 	Cloaked(false);
 	Invulnerable(false);
 }

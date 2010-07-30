@@ -161,6 +161,7 @@ void CUnitFactory::RegisterItems()
 		Footman->Stunned(false);
 		Footman->CurDirection();
 		Footman->State(CUnit::UNIT_IDLE);
+		Footman->EnemyClass(CUnit::FOOTMAN);
 
 		Footman->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Walk-N"));
 		Footman->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Marine-Walk-NE"));
@@ -238,6 +239,7 @@ void CUnitFactory::RegisterItems()
 		Cyclops->Stunned(false);
 		Cyclops->CurDirection();
 		Cyclops->State(CUnit::UNIT_IDLE);
+		Cyclops->EnemyClass(CUnit::CYCLOPS);
 		((CBasicEnemy*)Cyclops)->SetMirrored(false);
 
 		Cyclops->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Cyclops-Walk-N"));
@@ -287,6 +289,7 @@ void CUnitFactory::RegisterItems()
 		Colossus->Stunned(false);
 		Colossus->CurDirection();
 		Colossus->State(CUnit::UNIT_IDLE);
+		Colossus->EnemyClass(CUnit::COLOSSUS);
 		((CBasicEnemy*)Colossus)->SetMirrored(false);
 
 		Colossus->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Colossus-Walk-N"));
@@ -337,6 +340,7 @@ void CUnitFactory::RegisterItems()
 		Shade->Stunned(false);
 		Shade->CurDirection();
 		Shade->State(CUnit::UNIT_IDLE);
+		Shade->EnemyClass(CUnit::SHADE);
 		((CBasicEnemy*)Shade)->SetMirrored(false);
 
 		Shade->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Shade-Walk-N"));
@@ -387,6 +391,7 @@ void CUnitFactory::RegisterItems()
 		Medusa->Stunned(false);
 		Medusa->CurDirection();
 		Medusa->State(CUnit::UNIT_IDLE);
+		Medusa->EnemyClass(CUnit::MEDUSA);
 		((CBossEnemy*)Medusa)->SetMirrored(false);
 
 		Medusa->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Medusa-Walk-N"));
@@ -441,6 +446,7 @@ void CUnitFactory::RegisterItems()
 		Mage->Stunned(false);
 		Mage->CurDirection();
 		Mage->State(CUnit::UNIT_IDLE);
+		Mage->EnemyClass(CUnit::MAGE);
 		((CBasicEnemy*)Mage)->SetMirrored(false);
 
 		Mage->Animations()->push_back(CAnimationManager::GetInstance()->GetAnimationID("Mage-Walk-N"));

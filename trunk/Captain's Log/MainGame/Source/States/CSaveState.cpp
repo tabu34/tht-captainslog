@@ -37,26 +37,29 @@ void CSaveState::LoadProfiles()
 	ifstream fin;
 	string szPath;
 	szPath = CGame::GetInstance()->ResourcePath();
-	szPath+="Save.bin";
+	szPath += "Save.bin";
 	fin.open(szPath.c_str(), ios_base::in | ios_base::binary);
 
 	if(m_pProfiles)
+	{
 		delete[] m_pProfiles;
+	}
+	
 	m_pProfiles=NULL;
 
 	if(fin.fail())
 	{
 		fin.clear(ios_base::failbit);
-		m_nNumProfiles=0;
+		m_nNumProfiles = 0;
 	}
 	else if(fin.is_open() && fin.good())
 	{
 		fin.read((char*)&m_nNumProfiles, sizeof(int));
 		m_pProfiles = new tProfileHeader[m_nNumProfiles];
-		for(int i=0; i<m_nNumProfiles; i++)
+		for(int i = 0; i < m_nNumProfiles; i++)
 		{
 			fin.read((char*)&m_pProfiles[i], sizeof(tProfileHeader));
-			fin.seekg(m_pProfiles[i].nProfileSizeInBytes+fin.tellg());
+			fin.seekg(m_pProfiles[i].nProfileSizeInBytes + fin.tellg());
 		}
 		fin.close();
 	}
@@ -158,7 +161,7 @@ void CSaveState::SaveCurrent(int nSlot)
 	temp.nType = pCurUnit->Type();
 	vToSave.push_back(temp);
 
-	for(size_t i=0; i<vGame->size(); i++)
+	for(size_t i = 0; i < vGame->size(); i++)
 	{
 		pCurUnit = ((CUnit*)(*vGame)[i]);
 		if(pCurUnit!= (CUnit*)CMovementControl::GetInstance()->Marine() &&
@@ -184,6 +187,7 @@ void CSaveState::SaveCurrent(int nSlot)
 			temp.nMaxHealth = pCurUnit->MaxHealth();
 			temp.nSightRange = pCurUnit->SightRange();
 			temp.nSubType = pCurUnit->SubType();
+			temp.nEnemyClass = pCurUnit->EnemyClass();
 			temp.nType = pCurUnit->Type();
 			vToSave.push_back(temp);
 		}
@@ -191,8 +195,7 @@ void CSaveState::SaveCurrent(int nSlot)
 
 	tUnitSaveInfo* pData = new tUnitSaveInfo[vToSave.size()];
 
-	
-	for(size_t i=0; i<vToSave.size(); i++)
+	for(size_t i = 0; i < vToSave.size(); i++)
 	{
 		pData[i] = vToSave[i];	
 	}
@@ -200,7 +203,6 @@ void CSaveState::SaveCurrent(int nSlot)
 	Save(nSlot, CGamePlayState::GetInstance()->GetTime(), pData, (int)vToSave.size());
 
 	delete[] pData;
-
 }
 
 void CSaveState::Save(int nSlot, float fGameTime, tUnitSaveInfo* pData, int numUnits)
@@ -209,7 +211,7 @@ void CSaveState::Save(int nSlot, float fGameTime, tUnitSaveInfo* pData, int numU
 	ifstream fin;
 	string szPath;
 	szPath = CGame::GetInstance()->ResourcePath();
-	szPath+="Save.bin";
+	szPath += "Save.bin";
 	fin.open(szPath.c_str(), ios_base::in | ios_base::binary);
 
 	time_t rawtime;
@@ -221,22 +223,24 @@ void CSaveState::Save(int nSlot, float fGameTime, tUnitSaveInfo* pData, int numU
 	tUnitSaveInfo** ppSaveData = NULL;
 
 	if(m_pProfiles)
+	{
 		delete[] m_pProfiles;
-	m_pProfiles=NULL;
+	}
+	m_pProfiles = NULL;
 
 	if(fin.fail())
 	{
 		fin.clear(ios_base::failbit);
 
-		m_nNumProfiles=0;
-		nSlot=0;
+		m_nNumProfiles = 0;
+		nSlot = 0;
 	}
 	else if(fin.is_open() && fin.good())
 	{
 		fin.read((char*)&m_nNumProfiles, sizeof(int));
 		ppSaveData = new tUnitSaveInfo*[m_nNumProfiles];
 		m_pProfiles = new tProfileHeader[m_nNumProfiles];
-		for(int i=0; i<m_nNumProfiles; i++)
+		for(int i = 0; i < m_nNumProfiles; i++)
 		{
 			int nNumUnits;
 			fin.read((char*)&m_pProfiles[i], sizeof(tProfileHeader));
@@ -247,10 +251,12 @@ void CSaveState::Save(int nSlot, float fGameTime, tUnitSaveInfo* pData, int numU
 		fin.close();
 	}
 
-	if(nSlot>m_nNumProfiles)
-		nSlot=m_nNumProfiles;
+	if(nSlot > m_nNumProfiles)
+	{
+		nSlot = m_nNumProfiles;
+	}
 
-	if(nSlot>=0 && nSlot<m_nNumProfiles) //replacing an existing profile
+	if(nSlot >= 0 && nSlot < m_nNumProfiles) //replacing an existing profile
 	{
 		delete[] ppSaveData[nSlot];
 
@@ -265,7 +271,7 @@ void CSaveState::Save(int nSlot, float fGameTime, tUnitSaveInfo* pData, int numU
 		if(fout.is_open() && fout.good())
 		{
 			fout.write((char*)&m_nNumProfiles, sizeof(int));
-			for(int i=0; i<m_nNumProfiles; i++)
+			for(int i = 0; i < m_nNumProfiles; i++)
 			{
 				fout.write((char*)&m_pProfiles[i], sizeof(tProfileHeader));
 				int j=(m_pProfiles[i].nProfileSizeInBytes-sizeof(int))/sizeof(tUnitSaveInfo);
@@ -275,20 +281,22 @@ void CSaveState::Save(int nSlot, float fGameTime, tUnitSaveInfo* pData, int numU
 			fout.close();
 		}
 
-		for(int i=0; i<m_nNumProfiles; i++)
+		for(int i = 0; i < m_nNumProfiles; i++)
+		{
 			delete[] ppSaveData[i];
+		}
 	}
 	else //add a new profile
 	{
 		ofstream fout;
 		fout.open(szPath.c_str(), ios_base::out | ios_base::trunc | ios_base::binary);
-		m_nNumProfiles+=1;
+		m_nNumProfiles += 1;
 		if(fout.is_open() && fout.good())
 		{
 			fout.write((char*)&m_nNumProfiles, sizeof(int));
-			for(int i=0; i<m_nNumProfiles; i++)
+			for(int i = 0; i < m_nNumProfiles; i++)
 			{
-				if(i==m_nNumProfiles-1)
+				if(i == m_nNumProfiles - 1)
 				{
 					tProfileHeader pH;
 					pH.fGameTime = fGameTime;
@@ -296,30 +304,32 @@ void CSaveState::Save(int nSlot, float fGameTime, tUnitSaveInfo* pData, int numU
 					strcpy_s(pH.szLastPlayed, 256, szTime);
 
 					fout.write((char*)&pH, sizeof(tProfileHeader));
-					int j=(pH.nProfileSizeInBytes-sizeof(int))/sizeof(tUnitSaveInfo);
+					int j = (pH.nProfileSizeInBytes-sizeof(int))/sizeof(tUnitSaveInfo);
 					fout.write((char*)&j, sizeof(int));
 					fout.write((char*)pData, pH.nProfileSizeInBytes - sizeof(int));
 				}
 				else
 				{
 					fout.write((char*)&m_pProfiles[i], sizeof(tProfileHeader));
-					int j=(m_pProfiles[i].nProfileSizeInBytes-sizeof(int))/sizeof(tUnitSaveInfo);
+					int j = (m_pProfiles[i].nProfileSizeInBytes-sizeof(int))/sizeof(tUnitSaveInfo);
 					fout.write((char*)&j, sizeof(int));
 					fout.write((char*)ppSaveData[i], m_pProfiles[i].nProfileSizeInBytes - sizeof(int));
 				}
 			}
 			fout.close();
 		}
-		for(int i=0; i<m_nNumProfiles-1; i++)
+		for (int i = 0; i < m_nNumProfiles - 1; i++)
+		{
 			delete[] ppSaveData[i];
+		}
 	}
 
-	if(ppSaveData)
+	if (ppSaveData)
+	{
 		delete[] ppSaveData;
+	}
 
 	LoadProfiles();
-
-
 }
 
 void CSaveState::Enter()
@@ -329,9 +339,9 @@ void CSaveState::Enter()
 	m_bfFont.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
 	m_bfWhite.Initialize(CGame::GetInstance()->FontPath("Font - Orbitron.bmp").c_str(), 1.0f, 1.0f, 2, 0xFF000000, 0xFFFFFFFF);
 	m_bfWhite.LoadLetterRects(CGame::GetInstance()->FontPath("FontData.txt").c_str());
-	m_nCurrentControl=-1;
-	m_fErrorTimer=0.0f;
-	m_bError=false;
+	m_nCurrentControl =- 1;
+	m_fErrorTimer = 0.0f;
+	m_bError = false;
 	LoadProfiles();
 }
 
@@ -361,10 +371,10 @@ bool CSaveState::Input()
 	{
 		if(m_nCurrentControl == -1)
 		{
-			if(m_nNumProfiles==8)
+			if(m_nNumProfiles == 8)
 			{
-				m_bError=true;
-				m_fErrorTimer=2.0f;
+				m_bError = true;
+				m_fErrorTimer = 2.0f;
 			}
 			else
 				SaveCurrent(m_nNumProfiles);
