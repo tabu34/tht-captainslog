@@ -26,14 +26,14 @@ CUnitFactory::~CUnitFactory()
 {
 	for (unsigned int i = 0; i < m_vBasicEnemies.size(); i++)
 	{
-		SAFE_RELEASE(m_vBasicEnemies[i]->pUnit);
+		SAFE_DELETE(m_vBasicEnemies[i]->pUnit);
 		SAFE_DELETE(m_vBasicEnemies[i]);
 	}
 	m_vBasicEnemies.clear();
 
 	for (unsigned int i = 0; i < m_vBossEnemies.size(); i++)
 	{
-		SAFE_RELEASE(m_vBossEnemies[i]->pUnit);
+		SAFE_DELETE(m_vBossEnemies[i]->pUnit);
 		SAFE_DELETE(m_vBossEnemies[i]);
 	}
 	m_vBossEnemies.clear();
@@ -41,7 +41,7 @@ CUnitFactory::~CUnitFactory()
 	while (!m_UnitTemplates.empty())
 	{
 		map<string, CUnit*>::iterator iter = m_UnitTemplates.begin();
-		SAFE_RELEASE(iter->second);
+		SAFE_DELETE(iter->second);
 		m_UnitTemplates.erase(iter);
 	}
 }
