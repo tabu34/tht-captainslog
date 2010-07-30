@@ -9,9 +9,9 @@ class CAbility_DefensiveMatrix : public CTargetAbility
 public:
 	CAbility_DefensiveMatrix()
 	{
-		Cooldown(50);
-		TimePassed(50);
-		Duration(8);
+		Cooldown(20);
+		TimePassed(20);
+		Duration(4);
 		IsActive(false);
 	}
 
@@ -27,9 +27,9 @@ class CAbility_PinningShot : public CTargetAbility
 public:
 	CAbility_PinningShot()
 	{
-		Cooldown(20);
-		TimePassed(20);
-		Duration(6);
+		Cooldown(10);
+		TimePassed(10);
+		Duration(3);
 		IsActive(false);
 	}
 
@@ -56,8 +56,8 @@ class CAbility_Refresh : public CTargetAbility
 public:
 	CAbility_Refresh()
 	{
-		TimePassed(12);
-		Cooldown(12);
+		TimePassed(10);
+		Cooldown(10);
 		IsActive(false);
 	}
 
@@ -74,9 +74,9 @@ public:
 	{
 		Type(0);
 		Target(tar);
-		TimePassed(30);
-		Cooldown(30);
-		Duration(7);
+		TimePassed(25);
+		Cooldown(25);
+		Duration(5);
 		IsActive(false);
 	}
 
@@ -93,8 +93,8 @@ public:
 	{
 		Type(0);
 		Target(tar);
-		TimePassed(60);
-		Cooldown(60);
+		TimePassed(30);
+		Cooldown(30);
 		Duration(12);
 		IsActive(false);
 	}
@@ -128,9 +128,9 @@ class CAbility_RocketBarrage : public CLocationAbility
 public:
 	CAbility_RocketBarrage()
 	{
-		TimePassed(30);
-		Cooldown(30);
-		Range(150);
+		TimePassed(20);
+		Cooldown(20);
+		Range(250);
 	}
 
 	void Activate();
@@ -143,9 +143,9 @@ class CAbility_StunGrenade : public CLocationAbility
 public:
 	CAbility_StunGrenade()
 	{
-		TimePassed(30);
-		Cooldown(30);
-		Range(150);
+		TimePassed(20);
+		Cooldown(20);
+		Range(250);
 	}
 
 	void Activate();

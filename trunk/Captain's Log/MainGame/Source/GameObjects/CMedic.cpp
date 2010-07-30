@@ -15,7 +15,7 @@ CMedic::CMedic()
 	CurHealth(90);
 	MaxHealth(90);
 	AttackSpeed(2);
-	AttackDamage(15);
+	AttackDamage(10);
 	AttackTimer(0);
 	AttackRange(125);
 	SightRange(AttackRange() + 100);
