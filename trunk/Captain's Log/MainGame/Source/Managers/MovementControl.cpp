@@ -343,12 +343,12 @@ void CMovementControl::Input()
 				case CUnit::PLAYER_MARINE:
 					for (unsigned int i = 0; i < CMovementControl::GetInstance()->Marine()->Inventory()->size(); i++)
 					{
-						itemPoint = CGamePlayState::GetInstance()->ItemPositions()[i];
-						SetRect(&collisionRect, itemPoint.x, itemPoint.y, itemPoint.x + 43, itemPoint.y + 43);
-						if (IntersectRect(&collideInventory, &mouseRect, &collisionRect))
-						{
-							CMovementControl::GetInstance()->Marine()->Inventory()->operator [](i)->AddEffect();
-						}
+						//itemPoint = CGamePlayState::GetInstance()->ItemPositions()[i];
+						//SetRect(&collisionRect, itemPoint.x, itemPoint.y, itemPoint.x + 43, itemPoint.y + 43);
+						//if (IntersectRect(&collideInventory, &mouseRect, &collisionRect))
+						//{
+						//	CMovementControl::GetInstance()->Marine()->Inventory()->operator [](i)->AddEffect();
+						//}
 						//CSGD_TextureManager::GetInstance()->Draw(m_vItemInstances[CMovementControl::GetInstance()->Marine()->Inventory()->operator [](i)->ItemName()-1].TextureID(), m_ptItemPositions[i].x, m_ptItemPositions[i].y, 1.0f, 1.0f);
 					}
 					break;
@@ -446,19 +446,22 @@ void CMovementControl::Input()
 		//select the MARINE
 		for(size_t i=0; i<m_vObjectList->size(); i++)
 		{
-			if((CMarine*)(*m_vObjectList)[i] == m_pMarine)
+			if ((*m_vObjectList)[i]->Type() != CBase::OBJ_ITEM)
 			{
-				if(!((CUnit*)(*m_vObjectList)[i])->Selected())
+				if((*m_vObjectList)[i] == m_pMarine)
 				{
-					((CUnit*)(*m_vObjectList)[i])->Selected(true);
-					(*m_vSelected).push_back((*m_vObjectList)[i]);
-					CGamePlayState::GetInstance()->ClearCommand();
+					if(!((CUnit*)(*m_vObjectList)[i])->Selected())
+					{
+						((CUnit*)(*m_vObjectList)[i])->Selected(true);
+						(*m_vSelected).push_back((*m_vObjectList)[i]);
+						CGamePlayState::GetInstance()->ClearCommand();
+					}
 				}
-			}
-			else if(((CUnit*)(*m_vObjectList)[i])->Selected())
-			{
-				((CUnit*)(*m_vObjectList)[i])->Selected(false);
-				CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+				else if(((CUnit*)(*m_vObjectList)[i])->Selected())
+				{
+					((CUnit*)(*m_vObjectList)[i])->Selected(false);
+					CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+				}
 			}
 
 		}
@@ -468,19 +471,22 @@ void CMovementControl::Input()
 		//select the HEAVY
 		for(size_t i=0; i<m_vObjectList->size(); i++)
 		{
-			if((CHeavy*)(*m_vObjectList)[i] == m_pHeavy)
+			if ((*m_vObjectList)[i]->Type() != CBase::OBJ_ITEM)
 			{
-				if(!((CUnit*)(*m_vObjectList)[i])->Selected())
+				if((*m_vObjectList)[i] == m_pHeavy)
 				{
-					((CUnit*)(*m_vObjectList)[i])->Selected(true);
-					(*m_vSelected).push_back((*m_vObjectList)[i]);
-					CGamePlayState::GetInstance()->ClearCommand();
+					if(!((CUnit*)(*m_vObjectList)[i])->Selected())
+					{
+						((CUnit*)(*m_vObjectList)[i])->Selected(true);
+						(*m_vSelected).push_back((*m_vObjectList)[i]);
+						CGamePlayState::GetInstance()->ClearCommand();
+					}
 				}
-			}
-			else if(((CUnit*)(*m_vObjectList)[i])->Selected())
-			{
-				((CUnit*)(*m_vObjectList)[i])->Selected(false);
-				CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+				else if(((CUnit*)(*m_vObjectList)[i])->Selected())
+				{
+					((CUnit*)(*m_vObjectList)[i])->Selected(false);
+					CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+				}
 			}
 		}
 	}
@@ -489,19 +495,22 @@ void CMovementControl::Input()
 		//select the MEDIC
 		for(size_t i=0; i<m_vObjectList->size(); i++)
 		{
-			if((CMedic*)(*m_vObjectList)[i] == m_pMedic)
+			if ((*m_vObjectList)[i]->Type() != CBase::OBJ_ITEM)
 			{
-				if(!((CUnit*)(*m_vObjectList)[i])->Selected())
+				if((*m_vObjectList)[i] == m_pMedic)
 				{
-					((CUnit*)(*m_vObjectList)[i])->Selected(true);
-					(*m_vSelected).push_back((*m_vObjectList)[i]);
-					CGamePlayState::GetInstance()->ClearCommand();
+					if(!((CUnit*)(*m_vObjectList)[i])->Selected())
+					{
+						((CUnit*)(*m_vObjectList)[i])->Selected(true);
+						(*m_vSelected).push_back((*m_vObjectList)[i]);
+						CGamePlayState::GetInstance()->ClearCommand();
+					}
 				}
-			}
-			else if(((CUnit*)(*m_vObjectList)[i])->Selected())
-			{
-				((CUnit*)(*m_vObjectList)[i])->Selected(false);
-				CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+				else if(((CUnit*)(*m_vObjectList)[i])->Selected())
+				{
+					((CUnit*)(*m_vObjectList)[i])->Selected(false);
+					CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+				}
 			}
 		}
 	}
@@ -510,19 +519,22 @@ void CMovementControl::Input()
 		//select the SCOUT
 		for(size_t i=0; i<m_vObjectList->size(); i++)
 		{
-			if((CScout*)(*m_vObjectList)[i] == m_pScout)
+			if ((*m_vObjectList)[i]->Type() != CBase::OBJ_ITEM)
 			{
-				if(!((CUnit*)(*m_vObjectList)[i])->Selected())
+				if((*m_vObjectList)[i] == m_pScout)
 				{
-					((CUnit*)(*m_vObjectList)[i])->Selected(true);
-					(*m_vSelected).push_back((*m_vObjectList)[i]);
-					CGamePlayState::GetInstance()->ClearCommand();
+					if(!((CUnit*)(*m_vObjectList)[i])->Selected())
+					{
+						((CUnit*)(*m_vObjectList)[i])->Selected(true);
+						(*m_vSelected).push_back((*m_vObjectList)[i]);
+						CGamePlayState::GetInstance()->ClearCommand();
+					}
 				}
-			}
-			else if(((CUnit*)(*m_vObjectList)[i])->Selected())
-			{
-				((CUnit*)(*m_vObjectList)[i])->Selected(false);
-				CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+				else if(((CUnit*)(*m_vObjectList)[i])->Selected())
+				{
+					((CUnit*)(*m_vObjectList)[i])->Selected(false);
+					CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+				}
 			}
 		}
 	}
@@ -531,19 +543,22 @@ void CMovementControl::Input()
 		//select all PLAYER units
 		for(size_t i=0; i<m_vObjectList->size(); i++)
 		{
-			if(((CUnit*)(*m_vObjectList)[i])->Type()==CBase::OBJ_PLAYER)
+			if ((*m_vObjectList)[i]->Type() != CBase::OBJ_ITEM)
 			{
-				if(!((CUnit*)(*m_vObjectList)[i])->Selected())
+				if(((CUnit*)(*m_vObjectList)[i])->Type()==CBase::OBJ_PLAYER)
 				{
-					((CUnit*)(*m_vObjectList)[i])->Selected(true);
-					(*m_vSelected).push_back((*m_vObjectList)[i]);
-					CGamePlayState::GetInstance()->ClearCommand();
+					if(!((CUnit*)(*m_vObjectList)[i])->Selected())
+					{
+						((CUnit*)(*m_vObjectList)[i])->Selected(true);
+						(*m_vSelected).push_back((*m_vObjectList)[i]);
+						CGamePlayState::GetInstance()->ClearCommand();
+					}
 				}
-			}
-			else if(((CUnit*)(*m_vObjectList)[i])->Selected())
-			{
-				((CUnit*)(*m_vObjectList)[i])->Selected(false);
-				CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+				else if(((CUnit*)(*m_vObjectList)[i])->Selected())
+				{
+					((CUnit*)(*m_vObjectList)[i])->Selected(false);
+					CObjectManager::GetInstance()->FindAndRemove((CUnit*)(*m_vObjectList)[i]);
+				}
 			}
 		}
 	}
