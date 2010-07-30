@@ -888,6 +888,14 @@ void CGamePlayState::RenderHUD(void)
 					}
 					m_nToolTipOffsetY = 32;
 					m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
+					if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
+					{
+						CMovementControl::GetInstance()->Marine()->Inventory()->operator [](i)->AddEffect();
+					}
+					else if (CSGD_DirectInput::GetInstance()->MouseButtonDown(1))
+					{
+						CMovementControl::GetInstance()->Marine()->Inventory()->operator [](i)->Drop();
+					}
 				}
 			}
 			break;
@@ -933,7 +941,15 @@ void CGamePlayState::RenderHUD(void)
 						break;
 					}
 					m_nToolTipOffsetY = 32;
-					m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
+					m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true); 
+					if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
+					{
+						CMovementControl::GetInstance()->Medic()->Inventory()->operator [](i)->AddEffect();
+					}
+					else if (CSGD_DirectInput::GetInstance()->MouseButtonDown(1))
+					{
+						CMovementControl::GetInstance()->Medic()->Inventory()->operator [](i)->Drop();
+					}
 				}
 			}
 			break;
@@ -980,6 +996,14 @@ void CGamePlayState::RenderHUD(void)
 					}
 					m_nToolTipOffsetY = 32;
 					m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
+					if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
+					{
+						CMovementControl::GetInstance()->Heavy()->Inventory()->operator [](i)->AddEffect();
+					}
+					else if (CSGD_DirectInput::GetInstance()->MouseButtonDown(1))
+					{
+						CMovementControl::GetInstance()->Heavy()->Inventory()->operator [](i)->Drop();
+					}
 				}
 			}
 			break;
@@ -1026,6 +1050,14 @@ void CGamePlayState::RenderHUD(void)
 					}
 					m_nToolTipOffsetY = 32;
 					m_vButtonInstances[FindButton("ToolTipLargeBG")].Visible(true);
+					if(CSGD_DirectInput::GetInstance()->MouseButtonDown(0))
+					{
+						CMovementControl::GetInstance()->Scout()->Inventory()->operator [](i)->AddEffect();
+					}
+					else if (CSGD_DirectInput::GetInstance()->MouseButtonDown(1))
+					{
+						CMovementControl::GetInstance()->Scout()->Inventory()->operator [](i)->Drop();
+					}
 				}
 			}
 			break;

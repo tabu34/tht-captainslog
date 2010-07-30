@@ -51,8 +51,6 @@ class CParticle : public CBase
 
 public:
 
-	CParticle();
-
 	void Initialize(int nImageID,int nLife, float fScaleX, float fScaleY, float fPosX, float fPosY, int ncolor);
 
 	void Update( float fElapsedTime, int GravityPointX, int GravityPointY, int nGravity, int nSpread);
