@@ -184,7 +184,7 @@ void CPathManager::GenerateMap()
 	m_lstNodeList.clear();
 	m_mpAdjacencies.clear();
 	//step 1:  create all the nodes
-	tNode node, lastNode;
+	//tNode node, lastNode;
 
 	// calculate number of grid lines
 	int m_nNumGridLinesX = CWorldManager::GetInstance()->WorldWidth() / GRID_SCALE;
@@ -472,23 +472,23 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 
 		tNode tileEdges[4];
 		// Top left
-		tileEdges[0].fX = tilePosX * GRID_SCALE;
-		tileEdges[0].fY = tilePosY * GRID_SCALE;
+		tileEdges[0].fX = (float)(tilePosX * GRID_SCALE);
+		tileEdges[0].fY = (float)(tilePosY * GRID_SCALE);
 		// Top right
-		tileEdges[1].fX = tilePosX * GRID_SCALE + GRID_SCALE;
-		tileEdges[1].fY = tilePosY * GRID_SCALE;
+		tileEdges[1].fX = (float)(tilePosX * GRID_SCALE + GRID_SCALE);
+		tileEdges[1].fY = (float)(tilePosY * GRID_SCALE);
 		// Bottom left
-		tileEdges[2].fX = tilePosX * GRID_SCALE;
-		tileEdges[2].fY = tilePosY * GRID_SCALE + GRID_SCALE;
+		tileEdges[2].fX = (float)(tilePosX * GRID_SCALE);
+		tileEdges[2].fY = (float)(tilePosY * GRID_SCALE + GRID_SCALE);
 		// Bottom right
-		tileEdges[3].fX = tilePosX * GRID_SCALE + GRID_SCALE;
-		tileEdges[3].fY = tilePosY * GRID_SCALE + GRID_SCALE;
+		tileEdges[3].fX = (float)(tilePosX * GRID_SCALE + GRID_SCALE);
+		tileEdges[3].fY = (float)(tilePosY * GRID_SCALE + GRID_SCALE);
 
 		for(int i = 0; i < 4; i++)
 		{
 			POINT pt;
-			pt.x = tileEdges[i].fX;
-			pt.y = tileEdges[i].fY;
+			pt.x = (LONG)tileEdges[i].fX;
+			pt.y = (LONG)tileEdges[i].fY;
 			if(PointDistance(startPt, pt) < closestDistance)
 			{
 				closestDistance = PointDistance(startPt, pt);
@@ -522,23 +522,23 @@ vector<tNode*> CPathManager::GetPath(float fX1, float fY1, float fX2, float fY2)
 
 		tNode tileEdges[4];
 		// Top left
-		tileEdges[0].fX = tilePosX * GRID_SCALE;
-		tileEdges[0].fY = tilePosY * GRID_SCALE;
+		tileEdges[0].fX = (float)(tilePosX * GRID_SCALE);
+		tileEdges[0].fY = (float)(tilePosY * GRID_SCALE);
 		// Top right
-		tileEdges[1].fX = tilePosX * GRID_SCALE + GRID_SCALE;
-		tileEdges[1].fY = tilePosY * GRID_SCALE;
+		tileEdges[1].fX = (float)(tilePosX * GRID_SCALE + GRID_SCALE);
+		tileEdges[1].fY = (float)(tilePosY * GRID_SCALE);
 		// Bottom left
-		tileEdges[2].fX = tilePosX * GRID_SCALE;
-		tileEdges[2].fY = tilePosY * GRID_SCALE + GRID_SCALE;
+		tileEdges[2].fX = (float)(tilePosX * GRID_SCALE);
+		tileEdges[2].fY = (float)(tilePosY * GRID_SCALE + GRID_SCALE);
 		// Bottom right
-		tileEdges[3].fX = tilePosX * GRID_SCALE + GRID_SCALE;
-		tileEdges[3].fY = tilePosY * GRID_SCALE + GRID_SCALE;
+		tileEdges[3].fX = (float)(tilePosX * GRID_SCALE + GRID_SCALE);
+		tileEdges[3].fY = (float)(tilePosY * GRID_SCALE + GRID_SCALE);
 
 		for(int i = 0; i < 4; i++)
 		{
 			POINT pt;
-			pt.x = tileEdges[i].fX;
-			pt.y = tileEdges[i].fY;
+			pt.x = (LONG)tileEdges[i].fX;
+			pt.y = (LONG)tileEdges[i].fY;
 			if(PointDistance(endPt, pt) < closestDistance)
 			{
 				closestDistance = PointDistance(endPt, pt);

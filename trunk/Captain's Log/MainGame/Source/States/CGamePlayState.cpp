@@ -1162,7 +1162,7 @@ void CGamePlayState::Render(void)
 	CObjectManager::GetInstance()->RenderObjects();
 	CSGD_Direct3D::GetInstance()->GetSprite()->Flush();
 	vector<CBase*>* _objList = CObjectManager::GetInstance()->GetObjectList();
-	for(int i = 0; i < _objList->size(); i++)
+	for(unsigned int i = 0; i < _objList->size(); i++)
 	{
 		if((*_objList)[i]->Type() == CBase::OBJ_PLAYER || (*_objList)[i]->Type() == CBase::OBJ_ENEMY)
 		{
