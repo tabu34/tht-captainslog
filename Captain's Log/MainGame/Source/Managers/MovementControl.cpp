@@ -281,6 +281,7 @@ void CMovementControl::Input()
 			if ((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]->Type() == 0)
 			{
 				(*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]->Activate();
+				CGamePlayState::GetInstance()->ClearCommand();
 			}
 			else if ((*m_pUnitAbilitySelection->Abilities())[m_nUnitAbilityPosition]->Type() == 1)
 			{
