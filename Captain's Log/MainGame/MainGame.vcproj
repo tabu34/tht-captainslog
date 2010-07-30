@@ -823,6 +823,22 @@
 				RelativePath=".\My Inspector Results\r002mi1\r002mi1.insp"
 				>
 			</File>
+			<File
+				RelativePath=".\My Inspector Results\r003mi1\r003mi1.insp"
+				>
+			</File>
+			<File
+				RelativePath=".\My Inspector Results\r004mi1\r004mi1.insp"
+				>
+			</File>
+			<File
+				RelativePath=".\My Inspector Results\r005mi1\r005mi1.insp"
+				>
+			</File>
+			<File
+				RelativePath=".\My Inspector Results\r006mi1\r006mi1.insp"
+				>
+			</File>
 		</Filter>
 		<File
 			RelativePath="..\..\..\..\..\..\..\..\..\Program Files (x86)\FMOD SoundSystem\FMOD Programmers API Win32\api\fmodex.dll"

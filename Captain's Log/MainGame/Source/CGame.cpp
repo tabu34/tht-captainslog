@@ -311,5 +311,6 @@ void CGame::Shutdown()
 	m_pCM				= NULL;
 	
 	CSGD_FModManager::GetInstance()->UnloadSound(m_nMenuChoiceSFX);
+	CSGD_FModManager::GetInstance()->ShutdownFModManager();
 	CCodeProfiler::GetInstance()->Output("codeprofiler test --");
 }
