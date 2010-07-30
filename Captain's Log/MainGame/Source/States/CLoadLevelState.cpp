@@ -86,9 +86,21 @@ void CLoadLevelState::Load()
 		testItem->PosY(500);
 		CObjectManager::GetInstance()->AddObject(testItem);
 
-		testItem = CItemFactory::GetInstance()->CreateItem("Gloves of Haste");
+		testItem = CItemFactory::GetInstance()->CreateItem("Book of Protection");
 		testItem->PosX(550);
 		testItem->PosY(500);
+		CObjectManager::GetInstance()->AddObject(testItem);
+
+		
+		testItem = CItemFactory::GetInstance()->CreateItem("Gloves of Haste");
+		testItem->PosX(1500);
+		testItem->PosY(1800);
+		CObjectManager::GetInstance()->AddObject(testItem);
+
+		
+		testItem = CItemFactory::GetInstance()->CreateItem("Boots of Swiftness");
+		testItem->PosX(1600);
+		testItem->PosY(1850);
 		CObjectManager::GetInstance()->AddObject(testItem);
 
 
@@ -220,11 +232,11 @@ void CLoadLevelState::Load()
 
 
 
-		//CBossEnemy* Medusa = (CBossEnemy*)CUnitFactory::GetInstance()->CreateUnit("Medusa");
-		//Medusa->Type(CBase::OBJ_ENEMY);
-		//Medusa->PosX(2830);
-		//Medusa->PosY(2860);
-		//CObjectManager::GetInstance()->AddObject(Medusa);
+		CBossEnemy* Medusa = (CBossEnemy*)CUnitFactory::GetInstance()->CreateUnit("Medusa");
+		Medusa->Type(CBase::OBJ_ENEMY);
+		Medusa->PosX(2830);
+		Medusa->PosY(2860);
+		CObjectManager::GetInstance()->AddObject(Medusa);
 
 		//////////////////////////////////////////////////////////////////////////
 		CGame::GetInstance()->ChangeState( CGamePlayState::GetInstance() );
@@ -260,6 +272,26 @@ void CLoadLevelState::Load()
 		alliedScout->PosY(50);
 		alliedMedic->PosX(350);
 		alliedMedic->PosY(150);
+
+		CItem * testItem = CItemFactory::GetInstance()->CreateItem("Boots of Swiftness");
+		testItem->PosX(1500);
+		testItem->PosY(1850);
+		CObjectManager::GetInstance()->AddObject(testItem);
+
+		testItem = CItemFactory::GetInstance()->CreateItem("Book of Strength");
+		testItem->PosX(1500);
+		testItem->PosY(1950);
+		CObjectManager::GetInstance()->AddObject(testItem);
+
+		testItem = CItemFactory::GetInstance()->CreateItem("Book of Vitality");
+		testItem->PosX(800);
+		testItem->PosY(1200);
+		CObjectManager::GetInstance()->AddObject(testItem);
+
+		testItem = CItemFactory::GetInstance()->CreateItem("Book of Strength");
+		testItem->PosX(800);
+		testItem->PosY(1250);
+		CObjectManager::GetInstance()->AddObject(testItem);
 
 		CBasicEnemy* badGuy = (CBasicEnemy*)CUnitFactory::GetInstance()->CreateUnit("Shade");
 		badGuy->Type(CBase::OBJ_ENEMY);
@@ -369,6 +401,12 @@ void CLoadLevelState::Load()
 		Colossus->PosY(500);
 		CObjectManager::GetInstance()->AddObject(Colossus);
 
+		CBossEnemy* Mage = (CBossEnemy*)CUnitFactory::GetInstance()->CreateUnit("Mage");
+		Mage->Type(CBase::OBJ_ENEMY);
+		Mage->PosX(2200);
+		Mage->PosY(1500);
+		CObjectManager::GetInstance()->AddObject(Mage);
+
 		CGame::GetInstance()->ChangeState( CGamePlayState::GetInstance() );
 		
 	}
@@ -408,6 +446,26 @@ void CLoadLevelState::Load()
 		//Colossus->PosX(650);
 		//Colossus->PosY(400);
 		//CObjectManager::GetInstance()->AddObject(Colossus);
+
+		CItem * testItem = CItemFactory::GetInstance()->CreateItem("Shield of Angels");
+		testItem->PosX(750);
+		testItem->PosY(1200);
+		CObjectManager::GetInstance()->AddObject(testItem);
+
+		testItem = CItemFactory::GetInstance()->CreateItem("Gloves of Haste");
+		testItem->PosX(750);
+		testItem->PosY(1250);
+		CObjectManager::GetInstance()->AddObject(testItem);
+
+		testItem = CItemFactory::GetInstance()->CreateItem("Book of Vitality");
+		testItem->PosX(800);
+		testItem->PosY(1200);
+		CObjectManager::GetInstance()->AddObject(testItem);
+
+		testItem = CItemFactory::GetInstance()->CreateItem("Book of Strength");
+		testItem->PosX(800);
+		testItem->PosY(1250);
+		CObjectManager::GetInstance()->AddObject(testItem);
 
 
 		CBossEnemy* Medusa = (CBossEnemy*)CUnitFactory::GetInstance()->CreateUnit("Medusa");
